@@ -1,0 +1,36 @@
+# Deploiement en ligne sur Render (https://render.com) - "Blueprint".
+# 1. Pousse ce depot sur GitHub.
+# 2. Sur Render : New > Blueprint > selectionne ce depot.
+# 3. Render lit ce fichier, cree le service et te donne une URL publique (https).
+#
+# La base SQLite est stockee sur un disque persistant (les leads survivent aux redemarrages).
+
+services:
+  - type: web
+    name: leads-mutuelle-sante
+    runtime: node
+    # Plan "starter" (payant) requis pour le disque persistant ci-dessous.
+    # Pour un essai GRATUIT : mets "plan: free" ET supprime le bloc "disk"
+    # (attention : sans disque, la base SQLite est reinitialisee a chaque redeploiement).
+    plan: starter
+    region: frankfurt          # hebergement UE (RGPD)
+    branch: cursor/leads-mutuelle-sante-optin
+    buildCommand: npm ci
+    startCommand: node src/server.js
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /var/data
+      # Token du CRM : genere automatiquement, a recuperer dans le dashboard Render.
+      - key: ADMIN_TOKEN
+        generateValue: true
+      # PUBLIC_BASE_URL : mets ici l'URL publique fournie par Render (pour les liens double opt-in).
+      # - key: PUBLIC_BASE_URL
+      #   value: https://leads-mutuelle-sante.onrender.com
+    disk:
+      name: leads-data
+      mountPath: /var/data     # doit correspondre a DATA_DIR
+      sizeGB: 1
