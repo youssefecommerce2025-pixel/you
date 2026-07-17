@@ -51,6 +51,7 @@ npm start
 | `PARTNER_WEBHOOK_URL__<SLUG>` | Webhook spécifique par courtier (slug du nom ORIAS) | — |
 | `PARTNER_WEBHOOK_SECRET` | Secret HMAC-SHA256 (en-tête `X-Signature`) | non signé |
 | `WEBHOOK_MAX_ATTEMPTS` | Nombre d'essais avec backoff | `3` |
+| `PARTNER_API_KEYS` | Clés API d'intake affilié, format `cle:Nom,cle2:Nom2` | aucune |
 
 > Sans SMTP/SMS configuré, les messages de confirmation sont écrits dans `data/outbox.log` et
 > tracés dans la table `outbound_messages` (utile en développement).
@@ -74,6 +75,8 @@ double opt-in.
 | `GET` | `/api/admin/leads/:id/consent` | Export de la preuve de consentement (auth) |
 | `POST` | `/api/admin/leads/:id/transmettre` | Transmet (ou re-transmet) le lead au webhook courtier (auth) |
 | `GET` | `/api/admin/leads/:id/deliveries` | Historique des livraisons webhook (auth) |
+| `GET` | `/api/admin/analytics` | Analytics : entonnoir + conversion par source/UTM (auth) |
+| `POST` | `/api/partner/leads` | Intake de leads d'affiliés externes (clé API `X-Api-Key`) |
 
 Pages : `/` (landing), `/admin.html` (CRM), `/confidentialite.html` (confidentialité),
 `/mentions-legales.html` (mentions légales). Bandeau cookies (Google Consent Mode v2) sur les
@@ -89,6 +92,32 @@ envoie un `POST` JSON vers `PARTNER_WEBHOOK_URL` avec :
 - retries avec backoff, et traçabilité complète dans la table `webhook_deliveries`.
 
 Routage multi-courtiers possible via `PARTNER_WEBHOOK_URL__<SLUG>` (slug = nom ORIAS en majuscules).
+
+## Intake de leads d'affiliés externes
+
+Endpoint `POST /api/partner/leads` authentifié par clé API (en-tête `X-Api-Key`, définie via
+`PARTNER_API_KEYS`). L'affilié **doit** fournir la preuve de consentement recueillie de son côté :
+
+```json
+{
+  "prenom": "...", "nom": "...", "email": "...", "telephone": "0612345678",
+  "consent_telephone": true,
+  "consent": {
+    "ip": "203.0.113.5",
+    "collected_at": "2026-08-12T10:00:00Z",
+    "source_url": "https://affilie.fr/devis",
+    "user_agent": "...", "double_optin": false
+  }
+}
+```
+
+Le lead est enregistré avec `source = affilie:<Nom>` pour le suivi analytics.
+
+## Tests
+
+```bash
+npm test   # suite d'integration (node:test), base SQLite temporaire isolee
+```
 
 ## Rappel de conformité
 
