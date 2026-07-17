@@ -105,6 +105,7 @@ body {
 .footer__inner { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
 .footer a { color: #cbd5e1; text-decoration: none; }
 .footer a:hover { color: #fff; }
+.footer__links { display: flex; gap: 18px; }
 
 @media (max-width: 860px) {
   .hero__grid { grid-template-columns: 1fr; gap: 32px; }
