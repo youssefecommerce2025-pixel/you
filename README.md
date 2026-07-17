@@ -41,8 +41,15 @@ npm start
 | `PORT` | Port HTTP | `3000` |
 | `ADMIN_TOKEN` | Token d'accès au CRM | `admin-demo-token` |
 | `DOUBLE_OPTIN` | `1` pour activer le double opt-in | désactivé |
+| `PUBLIC_BASE_URL` | URL publique pour les liens de confirmation | déduite de la requête |
 | `DB_PATH` | Chemin du fichier SQLite | `data/leads.sqlite` |
 | `DATA_DIR` | Dossier de données | `data/` |
+| `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` / `SMTP_SECURE` | Envoi email (double opt-in) | repli fichier/console |
+| `MAIL_FROM` | Expéditeur des emails | `no-reply@example.fr` |
+| `SMS_API_URL` / `SMS_API_KEY` / `SMS_SENDER` | Envoi SMS via un fournisseur HTTP (Twilio, OVH...) | repli fichier/console |
+
+> Sans SMTP/SMS configuré, les messages de confirmation sont écrits dans `data/outbox.log` et
+> tracés dans la table `outbound_messages` (utile en développement).
 
 **Avant la production** : change `ADMIN_TOKEN`, renseigne tes vraies mentions dans `src/consent.js`
 (raison sociale, ORIAS, DPO...), mets l'app derrière HTTPS, et branche l'envoi email/SMS pour le
@@ -59,7 +66,10 @@ double opt-in.
 | `GET` | `/api/admin/leads` | Liste des leads (auth) |
 | `GET` | `/api/admin/stats` | Statistiques (auth) |
 | `PATCH` | `/api/admin/leads/:id` | Qualification / mise à jour (auth) |
+| `GET` | `/api/admin/leads/export.csv` | Export CSV des leads (auth, filtrable) |
 | `GET` | `/api/admin/leads/:id/consent` | Export de la preuve de consentement (auth) |
+
+Pages : `/` (landing), `/admin.html` (CRM), `/confidentialite.html` (politique de confidentialité).
 
 ## Rappel de conformité
 
