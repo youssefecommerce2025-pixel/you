@@ -1,0 +1,64 @@
+.admin { background: #f1f5f9; min-height: 100vh; }
+
+.login { display: grid; place-items: center; padding: 80px 0; }
+.login__card { padding: 30px; width: min(420px, 92%); text-align: center; }
+.login__card h2 { margin: 0 0 6px; }
+.login__card p { color: var(--muted); margin: 0 0 18px; }
+.login__card input { width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 14px; font-size: 1rem; }
+
+.btn--ghost { background: #fff; color: #334155; border: 1px solid var(--line); width: auto; box-shadow: none; }
+.btn--ghost:hover { background: #f8fafc; }
+
+/* Stats */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin: 28px 0; }
+.stat { background: #fff; border-radius: 12px; padding: 16px; box-shadow: var(--shadow); }
+.stat b { font-size: 1.6rem; display: block; color: var(--text); }
+.stat span { font-size: 0.8rem; color: var(--muted); text-transform: capitalize; }
+
+/* Toolbar */
+.toolbar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.toolbar input, .toolbar select { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; font-size: 0.9rem; background: #fff; }
+.toolbar input { flex: 1; min-width: 200px; }
+
+/* Table */
+.table-wrap { background: #fff; border-radius: 12px; box-shadow: var(--shadow); overflow: auto; }
+.leads-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.leads-table th { text-align: left; padding: 12px 14px; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--line); white-space: nowrap; background: #f8fafc; position: sticky; top: 0; }
+.leads-table td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+.leads-table tr:hover td { background: #f8fafc; }
+
+.pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
+.pill--nouveau { background: #dbeafe; color: #1e40af; }
+.pill--a_rappeler { background: #fef3c7; color: #92400e; }
+.pill--qualifie { background: #d1fae5; color: #065f46; }
+.pill--non_joignable { background: #f1f5f9; color: #475569; }
+.pill--non_interesse { background: #fee2e2; color: #991b1b; }
+.pill--transmis { background: #e0e7ff; color: #3730a3; }
+.pill--rejete { background: #fecaca; color: #7f1d1d; }
+
+.score { font-weight: 700; }
+.consent-ok { color: #047857; font-weight: 600; }
+.consent-wait { color: #b45309; font-weight: 600; }
+
+.link-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-weight: 600; padding: 0; font-size: 0.88rem; }
+
+/* Panel */
+.panel-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); z-index: 20; }
+.panel { position: fixed; top: 0; right: 0; height: 100vh; width: min(480px, 100%); background: #fff; z-index: 30; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; }
+.panel__header { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; border-bottom: 1px solid var(--line); }
+.panel__header h3 { margin: 0; }
+.panel__close { background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--muted); line-height: 1; }
+.panel__body { padding: 22px; overflow: auto; }
+
+.panel__body .grp { margin-bottom: 18px; }
+.panel__body label { display: block; font-size: 0.8rem; font-weight: 600; color: #334155; margin-bottom: 6px; }
+.panel__body input, .panel__body select, .panel__body textarea { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 10px; font-size: 0.9rem; font-family: inherit; }
+.panel__body textarea { min-height: 80px; resize: vertical; }
+
+.kv { display: grid; grid-template-columns: 130px 1fr; gap: 6px 12px; font-size: 0.85rem; margin-bottom: 16px; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; color: var(--text); word-break: break-word; }
+
+.proof { background: #f8fafc; border: 1px solid var(--line); border-radius: 10px; padding: 14px; font-size: 0.78rem; }
+.proof h4 { margin: 0 0 10px; }
+.proof pre { white-space: pre-wrap; word-break: break-word; font-size: 0.72rem; color: #334155; background: #fff; padding: 8px; border-radius: 6px; border: 1px solid var(--line); }

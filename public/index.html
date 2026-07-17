@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comparez votre mutuelle sante &mdash; Devis gratuit</title>
+    <meta
+      name="description"
+      content="Comparez les offres de mutuelle sante et recevez un devis personnalise gratuit. Sans engagement."
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar__inner">
+        <a class="brand" href="/">
+          <span class="brand__dot"></span>
+          <span id="brand-name">Mutuelle&nbsp;Compare</span>
+        </a>
+        <span class="topbar__badge">100&nbsp;% gratuit &middot; sans engagement</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero__grid">
+          <div class="hero__copy">
+            <h1>Trouvez la mutuelle sante qui vous ressemble, au meilleur prix.</h1>
+            <p class="hero__lead">
+              Recevez gratuitement un devis personnalise et laissez un courtier
+              partenaire vous rappeler pour comparer les offres. Simple, rapide, sans
+              engagement.
+            </p>
+            <ul class="hero__points">
+              <li>Comparaison independante de plusieurs assureurs</li>
+              <li>Un conseiller vous rappelle uniquement si vous le demandez</li>
+              <li>Vos donnees protegees, hebergees en Union europeenne</li>
+            </ul>
+            <div class="trust">
+              <div class="trust__item"><strong>+150</strong><span>offres comparees</span></div>
+              <div class="trust__item"><strong>2&nbsp;min</strong><span>pour votre devis</span></div>
+              <div class="trust__item"><strong>0&euro;</strong><span>frais de service</span></div>
+            </div>
+          </div>
+
+          <div class="card form-card">
+            <h2 class="form-card__title">Mon devis gratuit</h2>
+            <p class="form-card__sub">Remplissez le formulaire, on s'occupe du reste.</p>
+
+            <form id="lead-form" novalidate>
+              <div class="row">
+                <label class="field field--sm">
+                  <span>Civilite</span>
+                  <select name="civilite">
+                    <option value="">--</option>
+                    <option value="Mme">Mme</option>
+                    <option value="M.">M.</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>Prenom *</span>
+                  <input name="prenom" type="text" autocomplete="given-name" required />
+                </label>
+              </div>
+
+              <label class="field">
+                <span>Nom *</span>
+                <input name="nom" type="text" autocomplete="family-name" required />
+              </label>
+
+              <div class="row">
+                <label class="field">
+                  <span>Email *</span>
+                  <input name="email" type="email" autocomplete="email" required />
+                </label>
+                <label class="field">
+                  <span>Telephone *</span>
+                  <input name="telephone" type="tel" autocomplete="tel" placeholder="06 12 34 56 78" required />
+                </label>
+              </div>
+
+              <div class="row">
+                <label class="field field--sm">
+                  <span>Code postal</span>
+                  <input name="code_postal" type="text" inputmode="numeric" maxlength="5" />
+                </label>
+                <label class="field">
+                  <span>Tranche d'age</span>
+                  <select name="tranche_age">
+                    <option value="">--</option>
+                    <option value="18-34">18 - 34 ans</option>
+                    <option value="35-54">35 - 54 ans</option>
+                    <option value="55-64">55 - 64 ans</option>
+                    <option value="65-74">65 - 74 ans</option>
+                    <option value="75+">75 ans et +</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="row">
+                <label class="field">
+                  <span>Situation</span>
+                  <select name="situation">
+                    <option value="">--</option>
+                    <option value="actif">Actif / salarie</option>
+                    <option value="independant">Independant / TNS</option>
+                    <option value="retraite">Retraite</option>
+                    <option value="sans_emploi">Sans emploi</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>Mutuelle actuelle&nbsp;?</span>
+                  <select name="mutuelle_actuelle">
+                    <option value="">--</option>
+                    <option value="oui">Oui</option>
+                    <option value="non">Non</option>
+                  </select>
+                </label>
+              </div>
+
+              <label class="field">
+                <span>Budget mensuel envisage</span>
+                <select name="budget_mensuel">
+                  <option value="">--</option>
+                  <option value="0-30">Moins de 30 &euro;</option>
+                  <option value="30-60">30 - 60 &euro;</option>
+                  <option value="60-100">60 - 100 &euro;</option>
+                  <option value="100+">Plus de 100 &euro;</option>
+                </select>
+              </label>
+
+              <p class="nohealth">
+                Merci de ne renseigner aucune information de sante (maladie, traitement).
+                Nous n'en avons pas besoin et n'en collectons pas.
+              </p>
+
+              <!-- OPT-IN : case NON pre-cochee = acte positif clair (loi 30 juin 2025) -->
+              <label class="consent">
+                <input type="checkbox" id="consent_telephone" name="consent_telephone" />
+                <span id="consent-label">Chargement du texte de consentement&hellip;</span>
+              </label>
+
+              <button class="btn btn--primary" type="submit" id="submit-btn">
+                Recevoir mon devis gratuit
+              </button>
+
+              <p class="form-note">
+                * Champs obligatoires. En validant, vous acceptez uniquement d'etre
+                recontacte pour votre demande de mutuelle sante.
+              </p>
+
+              <div id="form-message" class="form-message" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="legal container">
+        <details>
+          <summary>Mentions d'information et protection des donnees (RGPD)</summary>
+          <ul id="legal-notice" class="legal__list"></ul>
+        </details>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <span id="footer-brand">Mutuelle Compare</span>
+        <a href="/admin.html">Espace conseiller</a>
+      </div>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

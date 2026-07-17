@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRM &mdash; Qualification des leads mutuelle sante</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/admin.css" />
+  </head>
+  <body class="admin">
+    <header class="topbar">
+      <div class="container topbar__inner">
+        <a class="brand" href="/admin.html">
+          <span class="brand__dot"></span>
+          <span>CRM &middot; Leads mutuelle sante</span>
+        </a>
+        <a class="topbar__badge" href="/">Voir la landing page</a>
+      </div>
+    </header>
+
+    <!-- Ecran de connexion -->
+    <section id="login" class="container login">
+      <div class="card login__card">
+        <h2>Espace conseiller</h2>
+        <p>Entrez le token d'acces pour consulter et qualifier les leads.</p>
+        <input id="token-input" type="password" placeholder="Token admin" />
+        <button class="btn btn--primary" id="login-btn">Se connecter</button>
+        <p id="login-error" class="form-message"></p>
+      </div>
+    </section>
+
+    <!-- Tableau de bord -->
+    <main id="dashboard" class="container" hidden>
+      <div class="stats" id="stats"></div>
+
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="Rechercher (nom, email, tel...)" />
+        <select id="filter-statut">
+          <option value="">Tous les statuts</option>
+          <option value="nouveau">Nouveau</option>
+          <option value="a_rappeler">A rappeler</option>
+          <option value="qualifie">Qualifie</option>
+          <option value="non_joignable">Non joignable</option>
+          <option value="non_interesse">Non interesse</option>
+          <option value="transmis">Transmis courtier</option>
+          <option value="rejete">Rejete</option>
+        </select>
+        <button class="btn btn--ghost" id="refresh-btn">Actualiser</button>
+        <button class="btn btn--ghost" id="logout-btn">Deconnexion</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="leads-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Date</th>
+              <th>Prospect</th>
+              <th>Contact</th>
+              <th>Profil</th>
+              <th>Score</th>
+              <th>Statut</th>
+              <th>Consentement</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="leads-body"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- Panneau de detail / qualification -->
+    <aside id="detail-panel" class="panel" hidden>
+      <div class="panel__header">
+        <h3 id="panel-title">Lead</h3>
+        <button id="panel-close" class="panel__close">&times;</button>
+      </div>
+      <div class="panel__body" id="panel-body"></div>
+    </aside>
+    <div id="panel-overlay" class="panel-overlay" hidden></div>
+
+    <script src="/admin.js"></script>
+  </body>
+</html>
