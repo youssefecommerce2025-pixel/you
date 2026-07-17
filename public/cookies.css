@@ -1,0 +1,32 @@
+.cc-banner {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 1000;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+  max-width: 720px;
+  margin: 0 auto;
+}
+.cc-inner { padding: 18px 20px; }
+.cc-text strong { font-size: 1rem; color: #0f172a; }
+.cc-text p { margin: 6px 0 14px; font-size: 0.85rem; color: #475569; line-height: 1.5; }
+.cc-text a { color: #2563eb; }
+.cc-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+.cc-btn { cursor: pointer; border-radius: 9px; padding: 10px 16px; font-size: 0.88rem; font-weight: 600; border: 1px solid transparent; }
+.cc-btn--primary { background: #2563eb; color: #fff; }
+.cc-btn--primary:hover { background: #1d4ed8; }
+.cc-btn--ghost { background: #fff; color: #334155; border-color: #e2e8f0; }
+.cc-btn--ghost:hover { background: #f8fafc; }
+.cc-custom { margin-top: 16px; border-top: 1px solid #e2e8f0; padding-top: 14px; display: grid; gap: 10px; }
+.cc-custom label { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: #334155; }
+.cc-custom input { width: 16px; height: 16px; accent-color: #2563eb; }
+.cc-custom .cc-btn { justify-self: end; }
+
+@media (max-width: 520px) {
+  .cc-actions { justify-content: stretch; }
+  .cc-actions .cc-btn { flex: 1; }
+}
