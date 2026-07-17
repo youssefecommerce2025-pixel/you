@@ -334,6 +334,62 @@ el("search").addEventListener("input", debounce(loadLeads, 300));
 el("panel-close").addEventListener("click", () => togglePanel(false));
 el("panel-overlay").addEventListener("click", () => togglePanel(false));
 
+// --- Onglets / vue analytics ---------------------------------------------
+document.querySelectorAll(".tab").forEach((t) => {
+  t.addEventListener("click", () => switchView(t.dataset.view));
+});
+el("analytics-days").addEventListener("change", loadAnalytics);
+
+function switchView(view) {
+  document.querySelectorAll(".tab").forEach((t) =>
+    t.classList.toggle("tab--active", t.dataset.view === view)
+  );
+  const isAnalytics = view === "analytics";
+  el("view-analytics").hidden = !isAnalytics;
+  el("leads-toolbar").hidden = isAnalytics;
+  el("leads-table-wrap").hidden = isAnalytics;
+  if (isAnalytics) loadAnalytics();
+}
+
+function renderAggTable(container, rows) {
+  const max = Math.max(1, ...rows.map((r) => r.leads));
+  el(container).innerHTML = rows.length
+    ? `<table><thead><tr><th>Cle</th><th class="num">Leads</th><th class="num">Convertis</th><th class="num">Taux</th></tr></thead><tbody>${rows
+        .map(
+          (r) =>
+            `<tr><td>${esc(r.cle)}<div class="bar"><i style="width:${Math.round(
+              (r.leads / max) * 100
+            )}%"></i></div></td><td class="num">${r.leads}</td><td class="num">${r.convertis}</td><td class="num">${r.taux_conversion}%</td></tr>`
+        )
+        .join("")}</tbody></table>`
+    : "<em>Aucune donnee.</em>";
+}
+
+async function loadAnalytics() {
+  const days = el("analytics-days").value;
+  const a = await api(`/api/admin/analytics?days=${days}`);
+  const f = a.funnel;
+  const pct = (n) => (f.total ? Math.round((n / f.total) * 100) : 0);
+  el("funnel").innerHTML = [
+    { b: f.total, s: "Leads recus", p: null },
+    { b: f.contactes, s: "Contactes", p: pct(f.contactes) },
+    { b: f.qualifies, s: "Qualifies", p: pct(f.qualifies) },
+    { b: f.transmis, s: "Transmis", p: pct(f.transmis) },
+    { b: f.perdus, s: "Perdus", p: pct(f.perdus) },
+    { b: f.desinscrits, s: "Desinscrits", p: pct(f.desinscrits) },
+  ]
+    .map(
+      (x) =>
+        `<div class="fstep"><b>${x.b}</b><span>${x.s}</span>${
+          x.p !== null ? `<small>${x.p}%</small>` : ""
+        }</div>`
+    )
+    .join("");
+  renderAggTable("an-source", a.parSource);
+  renderAggTable("an-utm-source", a.parUtmSource);
+  renderAggTable("an-utm-campaign", a.parUtmCampaign);
+}
+
 function debounce(fn, ms) {
   let t;
   return (...a) => {

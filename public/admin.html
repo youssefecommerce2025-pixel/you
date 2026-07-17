@@ -31,9 +31,35 @@
 
     <!-- Tableau de bord -->
     <main id="dashboard" class="container" hidden>
+      <div class="tabs">
+        <button class="tab tab--active" data-view="leads">Leads</button>
+        <button class="tab" data-view="analytics">Analytics</button>
+      </div>
+
       <div class="stats" id="stats"></div>
 
-      <div class="toolbar">
+      <!-- Vue Analytics -->
+      <section id="view-analytics" hidden>
+        <div class="toolbar">
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem">
+            Periode
+            <select id="analytics-days">
+              <option value="7">7 jours</option>
+              <option value="30">30 jours</option>
+              <option value="90" selected>90 jours</option>
+              <option value="365">1 an</option>
+            </select>
+          </label>
+        </div>
+        <div id="funnel" class="funnel"></div>
+        <div class="analytics-grid">
+          <div class="acard"><h3>Par source</h3><div id="an-source"></div></div>
+          <div class="acard"><h3>Par UTM source</h3><div id="an-utm-source"></div></div>
+          <div class="acard"><h3>Par campagne (UTM)</h3><div id="an-utm-campaign"></div></div>
+        </div>
+      </section>
+
+      <div class="toolbar" id="leads-toolbar">
         <input id="search" type="search" placeholder="Rechercher (nom, email, tel...)" />
         <select id="filter-statut">
           <option value="">Tous les statuts</option>
@@ -50,7 +76,7 @@
         <button class="btn btn--ghost" id="logout-btn">Deconnexion</button>
       </div>
 
-      <div class="table-wrap">
+      <div class="table-wrap" id="leads-table-wrap">
         <table class="leads-table">
           <thead>
             <tr>
