@@ -253,7 +253,29 @@ function togglePanel(open) {
 el("login-btn").addEventListener("click", login);
 el("token-input").addEventListener("keydown", (e) => e.key === "Enter" && login());
 el("refresh-btn").addEventListener("click", () => { loadStats(); loadLeads(); });
+el("export-btn").addEventListener("click", exportCsv);
 el("logout-btn").addEventListener("click", logout);
+
+async function exportCsv() {
+  const statut = el("filter-statut").value;
+  const q = el("search").value.trim();
+  const params = new URLSearchParams();
+  if (statut) params.set("statut", statut);
+  if (q) params.set("q", q);
+  const res = await fetch("/api/admin/leads/export.csv?" + params.toString(), {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) return;
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `leads-mutuelle-${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
 el("filter-statut").addEventListener("change", loadLeads);
 el("search").addEventListener("input", debounce(loadLeads, 300));
 el("panel-close").addEventListener("click", () => togglePanel(false));
