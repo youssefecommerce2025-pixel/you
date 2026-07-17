@@ -1,0 +1,25 @@
+{
+  "name": "leads-mutuelle-sante",
+  "version": "1.0.0",
+  "description": "Plateforme de generation de leads mutuelle sante conforme (opt-in RGPD, preuve de consentement horodatee, CRM de qualification) - conforme a la loi du 30 juin 2025 (opt-in au 11 aout 2026).",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "init-db": "node src/db.js --init"
+  },
+  "keywords": [
+    "leads",
+    "mutuelle",
+    "rgpd",
+    "opt-in",
+    "consentement",
+    "assurance"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "express": "^4.21.2"
+  }
+}
