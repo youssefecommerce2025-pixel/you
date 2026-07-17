@@ -9,6 +9,7 @@
       content="Comparez les offres de mutuelle sante et recevez un devis personnalise gratuit. Sans engagement."
     />
     <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/cookies.css" />
   </head>
   <body>
     <header class="topbar">
@@ -167,12 +168,15 @@
       <div class="container footer__inner">
         <span id="footer-brand">Mutuelle Compare</span>
         <span class="footer__links">
+          <a href="/mentions-legales.html">Mentions legales</a>
           <a href="/confidentialite.html">Politique de confidentialite</a>
+          <a href="#" onclick="event.preventDefault();window.cookieConsent&&window.cookieConsent.open()">Cookies</a>
           <a href="/admin.html">Espace conseiller</a>
         </span>
       </div>
     </footer>
 
     <script src="/app.js"></script>
+    <script src="/cookies.js" defer></script>
   </body>
 </html>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Politique de confidentialite &mdash; Mutuelle sante</title>
     <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/cookies.css" />
     <style>
       .doc { background: #fff; border-radius: 14px; box-shadow: var(--shadow); padding: 36px; margin: 40px auto; }
       .doc h1 { margin-top: 0; }
@@ -122,8 +123,12 @@
         <h2>9. Cookies</h2>
         <p>
           Ce site peut utiliser des cookies de mesure d'audience et, avec votre accord, des cookies
-          publicitaires pour nos campagnes d'acquisition. Vous pouvez gerer vos preferences a tout
-          moment.
+          publicitaires pour nos campagnes d'acquisition (Google, Meta). Les cookies non essentiels
+          ne sont deposes qu'apres votre consentement.
+        </p>
+        <p>
+          <button class="btn btn--primary" style="width:auto"
+            onclick="window.cookieConsent&&window.cookieConsent.open()">Gerer mes preferences cookies</button>
         </p>
       </div>
     </main>
@@ -131,9 +136,13 @@
     <footer class="footer">
       <div class="container footer__inner">
         <span id="footer-brand">Mutuelle Compare</span>
-        <a href="/">Accueil</a>
+        <span class="footer__links">
+          <a href="/mentions-legales.html">Mentions legales</a>
+          <a href="/">Accueil</a>
+        </span>
       </div>
     </footer>
+    <script src="/cookies.js" defer></script>
 
     <script>
       document.getElementById("maj").textContent = new Date().toLocaleDateString("fr-FR");
