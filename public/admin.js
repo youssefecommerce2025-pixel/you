@@ -125,6 +125,7 @@ async function openPanel(id) {
   const lead = (leads || []).find((l) => l.id === id);
   if (!lead) return;
   const consent = await api(`/api/admin/leads/${id}/consent`).catch(() => null);
+  const deliveries = await api(`/api/admin/leads/${id}/deliveries`).catch(() => ({ deliveries: [] }));
 
   el("panel-title").textContent = `${lead.prenom} ${lead.nom} (#${lead.id})`;
 
@@ -214,6 +215,29 @@ async function openPanel(id) {
 
     <button class="btn btn--primary" id="save-lead">Enregistrer</button>
 
+    <div class="grp" style="margin-top:18px">
+      <button class="btn btn--ghost" id="transmit-lead" style="width:100%">
+        Transmettre au courtier partenaire (webhook)
+      </button>
+      <div id="transmit-msg" class="muted" style="font-size:0.8rem;margin-top:6px"></div>
+    </div>
+
+    <div class="proof">
+      <h4>Livraisons webhook</h4>
+      ${
+        (deliveries.deliveries || []).length
+          ? `<pre>${esc(
+              (deliveries.deliveries || [])
+                .map(
+                  (d) =>
+                    `${d.created_at} · ${d.status}${d.http_status ? " (HTTP " + d.http_status + ")" : ""}${d.error ? " · " + d.error : ""}`
+                )
+                .join("\n")
+            )}</pre>`
+          : "<em>Aucune transmission pour le moment.</em>"
+      }
+    </div>
+
     <div class="proof">
       <h4>Preuve de consentement (RGPD)</h4>
       ${
@@ -225,6 +249,7 @@ async function openPanel(id) {
   `;
 
   el("save-lead").addEventListener("click", () => saveLead(id));
+  el("transmit-lead").addEventListener("click", () => transmitLead(id));
   togglePanel(true);
 }
 
@@ -242,6 +267,34 @@ async function saveLead(id) {
   togglePanel(false);
   loadStats();
   loadLeads();
+}
+
+async function transmitLead(id) {
+  const btn = el("transmit-lead");
+  const msg = el("transmit-msg");
+  btn.disabled = true;
+  const prev = btn.textContent;
+  btn.textContent = "Transmission...";
+  try {
+    const r = await api(`/api/admin/leads/${id}/transmettre`, { method: "POST" });
+    if (r.ok) {
+      msg.textContent = "Lead transmis avec succes au courtier partenaire.";
+      msg.style.color = "#047857";
+      loadStats();
+      loadLeads();
+    } else {
+      const reason = r.webhook?.reason === "no_url" ? "aucune URL de webhook configuree" : r.webhook?.error || "echec";
+      msg.textContent = "Echec de la transmission : " + reason;
+      msg.style.color = "#b91c1c";
+    }
+  } catch {
+    msg.textContent = "Erreur lors de la transmission.";
+    msg.style.color = "#b91c1c";
+  } finally {
+    btn.disabled = false;
+    btn.textContent = prev;
+    openPanel(id);
+  }
 }
 
 function togglePanel(open) {
