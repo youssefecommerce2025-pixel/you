@@ -10,6 +10,7 @@ import {
   buildConsentSnapshot,
   ORG,
 } from "./consent.js";
+import { sendDoubleOptinConfirmation, mailerMode } from "./notifier.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -86,7 +87,7 @@ app.get("/api/config", (req, res) => {
 /* --------------------------------------------------------------------------
  * POINT 1 - Reception d'un lead + capture de la PREUVE de consentement
  * ------------------------------------------------------------------------ */
-app.post("/api/leads", (req, res) => {
+app.post("/api/leads", async (req, res) => {
   const b = req.body || {};
 
   // 1) Le consentement telephonique (opt-in) est OBLIGATOIRE et doit etre un acte positif.
@@ -180,11 +181,27 @@ app.post("/api/leads", (req, res) => {
     method: useDoubleOptin ? "double_optin" : "single_optin",
   };
 
-  // En double opt-in : ici tu enverrais un email/SMS avec le lien de confirmation.
+  // En double opt-in : envoi reel du lien de confirmation par email et/ou SMS.
   if (useDoubleOptin) {
-    response.confirmUrl = `/api/leads/confirm?token=${confirmToken}`;
+    const baseUrl = (
+      process.env.PUBLIC_BASE_URL || `${req.protocol}://${req.get("host")}`
+    ).replace(/\/$/, "");
+    const confirmUrl = `${baseUrl}/api/leads/confirm?token=${confirmToken}`;
+    response.method = "double_optin";
     response.message =
-      "Un lien de confirmation doit etre envoye au prospect (double opt-in).";
+      "Un lien de confirmation a ete envoye au prospect (double opt-in).";
+    try {
+      const sendResult = await sendDoubleOptinConfirmation({
+        lead: { id: leadId, prenom: leadData.prenom, email, telephone },
+        confirmUrl,
+      });
+      response.notification = {
+        email: sendResult.email?.mode || sendResult.email?.ok,
+        sms: sendResult.sms?.mode || sendResult.sms?.ok,
+      };
+    } catch (e) {
+      console.error("Erreur envoi confirmation:", e);
+    }
   }
 
   res.status(201).json(response);
@@ -314,6 +331,65 @@ app.patch("/api/admin/leads/:id", requireAdmin, (req, res) => {
 });
 
 /* --------------------------------------------------------------------------
+ * Export CSV des leads (respecte les memes filtres que la liste)
+ * ------------------------------------------------------------------------ */
+function csvCell(v) {
+  const s = v === null || v === undefined ? "" : String(v);
+  return /[";\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+}
+
+app.get("/api/admin/leads/export.csv", requireAdmin, (req, res) => {
+  const { statut, q } = req.query;
+  let sql = "SELECT * FROM leads WHERE 1=1";
+  const params = [];
+  if (statut) {
+    sql += " AND statut = ?";
+    params.push(statut);
+  }
+  if (q) {
+    sql += " AND (prenom LIKE ? OR nom LIKE ? OR email LIKE ? OR telephone LIKE ?)";
+    const like = `%${q}%`;
+    params.push(like, like, like, like);
+  }
+  sql += " ORDER BY created_at DESC";
+  const leads = db.prepare(sql).all(...params);
+
+  const cols = [
+    "id",
+    "created_at",
+    "civilite",
+    "prenom",
+    "nom",
+    "email",
+    "telephone",
+    "code_postal",
+    "tranche_age",
+    "situation",
+    "mutuelle_actuelle",
+    "budget_mensuel",
+    "statut",
+    "score",
+    "assigne_a",
+    "courtier_orias",
+    "transmis_at",
+    "double_optin_confirme",
+    "desinscrit_at",
+  ];
+  const sep = ";"; // separateur FR (compatible Excel)
+  const header = cols.join(sep);
+  const rows = leads.map((l) => cols.map((c) => csvCell(l[c])).join(sep));
+  const csv = "\uFEFF" + [header, ...rows].join("\r\n"); // BOM pour Excel/accents
+
+  const date = new Date().toISOString().slice(0, 10);
+  res.setHeader("Content-Type", "text/csv; charset=utf-8");
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="leads-mutuelle-${date}.csv"`
+  );
+  res.send(csv);
+});
+
+/* --------------------------------------------------------------------------
  * Export de la PREUVE de consentement d'un lead (pour un controle CNIL/ACPR)
  * ------------------------------------------------------------------------ */
 app.get("/api/admin/leads/:id/consent", requireAdmin, (req, res) => {
@@ -361,5 +437,7 @@ app.listen(PORT, () => {
   console.log(`  Landing page : http://localhost:${PORT}/`);
   console.log(`  CRM (admin)  : http://localhost:${PORT}/admin.html`);
   console.log(`  Token admin  : ${ADMIN_TOKEN}`);
-  console.log(`  Version consentement : ${CONSENT_VERSION}\n`);
+  console.log(`  Version consentement : ${CONSENT_VERSION}`);
+  const mode = mailerMode();
+  console.log(`  Notifications : email=${mode.email}, sms=${mode.sms}\n`);
 });

@@ -77,10 +77,23 @@ function init() {
       FOREIGN KEY (lead_id) REFERENCES leads(id) ON DELETE CASCADE
     );
 
+    CREATE TABLE IF NOT EXISTS outbound_messages (
+      id          INTEGER PRIMARY KEY AUTOINCREMENT,
+      lead_id     INTEGER,
+      channel     TEXT    NOT NULL,   -- 'email' | 'sms'
+      recipient   TEXT    NOT NULL,
+      subject     TEXT,
+      body        TEXT,
+      status      TEXT    NOT NULL,   -- 'sent' | 'fallback' | 'error'
+      error       TEXT,
+      created_at  TEXT    NOT NULL
+    );
+
     CREATE INDEX IF NOT EXISTS idx_leads_statut ON leads(statut);
     CREATE INDEX IF NOT EXISTS idx_leads_created ON leads(created_at);
     CREATE INDEX IF NOT EXISTS idx_consent_lead ON consent_proofs(lead_id);
     CREATE INDEX IF NOT EXISTS idx_consent_token ON consent_proofs(confirm_token);
+    CREATE INDEX IF NOT EXISTS idx_outbound_lead ON outbound_messages(lead_id);
   `);
 }
 
