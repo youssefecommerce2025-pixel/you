@@ -11,6 +11,7 @@ import {
   ORG,
 } from "./consent.js";
 import { sendDoubleOptinConfirmation, mailerMode } from "./notifier.js";
+import { dispatchLead, deliveriesForLead, webhookConfigured } from "./webhook.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -291,7 +292,7 @@ const STATUTS = [
   "rejete",
 ];
 
-app.patch("/api/admin/leads/:id", requireAdmin, (req, res) => {
+app.patch("/api/admin/leads/:id", requireAdmin, async (req, res) => {
   const id = Number(req.params.id);
   const lead = db.prepare("SELECT * FROM leads WHERE id = ?").get(id);
   if (!lead) return res.status(404).json({ error: "Lead introuvable" });
@@ -327,7 +328,42 @@ app.patch("/api/admin/leads/:id", requireAdmin, (req, res) => {
       score=@score, transmis_at=@transmis_at, updated_at=@updated_at WHERE id=@id`
   ).run({ ...fields, score, transmis_at, updated_at: nowIso(), id });
 
-  res.json({ ok: true, lead: db.prepare("SELECT * FROM leads WHERE id = ?").get(id) });
+  const updated = db.prepare("SELECT * FROM leads WHERE id = ?").get(id);
+
+  // Transmission automatique vers le CRM du courtier partenaire lorsque le lead
+  // vient de passer au statut "transmis".
+  let webhook = null;
+  const justTransmis = b.statut === "transmis" && lead.statut !== "transmis";
+  if (justTransmis && webhookConfigured()) {
+    webhook = await dispatchLead(updated);
+  }
+
+  res.json({ ok: true, lead: updated, webhook });
+});
+
+/* --------------------------------------------------------------------------
+ * Transmission manuelle (re-envoi) d'un lead vers le CRM courtier
+ * ------------------------------------------------------------------------ */
+app.post("/api/admin/leads/:id/transmettre", requireAdmin, async (req, res) => {
+  const id = Number(req.params.id);
+  const lead = db.prepare("SELECT * FROM leads WHERE id = ?").get(id);
+  if (!lead) return res.status(404).json({ error: "Lead introuvable" });
+
+  const result = await dispatchLead(lead);
+  if (result.ok && lead.statut !== "transmis") {
+    db.prepare(
+      "UPDATE leads SET statut = 'transmis', transmis_at = ?, updated_at = ? WHERE id = ?"
+    ).run(nowIso(), nowIso(), id);
+  }
+  res.json({ ok: result.ok, webhook: result });
+});
+
+/* --------------------------------------------------------------------------
+ * Historique des livraisons webhook d'un lead
+ * ------------------------------------------------------------------------ */
+app.get("/api/admin/leads/:id/deliveries", requireAdmin, (req, res) => {
+  const id = Number(req.params.id);
+  res.json({ deliveries: deliveriesForLead(id) });
 });
 
 /* --------------------------------------------------------------------------
@@ -439,5 +475,6 @@ app.listen(PORT, () => {
   console.log(`  Token admin  : ${ADMIN_TOKEN}`);
   console.log(`  Version consentement : ${CONSENT_VERSION}`);
   const mode = mailerMode();
-  console.log(`  Notifications : email=${mode.email}, sms=${mode.sms}\n`);
+  console.log(`  Notifications : email=${mode.email}, sms=${mode.sms}`);
+  console.log(`  Webhook courtier : ${webhookConfigured() ? "configure" : "non configure"}\n`);
 });

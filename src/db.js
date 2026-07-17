@@ -89,11 +89,25 @@ function init() {
       created_at  TEXT    NOT NULL
     );
 
+    CREATE TABLE IF NOT EXISTS webhook_deliveries (
+      id           INTEGER PRIMARY KEY AUTOINCREMENT,
+      lead_id      INTEGER NOT NULL,
+      url          TEXT    NOT NULL,
+      status       TEXT    NOT NULL,   -- 'success' | 'error' | 'skipped'
+      http_status  INTEGER,
+      attempts     INTEGER NOT NULL DEFAULT 1,
+      response     TEXT,
+      error        TEXT,
+      created_at   TEXT    NOT NULL,
+      FOREIGN KEY (lead_id) REFERENCES leads(id) ON DELETE CASCADE
+    );
+
     CREATE INDEX IF NOT EXISTS idx_leads_statut ON leads(statut);
     CREATE INDEX IF NOT EXISTS idx_leads_created ON leads(created_at);
     CREATE INDEX IF NOT EXISTS idx_consent_lead ON consent_proofs(lead_id);
     CREATE INDEX IF NOT EXISTS idx_consent_token ON consent_proofs(confirm_token);
     CREATE INDEX IF NOT EXISTS idx_outbound_lead ON outbound_messages(lead_id);
+    CREATE INDEX IF NOT EXISTS idx_webhook_lead ON webhook_deliveries(lead_id);
   `);
 }
 

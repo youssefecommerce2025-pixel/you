@@ -26,6 +26,18 @@ export const ORG = {
   emailDpo: "dpo@[ton-domaine].fr",
   telephone: "[Numero]",
   siteComparateur: "[nom-du-comparateur].fr",
+  // Mentions legales complementaires
+  capitalSocial: "[Montant] €",
+  rcs: "[Ville] [SIREN]",
+  siret: "[14 chiffres]",
+  tvaIntra: "[FR + 11 chiffres]",
+  directeurPublication: "[Nom du directeur de publication]",
+  orias: "[Numero ORIAS a 8 chiffres]",
+  hebergeur: {
+    nom: "[Nom de l'hebergeur]",
+    adresse: "[Adresse de l'hebergeur]",
+    telephone: "[Telephone de l'hebergeur]",
+  },
 };
 
 // Case a cocher obligatoire (opt-in telephonique specifique) - decochee par defaut.
