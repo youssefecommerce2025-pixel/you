@@ -44,6 +44,14 @@ function init() {
       mutuelle_actuelle TEXT,   -- ex: 'oui', 'non'
       budget_mensuel    TEXT,   -- ex: '30-60', '60-100', '100+'
 
+      -- Attribution / acquisition
+      source            TEXT,   -- 'formulaire' | 'affilie:<nom>' | domaine referent
+      utm_source        TEXT,
+      utm_medium        TEXT,
+      utm_campaign      TEXT,
+      utm_term          TEXT,
+      utm_content       TEXT,
+
       -- CRM
       statut            TEXT    NOT NULL DEFAULT 'nouveau',
                                 -- nouveau | a_rappeler | qualifie | non_joignable | non_interesse | transmis | rejete
@@ -109,6 +117,22 @@ function init() {
     CREATE INDEX IF NOT EXISTS idx_outbound_lead ON outbound_messages(lead_id);
     CREATE INDEX IF NOT EXISTS idx_webhook_lead ON webhook_deliveries(lead_id);
   `);
+
+  // Migration legere : ajoute les colonnes d'attribution si absentes (bases existantes).
+  const cols = db.prepare("PRAGMA table_info(leads)").all().map((c) => c.name);
+  const toAdd = {
+    source: "TEXT",
+    utm_source: "TEXT",
+    utm_medium: "TEXT",
+    utm_campaign: "TEXT",
+    utm_term: "TEXT",
+    utm_content: "TEXT",
+  };
+  for (const [name, type] of Object.entries(toAdd)) {
+    if (!cols.includes(name)) db.exec(`ALTER TABLE leads ADD COLUMN ${name} ${type}`);
+  }
+  db.exec("CREATE INDEX IF NOT EXISTS idx_leads_utm ON leads(utm_source, utm_campaign)");
+  db.exec("CREATE INDEX IF NOT EXISTS idx_leads_source ON leads(source)");
 }
 
 init();

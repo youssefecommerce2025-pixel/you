@@ -55,11 +55,18 @@ form.addEventListener("submit", async (e) => {
   }
 
   const data = Object.fromEntries(new FormData(form).entries());
+  const params = new URLSearchParams(window.location.search);
   const payload = {
     ...data,
     consent_telephone: true,
     // On capture l'URL EXACTE de la page de capture (preuve de consentement).
     source_url: window.location.href,
+    // Attribution marketing (UTM) pour l'analytics de conversion.
+    utm_source: params.get("utm_source") || undefined,
+    utm_medium: params.get("utm_medium") || undefined,
+    utm_campaign: params.get("utm_campaign") || undefined,
+    utm_term: params.get("utm_term") || undefined,
+    utm_content: params.get("utm_content") || undefined,
   };
 
   submitBtn.disabled = true;

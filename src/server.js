@@ -1,5 +1,4 @@
 import express from "express";
-import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import db from "./db.js";
@@ -7,11 +6,11 @@ import {
   CONSENT_VERSION,
   CONSENT_TELEPHONE,
   mentionInformation,
-  buildConsentSnapshot,
   ORG,
 } from "./consent.js";
 import { sendDoubleOptinConfirmation, mailerMode } from "./notifier.js";
 import { dispatchLead, deliveriesForLead, webhookConfigured } from "./webhook.js";
+import { createLeadWithConsent, validateLead, computeScore } from "./leads.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -45,34 +44,6 @@ function requireAdmin(req, res, next) {
   res.status(401).json({ error: "Non autorise" });
 }
 
-/** Validation minimale des champs du lead. */
-function validateLead(body) {
-  const errors = [];
-  const email = String(body.email || "").trim();
-  const telephone = String(body.telephone || "").trim();
-  if (!String(body.prenom || "").trim()) errors.push("prenom requis");
-  if (!String(body.nom || "").trim()) errors.push("nom requis");
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) errors.push("email invalide");
-  // Numero FR : accepte formats 0X..., +33..., espaces/points
-  const telDigits = telephone.replace(/[\s.\-()]/g, "");
-  if (!/^(?:\+33|0033|0)[1-9]\d{8}$/.test(telDigits)) errors.push("telephone invalide");
-  // Refus de tout champ suspect qui contiendrait des donnees de sante libres
-  return { errors, email, telephone };
-}
-
-/** Score de qualification simple (0-100) base sur des criteres NON sensibles. */
-function computeScore(l) {
-  let s = 0;
-  if (l.telephone) s += 20;
-  if (l.email) s += 10;
-  if (l.code_postal) s += 10;
-  if (l.tranche_age) s += 15;
-  if (l.situation) s += 10;
-  if (l.mutuelle_actuelle) s += 15;
-  if (["30-60", "60-100", "100+"].includes(l.budget_mensuel)) s += 20;
-  return Math.min(100, s);
-}
-
 /* --------------------------------------------------------------------------
  * Config publique (le front recupere le texte de consentement officiel)
  * ------------------------------------------------------------------------ */
@@ -103,73 +74,23 @@ app.post("/api/leads", async (req, res) => {
   const { errors, email, telephone } = validateLead(b);
   if (errors.length) return res.status(400).json({ error: errors.join(", ") });
 
-  const ts = nowIso();
   const useDoubleOptin = process.env.DOUBLE_OPTIN === "1" || b.double_optin === true;
-  const snapshot = buildConsentSnapshot();
 
-  const insertLead = db.prepare(`
-    INSERT INTO leads (
-      created_at, updated_at, civilite, prenom, nom, email, telephone, code_postal,
-      tranche_age, situation, mutuelle_actuelle, budget_mensuel,
-      statut, score, double_optin_confirme
-    ) VALUES (
-      @created_at, @updated_at, @civilite, @prenom, @nom, @email, @telephone, @code_postal,
-      @tranche_age, @situation, @mutuelle_actuelle, @budget_mensuel,
-      @statut, @score, 0
-    )
-  `);
-
-  const leadData = {
-    created_at: ts,
-    updated_at: ts,
-    civilite: b.civilite || null,
-    prenom: String(b.prenom).trim(),
-    nom: String(b.nom).trim(),
-    email,
-    telephone,
-    code_postal: b.code_postal ? String(b.code_postal).trim() : null,
-    tranche_age: b.tranche_age || null,
-    situation: b.situation || null,
-    mutuelle_actuelle: b.mutuelle_actuelle || null,
-    budget_mensuel: b.budget_mensuel || null,
-    statut: "nouveau",
-    score: 0,
-  };
-  leadData.score = computeScore(leadData);
-
-  const confirmToken = useDoubleOptin ? crypto.randomBytes(24).toString("hex") : null;
-
-  const insertConsent = db.prepare(`
-    INSERT INTO consent_proofs (
-      lead_id, collected_at, ip_address, user_agent, source_url, referer,
-      consent_version, consent_text, consent_checkbox, method, confirm_token
-    ) VALUES (
-      @lead_id, @collected_at, @ip_address, @user_agent, @source_url, @referer,
-      @consent_version, @consent_text, 1, @method, @confirm_token
-    )
-  `);
-
-  const tx = db.transaction(() => {
-    const info = insertLead.run(leadData);
-    const leadId = info.lastInsertRowid;
-    insertConsent.run({
-      lead_id: leadId,
-      collected_at: ts,
-      ip_address: clientIp(req),
-      user_agent: req.headers["user-agent"] || null,
-      source_url: b.source_url || req.headers.referer || "",
-      referer: req.headers.referer || null,
-      consent_version: snapshot.version,
-      consent_text: JSON.stringify(snapshot),
-      method: useDoubleOptin ? "double_optin" : "single_optin",
-      confirm_token: confirmToken,
-    });
-    return leadId;
-  });
-
-  let leadId;
+  let leadId, confirmToken, snapshot;
   try {
-    leadId = tx();
+    ({ leadId, confirmToken, snapshot } = createLeadWithConsent({
+      body: b,
+      email,
+      telephone,
+      source: b.source || "formulaire",
+      consent: {
+        ip: clientIp(req),
+        userAgent: req.headers["user-agent"] || null,
+        sourceUrl: b.source_url || req.headers.referer || "",
+        referer: req.headers.referer || null,
+        method: useDoubleOptin ? "double_optin" : "single_optin",
+      },
+    }));
   } catch (e) {
     console.error("Erreur insertion lead:", e);
     return res.status(500).json({ error: "Erreur serveur" });
@@ -193,7 +114,7 @@ app.post("/api/leads", async (req, res) => {
       "Un lien de confirmation a ete envoye au prospect (double opt-in).";
     try {
       const sendResult = await sendDoubleOptinConfirmation({
-        lead: { id: leadId, prenom: leadData.prenom, email, telephone },
+        lead: { id: leadId, prenom: b.prenom, email, telephone },
         confirmUrl,
       });
       response.notification = {
@@ -254,6 +175,81 @@ app.post("/api/leads/desinscription", (req, res) => {
 });
 
 /* --------------------------------------------------------------------------
+ * Intake de leads d'affilies externes (API key partenaire)
+ * ------------------------------------------------------------------------
+ * Cle API via PARTNER_API_KEYS = "cle1:NomAffilie1,cle2:NomAffilie2".
+ * Le partenaire DOIT transmettre la preuve de consentement recueillie de son cote
+ * (horodatage, IP, URL de capture), sinon le lead est refuse.
+ */
+function parsePartnerKeys() {
+  const raw = process.env.PARTNER_API_KEYS || "";
+  const map = new Map();
+  raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .forEach((pair) => {
+      const idx = pair.indexOf(":");
+      if (idx > 0) map.set(pair.slice(0, idx), pair.slice(idx + 1));
+    });
+  return map;
+}
+
+function requirePartner(req, res, next) {
+  const key = req.headers["x-api-key"];
+  const keys = parsePartnerKeys();
+  if (key && keys.has(key)) {
+    req.partnerName = keys.get(key);
+    return next();
+  }
+  res.status(401).json({ error: "Cle API partenaire invalide" });
+}
+
+app.post("/api/partner/leads", requirePartner, (req, res) => {
+  const b = req.body || {};
+
+  // Consentement obligatoire + preuve fournie par l'affilie.
+  if (b.consent_telephone !== true) {
+    return res.status(400).json({ error: "consent_telephone requis (opt-in)" });
+  }
+  const c = b.consent || {};
+  if (!c.ip || !c.collected_at || !c.source_url) {
+    return res.status(400).json({
+      error:
+        "Preuve de consentement incomplete : consent.ip, consent.collected_at et consent.source_url sont requis.",
+    });
+  }
+
+  const { errors, email, telephone } = validateLead(b);
+  if (errors.length) return res.status(400).json({ error: errors.join(", ") });
+
+  let leadId;
+  try {
+    ({ leadId } = createLeadWithConsent({
+      body: b,
+      email,
+      telephone,
+      source: `affilie:${req.partnerName}`,
+      consent: {
+        ip: c.ip,
+        userAgent: c.user_agent || null,
+        sourceUrl: c.source_url,
+        referer: c.referer || null,
+        method: c.double_optin ? "double_optin" : "single_optin",
+        collectedAt: c.collected_at,
+        confirmedAt: c.confirmed_at || null,
+        confirmIp: c.confirm_ip || null,
+      },
+    }));
+  } catch (e) {
+    console.error("Erreur intake affilie:", e);
+    return res.status(500).json({ error: "Erreur serveur" });
+  }
+
+  res.status(201).json({ ok: true, leadId, source: `affilie:${req.partnerName}` });
+});
+
+/* --------------------------------------------------------------------------
  * POINT 2 - CRM : consultation et qualification des leads (protege)
  * ------------------------------------------------------------------------ */
 app.get("/api/admin/leads", requireAdmin, (req, res) => {
@@ -280,6 +276,69 @@ app.get("/api/admin/stats", requireAdmin, (req, res) => {
     .all();
   const total = db.prepare("SELECT COUNT(*) as n FROM leads").get().n;
   res.json({ total, parStatut: rows });
+});
+
+/* --------------------------------------------------------------------------
+ * Tableau de bord analytics : conversion par source / UTM + entonnoir
+ * ------------------------------------------------------------------------ */
+app.get("/api/admin/analytics", requireAdmin, (req, res) => {
+  const days = Math.min(365, Math.max(1, Number(req.query.days || 90)));
+  const since = new Date(Date.now() - days * 864e5).toISOString();
+
+  // "converti" = lead qualifie OU transmis (interet commercial concret).
+  const CONV = "statut IN ('qualifie','transmis')";
+  const TRANS = "statut = 'transmis'";
+
+  const agg = (dim) =>
+    db
+      .prepare(
+        `SELECT COALESCE(NULLIF(${dim}, ''), '(non renseigne)') AS cle,
+                COUNT(*) AS leads,
+                SUM(CASE WHEN ${CONV} THEN 1 ELSE 0 END) AS convertis,
+                SUM(CASE WHEN ${TRANS} THEN 1 ELSE 0 END) AS transmis
+         FROM leads WHERE created_at >= ?
+         GROUP BY cle ORDER BY leads DESC`
+      )
+      .all(since)
+      .map((r) => ({
+        ...r,
+        taux_conversion: r.leads ? Math.round((r.convertis / r.leads) * 1000) / 10 : 0,
+        taux_transmission: r.leads ? Math.round((r.transmis / r.leads) * 1000) / 10 : 0,
+      }));
+
+  const total = db
+    .prepare("SELECT COUNT(*) AS n FROM leads WHERE created_at >= ?")
+    .get(since).n;
+
+  // Entonnoir global
+  const count = (cond) =>
+    db.prepare(`SELECT COUNT(*) AS n FROM leads WHERE created_at >= ? AND ${cond}`).get(since).n;
+  const funnel = {
+    total,
+    contactes: count("statut != 'nouveau'"),
+    qualifies: count("statut = 'qualifie'"),
+    transmis: count("statut = 'transmis'"),
+    perdus: count("statut IN ('non_joignable','non_interesse','rejete')"),
+    double_optin_confirme: count("double_optin_confirme = 1"),
+    desinscrits: count("desinscrit_at IS NOT NULL"),
+  };
+
+  // Volume par jour (30 derniers jours du range)
+  const parJour = db
+    .prepare(
+      `SELECT substr(created_at,1,10) AS jour, COUNT(*) AS leads
+       FROM leads WHERE created_at >= ? GROUP BY jour ORDER BY jour DESC LIMIT 30`
+    )
+    .all(since);
+
+  res.json({
+    periode_jours: days,
+    funnel,
+    parSource: agg("source"),
+    parUtmSource: agg("utm_source"),
+    parUtmCampaign: agg("utm_campaign"),
+    parJour,
+  });
 });
 
 const STATUTS = [
@@ -403,6 +462,10 @@ app.get("/api/admin/leads/export.csv", requireAdmin, (req, res) => {
     "situation",
     "mutuelle_actuelle",
     "budget_mensuel",
+    "source",
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
     "statut",
     "score",
     "assigne_a",
@@ -467,14 +530,24 @@ app.get("/api/admin/leads/:id/consent", requireAdmin, (req, res) => {
 
 app.get("/health", (req, res) => res.json({ ok: true, ts: nowIso() }));
 
-app.listen(PORT, () => {
-  console.log(`\n  Plateforme leads mutuelle sante`);
-  console.log(`  ------------------------------------`);
-  console.log(`  Landing page : http://localhost:${PORT}/`);
-  console.log(`  CRM (admin)  : http://localhost:${PORT}/admin.html`);
-  console.log(`  Token admin  : ${ADMIN_TOKEN}`);
-  console.log(`  Version consentement : ${CONSENT_VERSION}`);
-  const mode = mailerMode();
-  console.log(`  Notifications : email=${mode.email}, sms=${mode.sms}`);
-  console.log(`  Webhook courtier : ${webhookConfigured() ? "configure" : "non configure"}\n`);
-});
+// Ne demarre le serveur que si ce fichier est execute directement (pas en test/import).
+const isMain =
+  process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
+
+if (isMain && process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    console.log(`\n  Plateforme leads mutuelle sante`);
+    console.log(`  ------------------------------------`);
+    console.log(`  Landing page : http://localhost:${PORT}/`);
+    console.log(`  CRM (admin)  : http://localhost:${PORT}/admin.html`);
+    console.log(`  Token admin  : ${ADMIN_TOKEN}`);
+    console.log(`  Version consentement : ${CONSENT_VERSION}`);
+    const mode = mailerMode();
+    console.log(`  Notifications : email=${mode.email}, sms=${mode.sms}`);
+    console.log(
+      `  Webhook courtier : ${webhookConfigured() ? "configure" : "non configure"}\n`
+    );
+  });
+}
+
+export default app;
