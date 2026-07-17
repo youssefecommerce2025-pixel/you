@@ -47,6 +47,10 @@ npm start
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` / `SMTP_SECURE` | Envoi email (double opt-in) | repli fichier/console |
 | `MAIL_FROM` | Expéditeur des emails | `no-reply@example.fr` |
 | `SMS_API_URL` / `SMS_API_KEY` / `SMS_SENDER` | Envoi SMS via un fournisseur HTTP (Twilio, OVH...) | repli fichier/console |
+| `PARTNER_WEBHOOK_URL` | Webhook du CRM courtier (transmission des leads) | désactivé |
+| `PARTNER_WEBHOOK_URL__<SLUG>` | Webhook spécifique par courtier (slug du nom ORIAS) | — |
+| `PARTNER_WEBHOOK_SECRET` | Secret HMAC-SHA256 (en-tête `X-Signature`) | non signé |
+| `WEBHOOK_MAX_ATTEMPTS` | Nombre d'essais avec backoff | `3` |
 
 > Sans SMTP/SMS configuré, les messages de confirmation sont écrits dans `data/outbox.log` et
 > tracés dans la table `outbound_messages` (utile en développement).
@@ -68,8 +72,23 @@ double opt-in.
 | `PATCH` | `/api/admin/leads/:id` | Qualification / mise à jour (auth) |
 | `GET` | `/api/admin/leads/export.csv` | Export CSV des leads (auth, filtrable) |
 | `GET` | `/api/admin/leads/:id/consent` | Export de la preuve de consentement (auth) |
+| `POST` | `/api/admin/leads/:id/transmettre` | Transmet (ou re-transmet) le lead au webhook courtier (auth) |
+| `GET` | `/api/admin/leads/:id/deliveries` | Historique des livraisons webhook (auth) |
 
-Pages : `/` (landing), `/admin.html` (CRM), `/confidentialite.html` (politique de confidentialité).
+Pages : `/` (landing), `/admin.html` (CRM), `/confidentialite.html` (confidentialité),
+`/mentions-legales.html` (mentions légales). Bandeau cookies (Google Consent Mode v2) sur les
+pages publiques.
+
+## Transmission vers le CRM d'un courtier partenaire (webhook)
+
+Quand un lead passe au statut `transmis` (ou via le bouton « Transmettre » du CRM), l'application
+envoie un `POST` JSON vers `PARTNER_WEBHOOK_URL` avec :
+
+- les données du lead (aucune donnée de santé) + un résumé de la preuve de consentement ;
+- l'en-tête `X-Signature: sha256=<hmac>` si `PARTNER_WEBHOOK_SECRET` est défini ;
+- retries avec backoff, et traçabilité complète dans la table `webhook_deliveries`.
+
+Routage multi-courtiers possible via `PARTNER_WEBHOOK_URL__<SLUG>` (slug = nom ORIAS en majuscules).
 
 ## Rappel de conformité
 
