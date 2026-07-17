@@ -34,6 +34,40 @@ npm start
 - Landing page : http://localhost:3000/
 - CRM conseiller : http://localhost:3000/admin.html
 
+## Lancer avec Docker (aucune installation de Node requise)
+
+Il te faut seulement [Docker](https://www.docker.com/products/docker-desktop/). Puis :
+
+```bash
+docker compose up --build
+```
+
+Ouvre ensuite http://localhost:3000 (CRM : http://localhost:3000/admin.html).
+Le token du CRM est défini dans `docker-compose.yml` (`ADMIN_TOKEN`). La base SQLite est
+persistée dans le volume `leads_data`. Pour arrêter : `Ctrl + C` puis `docker compose down`.
+
+Sans compose, en Docker seul :
+
+```bash
+docker build -t leads-mutuelle .
+docker run -p 3000:3000 -e ADMIN_TOKEN=test123 -v leads_data:/app/data leads-mutuelle
+```
+
+## Déployer en ligne (URL publique)
+
+Le fichier `render.yaml` permet un déploiement en un clic sur [Render](https://render.com) :
+
+1. Ce dépôt est déjà sur GitHub.
+2. Sur Render : **New > Blueprint**, sélectionne ce dépôt.
+3. Render lit `render.yaml`, crée le service (région Frankfurt = UE/RGPD) et fournit une URL `https://...onrender.com`.
+4. Récupère le `ADMIN_TOKEN` généré dans le dashboard Render (onglet Environment) pour accéder au CRM.
+
+> Le disque persistant (base SQLite conservée) nécessite le plan **starter** (payant). Pour un essai
+> **gratuit**, mets `plan: free` et supprime le bloc `disk` dans `render.yaml` (la base sera alors
+> réinitialisée à chaque redéploiement).
+
+La même image Docker fonctionne aussi sur Railway, Fly.io, Scaleway, un VPS, etc.
+
 ## Configuration (variables d'environnement)
 
 | Variable | Rôle | Défaut |
