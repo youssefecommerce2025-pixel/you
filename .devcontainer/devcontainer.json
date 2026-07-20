@@ -1,0 +1,30 @@
+{
+  "name": "leads-mutuelle-sante",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bookworm",
+  "hostRequirements": {
+    "cpus": 2
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "containerEnv": {
+    "ADMIN_TOKEN": "demo-admin-token",
+    "DATA_DIR": "/workspaces/leads-mutuelle-sante/data"
+  },
+  "onCreateCommand": "npm ci",
+  "postAttachCommand": {
+    "server": "npm start"
+  },
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Leads mutuelle sante (landing + CRM)",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["dbaeumer.vscode-eslint"]
+    }
+  }
+}

@@ -68,6 +68,51 @@ Le fichier `render.yaml` permet un déploiement en un clic sur [Render](https://
 
 La même image Docker fonctionne aussi sur Railway, Fly.io, Scaleway, un VPS, etc.
 
+## Voir le projet sans rien installer sur son PC (autre que Render)
+
+Si Docker et l'installation de Node.js en local ne te conviennent pas, voici d'autres options —
+tout se passe dans le navigateur, ta machine n'a rien à installer.
+
+### Juste lire le code (0 clic, 0 compte)
+
+Pour simplement regarder les fichiers (landing page, CRM, textes RGPD), il suffit de naviguer dans
+ce dépôt GitHub, branche `cursor/leads-mutuelle-sante-optin`. Aucune installation, aucun compte.
+
+### GitHub Codespaces — pour voir le site tourner, en un clic
+
+C'est un « Node.js déjà installé, dans le navigateur ». GitHub te prête une machine dans le cloud,
+tu n'installes rien chez toi.
+
+1. Va sur ce lien : <https://codespaces.new/youssefecommerce2025-pixel/you/tree/cursor/leads-mutuelle-sante-optin>
+   (connecte-toi avec ton compte GitHub si besoin).
+2. Clique **Create codespace**. Une fenêtre type VS Code s'ouvre dans l'onglet du navigateur.
+3. Patiente ~1 minute : les dépendances s'installent et le serveur démarre automatiquement
+   (configuré dans `.devcontainer/devcontainer.json`) ; un aperçu s'ouvre tout seul.
+4. Si l'aperçu ne s'ouvre pas seul : onglet **PORTS** en bas de l'écran → clique l'icône de globe
+   sur la ligne du port `3000`.
+5. Le token du CRM (`ADMIN_TOKEN`) pour `/admin.html` est `demo-admin-token` (défini dans le
+   devcontainer, à changer avant toute vraie mise en production).
+
+Gratuit jusqu'à 60h/mois sur un compte GitHub personnel, sans carte bancaire requise pour cet usage.
+Pour montrer le site à quelqu'un d'autre : dans l'onglet **PORTS**, clic droit sur le port `3000` →
+**Port Visibility** → **Public**, ce qui donne une vraie URL partageable.
+
+### Replit — encore plus « zéro clavier »
+
+1. Va sur <https://replit.com>, crée un compte gratuit (ou connexion GitHub).
+2. **Create Repl** → **Import from GitHub** → colle `https://github.com/youssefecommerce2025-pixel/you`
+   et choisis la branche `cursor/leads-mutuelle-sante-optin`.
+3. Clique le gros bouton **Run** en haut. Replit installe les dépendances et lance `npm start`.
+4. Une fenêtre d'aperçu apparaît avec une URL du type `https://....repl.co` — c'est ton adresse
+   publique, comme avec Render.
+
+### Rappel important
+
+Sur Codespaces/Replit, sans configuration supplémentaire, la base SQLite n'est pas persistée de
+façon durable (elle peut être réinitialisée si la machine cloud est recyclée) — parfait pour
+« juste voir le site », pas adapté à une vraie production (pour ça, garde Render + disque persistant,
+ou un VPS).
+
 ## Configuration (variables d'environnement)
 
 | Variable | Rôle | Défaut |
