@@ -16,6 +16,7 @@ process.env.DB_PATH = join(TMP, "test.sqlite");
 process.env.ADMIN_TOKEN = "test-token";
 process.env.NODE_ENV = "test";
 process.env.PARTNER_API_KEYS = "aff-key-1:AffilieTest";
+process.env.WHATSAPP_NUMBER = "596696000000";
 
 let server;
 let baseUrl;
@@ -192,6 +193,63 @@ test("Webhook : transmission 'skipped' si non configure", async () => {
   const r = await req("POST", `/api/admin/leads/${created.json.leadId}/transmettre`, admin);
   assert.equal(r.status, 200);
   assert.equal(r.json.webhook.status, "skipped");
+});
+
+test("Variantes : /api/variant/:slug renvoie la personnalisation DOM", async () => {
+  const r = await req("GET", "/api/variant/martinique-senior");
+  assert.equal(r.status, 200);
+  assert.equal(r.json.ile, "Martinique");
+  assert.equal(r.json.persona, "senior");
+  assert.equal(r.json.whatsapp, "596696000000");
+  const bad = await req("GET", "/api/variant/inconnu");
+  assert.equal(bad.status, 404);
+});
+
+test("Variantes : /lp/:slug sert la landing page (HTML)", async () => {
+  const res = await fetch(baseUrl + "/lp/reunion-famille");
+  assert.equal(res.status, 200);
+  const html = await res.text();
+  assert.match(html, /<title>/i);
+});
+
+test("Lead avec ile/persona : bien enregistre et visible dans l'analytics par ile", async () => {
+  const body = { ...validLead(), ile: "Martinique", persona: "senior", source: "lp:martinique-senior" };
+  const r = await req("POST", "/api/leads", { body });
+  assert.equal(r.status, 201);
+  const a = await req("GET", "/api/admin/analytics?days=90", admin);
+  const mq = a.json.parIle.find((x) => x.cle === "Martinique");
+  assert.ok(mq, "l'ile Martinique doit apparaitre");
+  assert.ok(mq.leads >= 1);
+});
+
+test("Tracking WhatsApp : enregistre un clic", async () => {
+  const r = await req("POST", "/api/track/whatsapp", {
+    body: { ile: "Guadeloupe", persona: "senior", variant: "guadeloupe-senior" },
+  });
+  assert.equal(r.status, 200);
+  assert.equal(r.json.ok, true);
+});
+
+test("Budget pub : ajout + calcul du CPL par ile", async () => {
+  const jour = new Date().toISOString().slice(0, 10);
+  const add = await req("POST", "/api/admin/spend", {
+    ...admin,
+    body: { jour, ile: "Martinique", source: "meta", montant_eur: 100 },
+  });
+  assert.equal(add.status, 201);
+
+  const a = await req("GET", "/api/admin/analytics?days=90", admin);
+  const mq = a.json.parIle.find((x) => x.cle === "Martinique");
+  assert.ok(mq.depense_eur >= 100);
+  assert.ok(mq.cpl_eur > 0, "le CPL doit etre calcule");
+  assert.ok(a.json.global.depense_eur >= 100);
+});
+
+test("Budget pub : refuse un montant/jour invalide et exige le token", async () => {
+  const noauth = await req("POST", "/api/admin/spend", { body: { jour: "2026-01-01", montant_eur: 10 } });
+  assert.equal(noauth.status, 401);
+  const bad = await req("POST", "/api/admin/spend", { ...admin, body: { jour: "abc", montant_eur: 10 } });
+  assert.equal(bad.status, 400);
 });
 
 // Verifie que le module leads calcule un score coherent
