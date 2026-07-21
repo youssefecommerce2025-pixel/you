@@ -52,9 +52,40 @@
           </label>
         </div>
         <div id="funnel" class="funnel"></div>
+
+        <div class="acard">
+          <h3>CPL par île (coût par lead)</h3>
+          <div id="an-ile"></div>
+          <form id="spend-form" class="spend-form">
+            <input type="date" id="sp-jour" required />
+            <select id="sp-ile">
+              <option value="">Île...</option>
+              <option>Martinique</option>
+              <option>Guadeloupe</option>
+              <option>La Réunion</option>
+              <option>Guyane</option>
+              <option>Mayotte</option>
+              <option>DOM-TOM</option>
+            </select>
+            <select id="sp-source">
+              <option value="">Canal...</option>
+              <option value="meta">Meta</option>
+              <option value="tiktok">TikTok</option>
+              <option value="google">Google</option>
+              <option value="radio">Radio</option>
+              <option value="autre">Autre</option>
+            </select>
+            <input type="number" id="sp-montant" placeholder="Budget €" min="0" step="0.01" required />
+            <button class="btn btn--primary" type="submit" style="width:auto">Ajouter le budget</button>
+          </form>
+          <p class="muted" style="font-size:0.8rem;margin:6px 0 0">
+            Saisis ici tes dépenses publicitaires (par jour/île) pour calculer automatiquement le CPL.
+          </p>
+        </div>
+
         <div class="analytics-grid">
+          <div class="acard"><h3>Par persona</h3><div id="an-persona"></div></div>
           <div class="acard"><h3>Par source</h3><div id="an-source"></div></div>
-          <div class="acard"><h3>Par UTM source</h3><div id="an-utm-source"></div></div>
           <div class="acard"><h3>Par campagne (UTM)</h3><div id="an-utm-campaign"></div></div>
         </div>
       </section>

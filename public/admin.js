@@ -339,6 +339,7 @@ document.querySelectorAll(".tab").forEach((t) => {
   t.addEventListener("click", () => switchView(t.dataset.view));
 });
 el("analytics-days").addEventListener("change", loadAnalytics);
+el("spend-form").addEventListener("submit", addSpend);
 
 function switchView(view) {
   document.querySelectorAll(".tab").forEach((t) =>
@@ -385,9 +386,43 @@ async function loadAnalytics() {
         }</div>`
     )
     .join("");
+  renderIleTable(a.parIle, a.global);
+  renderAggTable("an-persona", a.parPersona);
   renderAggTable("an-source", a.parSource);
-  renderAggTable("an-utm-source", a.parUtmSource);
   renderAggTable("an-utm-campaign", a.parUtmCampaign);
+}
+
+function renderIleTable(rows, global) {
+  const g = global || {};
+  const head = `<p class="muted" style="font-size:0.82rem;margin:0 0 8px">
+    Dépense totale : <b>${g.depense_eur ?? 0} €</b> ·
+    CPL global : <b>${g.cpl_eur ?? 0} €</b> ·
+    Clics WhatsApp : <b>${g.clics_whatsapp ?? 0}</b></p>`;
+  el("an-ile").innerHTML =
+    head +
+    (rows && rows.length
+      ? `<table><thead><tr><th>Île</th><th class="num">Leads</th><th class="num">Convertis</th><th class="num">WhatsApp</th><th class="num">Dépense</th><th class="num">CPL</th><th class="num">CPL qualifié</th></tr></thead><tbody>${rows
+          .map(
+            (r) =>
+              `<tr><td>${esc(r.cle)}</td><td class="num">${r.leads}</td><td class="num">${r.convertis}</td><td class="num">${r.clics_whatsapp}</td><td class="num">${r.depense_eur} €</td><td class="num cpl">${r.cpl_eur} €</td><td class="num cpl">${r.cpl_qualifie_eur} €</td></tr>`
+          )
+          .join("")}</tbody></table>`
+      : "<em>Aucune donnee.</em>");
+}
+
+async function addSpend(e) {
+  e.preventDefault();
+  const body = {
+    jour: el("sp-jour").value,
+    ile: el("sp-ile").value,
+    source: el("sp-source").value,
+    montant_eur: el("sp-montant").value,
+  };
+  const r = await api("/api/admin/spend", { method: "POST", body: JSON.stringify(body) });
+  if (r.ok) {
+    el("sp-montant").value = "";
+    loadAnalytics();
+  }
 }
 
 function debounce(fn, ms) {
