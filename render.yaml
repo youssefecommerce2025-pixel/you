@@ -1,0 +1,14 @@
+# Deploiement du frontend en site statique sur Render.
+# New > Blueprint > selectionne le depot "frontend".
+services:
+  - type: web
+    name: leads-mutuelle-frontend
+    runtime: static
+    branch: main
+    buildCommand: ""
+    staticPublishPath: .
+    # Toutes les routes inconnues renvoient index.html (pratique pour un site simple).
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

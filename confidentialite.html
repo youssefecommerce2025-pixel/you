@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Politique de confidentialite &mdash; Mutuelle sante</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/cookies.css" />
+    <script src="/config.js"></script>
+    <style>
+      .doc { background: #fff; border-radius: 14px; box-shadow: var(--shadow); padding: 36px; margin: 40px auto; }
+      .doc h1 { margin-top: 0; }
+      .doc h2 { margin-top: 32px; font-size: 1.2rem; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+      .doc p, .doc li { color: #334155; }
+      .doc table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
+      .doc th, .doc td { text-align: left; padding: 8px 10px; border: 1px solid var(--line); vertical-align: top; }
+      .doc th { background: #f8fafc; }
+      .muted { color: var(--muted); font-size: 0.85rem; }
+      .back { display: inline-block; margin-bottom: 8px; color: var(--primary); text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar__inner">
+        <a class="brand" href="/"><span class="brand__dot"></span><span id="brand-name">Mutuelle Compare</span></a>
+        <span class="topbar__badge">Protection des donnees</span>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="doc">
+        <a class="back" href="/">&larr; Retour</a>
+        <h1>Politique de confidentialite</h1>
+        <p class="muted">Derniere mise a jour : <span id="maj"></span></p>
+
+        <p>
+          La presente politique explique comment <strong id="org-name">[Responsable]</strong>
+          collecte et traite vos donnees personnelles lorsque vous demandez un devis de mutuelle
+          sante, conformement au Reglement general sur la protection des donnees (RGPD) et a la loi
+          Informatique et Libertes.
+        </p>
+
+        <h2>1. Responsable du traitement</h2>
+        <p id="responsable"></p>
+
+        <h2>2. Donnees collectees</h2>
+        <p>
+          Nous collectons uniquement les donnees que vous nous transmettez via le formulaire :
+          civilite, prenom, nom, adresse email, numero de telephone, code postal, tranche d'age,
+          situation, presence d'une mutuelle actuelle et budget envisage.
+        </p>
+        <p>
+          <strong>Aucune donnee de sante</strong> (pathologie, traitement, antecedent) n'est
+          collectee ni traitee. Nous vous demandons de ne pas en communiquer.
+        </p>
+        <p>
+          Pour la preuve de votre consentement, nous conservons egalement des donnees techniques :
+          horodatage, adresse IP, URL de la page, type de navigateur et version du texte de
+          consentement affiche.
+        </p>
+
+        <h2>3. Finalites et base legale</h2>
+        <table>
+          <thead>
+            <tr><th>Finalite</th><th>Base legale</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Traiter votre demande de devis et vous recontacter par telephone</td>
+              <td>Votre consentement (art. 6.1.a RGPD) et mesures precontractuelles a votre demande</td>
+            </tr>
+            <tr>
+              <td>Vous mettre en relation avec un courtier partenaire immatricule ORIAS</td>
+              <td>Votre consentement</td>
+            </tr>
+            <tr>
+              <td>Conserver la preuve du consentement</td>
+              <td>Obligation legale / interet legitime (defense de nos droits)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>4. Destinataires</h2>
+        <p>
+          Vos donnees sont accessibles a nos equipes habilitees et, le cas echeant, au courtier en
+          assurance partenaire immatricule a l'ORIAS selectionne pour etablir votre devis. Nous ne
+          vendons pas vos donnees a des tiers a des fins publicitaires.
+        </p>
+
+        <h2>5. Transferts hors Union europeenne</h2>
+        <p>
+          Vos donnees sont hebergees dans l'Union europeenne. Certaines operations de traitement
+          (par exemple la qualification telephonique) peuvent etre realisees par un prestataire situe
+          hors UE. Dans ce cas, le transfert est encadre par des garanties appropriees (clauses
+          contractuelles types de la Commission europeenne) et des mesures de securite adaptees.
+        </p>
+
+        <h2>6. Duree de conservation</h2>
+        <ul>
+          <li>Fiche prospect : 3 ans a compter du dernier contact.</li>
+          <li>Preuve de consentement : 5 ans a titre probatoire.</li>
+        </ul>
+
+        <h2>7. Vos droits</h2>
+        <p>
+          Vous disposez des droits d'acces, de rectification, d'effacement, d'opposition, de
+          limitation et de portabilite, ainsi que du droit de retirer votre consentement a tout
+          moment. Pour les exercer, contactez : <strong id="dpo"></strong>.
+        </p>
+        <p>
+          Vous pouvez egalement introduire une reclamation aupres de la CNIL
+          (<a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a>).
+        </p>
+
+        <h2>8. Se desinscrire</h2>
+        <p>Pour ne plus etre contacte(e), indiquez votre email ci-dessous :</p>
+        <form id="unsub-form" style="display:flex; gap:10px; flex-wrap:wrap; max-width:480px">
+          <input type="email" id="unsub-email" placeholder="votre@email.fr" required
+            style="flex:1; min-width:220px; padding:10px; border:1px solid var(--line); border-radius:10px" />
+          <button class="btn btn--primary" style="width:auto" type="submit">Me desinscrire</button>
+        </form>
+        <p id="unsub-msg" class="muted"></p>
+
+        <h2>9. Cookies</h2>
+        <p>
+          Ce site peut utiliser des cookies de mesure d'audience et, avec votre accord, des cookies
+          publicitaires pour nos campagnes d'acquisition (Google, Meta). Les cookies non essentiels
+          ne sont deposes qu'apres votre consentement.
+        </p>
+        <p>
+          <button class="btn btn--primary" style="width:auto"
+            onclick="window.cookieConsent&&window.cookieConsent.open()">Gerer mes preferences cookies</button>
+        </p>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <span id="footer-brand">Mutuelle Compare</span>
+        <span class="footer__links">
+          <a href="/mentions-legales.html">Mentions legales</a>
+          <a href="/">Accueil</a>
+        </span>
+      </div>
+    </footer>
+    <script src="/cookies.js" defer></script>
+
+    <script>
+      document.getElementById("maj").textContent = new Date().toLocaleDateString("fr-FR");
+
+      fetch(window.apiUrl("/api/config"))
+        .then((r) => r.json())
+        .then((cfg) => {
+          const o = cfg.org || {};
+          const name = o.raisonSociale || "[Responsable]";
+          document.getElementById("org-name").textContent = name;
+          document.getElementById("responsable").innerHTML =
+            `<strong>${name}</strong>` +
+            (o.formeJuridique ? ` (${o.formeJuridique})` : "") +
+            (o.adresse ? `<br>${o.adresse}` : "") +
+            (o.email ? `<br>Email : ${o.email}` : "") +
+            (o.telephone ? `<br>Tel : ${o.telephone}` : "");
+          document.getElementById("dpo").textContent = o.emailDpo || o.email || "";
+          if (o.siteComparateur && o.siteComparateur[0] !== "[") {
+            document.getElementById("brand-name").textContent = o.siteComparateur;
+            document.getElementById("footer-brand").textContent = o.siteComparateur;
+          }
+        })
+        .catch(() => {});
+
+      document.getElementById("unsub-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("unsub-email").value.trim();
+        const msg = document.getElementById("unsub-msg");
+        try {
+          const res = await fetch(window.apiUrl("/api/leads/desinscription"), {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          });
+          const data = await res.json();
+          msg.textContent = data.ok
+            ? "Votre demande de desinscription a bien ete prise en compte."
+            : "Une erreur est survenue.";
+        } catch {
+          msg.textContent = "Une erreur est survenue.";
+        }
+      });
+    </script>
+  </body>
+</html>

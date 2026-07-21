@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mentions legales &mdash; Mutuelle sante</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/cookies.css" />
+    <script src="/config.js"></script>
+    <style>
+      .doc { background: #fff; border-radius: 14px; box-shadow: var(--shadow); padding: 36px; margin: 40px auto; }
+      .doc h1 { margin-top: 0; }
+      .doc h2 { margin-top: 32px; font-size: 1.2rem; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+      .doc p, .doc li { color: #334155; }
+      .doc dl { display: grid; grid-template-columns: 220px 1fr; gap: 8px 16px; font-size: 0.92rem; }
+      .doc dt { color: var(--muted); }
+      .doc dd { margin: 0; }
+      .muted { color: var(--muted); font-size: 0.85rem; }
+      .back { display: inline-block; margin-bottom: 8px; color: var(--primary); text-decoration: none; }
+      @media (max-width: 560px) { .doc dl { grid-template-columns: 1fr; } .doc dt { margin-top: 8px; } }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar__inner">
+        <a class="brand" href="/"><span class="brand__dot"></span><span id="brand-name">Mutuelle Compare</span></a>
+        <span class="topbar__badge">Mentions legales</span>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="doc">
+        <a class="back" href="/">&larr; Retour</a>
+        <h1>Mentions legales</h1>
+
+        <h2>1. Editeur du site</h2>
+        <dl id="editeur"></dl>
+
+        <h2>2. Directeur de la publication</h2>
+        <p id="directeur"></p>
+
+        <h2>3. Hebergeur</h2>
+        <dl id="hebergeur"></dl>
+
+        <h2>4. Activite et statut d'intermediaire en assurance</h2>
+        <p id="orias-block">
+          Le site exerce une activite d'apport d'affaires / de mise en relation en assurance.
+          Les contrats sont distribues par des courtiers en assurance partenaires immatricules a
+          l'ORIAS (Organisme pour le Registre unique des Intermediaires en Assurance, Banque et
+          Finance &ndash; <a href="https://www.orias.fr" target="_blank" rel="noopener">www.orias.fr</a>),
+          soumis au controle de l'ACPR (Autorite de Controle Prudentiel et de Resolution,
+          4 place de Budapest, CS 92459, 75436 Paris Cedex 09).
+        </p>
+        <p id="orias-num" class="muted"></p>
+
+        <h2>5. Propriete intellectuelle</h2>
+        <p>
+          L'ensemble des contenus de ce site (textes, logos, marques, graphismes) est protege par
+          le droit de la propriete intellectuelle. Toute reproduction sans autorisation prealable
+          est interdite.
+        </p>
+
+        <h2>6. Donnees personnelles et cookies</h2>
+        <p>
+          Le traitement de vos donnees est decrit dans notre
+          <a href="/confidentialite.html">politique de confidentialite</a>. Vous pouvez gerer votre
+          consentement aux cookies a tout moment :
+          <button class="btn btn--primary" style="width:auto"
+            onclick="window.cookieConsent&&window.cookieConsent.open()">Gerer les cookies</button>
+        </p>
+
+        <h2>7. Responsabilite</h2>
+        <p>
+          Les informations fournies le sont a titre indicatif. L'editeur s'efforce d'assurer
+          l'exactitude des informations mais ne saurait etre tenu responsable des erreurs ou
+          omissions, ni de l'utilisation qui en est faite.
+        </p>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <span id="footer-brand">Mutuelle Compare</span>
+        <span class="footer__links">
+          <a href="/confidentialite.html">Politique de confidentialite</a>
+          <a href="/">Accueil</a>
+        </span>
+      </div>
+    </footer>
+
+    <script src="/cookies.js" defer></script>
+    <script>
+      function row(dt, dd) { return dd ? `<dt>${dt}</dt><dd>${dd}</dd>` : ""; }
+      fetch(window.apiUrl("/api/config"))
+        .then((r) => r.json())
+        .then((cfg) => {
+          const o = cfg.org || {};
+          if (o.siteComparateur && o.siteComparateur[0] !== "[") {
+            document.getElementById("brand-name").textContent = o.siteComparateur;
+            document.getElementById("footer-brand").textContent = o.siteComparateur;
+          }
+          document.getElementById("editeur").innerHTML =
+            row("Raison sociale", o.raisonSociale) +
+            row("Forme juridique", o.formeJuridique) +
+            row("Capital social", o.capitalSocial) +
+            row("Adresse", o.adresse) +
+            row("RCS", o.rcs) +
+            row("SIRET", o.siret) +
+            row("TVA intracommunautaire", o.tvaIntra) +
+            row("Email", o.email) +
+            row("Telephone", o.telephone);
+          document.getElementById("directeur").textContent =
+            o.directeurPublication || "[Nom du directeur de publication]";
+          const h = o.hebergeur || {};
+          document.getElementById("hebergeur").innerHTML =
+            row("Nom", h.nom) + row("Adresse", h.adresse) + row("Telephone", h.telephone);
+          document.getElementById("orias-num").textContent = o.orias
+            ? `N° ORIAS du/des partenaire(s) : ${o.orias}`
+            : "";
+        })
+        .catch(() => {});
+    </script>
+  </body>
+</html>
