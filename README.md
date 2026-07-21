@@ -68,6 +68,12 @@ Le fichier `render.yaml` permet un déploiement en un clic sur [Render](https://
 
 La même image Docker fonctionne aussi sur Railway, Fly.io, Scaleway, un VPS, etc.
 
+### Héberger sur ton propre serveur (nom de domaine + VPS)
+
+Guide pas à pas complet (domaine, VPS UE, Node, systemd, Nginx, HTTPS Let's Encrypt, sauvegardes) :
+**`deploy/GUIDE-DEPLOIEMENT.md`**. Fichiers prêts à l'emploi dans `deploy/` (`leads-mutuelle.service`,
+`nginx.conf.example`) et modèle de configuration `.env.example`.
+
 ## Configuration (variables d'environnement)
 
 | Variable | Rôle | Défaut |
