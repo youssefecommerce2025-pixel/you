@@ -26,17 +26,21 @@
       <section class="hero">
         <div class="container hero__grid">
           <div class="hero__copy">
-            <h1>Trouvez la mutuelle sante qui vous ressemble, au meilleur prix.</h1>
-            <p class="hero__lead">
+            <h1 id="hero-title">Trouvez la mutuelle sante qui vous ressemble, au meilleur prix.</h1>
+            <p class="hero__lead" id="hero-lead">
               Recevez gratuitement un devis personnalise et laissez un courtier
               partenaire vous rappeler pour comparer les offres. Simple, rapide, sans
               engagement.
             </p>
-            <ul class="hero__points">
+            <ul class="hero__points" id="hero-points">
               <li>Comparaison independante de plusieurs assureurs</li>
               <li>Un conseiller vous rappelle uniquement si vous le demandez</li>
               <li>Vos donnees protegees, hebergees en Union europeenne</li>
             </ul>
+            <a id="wa-cta" class="btn-wa" href="#" hidden>
+              <span class="btn-wa__icon">&#128172;</span>
+              Discuter sur WhatsApp maintenant
+            </a>
             <div class="trust">
               <div class="trust__item"><strong>+150</strong><span>offres comparees</span></div>
               <div class="trust__item"><strong>2&nbsp;min</strong><span>pour votre devis</span></div>
@@ -140,6 +144,10 @@
                 <input type="checkbox" id="consent_telephone" name="consent_telephone" />
                 <span id="consent-label">Chargement du texte de consentement&hellip;</span>
               </label>
+
+              <input type="hidden" name="ile" id="f-ile" />
+              <input type="hidden" name="persona" id="f-persona" />
+              <input type="hidden" name="source" id="f-source" />
 
               <button class="btn btn--primary" type="submit" id="submit-btn">
                 Recevoir mon devis gratuit

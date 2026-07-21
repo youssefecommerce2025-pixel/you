@@ -54,6 +54,11 @@ body {
   background: var(--accent); color: #04231a; font-size: 0.75rem; font-weight: 700;
   display: grid; place-items: center;
 }
+.btn-wa { display: inline-flex; align-items: center; gap: 10px; background: #25d366; color: #04231a; font-weight: 700; text-decoration: none; padding: 13px 20px; border-radius: 999px; margin-bottom: 28px; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35); transition: transform 0.08s, background 0.15s; }
+.btn-wa:hover { background: #1ebe5a; }
+.btn-wa:active { transform: translateY(1px); }
+.btn-wa__icon { font-size: 1.15rem; }
+
 .trust { display: flex; gap: 28px; }
 .trust__item { display: flex; flex-direction: column; }
 .trust__item strong { font-size: 1.5rem; color: #fff; }
