@@ -35,12 +35,12 @@ const insertLead = db.prepare(`
   INSERT INTO leads (
     created_at, updated_at, civilite, prenom, nom, email, telephone, code_postal,
     tranche_age, situation, mutuelle_actuelle, budget_mensuel,
-    source, utm_source, utm_medium, utm_campaign, utm_term, utm_content,
+    source, ile, persona, utm_source, utm_medium, utm_campaign, utm_term, utm_content,
     statut, score, double_optin_confirme
   ) VALUES (
     @created_at, @updated_at, @civilite, @prenom, @nom, @email, @telephone, @code_postal,
     @tranche_age, @situation, @mutuelle_actuelle, @budget_mensuel,
-    @source, @utm_source, @utm_medium, @utm_campaign, @utm_term, @utm_content,
+    @source, @ile, @persona, @utm_source, @utm_medium, @utm_campaign, @utm_term, @utm_content,
     @statut, @score, @double_optin_confirme
   )
 `);
@@ -88,6 +88,8 @@ export function createLeadWithConsent({ body, email, telephone, source, consent 
     mutuelle_actuelle: body.mutuelle_actuelle || null,
     budget_mensuel: body.budget_mensuel || null,
     source: source || body.source || "formulaire",
+    ile: body.ile || null,
+    persona: body.persona || null,
     utm_source: body.utm_source || null,
     utm_medium: body.utm_medium || null,
     utm_campaign: body.utm_campaign || null,

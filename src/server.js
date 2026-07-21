@@ -11,6 +11,7 @@ import {
 import { sendDoubleOptinConfirmation, mailerMode } from "./notifier.js";
 import { dispatchLead, deliveriesForLead, webhookConfigured } from "./webhook.js";
 import { createLeadWithConsent, validateLead, computeScore } from "./leads.js";
+import { getVariant, listVariants, WHATSAPP_NUMBER } from "./variants.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -53,7 +54,46 @@ app.get("/api/config", (req, res) => {
     consentVersion: CONSENT_VERSION,
     consentCheckboxLabel: CONSENT_TELEPHONE,
     informationNotice: mentionInformation(),
+    whatsapp: WHATSAPP_NUMBER,
   });
+});
+
+/* --------------------------------------------------------------------------
+ * Variantes de landing par ile / persona (DOM-TOM)
+ * ------------------------------------------------------------------------ */
+app.get("/api/variants", (req, res) => res.json({ variants: listVariants() }));
+
+app.get("/api/variant/:slug", (req, res) => {
+  const v = getVariant(req.params.slug);
+  if (!v) return res.status(404).json({ error: "Variante inconnue" });
+  res.json(v);
+});
+
+// URLs "propres" : /lp/martinique-senior -> sert la landing (personnalisation cote client).
+app.get("/lp/:slug", (req, res) => {
+  res.sendFile(join(__dirname, "..", "public", "index.html"));
+});
+
+/* --------------------------------------------------------------------------
+ * Tracking des clics WhatsApp (attribution du funnel WhatsApp)
+ * ------------------------------------------------------------------------ */
+app.post("/api/track/whatsapp", (req, res) => {
+  const b = req.body || {};
+  db.prepare(
+    `INSERT INTO wa_clicks (ile, persona, source, utm_source, utm_campaign, variant, ip, user_agent, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  ).run(
+    b.ile || null,
+    b.persona || null,
+    b.source || "whatsapp",
+    b.utm_source || null,
+    b.utm_campaign || null,
+    b.variant || null,
+    clientIp(req),
+    req.headers["user-agent"] || null,
+    nowIso()
+  );
+  res.json({ ok: true });
 });
 
 /* --------------------------------------------------------------------------
@@ -331,14 +371,88 @@ app.get("/api/admin/analytics", requireAdmin, (req, res) => {
     )
     .all(since);
 
+  // CPL par ile : croise le nombre de leads avec le budget pub saisi (ad_spend).
+  const leadsParIle = agg("ile");
+  const spendRows = db
+    .prepare(
+      `SELECT COALESCE(NULLIF(ile,''),'(non renseigne)') AS cle, SUM(montant_eur) AS depense
+       FROM ad_spend WHERE jour >= ? GROUP BY cle`
+    )
+    .all(since.slice(0, 10));
+  const spendMap = Object.fromEntries(spendRows.map((r) => [r.cle, r.depense]));
+  const waRows = db
+    .prepare(
+      `SELECT COALESCE(NULLIF(ile,''),'(non renseigne)') AS cle, COUNT(*) AS clics
+       FROM wa_clicks WHERE created_at >= ? GROUP BY cle`
+    )
+    .all(since);
+  const waMap = Object.fromEntries(waRows.map((r) => [r.cle, r.clics]));
+
+  const parIle = leadsParIle.map((r) => {
+    const depense = spendMap[r.cle] || 0;
+    return {
+      ...r,
+      clics_whatsapp: waMap[r.cle] || 0,
+      depense_eur: Math.round(depense * 100) / 100,
+      cpl_eur: r.leads ? Math.round((depense / r.leads) * 100) / 100 : 0,
+      cpl_qualifie_eur: r.convertis
+        ? Math.round((depense / r.convertis) * 100) / 100
+        : 0,
+    };
+  });
+
+  const totalSpend = spendRows.reduce((s, r) => s + (r.depense || 0), 0);
+  const totalWa = waRows.reduce((s, r) => s + r.clics, 0);
+
   res.json({
     periode_jours: days,
     funnel,
+    global: {
+      depense_eur: Math.round(totalSpend * 100) / 100,
+      clics_whatsapp: totalWa,
+      cpl_eur: total ? Math.round((totalSpend / total) * 100) / 100 : 0,
+    },
+    parIle,
     parSource: agg("source"),
+    parPersona: agg("persona"),
     parUtmSource: agg("utm_source"),
     parUtmCampaign: agg("utm_campaign"),
     parJour,
   });
+});
+
+/* --------------------------------------------------------------------------
+ * Budget publicitaire (pour le calcul du CPL) - CRUD simple
+ * ------------------------------------------------------------------------ */
+app.get("/api/admin/spend", requireAdmin, (req, res) => {
+  const rows = db
+    .prepare("SELECT * FROM ad_spend ORDER BY jour DESC, id DESC LIMIT 500")
+    .all();
+  res.json({ spend: rows });
+});
+
+app.post("/api/admin/spend", requireAdmin, (req, res) => {
+  const b = req.body || {};
+  const jour = String(b.jour || "").slice(0, 10);
+  const montant = Number(b.montant_eur);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(jour)) {
+    return res.status(400).json({ error: "jour requis (format YYYY-MM-DD)" });
+  }
+  if (!Number.isFinite(montant) || montant < 0) {
+    return res.status(400).json({ error: "montant_eur invalide" });
+  }
+  const info = db
+    .prepare(
+      `INSERT INTO ad_spend (jour, ile, source, montant_eur, note, created_at)
+       VALUES (?, ?, ?, ?, ?, ?)`
+    )
+    .run(jour, b.ile || null, b.source || null, montant, b.note || null, nowIso());
+  res.status(201).json({ ok: true, id: info.lastInsertRowid });
+});
+
+app.delete("/api/admin/spend/:id", requireAdmin, (req, res) => {
+  db.prepare("DELETE FROM ad_spend WHERE id = ?").run(Number(req.params.id));
+  res.json({ ok: true });
 });
 
 const STATUTS = [

@@ -45,7 +45,9 @@ function init() {
       budget_mensuel    TEXT,   -- ex: '30-60', '60-100', '100+'
 
       -- Attribution / acquisition
-      source            TEXT,   -- 'formulaire' | 'affilie:<nom>' | domaine referent
+      source            TEXT,   -- 'formulaire' | 'affilie:<nom>' | 'lp:<slug>' | 'whatsapp'
+      ile               TEXT,   -- 'Martinique' | 'Guadeloupe' | 'La Reunion' | ...
+      persona           TEXT,   -- 'senior' | 'famille' | 'fonctionnaire' | 'tns'
       utm_source        TEXT,
       utm_medium        TEXT,
       utm_campaign      TEXT,
@@ -114,14 +116,41 @@ function init() {
     CREATE INDEX IF NOT EXISTS idx_leads_created ON leads(created_at);
     CREATE INDEX IF NOT EXISTS idx_consent_lead ON consent_proofs(lead_id);
     CREATE INDEX IF NOT EXISTS idx_consent_token ON consent_proofs(confirm_token);
+    CREATE TABLE IF NOT EXISTS ad_spend (
+      id          INTEGER PRIMARY KEY AUTOINCREMENT,
+      jour        TEXT    NOT NULL,   -- 'YYYY-MM-DD'
+      ile         TEXT,
+      source      TEXT,               -- 'meta' | 'tiktok' | 'google' | 'radio' ...
+      montant_eur REAL    NOT NULL,
+      note        TEXT,
+      created_at  TEXT    NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS wa_clicks (
+      id          INTEGER PRIMARY KEY AUTOINCREMENT,
+      ile         TEXT,
+      persona     TEXT,
+      source      TEXT,
+      utm_source  TEXT,
+      utm_campaign TEXT,
+      variant     TEXT,
+      ip          TEXT,
+      user_agent  TEXT,
+      created_at  TEXT    NOT NULL
+    );
+
     CREATE INDEX IF NOT EXISTS idx_outbound_lead ON outbound_messages(lead_id);
     CREATE INDEX IF NOT EXISTS idx_webhook_lead ON webhook_deliveries(lead_id);
+    CREATE INDEX IF NOT EXISTS idx_spend_jour ON ad_spend(jour, ile);
+    CREATE INDEX IF NOT EXISTS idx_waclicks_created ON wa_clicks(created_at, ile);
   `);
 
   // Migration legere : ajoute les colonnes d'attribution si absentes (bases existantes).
   const cols = db.prepare("PRAGMA table_info(leads)").all().map((c) => c.name);
   const toAdd = {
     source: "TEXT",
+    ile: "TEXT",
+    persona: "TEXT",
     utm_source: "TEXT",
     utm_medium: "TEXT",
     utm_campaign: "TEXT",
@@ -133,6 +162,7 @@ function init() {
   }
   db.exec("CREATE INDEX IF NOT EXISTS idx_leads_utm ON leads(utm_source, utm_campaign)");
   db.exec("CREATE INDEX IF NOT EXISTS idx_leads_source ON leads(source)");
+  db.exec("CREATE INDEX IF NOT EXISTS idx_leads_ile ON leads(ile)");
 }
 
 init();
