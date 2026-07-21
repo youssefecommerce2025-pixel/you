@@ -1,0 +1,30 @@
+# Service systemd pour lancer l'application au demarrage et la relancer si elle plante.
+# Copier vers : /etc/systemd/system/leads-mutuelle.service
+# Puis :
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now leads-mutuelle
+#   sudo systemctl status leads-mutuelle
+
+[Unit]
+Description=Plateforme leads mutuelle sante (Node.js)
+After=network.target
+
+[Service]
+Type=simple
+# Adapte l'utilisateur et le chemin a ton installation.
+User=deploy
+WorkingDirectory=/var/www/leads-mutuelle
+ExecStart=/usr/bin/node src/server.js
+Restart=always
+RestartSec=3
+
+# Variables d'environnement chargees depuis un fichier (voir .env.example).
+EnvironmentFile=/var/www/leads-mutuelle/.env
+
+# Securite de base
+NoNewPrivileges=true
+ProtectSystem=full
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
