@@ -74,6 +74,13 @@ Guide pas à pas complet (domaine, VPS UE, Node, systemd, Nginx, HTTPS Let's Enc
 **`deploy/GUIDE-DEPLOIEMENT.md`**. Fichiers prêts à l'emploi dans `deploy/` (`leads-mutuelle.service`,
 `nginx.conf.example`) et modèle de configuration `.env.example`.
 
+### Héberger sur Hostinger (offre Node.js)
+
+Guide débutant dédié : **`deploy/GUIDE-HOSTINGER.md`**. L'application choisit automatiquement son
+moteur de base de données : `better-sqlite3` (natif, rapide) si disponible, sinon repli sur **`sql.js`**
+(100 % JavaScript, **aucune compilation** requise). Sur hébergement mutualisé, mets `DB_ENGINE=sqljs`
+pour une installation sans souci.
+
 ## Configuration (variables d'environnement)
 
 | Variable | Rôle | Défaut |
@@ -84,6 +91,7 @@ Guide pas à pas complet (domaine, VPS UE, Node, systemd, Nginx, HTTPS Let's Enc
 | `PUBLIC_BASE_URL` | URL publique pour les liens de confirmation | déduite de la requête |
 | `DB_PATH` | Chemin du fichier SQLite | `data/leads.sqlite` |
 | `DATA_DIR` | Dossier de données | `data/` |
+| `DB_ENGINE` | Moteur de base : `better-sqlite3` (natif) ou `sqljs` (100 % JS, sans compilation) | auto |
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` / `SMTP_SECURE` | Envoi email (double opt-in) | repli fichier/console |
 | `MAIL_FROM` | Expéditeur des emails | `no-reply@example.fr` |
 | `SMS_API_URL` / `SMS_API_KEY` / `SMS_SENDER` | Envoi SMS via un fournisseur HTTP (Twilio, OVH...) | repli fichier/console |
