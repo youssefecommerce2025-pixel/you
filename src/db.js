@@ -1,7 +1,7 @@
-import Database from "better-sqlite3";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { mkdirSync } from "node:fs";
+import { createSqljsDb } from "./sqljs-adapter.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = process.env.DATA_DIR || join(__dirname, "..", "data");
@@ -9,9 +9,34 @@ mkdirSync(DATA_DIR, { recursive: true });
 
 const DB_PATH = process.env.DB_PATH || join(DATA_DIR, "leads.sqlite");
 
-const db = new Database(DB_PATH);
-db.pragma("journal_mode = WAL");
-db.pragma("foreign_keys = ON");
+// Choix du moteur de base de donnees :
+//  - 'better-sqlite3' (natif, rapide) si disponible ET non desactive ;
+//  - sinon repli automatique sur sql.js (100 % JavaScript, aucune compilation).
+// Force le moteur avec DB_ENGINE = 'better-sqlite3' | 'sqljs'.
+let db;
+let engineName = "sql.js";
+const forced = process.env.DB_ENGINE;
+
+async function tryBetterSqlite() {
+  const { default: Database } = await import("better-sqlite3");
+  const d = new Database(DB_PATH);
+  d.pragma("journal_mode = WAL");
+  d.pragma("foreign_keys = ON");
+  return d;
+}
+
+if (forced !== "sqljs") {
+  try {
+    db = await tryBetterSqlite();
+    engineName = "better-sqlite3";
+  } catch (e) {
+    if (forced === "better-sqlite3") throw e;
+    db = await createSqljsDb(DB_PATH);
+    engineName = "sql.js";
+  }
+} else {
+  db = await createSqljsDb(DB_PATH);
+}
 
 /**
  * Schema
@@ -173,4 +198,4 @@ if (process.argv.includes("--init")) {
 }
 
 export default db;
-export { DB_PATH };
+export { DB_PATH, engineName };

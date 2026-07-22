@@ -1,7 +1,7 @@
 import express from "express";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import db from "./db.js";
+import db, { engineName } from "./db.js";
 import {
   CONSENT_VERSION,
   CONSENT_TELEPHONE,
@@ -656,6 +656,7 @@ if (isMain && process.env.NODE_ENV !== "test") {
     console.log(`  CRM (admin)  : http://localhost:${PORT}/admin.html`);
     console.log(`  Token admin  : ${ADMIN_TOKEN}`);
     console.log(`  Version consentement : ${CONSENT_VERSION}`);
+    console.log(`  Base de donnees : ${engineName}`);
     const mode = mailerMode();
     console.log(`  Notifications : email=${mode.email}, sms=${mode.sms}`);
     console.log(
