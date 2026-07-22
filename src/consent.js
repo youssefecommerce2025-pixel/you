@@ -25,7 +25,7 @@ export const ORG = {
   email: "contact@[ton-domaine].fr",
   emailDpo: "dpo@[ton-domaine].fr",
   telephone: "[Numero]",
-  siteComparateur: "[nom-du-comparateur].fr",
+  siteComparateur: "AssurDom",
   // Mentions legales complementaires
   capitalSocial: "[Montant] €",
   rcs: "[Ville] [SIREN]",

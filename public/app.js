@@ -56,27 +56,61 @@ async function loadVariant() {
 
 function setupWhatsApp() {
   const num = (variant && variant.whatsapp) || (config && config.whatsapp);
-  const cta = document.getElementById("wa-cta");
-  if (!num || !cta) return;
+  const buttons = [document.getElementById("wa-cta"), document.getElementById("wa-float")].filter(
+    Boolean
+  );
+  if (!num || !buttons.length) return;
   const msg =
     (variant && variant.wa_message) ||
     "Bonjour, je souhaite comparer les mutuelles sante et recevoir un devis.";
-  cta.href = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
-  cta.hidden = false;
-  cta.addEventListener("click", () => {
-    const payload = {
-      ile: variant?.ile,
-      persona: variant?.persona,
-      variant: variant?.slug,
-      source: variant ? "lp:" + variant.slug : "whatsapp",
-      ...currentUtm(),
-    };
-    // Envoi non bloquant du tracking (n'empeche pas l'ouverture de WhatsApp)
-    try {
-      navigator.sendBeacon
-        ? navigator.sendBeacon("/api/track/whatsapp", new Blob([JSON.stringify(payload)], { type: "application/json" }))
-        : fetch("/api/track/whatsapp", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), keepalive: true });
-    } catch (e) {}
+  const href = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+  buttons.forEach((btn) => {
+    btn.href = href;
+    btn.hidden = false;
+    btn.addEventListener("click", () => {
+      const payload = {
+        ile: variant?.ile,
+        persona: variant?.persona || document.getElementById("f-persona")?.value,
+        variant: variant?.slug,
+        source: variant ? "lp:" + variant.slug : "whatsapp",
+        ...currentUtm(),
+      };
+      try {
+        navigator.sendBeacon
+          ? navigator.sendBeacon("/api/track/whatsapp", new Blob([JSON.stringify(payload)], { type: "application/json" }))
+          : fetch("/api/track/whatsapp", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), keepalive: true });
+      } catch (e) {}
+    });
+  });
+}
+
+// Boutons "Je suis senior / famille / fonctionnaire" : pre-selectionnent le profil
+// et amenent au formulaire.
+function setupSegments() {
+  const personaSel = document.getElementById("persona-visible");
+  const fPersona = document.getElementById("f-persona");
+  const fSituation = document.getElementById("f-situation");
+  const ageSel = document.querySelector('[name="tranche_age"]');
+
+  function applyPersona(persona, age) {
+    if (fPersona) fPersona.value = persona || "";
+    if (fSituation) fSituation.value = persona || "";
+    if (personaSel && persona) personaSel.value = persona;
+    if (age && ageSel && !ageSel.value) ageSel.value = age;
+  }
+
+  if (personaSel) {
+    personaSel.addEventListener("change", () => applyPersona(personaSel.value, ""));
+  }
+
+  document.querySelectorAll(".js-segment").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      applyPersona(btn.dataset.persona, btn.dataset.age);
+      const devis = document.getElementById("devis");
+      if (devis) devis.scrollIntoView({ behavior: "smooth", block: "start" });
+      const first = document.querySelector('#lead-form [name="prenom"]');
+      if (first) setTimeout(() => first.focus(), 400);
+    });
   });
 }
 
@@ -178,4 +212,5 @@ form.addEventListener("submit", async (e) => {
 (async function init() {
   await Promise.all([loadConfig(), loadVariant()]);
   setupWhatsApp();
+  setupSegments();
 })();

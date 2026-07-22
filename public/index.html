@@ -3,59 +3,77 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Comparez votre mutuelle sante &mdash; Devis gratuit</title>
+    <title>AssurDom — Votre mutuelle santé en Outre-mer, au meilleur prix</title>
     <meta
       name="description"
-      content="Comparez les offres de mutuelle sante et recevez un devis personnalise gratuit. Sans engagement."
+      content="AssurDom compare gratuitement les mutuelles santé adaptées à l'Outre-mer (Martinique, Guadeloupe, Réunion, Guyane). Devis gratuit, un conseiller vous rappelle. Sans engagement."
     />
+    <link rel="icon" href="/logo.png" />
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/cookies.css" />
   </head>
   <body>
-    <header class="topbar">
-      <div class="container topbar__inner">
-        <a class="brand" href="/">
-          <span class="brand__dot"></span>
-          <span id="brand-name">Mutuelle&nbsp;Compare</span>
+    <!-- Bandeau d'annonce -->
+    <div class="announce">
+      💙 Comparateur 100 % gratuit &middot; Adapté à l'Outre-mer &middot; Un conseiller vous rappelle
+    </div>
+
+    <!-- En-tête -->
+    <header class="nav">
+      <div class="container nav__inner">
+        <a class="brand" href="#top">
+          <img src="/logo.png" alt="AssurDom" class="brand__logo" />
+          <span class="brand__name" id="brand-name">AssurDom</span>
         </a>
-        <span class="topbar__badge">100&nbsp;% gratuit &middot; sans engagement</span>
+        <nav class="nav__links">
+          <a href="#pour-qui">Pour qui&nbsp;?</a>
+          <a href="#garanties">Garanties</a>
+          <a href="#comment">Comment ça marche</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <a href="#devis" class="btn btn--primary btn--sm">Mon devis gratuit</a>
       </div>
     </header>
 
-    <main>
+    <main id="top">
+      <!-- HERO -->
       <section class="hero">
         <div class="container hero__grid">
           <div class="hero__copy">
-            <h1 id="hero-title">Trouvez la mutuelle sante qui vous ressemble, au meilleur prix.</h1>
+            <span class="hero__eyebrow">Spécial Outre-mer 🌴</span>
+            <h1 id="hero-title">
+              Votre mutuelle santé en Outre-mer, simple et au meilleur prix.
+            </h1>
             <p class="hero__lead" id="hero-lead">
-              Recevez gratuitement un devis personnalise et laissez un courtier
-              partenaire vous rappeler pour comparer les offres. Simple, rapide, sans
-              engagement.
+              Que vous soyez senior, en famille ou fonctionnaire, comparez gratuitement les
+              mutuelles adaptées à votre situation en Martinique, Guadeloupe, Réunion et Guyane.
+              Un conseiller vous rappelle rapidement.
             </p>
             <ul class="hero__points" id="hero-points">
-              <li>Comparaison independante de plusieurs assureurs</li>
-              <li>Un conseiller vous rappelle uniquement si vous le demandez</li>
-              <li>Vos donnees protegees, hebergees en Union europeenne</li>
+              <li>Comparaison indépendante de plusieurs assureurs</li>
+              <li>Économies sur l'optique, le dentaire et l'hospitalisation</li>
+              <li>Conseiller à votre écoute &middot; données protégées (UE)</li>
             </ul>
-            <a id="wa-cta" class="btn-wa" href="#" hidden>
-              <span class="btn-wa__icon">&#128172;</span>
-              Discuter sur WhatsApp maintenant
-            </a>
-            <div class="trust">
-              <div class="trust__item"><strong>+150</strong><span>offres comparees</span></div>
-              <div class="trust__item"><strong>2&nbsp;min</strong><span>pour votre devis</span></div>
-              <div class="trust__item"><strong>0&euro;</strong><span>frais de service</span></div>
+            <div class="hero__cta">
+              <a href="#devis" class="btn btn--primary btn--lg">Recevoir mon devis gratuit</a>
+              <a id="wa-cta" class="btn-wa" href="#" hidden>
+                <span class="btn-wa__icon">💬</span> WhatsApp
+              </a>
+            </div>
+            <div class="hero__trust">
+              <span>⭐️⭐️⭐️⭐️⭐️ Des centaines d'Ultramarins accompagnés</span>
             </div>
           </div>
 
-          <div class="card form-card">
+          <!-- FORMULAIRE (conversion) -->
+          <div class="card form-card" id="devis">
             <h2 class="form-card__title">Mon devis gratuit</h2>
-            <p class="form-card__sub">Remplissez le formulaire, on s'occupe du reste.</p>
+            <p class="form-card__sub">2 minutes, sans engagement. Un conseiller vous rappelle.</p>
 
             <form id="lead-form" novalidate>
               <div class="row">
                 <label class="field field--sm">
-                  <span>Civilite</span>
+                  <span>Civilité</span>
                   <select name="civilite">
                     <option value="">--</option>
                     <option value="Mme">Mme</option>
@@ -63,7 +81,7 @@
                   </select>
                 </label>
                 <label class="field">
-                  <span>Prenom *</span>
+                  <span>Prénom *</span>
                   <input name="prenom" type="text" autocomplete="given-name" required />
                 </label>
               </div>
@@ -79,18 +97,30 @@
                   <input name="email" type="email" autocomplete="email" required />
                 </label>
                 <label class="field">
-                  <span>Telephone *</span>
-                  <input name="telephone" type="tel" autocomplete="tel" placeholder="06 12 34 56 78" required />
+                  <span>Téléphone *</span>
+                  <input name="telephone" type="tel" autocomplete="tel" placeholder="0696 12 34 56" required />
                 </label>
               </div>
 
               <div class="row">
                 <label class="field field--sm">
                   <span>Code postal</span>
-                  <input name="code_postal" type="text" inputmode="numeric" maxlength="5" />
+                  <input name="code_postal" type="text" inputmode="numeric" maxlength="5" placeholder="972.." />
                 </label>
                 <label class="field">
-                  <span>Tranche d'age</span>
+                  <span>Votre profil</span>
+                  <select name="persona_visible" id="persona-visible">
+                    <option value="">--</option>
+                    <option value="senior">Senior (60 ans et +)</option>
+                    <option value="famille">Famille</option>
+                    <option value="fonctionnaire">Fonctionnaire / Indépendant</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="row">
+                <label class="field">
+                  <span>Tranche d'âge</span>
                   <select name="tranche_age">
                     <option value="">--</option>
                     <option value="18-34">18 - 34 ans</option>
@@ -98,19 +128,6 @@
                     <option value="55-64">55 - 64 ans</option>
                     <option value="65-74">65 - 74 ans</option>
                     <option value="75+">75 ans et +</option>
-                  </select>
-                </label>
-              </div>
-
-              <div class="row">
-                <label class="field">
-                  <span>Situation</span>
-                  <select name="situation">
-                    <option value="">--</option>
-                    <option value="actif">Actif / salarie</option>
-                    <option value="independant">Independant / TNS</option>
-                    <option value="retraite">Retraite</option>
-                    <option value="sans_emploi">Sans emploi</option>
                   </select>
                 </label>
                 <label class="field">
@@ -124,49 +141,198 @@
               </div>
 
               <label class="field">
-                <span>Budget mensuel envisage</span>
+                <span>Budget mensuel envisagé</span>
                 <select name="budget_mensuel">
                   <option value="">--</option>
-                  <option value="0-30">Moins de 30 &euro;</option>
-                  <option value="30-60">30 - 60 &euro;</option>
-                  <option value="60-100">60 - 100 &euro;</option>
-                  <option value="100+">Plus de 100 &euro;</option>
+                  <option value="0-30">Moins de 30 €</option>
+                  <option value="30-60">30 - 60 €</option>
+                  <option value="60-100">60 - 100 €</option>
+                  <option value="100+">Plus de 100 €</option>
                 </select>
               </label>
 
-              <p class="nohealth">
-                Merci de ne renseigner aucune information de sante (maladie, traitement).
-                Nous n'en avons pas besoin et n'en collectons pas.
-              </p>
-
-              <!-- OPT-IN : case NON pre-cochee = acte positif clair (loi 30 juin 2025) -->
-              <label class="consent">
-                <input type="checkbox" id="consent_telephone" name="consent_telephone" />
-                <span id="consent-label">Chargement du texte de consentement&hellip;</span>
-              </label>
-
+              <!-- champ caché : situation reprend le profil -->
+              <input type="hidden" name="situation" id="f-situation" />
               <input type="hidden" name="ile" id="f-ile" />
               <input type="hidden" name="persona" id="f-persona" />
               <input type="hidden" name="source" id="f-source" />
 
-              <button class="btn btn--primary" type="submit" id="submit-btn">
-                Recevoir mon devis gratuit
-              </button>
-
-              <p class="form-note">
-                * Champs obligatoires. En validant, vous acceptez uniquement d'etre
-                recontacte pour votre demande de mutuelle sante.
+              <p class="nohealth">
+                🔒 Ne renseignez aucune information de santé (maladie, traitement). Nous n'en
+                collectons pas.
               </p>
 
+              <label class="consent">
+                <input type="checkbox" id="consent_telephone" name="consent_telephone" />
+                <span id="consent-label">Chargement…</span>
+              </label>
+
+              <button class="btn btn--primary btn--block" type="submit" id="submit-btn">
+                Recevoir mon devis gratuit →
+              </button>
+
+              <p class="form-note">* Champs obligatoires. Vous acceptez uniquement d'être recontacté pour votre mutuelle santé.</p>
               <div id="form-message" class="form-message" role="status" aria-live="polite"></div>
             </form>
           </div>
         </div>
       </section>
 
+      <!-- BARRE DE CONFIANCE -->
+      <section class="stats-band">
+        <div class="container stats-band__inner">
+          <div class="stat"><b>+150</b><span>offres comparées</span></div>
+          <div class="stat"><b>4</b><span>îles couvertes</span></div>
+          <div class="stat"><b>0 €</b><span>frais de service</span></div>
+          <div class="stat"><b>&lt; 24h</b><span>rappel conseiller</span></div>
+        </div>
+      </section>
+
+      <!-- POUR QUI ? (3 segments) -->
+      <section class="section" id="pour-qui">
+        <div class="container">
+          <h2 class="section__title">Une mutuelle adaptée à <span class="hl">votre situation</span></h2>
+          <p class="section__sub">Choisissez votre profil : on vous oriente vers les offres les plus pertinentes.</p>
+
+          <div class="segments">
+            <article class="segment">
+              <div class="segment__icon">👵🏾</div>
+              <h3>Seniors (60 ans et +)</h3>
+              <p>Mieux remboursé sur l'optique, le dentaire et l'hospitalisation, sans payer trop cher.</p>
+              <ul>
+                <li>Garanties renforcées optique &amp; dentaire</li>
+                <li>Hospitalisation bien couverte</li>
+                <li>Idéal Martinique &amp; Guadeloupe</li>
+              </ul>
+              <button class="btn btn--soft btn--block js-segment" data-persona="senior" data-age="65-74">
+                Je suis senior →
+              </button>
+            </article>
+
+            <article class="segment segment--featured">
+              <div class="segment__badge">Le plus demandé</div>
+              <div class="segment__icon">👨‍👩‍👧‍👦</div>
+              <h3>Familles</h3>
+              <p>La meilleure couverture pour toute la famille, au meilleur rapport prix / garanties.</p>
+              <ul>
+                <li>Toute la famille sur un seul contrat</li>
+                <li>Soins courants, optique, dentaire</li>
+                <li>Idéal La Réunion &amp; Guyane</li>
+              </ul>
+              <button class="btn btn--primary btn--block js-segment" data-persona="famille" data-age="35-54">
+                Je cherche pour ma famille →
+              </button>
+            </article>
+
+            <article class="segment">
+              <div class="segment__icon">💼</div>
+              <h3>Fonctionnaires &amp; Indépendants</h3>
+              <p>Optimisez votre complémentaire santé avec des garanties adaptées à votre statut.</p>
+              <ul>
+                <li>Offres pensées pour les agents publics</li>
+                <li>Solutions pour indépendants (TNS)</li>
+                <li>Garanties sur-mesure</li>
+              </ul>
+              <button class="btn btn--soft btn--block js-segment" data-persona="fonctionnaire" data-age="35-54">
+                Optimiser ma mutuelle →
+              </button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- POURQUOI ASSURDOM -->
+      <section class="section section--alt">
+        <div class="container why">
+          <div class="why__media">
+            <img src="/hero.png" alt="Mutuelle santé Outre-mer" />
+          </div>
+          <div class="why__copy">
+            <h2 class="section__title">Pourquoi choisir <span class="hl">AssurDom</span>&nbsp;?</h2>
+            <div class="why__item"><span>💰</span><div><b>Vous payez le juste prix</b><p>On compare pour vous plusieurs assureurs et on trouve le meilleur tarif à garanties égales.</p></div></div>
+            <div class="why__item"><span>📞</span><div><b>Un conseiller à votre écoute</b><p>Pas de robot : une vraie personne vous rappelle pour vous expliquer, sans jargon.</p></div></div>
+            <div class="why__item"><span>🌴</span><div><b>Pensé pour l'Outre-mer</b><p>Des offres et un accompagnement adaptés à la réalité de la Martinique, Guadeloupe, Réunion et Guyane.</p></div></div>
+            <div class="why__item"><span>🔒</span><div><b>Vos données protégées</b><p>Consentement clair, aucune donnée de santé collectée, hébergement en Union européenne.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GARANTIES -->
+      <section class="section" id="garanties">
+        <div class="container">
+          <h2 class="section__title">Ce que votre mutuelle peut <span class="hl">couvrir</span></h2>
+          <p class="section__sub">Selon la formule choisie, vous êtes mieux remboursé sur&nbsp;:</p>
+          <div class="guarantees">
+            <div class="guarantee"><span>👓</span><b>Optique</b><p>Lunettes, lentilles</p></div>
+            <div class="guarantee"><span>🦷</span><b>Dentaire</b><p>Soins, prothèses, implants</p></div>
+            <div class="guarantee"><span>🏥</span><b>Hospitalisation</b><p>Séjour, chambre particulière</p></div>
+            <div class="guarantee"><span>🩺</span><b>Soins courants</b><p>Médecin, spécialistes</p></div>
+            <div class="guarantee"><span>💊</span><b>Pharmacie</b><p>Médicaments</p></div>
+            <div class="guarantee"><span>🧑‍⚕️</span><b>Médecines douces</b><p>Ostéo, etc.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMMENT CA MARCHE -->
+      <section class="section section--alt" id="comment">
+        <div class="container">
+          <h2 class="section__title">Comment ça marche&nbsp;? <span class="hl">3 étapes</span></h2>
+          <div class="steps">
+            <div class="step"><div class="step__n">1</div><b>Vous remplissez le formulaire</b><p>2 minutes, gratuit et sans engagement.</p></div>
+            <div class="step"><div class="step__n">2</div><b>Un conseiller vous rappelle</b><p>Il comprend votre besoin et compare pour vous.</p></div>
+            <div class="step"><div class="step__n">3</div><b>Vous choisissez la meilleure offre</b><p>Vous économisez, bien couvert, l'esprit tranquille.</p></div>
+          </div>
+          <div class="center"><a href="#devis" class="btn btn--primary btn--lg">Je commence maintenant</a></div>
+        </div>
+      </section>
+
+      <!-- TEMOIGNAGES -->
+      <section class="section" id="avis">
+        <div class="container">
+          <h2 class="section__title">Ils nous ont fait <span class="hl">confiance</span></h2>
+          <div class="reviews">
+            <blockquote class="review">
+              <p>« J'ai économisé sur ma mutuelle et je suis mieux remboursée pour mes lunettes. Conseiller très clair. »</p>
+              <footer>— Marie-Claire, Martinique</footer>
+            </blockquote>
+            <blockquote class="review">
+              <p>« Rapide et sans prise de tête. On a trouvé une mutuelle pour toute la famille au bon prix. »</p>
+              <footer>— David, La Réunion</footer>
+            </blockquote>
+            <blockquote class="review">
+              <p>« En tant que fonctionnaire, j'ai enfin une couverture adaptée. Je recommande. »</p>
+              <footer>— Sandrine, Guadeloupe</footer>
+            </blockquote>
+          </div>
+          <p class="reviews__note">Témoignages illustratifs.</p>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section section--alt" id="faq">
+        <div class="container container--narrow">
+          <h2 class="section__title">Questions <span class="hl">fréquentes</span></h2>
+          <details class="faq"><summary>Est-ce vraiment gratuit&nbsp;?</summary><p>Oui, la comparaison et la mise en relation sont 100 % gratuites et sans engagement.</p></details>
+          <details class="faq"><summary>Qui va m'appeler&nbsp;?</summary><p>Un conseiller en assurance partenaire, uniquement si vous avez donné votre accord dans le formulaire.</p></details>
+          <details class="faq"><summary>Est-ce adapté à mon île&nbsp;?</summary><p>Oui : nous accompagnons la Martinique, la Guadeloupe, La Réunion et la Guyane.</p></details>
+          <details class="faq"><summary>Devez-vous connaître mon état de santé&nbsp;?</summary><p>Non. Nous ne collectons aucune donnée de santé. Merci de ne pas en communiquer.</p></details>
+          <details class="faq"><summary>Puis-je changer d'avis&nbsp;?</summary><p>Oui, à tout moment. Vous pouvez retirer votre consentement et vous désinscrire facilement.</p></details>
+        </div>
+      </section>
+
+      <!-- CTA FINAL -->
+      <section class="cta-final">
+        <div class="container center">
+          <h2>Prêt à payer moins cher votre mutuelle&nbsp;?</h2>
+          <p>Recevez votre devis gratuit en 2 minutes. Un conseiller vous rappelle.</p>
+          <a href="#devis" class="btn btn--light btn--lg">Recevoir mon devis gratuit</a>
+        </div>
+      </section>
+
+      <!-- Mentions RGPD (repliees) -->
       <section class="legal container">
         <details>
-          <summary>Mentions d'information et protection des donnees (RGPD)</summary>
+          <summary>Mentions d'information et protection des données (RGPD)</summary>
           <ul id="legal-notice" class="legal__list"></ul>
         </details>
       </section>
@@ -174,15 +340,25 @@
 
     <footer class="footer">
       <div class="container footer__inner">
-        <span id="footer-brand">Mutuelle Compare</span>
+        <div class="footer__brand">
+          <img src="/logo.png" alt="AssurDom" />
+          <span id="footer-brand">AssurDom</span>
+        </div>
         <span class="footer__links">
-          <a href="/mentions-legales.html">Mentions legales</a>
-          <a href="/confidentialite.html">Politique de confidentialite</a>
+          <a href="/mentions-legales.html">Mentions légales</a>
+          <a href="/confidentialite.html">Confidentialité</a>
           <a href="#" onclick="event.preventDefault();window.cookieConsent&&window.cookieConsent.open()">Cookies</a>
           <a href="/admin.html">Espace conseiller</a>
         </span>
       </div>
+      <div class="container footer__legal">
+        AssurDom est un service de comparaison et de mise en relation. Les contrats sont distribués
+        par des courtiers partenaires immatriculés à l'ORIAS.
+      </div>
     </footer>
+
+    <!-- Bouton WhatsApp flottant -->
+    <a id="wa-float" class="wa-float" href="#" hidden aria-label="WhatsApp">💬</a>
 
     <script src="/app.js"></script>
     <script src="/cookies.js" defer></script>
