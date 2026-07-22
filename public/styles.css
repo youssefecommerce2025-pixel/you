@@ -73,8 +73,9 @@ a { color: var(--brand-dark); }
 .hero__points li { position: relative; padding-left: 30px; color: #eaf5f6; }
 .hero__points li::before { content: "✓"; position: absolute; left: 0; top: 1px; width: 20px; height: 20px; border-radius: 50%; background: #eab308; color: #3d2c00; font-size: 0.72rem; font-weight: 800; display: grid; place-items: center; }
 .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-.hero__logo { margin-top: 26px; }
-.hero__logo img { width: 150px; height: 150px; border-radius: 24px; background: #fff; padding: 10px; box-shadow: var(--shadow-lg); }
+.hero__logo { margin-top: 30px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.hero__logo img { width: 230px; height: 230px; border-radius: 28px; background: #fff; padding: 14px; box-shadow: var(--shadow-lg); }
+.hero__logo-name { margin-top: 14px; font-weight: 800; font-size: 2rem; color: #fff; letter-spacing: -0.02em; }
 
 /* Carte formulaire */
 .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-lg); }
