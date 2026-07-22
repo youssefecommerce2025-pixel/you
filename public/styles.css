@@ -66,14 +66,15 @@ a { color: var(--brand-dark); }
 /* Hero */
 .hero { background: radial-gradient(1100px 500px at 12% -10%, #14586a 0%, var(--navy) 55%); color: #e9f5f6; padding: 60px 0 80px; }
 .hero__grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: start; }
-.hero__eyebrow { display: inline-block; background: rgba(255, 255, 255, 0.12); color: #eafaf8; padding: 5px 12px; border-radius: 999px; font-size: 0.82rem; font-weight: 600; margin-bottom: 14px; }
+.hero__eyebrow { display: inline-block; background: rgba(255, 255, 255, 0.14); color: #fff; padding: 9px 20px; border-radius: 999px; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; letter-spacing: 0.01em; }
 .hero__copy h1 { font-size: 2.65rem; line-height: 1.1; margin: 0 0 16px; color: #fff; letter-spacing: -0.02em; }
 .hero__lead { font-size: 1.12rem; color: #cfe4e6; margin: 0 0 22px; }
 .hero__points { list-style: none; padding: 0; margin: 0 0 26px; display: grid; gap: 10px; }
 .hero__points li { position: relative; padding-left: 30px; color: #eaf5f6; }
 .hero__points li::before { content: "✓"; position: absolute; left: 0; top: 1px; width: 20px; height: 20px; border-radius: 50%; background: #eab308; color: #3d2c00; font-size: 0.72rem; font-weight: 800; display: grid; place-items: center; }
 .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-.hero__trust { margin-top: 18px; font-size: 0.88rem; color: #bfe0e2; }
+.hero__logo { margin-top: 26px; }
+.hero__logo img { width: 150px; height: 150px; border-radius: 24px; background: #fff; padding: 10px; box-shadow: var(--shadow-lg); }
 
 /* Carte formulaire */
 .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-lg); }
