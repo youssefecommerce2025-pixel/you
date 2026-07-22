@@ -15,7 +15,7 @@
  * Les anciens leads gardent la version sous laquelle ils ont consenti (tracabilite).
  */
 
-export const CONSENT_VERSION = "2026-08-v1";
+export const CONSENT_VERSION = "2026-08-v2";
 
 // Personnalise ces valeurs avec ta vraie raison sociale / mentions.
 export const ORG = {
@@ -41,12 +41,10 @@ export const ORG = {
 };
 
 // Case a cocher obligatoire (opt-in telephonique specifique) - decochee par defaut.
-export const CONSENT_TELEPHONE = [
-  `J'accepte d'etre contacte(e) par telephone par ${ORG.raisonSociale}`,
-  `et/ou un courtier en assurance partenaire immatricule a l'ORIAS,`,
-  `afin de recevoir un devis et des offres de mutuelle sante correspondant a ma demande.`,
-  `Je comprends que je peux retirer ce consentement a tout moment.`,
-].join(" ");
+export const CONSENT_TELEPHONE =
+  "J'accepte d'être contacté(e) par téléphone par un courtier en assurance partenaire " +
+  "immatriculé à l'ORIAS, afin de recevoir un devis et des offres de mutuelle santé " +
+  "correspondant à ma demande. Je comprends que je peux retirer ce consentement à tout moment.";
 
 // Mention d'information (RGPD) affichee sous le formulaire - non cochable, informative.
 export function mentionInformation() {

@@ -70,7 +70,8 @@ test("GET /api/config expose la version et le libelle de consentement", async ()
   const r = await req("GET", "/api/config");
   assert.equal(r.status, 200);
   assert.ok(r.json.consentVersion);
-  assert.match(r.json.consentCheckboxLabel, /telephone/i);
+  assert.match(r.json.consentCheckboxLabel, /t[ée]l[ée]phone/i);
+  assert.match(r.json.consentCheckboxLabel, /ORIAS/);
 });
 
 test("POST /api/leads refuse sans consentement", async () => {
