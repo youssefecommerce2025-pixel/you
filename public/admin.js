@@ -340,16 +340,62 @@ document.querySelectorAll(".tab").forEach((t) => {
 });
 el("analytics-days").addEventListener("change", loadAnalytics);
 el("spend-form").addEventListener("submit", addSpend);
+["sim-budget", "sim-cpl", "sim-taux", "sim-prix", "sim-reventes", "sim-frais"].forEach((id) => {
+  const node = el(id);
+  if (node) node.addEventListener("input", computeSim);
+});
 
 function switchView(view) {
   document.querySelectorAll(".tab").forEach((t) =>
     t.classList.toggle("tab--active", t.dataset.view === view)
   );
   const isAnalytics = view === "analytics";
+  const isSim = view === "simulateur";
+  const isLeads = view === "leads";
   el("view-analytics").hidden = !isAnalytics;
-  el("leads-toolbar").hidden = isAnalytics;
-  el("leads-table-wrap").hidden = isAnalytics;
+  el("view-simulateur").hidden = !isSim;
+  el("leads-toolbar").hidden = !isLeads;
+  el("leads-table-wrap").hidden = !isLeads;
   if (isAnalytics) loadAnalytics();
+  if (isSim) computeSim();
+}
+
+function numVal(id) {
+  const v = parseFloat(el(id).value);
+  return Number.isFinite(v) ? v : 0;
+}
+
+function eur(n) {
+  return new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 }).format(Math.round(n)) + " €";
+}
+
+function computeSim() {
+  const budget = numVal("sim-budget");
+  const cpl = numVal("sim-cpl");
+  const taux = numVal("sim-taux") / 100;
+  const prix = numVal("sim-prix");
+  const reventes = Math.max(1, numVal("sim-reventes") || 1);
+  const frais = numVal("sim-frais");
+
+  const leadsAcquis = cpl > 0 ? budget / cpl : 0;
+  const leadsVendables = leadsAcquis * taux;
+  const ca = leadsVendables * prix * reventes;
+  const coutTotal = budget + frais;
+  const benefice = ca - coutTotal;
+  const marge = ca > 0 ? (benefice / ca) * 100 : 0;
+  const roas = budget > 0 ? ca / budget : 0;
+
+  const benefClass = benefice >= 0 ? "big" : "neg";
+  el("sim-results").innerHTML = [
+    `<div class="sim-kpi"><b>${Math.round(leadsAcquis)}</b><span>leads acquis / mois</span></div>`,
+    `<div class="sim-kpi"><b>${Math.round(leadsVendables)}</b><span>leads vendables / mois</span></div>`,
+    `<div class="sim-kpi big"><b>${eur(ca)}</b><span>Chiffre d'affaires / mois</span></div>`,
+    `<div class="sim-kpi"><b>${eur(coutTotal)}</b><span>Coûts (pub + frais)</span></div>`,
+    `<div class="sim-kpi ${benefClass}"><b>${eur(benefice)}</b><span>Bénéfice estimé / mois</span></div>`,
+    `<div class="sim-kpi"><b>${marge.toFixed(0)} %</b><span>Marge nette</span></div>`,
+    `<div class="sim-kpi"><b>${roas.toFixed(1)}×</b><span>Retour sur pub (ROAS)</span></div>`,
+    `<div class="sim-kpi"><b>${eur(ca * 12)}</b><span>CA annualisé</span></div>`,
+  ].join("");
 }
 
 function renderAggTable(container, rows) {

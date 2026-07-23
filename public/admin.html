@@ -34,6 +34,7 @@
       <div class="tabs">
         <button class="tab tab--active" data-view="leads">Leads</button>
         <button class="tab" data-view="analytics">Analytics</button>
+        <button class="tab" data-view="simulateur">Simulateur CA</button>
       </div>
 
       <div class="stats" id="stats"></div>
@@ -87,6 +88,48 @@
           <div class="acard"><h3>Par persona</h3><div id="an-persona"></div></div>
           <div class="acard"><h3>Par source</h3><div id="an-source"></div></div>
           <div class="acard"><h3>Par campagne (UTM)</h3><div id="an-utm-campaign"></div></div>
+        </div>
+      </section>
+
+      <!-- Vue Simulateur de chiffre d'affaires -->
+      <section id="view-simulateur" hidden>
+        <div class="sim">
+          <div class="acard">
+            <h3>Vos hypothèses</h3>
+            <div class="sim-form">
+              <label>Budget publicitaire / mois (€)
+                <input type="number" id="sim-budget" value="5000" min="0" step="100" />
+              </label>
+              <label>Coût par lead acquis — CPL (€)
+                <input type="number" id="sim-cpl" value="12" min="0" step="0.5" />
+              </label>
+              <label>Part de leads vendables (%)
+                <input type="number" id="sim-taux" value="55" min="0" max="100" step="1" />
+              </label>
+              <label>Prix de vente d'un lead (€)
+                <input type="number" id="sim-prix" value="30" min="0" step="1" />
+              </label>
+              <label>Reventes par lead (1 = exclusif)
+                <input type="number" id="sim-reventes" value="1" min="1" max="5" step="1" />
+              </label>
+              <label>Autres frais fixes / mois (€)
+                <input type="number" id="sim-frais" value="200" min="0" step="50" />
+              </label>
+            </div>
+            <p class="muted" style="font-size:0.8rem;margin:10px 0 0">
+              Astuce : mets un CPL réaliste (8–20 € au DOM) et un prix de vente selon l'exclusivité
+              (25–50 € exclusif, 8–20 € mutualisé). Passe « Reventes » à 2-3 pour simuler le mutualisé.
+            </p>
+          </div>
+
+          <div class="acard">
+            <h3>Résultats estimés / mois</h3>
+            <div class="sim-results" id="sim-results"></div>
+            <p class="muted" style="font-size:0.78rem;margin:12px 0 0">
+              Estimations indicatives. Les résultats réels dépendent de la performance des campagnes
+              et de tes acheteurs (courtiers).
+            </p>
+          </div>
         </div>
       </section>
 

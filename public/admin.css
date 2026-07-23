@@ -29,6 +29,18 @@
 .acard td.num, .acard th.num { text-align: right; }
 .bar { height: 6px; background: #e0e7ff; border-radius: 4px; overflow: hidden; margin-top: 4px; }
 .bar > i { display: block; height: 100%; background: var(--primary); }
+.sim { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+.sim-form { display: grid; gap: 14px; }
+.sim-form label { display: grid; gap: 6px; font-size: 0.9rem; font-weight: 600; color: #334155; }
+.sim-form input { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; font-size: 1rem; }
+.sim-results { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sim-kpi { background: #f8fafc; border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.sim-kpi b { display: block; font-size: 1.5rem; color: var(--text); }
+.sim-kpi.big b { color: #047857; }
+.sim-kpi.neg b { color: #b91c1c; }
+.sim-kpi span { font-size: 0.8rem; color: var(--muted); }
+@media (max-width: 760px) { .sim { grid-template-columns: 1fr; } }
+
 .spend-form { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
 .spend-form input, .spend-form select { padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; font-size: 0.85rem; }
 .spend-form input[type="number"] { width: 110px; }
