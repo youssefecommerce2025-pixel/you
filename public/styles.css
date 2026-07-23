@@ -123,6 +123,8 @@ a { color: var(--brand-dark); }
 .segment ul { list-style: none; padding: 0; margin: 0 0 20px; display: grid; gap: 8px; }
 .segment ul li { position: relative; padding-left: 26px; font-size: 0.92rem; }
 .segment ul li::before { content: "✓"; position: absolute; left: 0; color: var(--brand); font-weight: 800; }
+.segment__saving { margin: 0 0 20px !important; padding: 10px 12px; border-radius: 10px; background: #fff6e8; color: #8a4b00 !important; font-size: 0.85rem; line-height: 1.35; }
+.segment__saving strong { color: #b85d00; font-size: 1.05rem; }
 .segment .btn { margin-top: auto; }
 
 /* Pourquoi */
