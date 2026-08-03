@@ -19,6 +19,10 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
+/* Un element avec l'attribut hidden doit TOUJOURS etre masque,
+   meme si une classe lui donne un display (flex/grid...). */
+[hidden] { display: none !important; }
+
 body {
   margin: 0;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
