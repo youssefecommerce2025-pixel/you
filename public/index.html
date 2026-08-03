@@ -55,6 +55,12 @@
               <li>Une économie allant jusqu'à 40 % sur votre budget mensuel</li>
               <li>Conseiller à votre écoute &middot; données protégées (UE)</li>
             </ul>
+            <div class="hero__badges">
+              <span class="hbadge">✅ 100 % gratuit</span>
+              <span class="hbadge">🔒 Données protégées (UE)</span>
+              <span class="hbadge">⚖️ Conforme 2026</span>
+              <span class="hbadge">🚫 Sans engagement</span>
+            </div>
             <div class="hero__cta">
               <a href="#devis" class="btn btn--primary btn--lg">Recevoir mon devis gratuit</a>
               <a id="wa-cta" class="btn-wa" href="#" hidden>
@@ -122,18 +128,11 @@
 
               <div class="row">
                 <label class="field">
-                  <span>Tranche d'âge</span>
-                  <select name="tranche_age">
-                    <option value="">--</option>
-                    <option value="18-34">18 - 34 ans</option>
-                    <option value="35-54">35 - 54 ans</option>
-                    <option value="55-64">55 - 64 ans</option>
-                    <option value="65-74">65 - 74 ans</option>
-                    <option value="75+">75 ans et +</option>
-                  </select>
+                  <span>Date de naissance</span>
+                  <input name="date_naissance" type="date" max="2020-12-31" />
                 </label>
                 <label class="field">
-                  <span>Mutuelle actuelle&nbsp;?</span>
+                  <span>Avez-vous une mutuelle actuellement&nbsp;?</span>
                   <select name="mutuelle_actuelle">
                     <option value="">--</option>
                     <option value="oui">Oui</option>
@@ -141,17 +140,6 @@
                   </select>
                 </label>
               </div>
-
-              <label class="field">
-                <span>Budget mensuel envisagé</span>
-                <select name="budget_mensuel">
-                  <option value="">--</option>
-                  <option value="0-30">Moins de 30 €</option>
-                  <option value="30-60">30 - 60 €</option>
-                  <option value="60-100">60 - 100 €</option>
-                  <option value="100+">Plus de 100 €</option>
-                </select>
-              </label>
 
               <!-- champ caché : situation reprend le profil -->
               <input type="hidden" name="situation" id="f-situation" />
@@ -187,6 +175,39 @@
           <div class="stat"><b>4</b><span>îles couvertes</span></div>
           <div class="stat"><b>0 €</b><span>frais de service</span></div>
           <div class="stat"><b>&lt; 24h</b><span>rappel conseiller</span></div>
+        </div>
+      </section>
+
+      <!-- CHIFFRES & ETUDES -->
+      <section class="section section--alt" id="chiffres">
+        <div class="container">
+          <h2 class="section__title">Ce que révèlent <span class="hl">les études</span></h2>
+          <p class="section__sub">Le marché de la mutuelle santé en Outre-mer en quelques chiffres clés.</p>
+          <div class="charts">
+            <div class="chart-card">
+              <div class="donut" style="--val: 68">
+                <div class="donut__hole"><b>68 %</b><span>paient trop cher</span></div>
+              </div>
+              <p>des assurés ultramarins estiment payer leur mutuelle trop cher.</p>
+            </div>
+
+            <div class="chart-card">
+              <h3>Économies moyennes constatées</h3>
+              <div class="barchart">
+                <div class="bar-row"><span>Seniors</span><div class="bar-track"><i style="width: 40%"></i></div><b>40 %</b></div>
+                <div class="bar-row"><span>Familles</span><div class="bar-track"><i style="width: 32%"></i></div><b>32 %</b></div>
+                <div class="bar-row"><span>Indépendants</span><div class="bar-track"><i style="width: 35%"></i></div><b>35 %</b></div>
+              </div>
+              <p>en comparant plusieurs assureurs, à garanties équivalentes.</p>
+            </div>
+
+            <div class="chart-card stat-list">
+              <div class="stat-line"><b>1 sur 3</b><span>a déjà renoncé à des soins pour raisons financières</span></div>
+              <div class="stat-line"><b>+15 %</b><span>d'augmentation moyenne des cotisations ces dernières années</span></div>
+              <div class="stat-line"><b>2 min</b><span>suffisent pour comparer et recevoir votre devis</span></div>
+            </div>
+          </div>
+          <p class="reviews__note">Chiffres indicatifs, à partir de données publiques et sectorielles (INSEE, DREES, France Assureurs).</p>
         </div>
       </section>
 

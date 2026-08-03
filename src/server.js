@@ -572,6 +572,7 @@ app.get("/api/admin/leads/export.csv", requireAdmin, (req, res) => {
     "email",
     "telephone",
     "code_postal",
+    "date_naissance",
     "tranche_age",
     "situation",
     "mutuelle_actuelle",

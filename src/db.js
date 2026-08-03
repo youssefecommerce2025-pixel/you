@@ -64,7 +64,8 @@ function init() {
       code_postal       TEXT,
 
       -- Qualification metier (PAS de donnees de sante)
-      tranche_age       TEXT,   -- ex: '55-64', '65-74', '75+'
+      date_naissance    TEXT,   -- 'YYYY-MM-DD'
+      tranche_age       TEXT,   -- derive de la date de naissance : '55-64', '65-74', '75+'
       situation         TEXT,   -- ex: 'actif', 'retraite', 'independant'
       mutuelle_actuelle TEXT,   -- ex: 'oui', 'non'
       budget_mensuel    TEXT,   -- ex: '30-60', '60-100', '100+'
@@ -176,6 +177,7 @@ function init() {
     source: "TEXT",
     ile: "TEXT",
     persona: "TEXT",
+    date_naissance: "TEXT",
     utm_source: "TEXT",
     utm_medium: "TEXT",
     utm_campaign: "TEXT",

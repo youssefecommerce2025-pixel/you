@@ -7,6 +7,20 @@ import { buildConsentSnapshot } from "./consent.js";
 
 const nowIso = () => new Date().toISOString();
 
+// Derive une tranche d'age a partir d'une date de naissance (YYYY-MM-DD).
+export function trancheFromDOB(dob) {
+  if (!dob) return null;
+  const d = new Date(dob);
+  if (isNaN(d.getTime())) return null;
+  const age = Math.floor((Date.now() - d.getTime()) / (365.25 * 24 * 3600 * 1000));
+  if (age < 0 || age > 120) return null;
+  if (age < 35) return "18-34";
+  if (age < 55) return "35-54";
+  if (age < 65) return "55-64";
+  if (age < 75) return "65-74";
+  return "75+";
+}
+
 export function computeScore(l) {
   let s = 0;
   if (l.telephone) s += 20;
@@ -34,12 +48,12 @@ export function validateLead(body) {
 const insertLead = db.prepare(`
   INSERT INTO leads (
     created_at, updated_at, civilite, prenom, nom, email, telephone, code_postal,
-    tranche_age, situation, mutuelle_actuelle, budget_mensuel,
+    date_naissance, tranche_age, situation, mutuelle_actuelle, budget_mensuel,
     source, ile, persona, utm_source, utm_medium, utm_campaign, utm_term, utm_content,
     statut, score, double_optin_confirme
   ) VALUES (
     @created_at, @updated_at, @civilite, @prenom, @nom, @email, @telephone, @code_postal,
-    @tranche_age, @situation, @mutuelle_actuelle, @budget_mensuel,
+    @date_naissance, @tranche_age, @situation, @mutuelle_actuelle, @budget_mensuel,
     @source, @ile, @persona, @utm_source, @utm_medium, @utm_campaign, @utm_term, @utm_content,
     @statut, @score, @double_optin_confirme
   )
@@ -83,7 +97,8 @@ export function createLeadWithConsent({ body, email, telephone, source, consent 
     email,
     telephone,
     code_postal: body.code_postal ? String(body.code_postal).trim() : null,
-    tranche_age: body.tranche_age || null,
+    date_naissance: body.date_naissance || null,
+    tranche_age: body.tranche_age || trancheFromDOB(body.date_naissance) || null,
     situation: body.situation || null,
     mutuelle_actuelle: body.mutuelle_actuelle || null,
     budget_mensuel: body.budget_mensuel || null,
