@@ -10,7 +10,7 @@ import {
 } from "./consent.js";
 import { sendDoubleOptinConfirmation, mailerMode } from "./notifier.js";
 import { dispatchLead, deliveriesForLead, webhookConfigured } from "./webhook.js";
-import { createLeadWithConsent, validateLead, computeScore } from "./leads.js";
+import { createLeadWithConsent, validateLead, computeScore, trancheFromDOB } from "./leads.js";
 import { getVariant, listVariants, WHATSAPP_NUMBER } from "./variants.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -475,13 +475,19 @@ app.patch("/api/admin/leads/:id", requireAdmin, async (req, res) => {
     return res.status(400).json({ error: "statut invalide" });
   }
 
+  const date_naissance = b.date_naissance ?? lead.date_naissance;
   const fields = {
     statut: b.statut ?? lead.statut,
     notes: b.notes ?? lead.notes,
     assigne_a: b.assigne_a ?? lead.assigne_a,
     courtier_orias: b.courtier_orias ?? lead.courtier_orias,
-    tranche_age: b.tranche_age ?? lead.tranche_age,
+    date_naissance,
+    // La tranche d'age est recalculee a partir de la date de naissance si fournie.
+    tranche_age: b.date_naissance
+      ? trancheFromDOB(b.date_naissance) || lead.tranche_age
+      : b.tranche_age ?? lead.tranche_age,
     situation: b.situation ?? lead.situation,
+    persona: b.persona ?? lead.persona,
     mutuelle_actuelle: b.mutuelle_actuelle ?? lead.mutuelle_actuelle,
     budget_mensuel: b.budget_mensuel ?? lead.budget_mensuel,
   };
@@ -496,8 +502,8 @@ app.patch("/api/admin/leads/:id", requireAdmin, async (req, res) => {
 
   db.prepare(
     `UPDATE leads SET statut=@statut, notes=@notes, assigne_a=@assigne_a,
-      courtier_orias=@courtier_orias, tranche_age=@tranche_age, situation=@situation,
-      mutuelle_actuelle=@mutuelle_actuelle, budget_mensuel=@budget_mensuel,
+      courtier_orias=@courtier_orias, date_naissance=@date_naissance, tranche_age=@tranche_age,
+      situation=@situation, persona=@persona, mutuelle_actuelle=@mutuelle_actuelle, budget_mensuel=@budget_mensuel,
       score=@score, transmis_at=@transmis_at, updated_at=@updated_at WHERE id=@id`
   ).run({ ...fields, score, transmis_at, updated_at: nowIso(), id });
 
@@ -641,6 +647,108 @@ app.get("/api/admin/leads/:id/consent", requireAdmin, (req, res) => {
       },
     },
   });
+});
+
+/* --------------------------------------------------------------------------
+ * Certificat de consentement (document HTML imprimable / enregistrable en PDF)
+ * ------------------------------------------------------------------------ */
+app.get("/api/admin/leads/:id/consent/certificate", requireAdmin, (req, res) => {
+  const id = Number(req.params.id);
+  const lead = db.prepare("SELECT * FROM leads WHERE id = ?").get(id);
+  if (!lead) return res.status(404).send("Lead introuvable");
+  const proof = db
+    .prepare("SELECT * FROM consent_proofs WHERE lead_id = ? ORDER BY id DESC LIMIT 1")
+    .get(id);
+  if (!proof) return res.status(404).send("Aucune preuve de consentement");
+
+  const snap = JSON.parse(proof.consent_text);
+  const esc = (s) =>
+    String(s ?? "").replace(/[&<>"]/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])
+    );
+  const fmtDate = (iso) => {
+    try {
+      return new Date(iso).toLocaleString("fr-FR", { timeZone: "UTC" }) + " (UTC)";
+    } catch {
+      return esc(iso);
+    }
+  };
+  const oui = (v) => (v ? "Oui" : "Non");
+
+  const html = `<!doctype html>
+<html lang="fr"><head><meta charset="utf-8" />
+<title>Certificat de consentement - ${esc(lead.prenom)} ${esc(lead.nom)}</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #12333d; margin: 0; background: #f4f9fa; }
+  .sheet { max-width: 800px; margin: 24px auto; background: #fff; border: 1px solid #e3edef; border-radius: 14px; padding: 40px; }
+  .head { display: flex; align-items: center; gap: 14px; border-bottom: 2px solid #0e9e92; padding-bottom: 18px; margin-bottom: 22px; }
+  .head img { width: 54px; height: 54px; border-radius: 12px; }
+  .head h1 { margin: 0; font-size: 1.4rem; color: #0c3a48; }
+  .head span { color: #5b7683; font-size: 0.9rem; }
+  h2 { font-size: 1rem; color: #0b7d74; margin: 26px 0 8px; text-transform: uppercase; letter-spacing: 0.03em; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  td { padding: 8px 6px; border-bottom: 1px solid #eef4f5; vertical-align: top; }
+  td.k { color: #5b7683; width: 230px; }
+  .quote { background: #f2f8f9; border: 1px solid #e3edef; border-radius: 10px; padding: 14px; font-size: 0.9rem; white-space: pre-wrap; }
+  .foot { margin-top: 26px; font-size: 0.78rem; color: #5b7683; border-top: 1px solid #eef4f5; padding-top: 14px; }
+  .actions { max-width: 800px; margin: 0 auto 12px; text-align: right; }
+  .btn { background: #0e9e92; color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.95rem; }
+  @media print { .actions { display: none; } body { background: #fff; } .sheet { border: none; margin: 0; max-width: none; } }
+</style></head>
+<body>
+  <div class="actions"><button class="btn" onclick="window.print()">Imprimer / Enregistrer en PDF</button></div>
+  <div class="sheet">
+    <div class="head">
+      <img src="/logo.png" alt="AssurDom" />
+      <div>
+        <h1>Certificat de consentement</h1>
+        <span>Preuve de consentement au démarchage téléphonique &middot; ${esc(ORG.siteComparateur)}</span>
+      </div>
+    </div>
+
+    <h2>Personne concernée</h2>
+    <table>
+      <tr><td class="k">Nom et prénom</td><td>${esc(lead.civilite || "")} ${esc(lead.prenom)} ${esc(lead.nom)}</td></tr>
+      <tr><td class="k">Email</td><td>${esc(lead.email)}</td></tr>
+      <tr><td class="k">Téléphone</td><td>${esc(lead.telephone)}</td></tr>
+      <tr><td class="k">Référence du lead</td><td>#${lead.id}</td></tr>
+    </table>
+
+    <h2>Preuve de consentement</h2>
+    <table>
+      <tr><td class="k">Date et heure du consentement</td><td>${fmtDate(proof.collected_at)}</td></tr>
+      <tr><td class="k">Adresse IP</td><td>${esc(proof.ip_address)}</td></tr>
+      <tr><td class="k">Page de recueil (URL)</td><td>${esc(proof.source_url)}</td></tr>
+      <tr><td class="k">Navigateur / appareil</td><td>${esc(proof.user_agent || "-")}</td></tr>
+      <tr><td class="k">Version du consentement</td><td>${esc(proof.consent_version)}</td></tr>
+      <tr><td class="k">Case cochée volontairement</td><td>${oui(proof.consent_checkbox)}</td></tr>
+      <tr><td class="k">Méthode</td><td>${proof.method === "double_optin" ? "Double opt-in" : "Opt-in"}</td></tr>
+      ${
+        proof.method === "double_optin"
+          ? `<tr><td class="k">Confirmation double opt-in</td><td>${
+              proof.confirmed_at ? fmtDate(proof.confirmed_at) + " (IP " + esc(proof.confirm_ip || "-") + ")" : "En attente"
+            }</td></tr>`
+          : ""
+      }
+    </table>
+
+    <h2>Texte exact présenté à la personne</h2>
+    <div class="quote">${esc(snap.checkbox_label || "")}</div>
+
+    <h2>Mention d'information affichée</h2>
+    <div class="quote">${esc(snap.information_notice || "")}</div>
+
+    <div class="foot">
+      Ce certificat atteste du recueil du consentement conformément au RGPD et à la loi n° 2025-594
+      du 30 juin 2025. Document généré le ${fmtDate(nowIso())} par ${esc(ORG.siteComparateur)}.
+      À conserver à titre de preuve (durée recommandée : 5 ans).
+    </div>
+  </div>
+</body></html>`;
+
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  res.send(html);
 });
 
 app.get("/health", (req, res) => res.json({ ok: true, ts: nowIso() }));

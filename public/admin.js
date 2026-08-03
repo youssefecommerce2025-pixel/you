@@ -93,7 +93,7 @@ async function loadLeads() {
   el("leads-body").innerHTML = (leads || [])
     .map((l) => {
       const date = new Date(l.created_at).toLocaleString("fr-FR");
-      const profil = [l.tranche_age, l.situation, l.budget_mensuel ? l.budget_mensuel + "€" : null]
+      const profil = [l.tranche_age, l.persona]
         .filter(Boolean)
         .join(" · ");
       const consent =
@@ -156,45 +156,26 @@ async function openPanel(id) {
     </div>
 
     <div class="grp">
-      <label>Tranche d'age</label>
-      ${optSel("tranche_age", lead.tranche_age, [
+      <label>Date de naissance${lead.tranche_age ? ` (tranche : ${esc(lead.tranche_age)})` : ""}</label>
+      <input type="date" data-field="date_naissance" value="${esc(lead.date_naissance || "")}" />
+    </div>
+
+    <div class="grp">
+      <label>Profil</label>
+      ${optSel("persona", lead.persona, [
         { v: "", t: "—" },
-        { v: "18-34", t: "18-34" },
-        { v: "35-54", t: "35-54" },
-        { v: "55-64", t: "55-64" },
-        { v: "65-74", t: "65-74" },
-        { v: "75+", t: "75+" },
+        { v: "senior", t: "Senior" },
+        { v: "famille", t: "Famille" },
+        { v: "fonctionnaire", t: "Fonctionnaire / Indépendant" },
       ])}
     </div>
 
     <div class="grp">
-      <label>Situation</label>
-      ${optSel("situation", lead.situation, [
-        { v: "", t: "—" },
-        { v: "actif", t: "Actif" },
-        { v: "independant", t: "Independant / TNS" },
-        { v: "retraite", t: "Retraite" },
-        { v: "sans_emploi", t: "Sans emploi" },
-      ])}
-    </div>
-
-    <div class="grp">
-      <label>Mutuelle actuelle</label>
+      <label>A une mutuelle actuellement&nbsp;?</label>
       ${optSel("mutuelle_actuelle", lead.mutuelle_actuelle, [
         { v: "", t: "—" },
         { v: "oui", t: "Oui" },
         { v: "non", t: "Non" },
-      ])}
-    </div>
-
-    <div class="grp">
-      <label>Budget mensuel</label>
-      ${optSel("budget_mensuel", lead.budget_mensuel, [
-        { v: "", t: "—" },
-        { v: "0-30", t: "< 30€" },
-        { v: "30-60", t: "30-60€" },
-        { v: "60-100", t: "60-100€" },
-        { v: "100+", t: "100€+" },
       ])}
     </div>
 
@@ -240,9 +221,12 @@ async function openPanel(id) {
 
     <div class="proof">
       <h4>Preuve de consentement (RGPD)</h4>
+      <button class="btn btn--primary" id="cert-btn" style="width:100%;margin-bottom:12px">
+        📄 Télécharger le certificat de consentement
+      </button>
       ${
         consent
-          ? `<pre>${esc(JSON.stringify(consent.preuve_consentement, null, 2))}</pre>`
+          ? `<details><summary style="cursor:pointer;color:#64748b;font-size:0.8rem">Voir le détail technique</summary><pre>${esc(JSON.stringify(consent.preuve_consentement, null, 2))}</pre></details>`
           : "<em>Aucune preuve disponible.</em>"
       }
     </div>
@@ -250,6 +234,12 @@ async function openPanel(id) {
 
   el("save-lead").addEventListener("click", () => saveLead(id));
   el("transmit-lead").addEventListener("click", () => transmitLead(id));
+  el("cert-btn").addEventListener("click", () => {
+    window.open(
+      `/api/admin/leads/${id}/consent/certificate?token=${encodeURIComponent(token)}`,
+      "_blank"
+    );
+  });
   togglePanel(true);
 }
 
