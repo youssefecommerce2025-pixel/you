@@ -758,7 +758,8 @@ const isMain =
   process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
 
 if (isMain && process.env.NODE_ENV !== "test") {
-  app.listen(PORT, () => {
+  // 0.0.0.0 : obligatoire chez certains hebergeurs (Hostinger) pour que le proxy voie l'app.
+  app.listen(PORT, "0.0.0.0", () => {
     console.log(`\n  Plateforme leads mutuelle sante`);
     console.log(`  ------------------------------------`);
     console.log(`  Landing page : http://localhost:${PORT}/`);
