@@ -26,7 +26,7 @@ Dans **hPanel** :
 2. Clique **Créer une application**.
 3. Renseigne :
    - **Version de Node.js** : choisis **22** (ou la plus récente proposée).
-   - **Fichier de démarrage** (entry file) : `src/server.js`
+   - **Fichier de démarrage** (entry file) : `server.cjs`
    - **Dossier de l'application** : laisse par défaut (ex. `domains/assurdom.fr/nodejs`).
 
 ## Étape 3 — Mettre le code du site
@@ -74,7 +74,7 @@ d'environnement ») :
 ## Questions fréquentes
 
 **« Le site affiche une erreur au démarrage »**
-→ Vérifie que le **fichier de démarrage** est bien `src/server.js`, que **NPM install** a été lancé,
+→ Vérifie que le **fichier de démarrage** est bien `server.cjs`, que **NPM install** a été lancé,
 et que la variable `DB_ENGINE` vaut `sqljs`. Puis **Redémarre** l'application.
 
 **« Où sont stockés mes clients (leads) ? »**

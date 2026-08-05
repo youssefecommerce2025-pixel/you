@@ -753,9 +753,13 @@ app.get("/api/admin/leads/:id/consent/certificate", requireAdmin, (req, res) => 
 
 app.get("/health", (req, res) => res.json({ ok: true, ts: nowIso() }));
 
-// Ne demarre le serveur que si ce fichier est execute directement (pas en test/import).
+// Demarre le serveur si :
+//  - execute directement (node src/server.js), ou
+//  - charge via le loader Hostinger (server.cjs pose START_SERVER=1).
+// Ne demarre PAS pendant les tests (NODE_ENV=test).
 const isMain =
-  process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
+  process.env.START_SERVER === "1" ||
+  (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]);
 
 if (isMain && process.env.NODE_ENV !== "test") {
   // 0.0.0.0 : obligatoire chez certains hebergeurs (Hostinger) pour que le proxy voie l'app.
