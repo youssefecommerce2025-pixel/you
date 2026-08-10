@@ -73,7 +73,7 @@ function init() {
       -- Attribution / acquisition
       source            TEXT,   -- 'formulaire' | 'affilie:<nom>' | 'lp:<slug>' | 'whatsapp'
       ile               TEXT,   -- 'Martinique' | 'Guadeloupe' | 'La Reunion' | ...
-      persona           TEXT,   -- 'senior' | 'famille' | 'fonctionnaire' | 'tns'
+      persona           TEXT,   -- 'senior' | 'famille' | 'fonctionnaire' | 'autres'
       utm_source        TEXT,
       utm_medium        TEXT,
       utm_campaign      TEXT,

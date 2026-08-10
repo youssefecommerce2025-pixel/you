@@ -167,6 +167,7 @@ async function openPanel(id) {
         { v: "senior", t: "Senior" },
         { v: "famille", t: "Famille" },
         { v: "fonctionnaire", t: "Fonctionnaire / Indépendant" },
+        { v: "autres", t: "Autres" },
       ])}
     </div>
 
