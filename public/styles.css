@@ -51,9 +51,35 @@ a { color: var(--brand-dark); }
 .btn--lg { padding: 16px 28px; font-size: 1.08rem; }
 .btn--block { width: 100%; }
 
-.btn-wa { display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: #04231a; font-weight: 700; text-decoration: none; padding: 13px 20px; border-radius: 12px; box-shadow: 0 10px 22px rgba(37, 211, 102, 0.32); }
-.btn-wa:hover { background: #1ebe5a; }
-.btn-wa__icon { font-size: 1.1rem; }
+.btn-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  background: #25d366;
+  color: #fff;
+  padding: 8px 22px 8px 8px;
+  border-radius: 999px;
+  box-shadow: 0 10px 22px rgba(37, 211, 102, 0.35);
+  transition: transform 0.08s, background 0.15s, filter 0.15s;
+}
+.btn-wa:hover { background: #1ebe5a; filter: brightness(1.03); transform: translateY(-1px); }
+.btn-wa:active { transform: translateY(1px); }
+.btn-wa__logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #25d366;
+  border: 3px solid #fff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+  flex: 0 0 auto;
+}
+.btn-wa__logo svg { width: 26px; height: 26px; display: block; color: #fff; }
+.btn-wa__text { display: flex; flex-direction: column; line-height: 1.15; text-align: left; }
+.btn-wa__text strong { font-size: 1.05rem; font-weight: 800; letter-spacing: 0.01em; }
+.btn-wa__text small { font-size: 0.82rem; font-weight: 500; opacity: 0.95; }
 
 /* Annonce + Nav */
 .announce { background: linear-gradient(90deg, var(--navy), var(--brand-dark)); color: #eafaf8; text-align: center; font-size: 0.85rem; padding: 8px 12px; }
