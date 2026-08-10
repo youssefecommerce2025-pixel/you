@@ -33,15 +33,63 @@ export function computeScore(l) {
   return Math.min(100, s);
 }
 
+/** Normalise un numero (retire espaces, +, 00…). */
+export function normalizePhoneDigits(telephone) {
+  let d = String(telephone || "").replace(/[\s.\-()]/g, "");
+  if (d.startsWith("+")) d = d.slice(1);
+  if (d.startsWith("00")) d = d.slice(2);
+  return d;
+}
+
+/**
+ * Accepte uniquement les numeros DOM-TOM (pas la metropole).
+ * Formats locaux (0696…) et internationaux (+596, +590, +594, +262…).
+ */
+export function isDomTomPhone(telephone) {
+  const d = normalizePhoneDigits(telephone);
+  // Format national a 10 chiffres (0 + indicatif local DOM-TOM)
+  if (
+    /^0(?:590|690|691|596|696|697|594|694|262|692|693|269|639|508)\d{6}$/.test(d)
+  ) {
+    return true;
+  }
+  // Format international (sans +)
+  if (/^590(?:590|690|691)\d{6}$/.test(d)) return true; // Guadeloupe / Saint-Martin / Saint-Barthelemy
+  if (/^596(?:596|696|697)\d{6}$/.test(d)) return true; // Martinique
+  if (/^594(?:594|694)\d{6}$/.test(d)) return true; // Guyane
+  if (/^262(?:262|692|693|269|639)\d{6}$/.test(d)) return true; // Reunion / Mayotte
+  if (/^508\d{6}$/.test(d)) return true; // Saint-Pierre-et-Miquelon
+  if (/^687\d{6}$/.test(d)) return true; // Nouvelle-Caledonie
+  if (/^689\d{8}$/.test(d)) return true; // Polynesie francaise
+  if (/^681\d{6}$/.test(d)) return true; // Wallis-et-Futuna
+  return false;
+}
+
+/** Codes postaux DOM-TOM : 971–978 et 986–988. */
+export function isDomTomPostalCode(cp) {
+  return /^(?:97[1-8]|98[6-8])\d{2}$/.test(String(cp || "").trim());
+}
+
 export function validateLead(body) {
   const errors = [];
   const email = String(body.email || "").trim();
   const telephone = String(body.telephone || "").trim();
+  const code_postal = String(body.code_postal || "").trim();
   if (!String(body.prenom || "").trim()) errors.push("prenom requis");
   if (!String(body.nom || "").trim()) errors.push("nom requis");
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) errors.push("email invalide");
-  const telDigits = telephone.replace(/[\s.\-()]/g, "");
-  if (!/^(?:\+33|0033|0)[1-9]\d{8}$/.test(telDigits)) errors.push("telephone invalide");
+  if (!isDomTomPhone(telephone)) {
+    errors.push(
+      "telephone invalide : uniquement un numero Outre-mer (DOM-TOM), pas de metropole"
+    );
+  }
+  if (!code_postal) {
+    errors.push("code postal requis");
+  } else if (!isDomTomPostalCode(code_postal)) {
+    errors.push(
+      "code postal invalide : uniquement DOM-TOM (971 a 978, 986 a 988)"
+    );
+  }
   return { errors, email, telephone };
 }
 

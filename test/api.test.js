@@ -54,7 +54,8 @@ const validLead = () => ({
   prenom: "Sophie",
   nom: "Martin",
   email: `sophie${Math.random().toString(36).slice(2)}@ex.fr`,
-  telephone: "0612345678",
+  telephone: "0696123456",
+  code_postal: "97200",
   tranche_age: "55-64",
   budget_mensuel: "60-100",
   consent_telephone: true,
@@ -86,6 +87,35 @@ test("POST /api/leads refuse un telephone invalide", async () => {
   const r = await req("POST", "/api/leads", { body });
   assert.equal(r.status, 400);
   assert.match(r.json.error, /telephone/i);
+});
+
+test("POST /api/leads refuse un telephone de metropole", async () => {
+  const body = { ...validLead(), telephone: "0612345678" };
+  const r = await req("POST", "/api/leads", { body });
+  assert.equal(r.status, 400);
+  assert.match(r.json.error, /telephone|Outre-mer|DOM-TOM|metropole/i);
+});
+
+test("POST /api/leads refuse un code postal hors DOM-TOM", async () => {
+  const body = { ...validLead(), code_postal: "75001" };
+  const r = await req("POST", "/api/leads", { body });
+  assert.equal(r.status, 400);
+  assert.match(r.json.error, /code postal|DOM-TOM/i);
+});
+
+test("POST /api/leads accepte telephone et CP DOM-TOM (formats varies)", async () => {
+  const cases = [
+    { telephone: "0690 12 34 56", code_postal: "97100" }, // Guadeloupe
+    { telephone: "+596696123456", code_postal: "97200" }, // Martinique intl
+    { telephone: "0694123456", code_postal: "97300" }, // Guyane
+    { telephone: "0692123456", code_postal: "97400" }, // Reunion
+    { telephone: "0639123456", code_postal: "97600" }, // Mayotte
+  ];
+  for (const c of cases) {
+    const body = { ...validLead(), ...c, email: `ok${Math.random().toString(36).slice(2)}@ex.fr` };
+    const r = await req("POST", "/api/leads", { body });
+    assert.equal(r.status, 201, `attendu 201 pour ${JSON.stringify(c)}, obtenu ${r.status} ${JSON.stringify(r.json)}`);
+  }
 });
 
 test("POST /api/leads cree un lead avec opt-in et enregistre la preuve", async () => {

@@ -153,6 +153,26 @@ function showMessage(text, type) {
   messageEl.className = "form-message " + type;
 }
 
+function isDomTomPhoneClient(telephone) {
+  let d = String(telephone || "").replace(/[\s.\-()]/g, "");
+  if (d.startsWith("+")) d = d.slice(1);
+  if (d.startsWith("00")) d = d.slice(2);
+  if (/^0(?:590|690|691|596|696|697|594|694|262|692|693|269|639|508)\d{6}$/.test(d)) return true;
+  if (/^590(?:590|690|691)\d{6}$/.test(d)) return true;
+  if (/^596(?:596|696|697)\d{6}$/.test(d)) return true;
+  if (/^594(?:594|694)\d{6}$/.test(d)) return true;
+  if (/^262(?:262|692|693|269|639)\d{6}$/.test(d)) return true;
+  if (/^508\d{6}$/.test(d)) return true;
+  if (/^687\d{6}$/.test(d)) return true;
+  if (/^689\d{8}$/.test(d)) return true;
+  if (/^681\d{6}$/.test(d)) return true;
+  return false;
+}
+
+function isDomTomPostalCodeClient(cp) {
+  return /^(?:97[1-8]|98[6-8])\d{2}$/.test(String(cp || "").trim());
+}
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   showMessage("", "");
@@ -167,6 +187,22 @@ form.addEventListener("submit", async (e) => {
   }
 
   const data = Object.fromEntries(new FormData(form).entries());
+
+  if (!isDomTomPhoneClient(data.telephone)) {
+    showMessage(
+      "Merci d'indiquer un numéro de téléphone d'Outre-mer (DOM-TOM). Les numéros de métropole ne sont pas acceptés.",
+      "err"
+    );
+    return;
+  }
+  if (!isDomTomPostalCodeClient(data.code_postal)) {
+    showMessage(
+      "Merci d'indiquer un code postal d'Outre-mer (971 à 978, ou 986 à 988).",
+      "err"
+    );
+    return;
+  }
+
   const params = new URLSearchParams(window.location.search);
   const payload = {
     ...data,

@@ -105,15 +105,32 @@
                   <input name="email" type="email" autocomplete="email" required />
                 </label>
                 <label class="field">
-                  <span>Téléphone *</span>
-                  <input name="telephone" type="tel" autocomplete="tel" placeholder="0696 12 34 56" required />
+                  <span>Téléphone Outre-mer *</span>
+                  <input
+                    name="telephone"
+                    type="tel"
+                    autocomplete="tel"
+                    placeholder="0696 12 34 56"
+                    pattern="^(?:0|\+?590|\+?596|\+?594|\+?262)[\d\s.\-]{8,}$"
+                    title="Numéro Outre-mer uniquement (ex. 0696…, 0690…, 0692…)"
+                    required
+                  />
                 </label>
               </div>
 
               <div class="row">
                 <label class="field field--sm">
-                  <span>Code postal</span>
-                  <input name="code_postal" type="text" inputmode="numeric" maxlength="5" placeholder="972.." />
+                  <span>Code postal Outre-mer *</span>
+                  <input
+                    name="code_postal"
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="5"
+                    placeholder="97200"
+                    pattern="^(97[1-8]|98[6-8])[0-9]{2}$"
+                    title="Code postal DOM-TOM uniquement (971–978, 986–988)"
+                    required
+                  />
                 </label>
                 <label class="field">
                   <span>Votre profil</span>
