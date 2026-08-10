@@ -59,14 +59,21 @@ function setupWhatsApp() {
   const buttons = [document.getElementById("wa-cta"), document.getElementById("wa-float")].filter(
     Boolean
   );
-  if (!num || !buttons.length) return;
+  if (!buttons.length) return;
+
+  // Toujours visibles (hero + bouton flottant).
+  buttons.forEach((btn) => {
+    btn.hidden = false;
+  });
+
+  if (!num) return;
+
   const msg =
     (variant && variant.wa_message) ||
     "Bonjour, je souhaite comparer les mutuelles sante et recevoir un devis.";
   const href = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
   buttons.forEach((btn) => {
     btn.href = href;
-    btn.hidden = false;
     btn.addEventListener("click", () => {
       const payload = {
         ile: variant?.ile,
@@ -189,17 +196,13 @@ form.addEventListener("submit", async (e) => {
       showMessage(result.error || "Une erreur est survenue.", "err");
     } else {
       form.reset();
+      const prenom = encodeURIComponent(data.prenom || "");
       if (result.method === "double_optin") {
-        showMessage(
-          "Merci ! Un lien de confirmation vous a ete envoye. Confirmez-le pour finaliser votre demande.",
-          "ok"
-        );
+        window.location.href = `/merci.html?mode=double_optin&prenom=${prenom}`;
       } else {
-        showMessage(
-          "Merci ! Votre demande est enregistree. Un conseiller vous rappellera rapidement.",
-          "ok"
-        );
+        window.location.href = `/merci.html?prenom=${prenom}`;
       }
+      return;
     }
   } catch (err) {
     showMessage("Impossible d'envoyer le formulaire. Reessayez.", "err");
