@@ -141,18 +141,105 @@ function applySocialProfile(profile, provider) {
   setVal("nom", profile.nom);
   setVal("email", profile.email);
   if (profile.civilite) setVal("civilite", profile.civilite);
+  setVal("date_naissance", profile.date_naissance);
+  setVal("code_postal", profile.code_postal);
 
   const socialField = document.getElementById("f-social-login");
   if (socialField) socialField.value = provider || "";
 
+  const missing = [];
+  if (!profile.date_naissance) missing.push("date de naissance");
+  if (!profile.code_postal) missing.push("code postal");
+  const extra =
+    missing.length > 0
+      ? ` Merci de compléter aussi : ${missing.join(" et ")}.`
+      : "";
+
   showSocialMsg(
-    "Informations préremplies. Merci de compléter votre profil et votre mutuelle actuelle.",
+    "Informations préremplies." +
+      extra +
+      " Votre profil et votre mutuelle actuelle restent à remplir.",
     "ok"
   );
 
   // Focus sur le premier champ manuel à remplir
   const manual = form.querySelector('[data-manual-only="1"]');
   if (manual) setTimeout(() => manual.focus(), 200);
+}
+
+function pad2(n) {
+  return String(n).padStart(2, "0");
+}
+
+/** Convertit une date Google/Facebook en YYYY-MM-DD si possible. */
+function toIsoDate(input) {
+  if (!input) return "";
+  if (typeof input === "string") {
+    // Facebook : MM/DD/YYYY
+    const m = input.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    if (m) return `${m[3]}-${pad2(m[1])}-${pad2(m[2])}`;
+    // Déjà ISO
+    if (/^\d{4}-\d{2}-\d{2}$/.test(input)) return input;
+    return "";
+  }
+  if (typeof input === "object" && input.year && input.month && input.day) {
+    return `${input.year}-${pad2(input.month)}-${pad2(input.day)}`;
+  }
+  return "";
+}
+
+function extractGooglePostalCode(addresses) {
+  if (!Array.isArray(addresses)) return "";
+  for (const a of addresses) {
+    const cp = String(a.postalCode || a.postal_code || "").trim();
+    if (cp) return cp;
+  }
+  return "";
+}
+
+function extractGoogleBirthday(birthdays) {
+  if (!Array.isArray(birthdays)) return "";
+  for (const b of birthdays) {
+    const iso = toIsoDate(b.date);
+    if (iso) return iso;
+  }
+  return "";
+}
+
+async function fetchGooglePeople(accessToken) {
+  const fields = "names,emailAddresses,birthdays,addresses";
+  const res = await fetch(
+    `https://people.googleapis.com/v1/people/me?personFields=${encodeURIComponent(fields)}`,
+    { headers: { Authorization: "Bearer " + accessToken } }
+  );
+  if (!res.ok) {
+    // Repli userinfo si People API non activee
+    const uRes = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+      headers: { Authorization: "Bearer " + accessToken },
+    });
+    const u = await uRes.json();
+    return {
+      prenom: u.given_name || (u.name || "").split(" ")[0] || "",
+      nom: u.family_name || (u.name || "").split(" ").slice(1).join(" ") || "",
+      email: u.email || "",
+      date_naissance: "",
+      code_postal: "",
+    };
+  }
+  const p = await res.json();
+  const name =
+    (p.names || []).find((n) => n.metadata?.primary) || (p.names || [])[0] || {};
+  const email =
+    (p.emailAddresses || []).find((e) => e.metadata?.primary)?.value ||
+    (p.emailAddresses || [])[0]?.value ||
+    "";
+  return {
+    prenom: name.givenName || "",
+    nom: name.familyName || "",
+    email,
+    date_naissance: extractGoogleBirthday(p.birthdays),
+    code_postal: extractGooglePostalCode(p.addresses),
+  };
 }
 
 function loadScript(src, id) {
@@ -187,66 +274,36 @@ async function loginWithGoogle() {
     return;
   }
   await loadScript("https://accounts.google.com/gsi/client", "google-gsi");
+
+  const scopes = [
+    "openid",
+    "email",
+    "profile",
+    "https://www.googleapis.com/auth/user.birthday.read",
+    "https://www.googleapis.com/auth/user.addresses.read",
+  ].join(" ");
+
   await new Promise((resolve, reject) => {
     try {
-      window.google.accounts.id.initialize({
+      const tokenClient = window.google.accounts.oauth2.initTokenClient({
         client_id: clientId,
-        callback: (resp) => {
-          const payload = decodeJwtPayload(resp.credential);
-          if (!payload) {
-            showSocialMsg("Impossible de lire le compte Google.", "err");
-            return reject(new Error("jwt"));
+        scope: scopes,
+        callback: async (tokenResponse) => {
+          if (!tokenResponse.access_token) {
+            showSocialMsg("Connexion Google annulée.", "err");
+            return reject(new Error("cancel"));
           }
-          applySocialProfile(
-            {
-              prenom: payload.given_name || (payload.name || "").split(" ")[0] || "",
-              nom:
-                payload.family_name ||
-                (payload.name || "").split(" ").slice(1).join(" ") ||
-                "",
-              email: payload.email || "",
-            },
-            "gmail"
-          );
-          resolve();
+          try {
+            const profile = await fetchGooglePeople(tokenResponse.access_token);
+            applySocialProfile(profile, "gmail");
+            resolve();
+          } catch (e) {
+            showSocialMsg("Erreur lors de la récupération du profil Google.", "err");
+            reject(e);
+          }
         },
-        auto_select: false,
-        cancel_on_tap_outside: true,
       });
-      window.google.accounts.id.prompt((notification) => {
-        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          // Fallback bouton One Tap indisponible → oauth token client
-          const tokenClient = window.google.accounts.oauth2.initTokenClient({
-            client_id: clientId,
-            scope: "openid email profile",
-            callback: async (tokenResponse) => {
-              if (!tokenResponse.access_token) {
-                showSocialMsg("Connexion Google annulée.", "err");
-                return reject(new Error("cancel"));
-              }
-              try {
-                const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-                  headers: { Authorization: "Bearer " + tokenResponse.access_token },
-                });
-                const u = await res.json();
-                applySocialProfile(
-                  {
-                    prenom: u.given_name || (u.name || "").split(" ")[0] || "",
-                    nom: u.family_name || (u.name || "").split(" ").slice(1).join(" ") || "",
-                    email: u.email || "",
-                  },
-                  "gmail"
-                );
-                resolve();
-              } catch (e) {
-                showSocialMsg("Erreur lors de la récupération du profil Google.", "err");
-                reject(e);
-              }
-            },
-          });
-          tokenClient.requestAccessToken({ prompt: "consent" });
-        }
-      });
+      tokenClient.requestAccessToken({ prompt: "consent" });
     } catch (e) {
       showSocialMsg("Connexion Google indisponible pour le moment.", "err");
       reject(e);
@@ -270,7 +327,6 @@ async function loginWithMeta(providerLabel) {
   };
   if (!window.FB) {
     await loadScript("https://connect.facebook.net/fr_FR/sdk.js", "facebook-jssdk");
-    // fbAsyncInit may have missed if script cached; init explicitly
     if (window.FB) window.FB.init({ appId, cookie: true, xfbml: false, version: "v21.0" });
   }
 
@@ -281,29 +337,38 @@ async function loginWithMeta(providerLabel) {
           showSocialMsg("Connexion annulée.", "err");
           return reject(new Error("cancel"));
         }
-        window.FB.api("/me", { fields: "first_name,last_name,email,name" }, (u) => {
-          if (!u || u.error) {
-            showSocialMsg("Impossible de lire le profil Meta.", "err");
-            return reject(new Error("api"));
-          }
-          applySocialProfile(
-            {
-              prenom: u.first_name || (u.name || "").split(" ")[0] || "",
-              nom: u.last_name || (u.name || "").split(" ").slice(1).join(" ") || "",
-              email: u.email || "",
-            },
-            providerLabel
-          );
-          if (!u.email) {
-            showSocialMsg(
-              "Compte connecté, mais l'e-mail n'a pas été fourni. Merci de le saisir manuellement. Profil et mutuelle restent à remplir.",
-              "ok"
+        // birthday : permission user_birthday (review Meta parfois requise)
+        // location : rarement un CP ; on tente quand meme
+        window.FB.api(
+          "/me",
+          { fields: "first_name,last_name,email,name,birthday,location" },
+          (u) => {
+            if (!u || u.error) {
+              showSocialMsg("Impossible de lire le profil Meta.", "err");
+              return reject(new Error("api"));
+            }
+            let code_postal = "";
+            // Si Meta renvoie un CP dans un champ libre (rare), on le capture
+            if (u.location && typeof u.location === "object") {
+              const locName = String(u.location.name || "");
+              const m = locName.match(/\b(97[1-8]\d{2}|98[6-8]\d{2})\b/);
+              if (m) code_postal = m[1];
+            }
+            applySocialProfile(
+              {
+                prenom: u.first_name || (u.name || "").split(" ")[0] || "",
+                nom: u.last_name || (u.name || "").split(" ").slice(1).join(" ") || "",
+                email: u.email || "",
+                date_naissance: toIsoDate(u.birthday || ""),
+                code_postal,
+              },
+              providerLabel
             );
+            resolve();
           }
-          resolve();
-        });
+        );
       },
-      { scope: "public_profile,email" }
+      { scope: "public_profile,email,user_birthday,user_location" }
     );
   });
 }
