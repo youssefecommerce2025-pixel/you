@@ -55,6 +55,9 @@ app.get("/api/config", (req, res) => {
     consentCheckboxLabel: CONSENT_TELEPHONE,
     informationNotice: mentionInformation(),
     whatsapp: WHATSAPP_NUMBER,
+    // Prefill social (optionnel) — cles publiques uniquement.
+    googleClientId: process.env.GOOGLE_CLIENT_ID || "",
+    facebookAppId: process.env.FACEBOOK_APP_ID || "",
   });
 });
 

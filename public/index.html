@@ -26,6 +26,7 @@
           <span class="brand__name" id="brand-name">AssurDom</span>
         </a>
         <nav class="nav__links">
+          <a href="#vous-etes-ou">Vous êtes où&nbsp;?</a>
           <a href="#pour-qui">Pour qui&nbsp;?</a>
           <a href="#garanties">Garanties</a>
           <a href="#comment">Comment ça marche</a>
@@ -86,6 +87,29 @@
             <h2 class="form-card__title">Mon devis gratuit</h2>
             <p class="form-card__sub">2 minutes, sans engagement. Un conseiller vous rappelle.</p>
 
+            <div class="social-fill" id="social-fill">
+              <p class="social-fill__label">Remplir plus vite avec votre compte</p>
+              <div class="social-fill__btns">
+                <button type="button" class="social-btn social-btn--google" id="btn-google" aria-label="Continuer avec Gmail">
+                  <span class="social-btn__icon" aria-hidden="true">G</span>
+                  Gmail
+                </button>
+                <button type="button" class="social-btn social-btn--facebook" id="btn-facebook" aria-label="Continuer avec Facebook">
+                  <span class="social-btn__icon" aria-hidden="true">f</span>
+                  Facebook
+                </button>
+                <button type="button" class="social-btn social-btn--instagram" id="btn-instagram" aria-label="Continuer avec Instagram">
+                  <span class="social-btn__icon" aria-hidden="true">◎</span>
+                  Instagram
+                </button>
+              </div>
+              <p class="social-fill__hint">
+                On préremplit nom, prénom et e-mail. <b>Votre profil</b> et
+                <b>mutuelle actuelle</b> restent à remplir par vous.
+              </p>
+              <div id="social-fill-msg" class="form-message" role="status" aria-live="polite"></div>
+            </div>
+
             <form id="lead-form" novalidate>
               <div class="row">
                 <label class="field field--sm">
@@ -141,8 +165,8 @@
                   />
                 </label>
                 <label class="field">
-                  <span>Votre profil</span>
-                  <select name="persona_visible" id="persona-visible">
+                  <span>Votre profil <em class="manual-tag">à remplir</em></span>
+                  <select name="persona_visible" id="persona-visible" data-manual-only="1">
                     <option value="">--</option>
                     <option value="senior">Senior (60 ans et +)</option>
                     <option value="famille">Famille</option>
@@ -158,8 +182,8 @@
                   <input name="date_naissance" type="date" max="2020-12-31" />
                 </label>
                 <label class="field">
-                  <span>Avez-vous une mutuelle actuellement&nbsp;?</span>
-                  <select name="mutuelle_actuelle">
+                  <span>Avez-vous une mutuelle actuellement&nbsp;? <em class="manual-tag">à remplir</em></span>
+                  <select name="mutuelle_actuelle" data-manual-only="1">
                     <option value="">--</option>
                     <option value="oui">Oui</option>
                     <option value="non">Non</option>
@@ -172,6 +196,7 @@
               <input type="hidden" name="ile" id="f-ile" />
               <input type="hidden" name="persona" id="f-persona" />
               <input type="hidden" name="source" id="f-source" />
+              <input type="hidden" name="social_login" id="f-social-login" value="" />
 
               <p class="nohealth">
                 🔒 Ne renseignez aucune information de santé (maladie, traitement). Nous n'en
@@ -201,6 +226,42 @@
           <div class="stat"><b>4</b><span>îles couvertes</span></div>
           <div class="stat"><b>0 €</b><span>frais de service</span></div>
           <div class="stat"><b>&lt; 24h</b><span>rappel conseiller</span></div>
+        </div>
+      </section>
+
+      <!-- VOUS ETES OU ? (4 landings ile) -->
+      <section class="section" id="vous-etes-ou">
+        <div class="container">
+          <h2 class="section__title">Vous êtes où&nbsp;?</h2>
+          <p class="section__sub">
+            Choisissez votre île : on vous oriente vers la page AssurDom adaptée à votre territoire.
+          </p>
+          <div class="islands">
+            <a class="island" href="/lp/martinique-senior" data-slug="martinique-senior">
+              <span class="island__flag" aria-hidden="true">🇲🇶</span>
+              <span class="island__name">Martinique</span>
+              <span class="island__desc">Spécial seniors · devis local</span>
+              <span class="island__cta">Voir ma page →</span>
+            </a>
+            <a class="island" href="/lp/guadeloupe-senior" data-slug="guadeloupe-senior">
+              <span class="island__flag" aria-hidden="true">🇬🇵</span>
+              <span class="island__name">Guadeloupe</span>
+              <span class="island__desc">Spécial seniors · devis local</span>
+              <span class="island__cta">Voir ma page →</span>
+            </a>
+            <a class="island" href="/lp/reunion-famille" data-slug="reunion-famille">
+              <span class="island__flag" aria-hidden="true">🇷🇪</span>
+              <span class="island__name">La Réunion</span>
+              <span class="island__desc">Spécial familles · devis local</span>
+              <span class="island__cta">Voir ma page →</span>
+            </a>
+            <a class="island" href="/lp/guyane-famille" data-slug="guyane-famille">
+              <span class="island__flag" aria-hidden="true">🇬🇫</span>
+              <span class="island__name">Guyane</span>
+              <span class="island__desc">Spécial familles · devis local</span>
+              <span class="island__cta">Voir ma page →</span>
+            </a>
+          </div>
         </div>
       </section>
 
