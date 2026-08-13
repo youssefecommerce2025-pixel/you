@@ -166,8 +166,11 @@ a { color: var(--brand-dark); }
   gap: 10px;
 }
 
-/* Boutons pleine largeur, hauteur + logos identiques (20×20 / 48px) */
-.sso-btn {
+/* Boutons pleine largeur — fond BLANC strict, hauteur 48px, logos 20×20 */
+.sso-btn,
+#btn-google,
+#btn-facebook,
+#btn-apple {
   position: relative;
   display: flex;
   align-items: center;
@@ -177,10 +180,11 @@ a { color: var(--brand-dark); }
   height: 48px;
   min-height: 48px;
   max-height: 48px;
-  padding: 0 44px; /* place pour le logo à gauche */
+  padding: 0 44px;
   border: 1px solid #12333d;
   border-radius: 4px;
-  background: #fff;
+  background: #ffffff !important; /* fond blanc forcé */
+  background-color: #ffffff !important;
   color: #12333d;
   font-size: 15px;
   font-weight: 600;
@@ -192,8 +196,12 @@ a { color: var(--brand-dark); }
   -webkit-appearance: none;
   appearance: none;
 }
-.sso-btn:hover {
-  background: #f4f9fa;
+.sso-btn:hover,
+#btn-google:hover,
+#btn-facebook:hover,
+#btn-apple:hover {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
   border-color: #12333d;
 }
 .sso-btn:focus-visible {
@@ -222,7 +230,6 @@ a { color: var(--brand-dark); }
   flex-shrink: 0;
 }
 
-/* Google : le "G" doit rester sur fond blanc (guidelines Google) */
 .sso-btn__logo--google {
   width: 20px;
   height: 20px;
@@ -235,10 +242,17 @@ a { color: var(--brand-dark); }
   pointer-events: none;
   text-align: center;
   white-space: nowrap;
+  color: #12333d;
 }
+
+/* Apple : logo NOIR sur fond blanc */
 .sso-btn--apple .sso-btn__logo,
-.sso-btn__logo--apple {
-  color: #000;
+.sso-btn__logo--apple,
+#btn-apple .sso-btn__logo {
+  color: #000000 !important;
+}
+#btn-apple .sso-btn__logo svg path {
+  fill: #000000 !important;
 }
 
 .social-fill__hint {
