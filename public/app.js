@@ -372,13 +372,60 @@ async function loginWithMeta(providerLabel) {
   });
 }
 
+async function loginWithApple() {
+  const clientId = config?.appleClientId;
+  if (!clientId) {
+    showSocialMsg(
+      "Apple n'est pas encore configuré (APPLE_CLIENT_ID). Ajoutez le Services ID Apple dans Hostinger / .env.",
+      "err"
+    );
+    return;
+  }
+  await loadScript(
+    "https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/fr_FR/appleid.auth.js",
+    "apple-auth"
+  );
+  const redirectURI =
+    (config.publicBaseUrl || window.location.origin).replace(/\/$/, "") + "/";
+  window.AppleID.auth.init({
+    clientId,
+    scope: "name email",
+    redirectURI,
+    usePopup: true,
+  });
+  try {
+    const data = await window.AppleID.auth.signIn();
+    const payload = decodeJwtPayload(data?.authorization?.id_token || "");
+    const prenom = data?.user?.name?.firstName || "";
+    const nom = data?.user?.name?.lastName || "";
+    const email = data?.user?.email || payload?.email || "";
+    applySocialProfile(
+      {
+        prenom,
+        nom,
+        email,
+        date_naissance: "",
+        code_postal: "",
+      },
+      "apple"
+    );
+  } catch (e) {
+    const code = e?.error || e?.message || "";
+    if (String(code).includes("popup_closed") || String(code).includes("user_cancelled")) {
+      showSocialMsg("Connexion annulée.", "err");
+    } else {
+      showSocialMsg("Connexion Apple impossible pour le moment.", "err");
+    }
+  }
+}
+
 function setupSocialFill() {
   const g = document.getElementById("btn-google");
   const f = document.getElementById("btn-facebook");
-  const t = document.getElementById("btn-tiktok");
+  const a = document.getElementById("btn-apple");
   if (g) {
     g.addEventListener("click", async () => {
-      showSocialMsg("Connexion Gmail…", "");
+      showSocialMsg("Connexion Google…", "");
       try {
         await loginWithGoogle();
       } catch (e) {}
@@ -392,44 +439,13 @@ function setupSocialFill() {
       } catch (e) {}
     });
   }
-  if (t) {
-    t.addEventListener("click", () => {
-      if (!config?.tiktokEnabled) {
-        showSocialMsg(
-          "TikTok n'est pas encore configuré (TIKTOK_CLIENT_KEY + TIKTOK_CLIENT_SECRET).",
-          "err"
-        );
-        return;
-      }
-      showSocialMsg("Redirection vers TikTok…", "");
-      window.location.href = "/api/auth/tiktok/start";
+  if (a) {
+    a.addEventListener("click", async () => {
+      showSocialMsg("Connexion Apple…", "");
+      try {
+        await loginWithApple();
+      } catch (e) {}
     });
-  }
-
-  // Retour OAuth TikTok
-  const params = new URLSearchParams(window.location.search);
-  const err = params.get("social_error");
-  if (err) {
-    showSocialMsg(err, "err");
-  }
-  const prefill = params.get("social_prefill");
-  if (prefill) {
-    try {
-      const b64 = prefill.replace(/-/g, "+").replace(/_/g, "/");
-      const pad = b64.length % 4 === 0 ? "" : "=".repeat(4 - (b64.length % 4));
-      const json = JSON.parse(atob(b64 + pad));
-      applySocialProfile(json, json.provider || "tiktok");
-      // Nettoie l'URL
-      params.delete("social_prefill");
-      params.delete("social_error");
-      const clean =
-        window.location.pathname +
-        (params.toString() ? "?" + params.toString() : "") +
-        "#devis";
-      window.history.replaceState({}, "", clean);
-    } catch (e) {
-      showSocialMsg("Impossible de lire le profil TikTok.", "err");
-    }
   }
 }
 

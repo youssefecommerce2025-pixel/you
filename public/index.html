@@ -87,31 +87,6 @@
             <h2 class="form-card__title">Mon devis gratuit</h2>
             <p class="form-card__sub">2 minutes, sans engagement. Un conseiller vous rappelle.</p>
 
-            <div class="social-fill" id="social-fill">
-              <p class="social-fill__label">Remplir plus vite avec votre compte</p>
-              <div class="social-fill__btns">
-                <button type="button" class="social-btn social-btn--google" id="btn-google" aria-label="Continuer avec Gmail">
-                  <span class="social-btn__icon" aria-hidden="true">G</span>
-                  Gmail
-                </button>
-                <button type="button" class="social-btn social-btn--facebook" id="btn-facebook" aria-label="Continuer avec Facebook">
-                  <span class="social-btn__icon" aria-hidden="true">f</span>
-                  Facebook
-                </button>
-                <button type="button" class="social-btn social-btn--tiktok" id="btn-tiktok" aria-label="Continuer avec TikTok">
-                  <span class="social-btn__icon" aria-hidden="true">♪</span>
-                  TikTok
-                </button>
-              </div>
-              <p class="social-fill__hint">
-                Gmail / Facebook : nom, prénom, e-mail, date de naissance et code postal
-                (quand le compte les fournit).
-                TikTok : prénom/nom d’affichage (TikTok ne fournit pas e-mail, date de naissance ni CP).
-                <b>Votre profil</b> et <b>mutuelle actuelle</b> restent toujours à remplir par vous.
-              </p>
-              <div id="social-fill-msg" class="form-message" role="status" aria-live="polite"></div>
-            </div>
-
             <form id="lead-form" novalidate>
               <div class="row">
                 <label class="field field--sm">
@@ -217,6 +192,35 @@
               <p class="form-note">* Champs obligatoires. Vous acceptez uniquement d'être recontacté pour votre mutuelle santé.</p>
               <div id="form-message" class="form-message" role="status" aria-live="polite"></div>
             </form>
+
+            <!-- SSO sous le formulaire (style Continuer avec…) -->
+            <div class="social-fill" id="social-fill">
+              <div class="social-fill__divider"><span>ou</span></div>
+              <p class="social-fill__label">Remplir plus vite avec votre compte</p>
+              <div class="social-fill__btns">
+                <button type="button" class="social-btn social-btn--google" id="btn-google">
+                  <span class="social-btn__icon" aria-hidden="true">G</span>
+                  Continuer avec Google
+                </button>
+                <button type="button" class="social-btn social-btn--facebook" id="btn-facebook">
+                  <span class="social-btn__icon" aria-hidden="true">f</span>
+                  Continuer avec Facebook
+                </button>
+                <button type="button" class="social-btn social-btn--apple" id="btn-apple">
+                  <span class="social-btn__icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12.65 8.4c-.02-2.02 1.65-2.99 1.72-3.03-.94-1.37-2.4-1.56-2.92-1.58-1.24-.13-2.42.73-3.05.73-.63 0-1.6-.71-2.63-.69-1.35.02-2.6.79-3.29 2-.1.18-1.4 2.56.99 5.35.93 1.09 1.81 2.17 3.09 2.13 1.25-.04 1.72-.8 3.23-.8 1.5 0 1.93.8 3.25.78 1.34-.03 2.19-1.11 3.11-2.21.42-.5.76-.99 1.05-1.52-2.45-.93-2.53-3.53-2.55-3.16zM10.9 2.6c.68-.83 1.14-1.98 1.01-3.13-1.01.04-2.23.67-2.95 1.51-.65.74-1.21 1.92-1.06 3.05 1.11.09 2.25-.57 3-1.43z"/></svg>
+                  </span>
+                  Continuer avec Apple
+                </button>
+              </div>
+              <p class="social-fill__hint">
+                Google / Facebook : nom, prénom, e-mail, date de naissance et code postal
+                (quand le compte les fournit).
+                Apple : nom et e-mail (pas de date de naissance ni code postal).
+                <b>Votre profil</b> et <b>mutuelle actuelle</b> restent à remplir par vous.
+              </p>
+              <div id="social-fill-msg" class="form-message" role="status" aria-live="polite"></div>
+            </div>
           </div>
         </div>
       </section>
