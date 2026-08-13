@@ -172,9 +172,7 @@ a { color: var(--brand-dark); }
 }
 .social-btn--google .social-btn__icon { background: #ea4335; }
 .social-btn--facebook .social-btn__icon { background: #1877f2; }
-.social-btn--instagram .social-btn__icon {
-  background: linear-gradient(135deg, #f58529, #dd2a7b 45%, #8134af 70%, #515bd4);
-}
+.social-btn--tiktok .social-btn__icon { background: #010101; color: #fff; }
 .social-fill__hint { margin: 10px 0 0; font-size: 0.76rem; color: var(--muted); line-height: 1.4; }
 .manual-tag {
   display: inline-block;

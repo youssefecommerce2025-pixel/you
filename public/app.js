@@ -315,8 +315,7 @@ async function loginWithMeta(providerLabel) {
   const appId = config?.facebookAppId;
   if (!appId) {
     showSocialMsg(
-      (providerLabel === "instagram" ? "Instagram" : "Facebook") +
-        " n'est pas encore configuré (FACEBOOK_APP_ID). Ajoutez la clé Meta dans Hostinger / .env.",
+      "Facebook n'est pas encore configuré (FACEBOOK_APP_ID). Ajoutez la clé Meta dans Hostinger / .env.",
       "err"
     );
     return;
@@ -376,7 +375,7 @@ async function loginWithMeta(providerLabel) {
 function setupSocialFill() {
   const g = document.getElementById("btn-google");
   const f = document.getElementById("btn-facebook");
-  const i = document.getElementById("btn-instagram");
+  const t = document.getElementById("btn-tiktok");
   if (g) {
     g.addEventListener("click", async () => {
       showSocialMsg("Connexion Gmail…", "");
@@ -393,14 +392,44 @@ function setupSocialFill() {
       } catch (e) {}
     });
   }
-  if (i) {
-    i.addEventListener("click", async () => {
-      // Instagram Login web grand public passe par Meta/Facebook Login.
-      showSocialMsg("Connexion Instagram (via Meta)…", "");
-      try {
-        await loginWithMeta("instagram");
-      } catch (e) {}
+  if (t) {
+    t.addEventListener("click", () => {
+      if (!config?.tiktokEnabled) {
+        showSocialMsg(
+          "TikTok n'est pas encore configuré (TIKTOK_CLIENT_KEY + TIKTOK_CLIENT_SECRET).",
+          "err"
+        );
+        return;
+      }
+      showSocialMsg("Redirection vers TikTok…", "");
+      window.location.href = "/api/auth/tiktok/start";
     });
+  }
+
+  // Retour OAuth TikTok
+  const params = new URLSearchParams(window.location.search);
+  const err = params.get("social_error");
+  if (err) {
+    showSocialMsg(err, "err");
+  }
+  const prefill = params.get("social_prefill");
+  if (prefill) {
+    try {
+      const b64 = prefill.replace(/-/g, "+").replace(/_/g, "/");
+      const pad = b64.length % 4 === 0 ? "" : "=".repeat(4 - (b64.length % 4));
+      const json = JSON.parse(atob(b64 + pad));
+      applySocialProfile(json, json.provider || "tiktok");
+      // Nettoie l'URL
+      params.delete("social_prefill");
+      params.delete("social_error");
+      const clean =
+        window.location.pathname +
+        (params.toString() ? "?" + params.toString() : "") +
+        "#devis";
+      window.history.replaceState({}, "", clean);
+    } catch (e) {
+      showSocialMsg("Impossible de lire le profil TikTok.", "err");
+    }
   }
 }
 
