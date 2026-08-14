@@ -427,11 +427,94 @@ a { color: var(--brand-dark); }
 .wa-float { position: fixed; right: 18px; bottom: 18px; z-index: 60; width: 58px; height: 58px; border-radius: 50%; background: #25d366; color: #fff; font-size: 1.7rem; display: grid; place-items: center; text-decoration: none; box-shadow: 0 12px 26px rgba(37, 211, 102, 0.45); }
 .wa-float:hover { background: #1ebe5a; }
 
+.social-fill--inline {
+  margin: 8px 0 14px;
+  padding: 0;
+}
+
+/* Multi-étapes formulaire */
+.form-progress {
+  margin: 0 0 16px;
+}
+.form-progress__bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+.form-progress__bar span {
+  display: block;
+  height: 100%;
+  width: 33.333%;
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+  border-radius: inherit;
+  transition: width 0.25s ease;
+}
+.form-progress__label {
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.form-step__q {
+  margin: 0 0 14px;
+  font-size: 1.15rem;
+  font-weight: 750;
+  color: var(--navy);
+  line-height: 1.35;
+}
+.form-step__nav {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 8px;
+}
+.form-step__nav .btn--primary {
+  flex: 1;
+}
+.form-step[hidden] {
+  display: none !important;
+}
+
+/* CTA sticky mobile */
+.mobile-cta {
+  display: none;
+}
+
 @media (max-width: 900px) {
-  .hero__grid, .why { grid-template-columns: 1fr; gap: 32px; }
-  .hero__copy h1 { font-size: 2.1rem; }
+  .hero__grid, .why { grid-template-columns: 1fr; gap: 20px; }
+  .hero { padding: 28px 0 40px; }
+  .hero__grid {
+    display: flex;
+    flex-direction: column;
+  }
+  /* Formulaire EN PREMIER sur mobile (TikTok / Meta ads) */
+  .hero__copy { order: 2; }
+  .form-card { order: 1; margin-top: 0; }
+  .hero__copy h1 { font-size: 1.55rem; margin-bottom: 10px; }
+  .hero__lead { font-size: 0.98rem; margin-bottom: 12px; }
+  .hero__points { display: none; } /* allège above-the-fold */
+  .hero__badges { margin-bottom: 12px; gap: 6px; }
+  .hero__logo { display: none; }
+  .hero__cta .btn--lg { width: 100%; }
   .segments, .guarantees, .steps, .reviews, .charts, .islands { grid-template-columns: 1fr; }
   .segment--featured { transform: none; }
   .nav__links { display: none; }
   .stats-band__inner { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+
+  .mobile-cta {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 70;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.96);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -8px 24px rgba(12, 58, 72, 0.12);
+    backdrop-filter: blur(8px);
+  }
+  .mobile-cta.is-hidden { display: none; }
+  .wa-float { bottom: 78px; }
+  body { padding-bottom: 78px; }
 }

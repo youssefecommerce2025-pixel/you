@@ -407,9 +407,92 @@ function setupSocialFill() {
       showSocialMsg("Connexion Google…", "");
       try {
         await loginWithGoogle();
+        // Après Google, on va directement à l'étape contact si besoin
+        if (typeof window.__goFormStep === "function") window.__goFormStep(3);
       } catch (e) {}
     });
   }
+}
+
+/** Formulaire multi-étapes : CP → âge → contact */
+function setupMultiStep() {
+  const steps = Array.from(document.querySelectorAll(".form-step"));
+  if (!steps.length) return;
+  const fill = document.getElementById("form-progress-fill");
+  const numEl = document.getElementById("form-step-num");
+  let current = 1;
+
+  function showStep(n) {
+    current = n;
+    steps.forEach((s) => {
+      const sn = Number(s.dataset.step);
+      const on = sn === n;
+      s.hidden = !on;
+      s.classList.toggle("is-active", on);
+    });
+    if (fill) fill.style.width = `${(n / 3) * 100}%`;
+    if (numEl) numEl.textContent = String(n);
+    const active = document.querySelector(`.form-step[data-step="${n}"]`);
+    const focusable = active?.querySelector("input, select, button.js-next-step, button[type=submit]");
+    if (focusable) setTimeout(() => focusable.focus(), 150);
+  }
+
+  function validateStep(n) {
+    if (n === 1) {
+      const cp = form.querySelector('[name="code_postal"]');
+      if (!cp?.value || !isDomTomPostalCodeClient(cp.value)) {
+        showMessage(
+          "Merci d'indiquer un code postal d'Outre-mer (971–978 ou 986–988).",
+          "err"
+        );
+        cp?.focus();
+        return false;
+      }
+    }
+    if (n === 3) {
+      const prenom = form.querySelector('[name="prenom"]');
+      const nom = form.querySelector('[name="nom"]');
+      const email = form.querySelector('[name="email"]');
+      const tel = form.querySelector('[name="telephone"]');
+      if (!prenom?.value?.trim() || !nom?.value?.trim() || !email?.value?.trim() || !tel?.value?.trim()) {
+        showMessage("Merci de remplir prénom, nom, email et téléphone.", "err");
+        return false;
+      }
+    }
+    showMessage("", "");
+    return true;
+  }
+
+  document.querySelectorAll(".js-next-step").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const next = Number(btn.dataset.next);
+      if (!validateStep(current)) return;
+      showStep(next);
+    });
+  });
+  document.querySelectorAll(".js-prev-step").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      showStep(Number(btn.dataset.prev));
+      showMessage("", "");
+    });
+  });
+
+  window.__goFormStep = showStep;
+  showStep(1);
+}
+
+/** Cache la barre CTA mobile quand le formulaire est visible */
+function setupMobileCta() {
+  const bar = document.getElementById("mobile-cta");
+  const devis = document.getElementById("devis");
+  if (!bar || !devis || !window.IntersectionObserver) return;
+  const io = new IntersectionObserver(
+    ([entry]) => {
+      bar.classList.toggle("is-hidden", entry.isIntersecting);
+    },
+    { threshold: 0.25 }
+  );
+  io.observe(devis);
 }
 
 function setupIslands() {
@@ -552,4 +635,6 @@ form.addEventListener("submit", async (e) => {
   setupSegments();
   setupSocialFill();
   setupIslands();
+  setupMultiStep();
+  setupMobileCta();
 })();
