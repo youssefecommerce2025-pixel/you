@@ -91,10 +91,9 @@ function setupWhatsApp() {
   });
 }
 
-// Boutons "Je suis senior / famille / fonctionnaire" : pre-selectionnent le profil
-// et amenent au formulaire.
+// Boutons "Je suis senior / famille / fonctionnaire" : préremplissent persona caché
+// et amènent au formulaire.
 function setupSegments() {
-  const personaSel = document.getElementById("persona-visible");
   const fPersona = document.getElementById("f-persona");
   const fSituation = document.getElementById("f-situation");
   const ageSel = document.querySelector('[name="tranche_age"]');
@@ -102,12 +101,7 @@ function setupSegments() {
   function applyPersona(persona, age) {
     if (fPersona) fPersona.value = persona || "";
     if (fSituation) fSituation.value = persona || "";
-    if (personaSel && persona) personaSel.value = persona;
     if (age && ageSel && !ageSel.value) ageSel.value = age;
-  }
-
-  if (personaSel) {
-    personaSel.addEventListener("change", () => applyPersona(personaSel.value, ""));
   }
 
   document.querySelectorAll(".js-segment").forEach((btn) => {
@@ -128,11 +122,11 @@ function showSocialMsg(text, type) {
   el.className = "form-message" + (type ? " " + type : "");
 }
 
-/** Préremplit uniquement les champs autorisés (jamais profil ni mutuelle). */
+/** Préremplit les champs du formulaire via SSO. */
 function applySocialProfile(profile, provider) {
   const setVal = (name, value) => {
     const el = form.querySelector(`[name="${name}"]`);
-    if (!el || el.getAttribute("data-manual-only") === "1") return;
+    if (!el || el.type === "hidden") return;
     if (value == null || value === "") return;
     el.value = value;
   };
@@ -155,16 +149,10 @@ function applySocialProfile(profile, provider) {
       ? ` Merci de compléter aussi : ${missing.join(" et ")}.`
       : "";
 
-  showSocialMsg(
-    "Informations préremplies." +
-      extra +
-      " Votre profil et votre mutuelle actuelle restent à remplir.",
-    "ok"
-  );
+  showSocialMsg("Informations préremplies." + extra, "ok");
 
-  // Focus sur le premier champ manuel à remplir
-  const manual = form.querySelector('[data-manual-only="1"]');
-  if (manual) setTimeout(() => manual.focus(), 200);
+  const tel = form.querySelector('[name="telephone"]');
+  if (tel && !tel.value) setTimeout(() => tel.focus(), 200);
 }
 
 function pad2(n) {

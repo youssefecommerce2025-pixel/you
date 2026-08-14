@@ -142,38 +142,18 @@
                   />
                 </label>
                 <label class="field">
-                  <span>Votre profil <em class="manual-tag">à remplir</em></span>
-                  <select name="persona_visible" id="persona-visible" data-manual-only="1">
-                    <option value="">--</option>
-                    <option value="senior">Senior (60 ans et +)</option>
-                    <option value="famille">Famille</option>
-                    <option value="fonctionnaire">Fonctionnaire / Indépendant</option>
-                    <option value="autres">Autres</option>
-                  </select>
-                </label>
-              </div>
-
-              <div class="row">
-                <label class="field">
                   <span>Date de naissance</span>
                   <input name="date_naissance" type="date" max="2020-12-31" />
                 </label>
-                <label class="field">
-                  <span>Avez-vous une mutuelle actuellement&nbsp;? <em class="manual-tag">à remplir</em></span>
-                  <select name="mutuelle_actuelle" data-manual-only="1">
-                    <option value="">--</option>
-                    <option value="oui">Oui</option>
-                    <option value="non">Non</option>
-                  </select>
-                </label>
               </div>
 
-              <!-- champ caché : situation reprend le profil -->
+              <!-- champs cachés : persona/situation via LP ou boutons segment -->
               <input type="hidden" name="situation" id="f-situation" />
               <input type="hidden" name="ile" id="f-ile" />
               <input type="hidden" name="persona" id="f-persona" />
               <input type="hidden" name="source" id="f-source" />
               <input type="hidden" name="social_login" id="f-social-login" value="" />
+              <input type="hidden" name="mutuelle_actuelle" value="" />
 
               <p class="nohealth">
                 🔒 Ne renseignez aucune information de santé (maladie, traitement). Nous n'en
@@ -236,7 +216,6 @@
                 (quand le compte les fournit).
                 Facebook : nom, prénom et e-mail.
                 Apple : nom et e-mail (pas de date de naissance ni code postal).
-                <b>Votre profil</b> et <b>mutuelle actuelle</b> restent à remplir par vous.
               </p>
               <div id="social-fill-msg" class="form-message" role="status" aria-live="polite"></div>
             </div>
@@ -530,7 +509,7 @@
     <!-- Bouton WhatsApp flottant -->
     <a id="wa-float" class="wa-float" href="#" aria-label="WhatsApp">💬</a>
 
-    <script src="/app.js?v=fb-email-only-1"></script>
+    <script src="/app.js?v=form-no-profil-1"></script>
     <script src="/cookies.js" defer></script>
   </body>
 </html>
