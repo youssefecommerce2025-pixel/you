@@ -15,16 +15,16 @@
  * Les anciens leads gardent la version sous laquelle ils ont consenti (tracabilite).
  */
 
-export const CONSENT_VERSION = "2026-08-v2";
+export const CONSENT_VERSION = "2026-08-v3";
 
-// Personnalise ces valeurs avec ta vraie raison sociale / mentions.
+// Mentions AssurDom (confidentialite / mentions legales / consentement).
 export const ORG = {
-  raisonSociale: "[TA RAISON SOCIALE]",
-  formeJuridique: "[SARL / SAS / ...]",
-  adresse: "[Adresse complete]",
-  email: "contact@[ton-domaine].fr",
-  emailDpo: "dpo@[ton-domaine].fr",
-  telephone: "[Numero]",
+  raisonSociale: "Auto-entrepreneur",
+  formeJuridique: "",
+  adresse: "Bordeaux",
+  email: "contact@assurdom.fr",
+  emailDpo: "contact@assurdom.fr",
+  telephone: "+33 759 10 59 12",
   siteComparateur: "AssurDom",
   // Mentions legales complementaires
   capitalSocial: "[Montant] €",
@@ -49,8 +49,9 @@ export const CONSENT_TELEPHONE =
 // Mention d'information (RGPD) affichee sous le formulaire - non cochable, informative.
 export function mentionInformation() {
   return [
-    `Les informations recueillies via ce formulaire sont enregistrees par ${ORG.raisonSociale} (${ORG.formeJuridique}), ` +
-      `responsable de traitement, aux seules fins de traiter votre demande de devis de mutuelle sante ` +
+    `Les informations recueillies via ce formulaire sont enregistrees par ${ORG.raisonSociale}` +
+      (ORG.formeJuridique ? ` (${ORG.formeJuridique})` : "") +
+      `, responsable de traitement, aux seules fins de traiter votre demande de devis de mutuelle sante ` +
       `et de vous mettre en relation avec un courtier en assurance partenaire immatricule a l'ORIAS.`,
     `Base legale : votre consentement (art. 6.1.a RGPD) et l'execution de mesures precontractuelles a votre demande.`,
     `Nous ne collectons AUCUNE donnee de sante (pathologie, traitement, antecedent). Merci de ne pas en communiquer.`,

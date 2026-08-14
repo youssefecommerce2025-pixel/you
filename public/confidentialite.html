@@ -33,14 +33,19 @@
         <p class="muted">Derniere mise a jour : <span id="maj"></span></p>
 
         <p>
-          La presente politique explique comment <strong id="org-name">[Responsable]</strong>
+          La presente politique explique comment <strong>on</strong>
           collecte et traite vos donnees personnelles lorsque vous demandez un devis de mutuelle
           sante, conformement au Reglement general sur la protection des donnees (RGPD) et a la loi
           Informatique et Libertes.
         </p>
 
         <h2>1. Responsable du traitement</h2>
-        <p id="responsable"></p>
+        <p id="responsable">
+          <strong>Auto-entrepreneur</strong><br />
+          Bordeaux<br />
+          Email : contact@assurdom.fr<br />
+          Tel : +33 759 10 59 12
+        </p>
 
         <h2>2. Donnees collectees</h2>
         <p>
@@ -151,15 +156,18 @@
         .then((r) => r.json())
         .then((cfg) => {
           const o = cfg.org || {};
-          const name = o.raisonSociale || "[Responsable]";
-          document.getElementById("org-name").textContent = name;
+          // Responsable du traitement (valeurs AssurDom)
+          const name = o.raisonSociale || "Auto-entrepreneur";
+          const adresse = o.adresse || "Bordeaux";
+          const email = o.email || "contact@assurdom.fr";
+          const tel = o.telephone || "+33 759 10 59 12";
           document.getElementById("responsable").innerHTML =
             `<strong>${name}</strong>` +
-            (o.formeJuridique ? ` (${o.formeJuridique})` : "") +
-            (o.adresse ? `<br>${o.adresse}` : "") +
-            (o.email ? `<br>Email : ${o.email}` : "") +
-            (o.telephone ? `<br>Tel : ${o.telephone}` : "");
-          document.getElementById("dpo").textContent = o.emailDpo || o.email || "";
+            `<br>${adresse}` +
+            `<br>Email : ${email}` +
+            `<br>Tel : ${tel}`;
+          document.getElementById("dpo").textContent =
+            o.emailDpo || o.email || "contact@assurdom.fr";
           if (o.siteComparateur && o.siteComparateur[0] !== "[") {
             document.getElementById("brand-name").textContent = o.siteComparateur;
             document.getElementById("footer-brand").textContent = o.siteComparateur;
