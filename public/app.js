@@ -402,29 +402,11 @@ async function loginWithApple() {
 
 function setupSocialFill() {
   const g = document.getElementById("btn-google");
-  const f = document.getElementById("btn-facebook");
-  const a = document.getElementById("btn-apple");
   if (g) {
     g.addEventListener("click", async () => {
       showSocialMsg("Connexion Google…", "");
       try {
         await loginWithGoogle();
-      } catch (e) {}
-    });
-  }
-  if (f) {
-    f.addEventListener("click", async () => {
-      showSocialMsg("Connexion Facebook…", "");
-      try {
-        await loginWithMeta("facebook");
-      } catch (e) {}
-    });
-  }
-  if (a) {
-    a.addEventListener("click", async () => {
-      showSocialMsg("Connexion Apple…", "");
-      try {
-        await loginWithApple();
       } catch (e) {}
     });
   }
