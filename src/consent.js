@@ -27,16 +27,16 @@ export const ORG = {
   telephone: "+33 759 10 59 12",
   siteComparateur: "AssurDom",
   // Mentions legales complementaires
-  capitalSocial: "[Montant] €",
-  rcs: "[Ville] [SIREN]",
-  siret: "[14 chiffres]",
-  tvaIntra: "[FR + 11 chiffres]",
-  directeurPublication: "[Nom du directeur de publication]",
-  orias: "[Numero ORIAS a 8 chiffres]",
+  capitalSocial: "1000 €",
+  rcs: "",
+  siret: "",
+  tvaIntra: "",
+  directeurPublication: "",
+  orias: "",
   hebergeur: {
-    nom: "[Nom de l'hebergeur]",
-    adresse: "[Adresse de l'hebergeur]",
-    telephone: "[Telephone de l'hebergeur]",
+    nom: "HOSTINGER operations, UAB",
+    adresse: "Švitrigailos str. 34, Vilnius 03230 Lithuania",
+    telephone: "37064503378",
   },
 };
 
