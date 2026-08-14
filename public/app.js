@@ -336,30 +336,23 @@ async function loginWithMeta(providerLabel) {
           showSocialMsg("Connexion annulée.", "err");
           return reject(new Error("cancel"));
         }
-        // birthday : permission user_birthday (review Meta parfois requise)
-        // location : rarement un CP ; on tente quand meme
+        // Permissions de base seulement (pas d'App Review Meta) :
+        // public_profile + email → nom, prénom, e-mail.
         window.FB.api(
           "/me",
-          { fields: "first_name,last_name,email,name,birthday,location" },
+          { fields: "first_name,last_name,email,name" },
           (u) => {
             if (!u || u.error) {
               showSocialMsg("Impossible de lire le profil Meta.", "err");
               return reject(new Error("api"));
-            }
-            let code_postal = "";
-            // Si Meta renvoie un CP dans un champ libre (rare), on le capture
-            if (u.location && typeof u.location === "object") {
-              const locName = String(u.location.name || "");
-              const m = locName.match(/\b(97[1-8]\d{2}|98[6-8]\d{2})\b/);
-              if (m) code_postal = m[1];
             }
             applySocialProfile(
               {
                 prenom: u.first_name || (u.name || "").split(" ")[0] || "",
                 nom: u.last_name || (u.name || "").split(" ").slice(1).join(" ") || "",
                 email: u.email || "",
-                date_naissance: toIsoDate(u.birthday || ""),
-                code_postal,
+                date_naissance: "",
+                code_postal: "",
               },
               providerLabel
             );
@@ -367,7 +360,7 @@ async function loginWithMeta(providerLabel) {
           }
         );
       },
-      { scope: "public_profile,email,user_birthday,user_location" }
+      { scope: "public_profile,email" }
     );
   });
 }
