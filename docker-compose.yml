@@ -22,6 +22,11 @@ services:
       # PARTNER_WEBHOOK_URL: "https://crm-courtier.fr/webhook"
       # PARTNER_WEBHOOK_SECRET: "secret-hmac"
       # PARTNER_API_KEYS: "cle1:Affilie1,cle2:Affilie2"
+      # --- Pixels Meta / TikTok (IDs publics + tokens CAPI restant serveur) ---
+      # META_PIXEL_ID: "1234567890"
+      # META_CAPI_TOKEN: "EAAB..."
+      # TIKTOK_PIXEL_ID: "XXXXXXXXXXXXXXXXXX"
+      # TIKTOK_ACCESS_TOKEN: "..."
     volumes:
       # Persistance de la base SQLite entre les redemarrages.
       - leads_data:/app/data

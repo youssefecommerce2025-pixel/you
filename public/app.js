@@ -87,6 +87,9 @@ function setupWhatsApp() {
           ? navigator.sendBeacon("/api/track/whatsapp", new Blob([JSON.stringify(payload)], { type: "application/json" }))
           : fetch("/api/track/whatsapp", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), keepalive: true });
       } catch (e) {}
+      try {
+        window.adPixels?.track("Contact", { content_name: "whatsapp" });
+      } catch (e) {}
     });
   });
 }
@@ -421,6 +424,7 @@ function setupMultiStep() {
   const fill = document.getElementById("form-progress-fill");
   const numEl = document.getElementById("form-step-num");
   let current = 1;
+  let checkoutTracked = false;
 
   function showStep(n) {
     current = n;
@@ -432,6 +436,12 @@ function setupMultiStep() {
     });
     if (fill) fill.style.width = `${(n / 3) * 100}%`;
     if (numEl) numEl.textContent = String(n);
+    if (n === 3 && !checkoutTracked) {
+      checkoutTracked = true;
+      try {
+        window.adPixels?.track("InitiateCheckout", { content_name: "formulaire_contact" });
+      } catch (e) {}
+    }
     const active = document.querySelector(`.form-step[data-step="${n}"]`);
     const focusable = active?.querySelector("input, select, button.js-next-step, button[type=submit]");
     if (focusable) setTimeout(() => focusable.focus(), 150);
@@ -585,6 +595,14 @@ form.addEventListener("submit", async (e) => {
   }
 
   const params = new URLSearchParams(window.location.search);
+  const eventId =
+    (window.adPixels && window.adPixels.newEventId && window.adPixels.newEventId()) ||
+    `evt-${Date.now()}`;
+  const clickIds = (window.adPixels && window.adPixels.clickIds && window.adPixels.clickIds()) || {};
+  const adsConsent = !!(window.adPixels && window.adPixels.adsConsentGranted
+    ? window.adPixels.adsConsentGranted()
+    : window.cookieConsent?.get()?.ads);
+
   const payload = {
     ...data,
     consent_telephone: true,
@@ -596,6 +614,13 @@ form.addEventListener("submit", async (e) => {
     utm_campaign: params.get("utm_campaign") || undefined,
     utm_term: params.get("utm_term") || undefined,
     utm_content: params.get("utm_content") || undefined,
+    // Pixels Meta / TikTok (CAPI) : uniquement utiles si cookies pub acceptes.
+    ads_consent: adsConsent,
+    event_id: eventId,
+    fbp: clickIds.fbp || undefined,
+    fbc: clickIds.fbc || undefined,
+    ttp: clickIds.ttp || undefined,
+    ttclid: clickIds.ttclid || params.get("ttclid") || undefined,
   };
 
   submitBtn.disabled = true;
@@ -613,11 +638,19 @@ form.addEventListener("submit", async (e) => {
       showMessage(result.error || "Une erreur est survenue.", "err");
     } else {
       form.reset();
+      try {
+        window.adPixels?.track(
+          "Lead",
+          { content_name: "devis_mutuelle", content_category: "mutuelle_sante" },
+          { eventID: result.eventId || eventId }
+        );
+      } catch (e) {}
       const prenom = encodeURIComponent(data.prenom || "");
+      const eid = encodeURIComponent(result.eventId || eventId);
       if (result.method === "double_optin") {
-        window.location.href = `/merci.html?mode=double_optin&prenom=${prenom}`;
+        window.location.href = `/merci.html?mode=double_optin&prenom=${prenom}&eid=${eid}`;
       } else {
-        window.location.href = `/merci.html?prenom=${prenom}`;
+        window.location.href = `/merci.html?prenom=${prenom}&eid=${eid}`;
       }
       return;
     }

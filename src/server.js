@@ -12,6 +12,12 @@ import { sendDoubleOptinConfirmation, mailerMode } from "./notifier.js";
 import { dispatchLead, deliveriesForLead, webhookConfigured } from "./webhook.js";
 import { createLeadWithConsent, validateLead, computeScore, trancheFromDOB } from "./leads.js";
 import { getVariant, listVariants, WHATSAPP_NUMBER } from "./variants.js";
+import {
+  metaPixelId,
+  tiktokPixelId,
+  pixelsConfigured,
+  sendConversionEvents,
+} from "./pixels.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -60,6 +66,9 @@ app.get("/api/config", (req, res) => {
     facebookAppId: process.env.FACEBOOK_APP_ID || "",
     appleClientId: process.env.APPLE_CLIENT_ID || "",
     publicBaseUrl: (process.env.PUBLIC_BASE_URL || "").replace(/\/$/, ""),
+    // IDs publics des pixels (jamais les tokens CAPI).
+    metaPixelId: metaPixelId(),
+    tiktokPixelId: tiktokPixelId(),
   });
 });
 
@@ -141,11 +150,15 @@ app.post("/api/leads", async (req, res) => {
     return res.status(500).json({ error: "Erreur serveur" });
   }
 
+  const adsConsent = b.ads_consent === true;
+  const eventId = String(b.event_id || "").trim() || crypto.randomUUID();
+
   const response = {
     ok: true,
     leadId,
     consentVersion: snapshot.version,
     method: useDoubleOptin ? "double_optin" : "single_optin",
+    eventId,
   };
 
   // En double opt-in : envoi reel du lien de confirmation par email et/ou SMS.
@@ -172,6 +185,27 @@ app.post("/api/leads", async (req, res) => {
   }
 
   res.status(201).json(response);
+
+  // CAPI Meta / Events API TikTok : fire-and-forget, uniquement si cookies pub acceptes.
+  if (adsConsent) {
+    sendConversionEvents({
+      adsConsent: true,
+      eventId,
+      leadId,
+      email,
+      telephone,
+      prenom: b.prenom,
+      nom: b.nom,
+      codePostal: b.code_postal,
+      sourceUrl: b.source_url || req.headers.referer || "",
+      ip: clientIp(req),
+      userAgent: req.headers["user-agent"] || "",
+      fbp: b.fbp,
+      fbc: b.fbc,
+      ttp: b.ttp,
+      ttclid: b.ttclid,
+    }).catch((e) => console.error("Pixels CAPI:", e));
+  }
 });
 
 /* --------------------------------------------------------------------------
@@ -779,7 +813,11 @@ if (isMain && process.env.NODE_ENV !== "test") {
     const mode = mailerMode();
     console.log(`  Notifications : email=${mode.email}, sms=${mode.sms}`);
     console.log(
-      `  Webhook courtier : ${webhookConfigured() ? "configure" : "non configure"}\n`
+      `  Webhook courtier : ${webhookConfigured() ? "configure" : "non configure"}`
+    );
+    const px = pixelsConfigured();
+    console.log(
+      `  Pixels : meta=${px.meta ? "oui" : "non"} tiktok=${px.tiktok ? "oui" : "non"} capi=${px.metaCapi ? "oui" : "non"} tiktok-api=${px.tiktokEvents ? "oui" : "non"}\n`
     );
   });
 }
