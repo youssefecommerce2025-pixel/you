@@ -54,6 +54,10 @@ d'environnement ») :
 | `PUBLIC_BASE_URL` | `https://assurdom.fr` | Ton adresse publique |
 | `WHATSAPP_NUMBER` | *(ton numéro, ex. 596696XXXXXX)* | Bouton WhatsApp |
 | `DB_ENGINE` | `sqljs` | Utilise la base « sans compilation » (recommandé sur Hostinger) |
+| `META_PIXEL_ID` | *(ID du pixel Meta, optionnel)* | Mesure des pubs Facebook / Instagram |
+| `TIKTOK_PIXEL_ID` | *(ID du pixel TikTok, optionnel)* | Mesure des pubs TikTok |
+| `META_CAPI_TOKEN` | *(jeton API Conversions Meta, optionnel)* | Mesure serveur, plus fiable |
+| `TIKTOK_ACCESS_TOKEN` | *(jeton Events API TikTok, optionnel)* | Mesure serveur, plus fiable |
 
 *(Tu pourras en ajouter d'autres plus tard : email, SMS, webhook... voir `.env.example`.)*
 

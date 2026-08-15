@@ -81,7 +81,7 @@
       '<div class="cc-inner">' +
       '<div class="cc-text">' +
       "<strong>Nous respectons votre vie privee</strong>" +
-      "<p>Nous utilisons des cookies pour mesurer l'audience et, avec votre accord, pour nos campagnes publicitaires (Google, Meta). " +
+      "<p>Nous utilisons des cookies pour mesurer l'audience et, avec votre accord, pour nos campagnes publicitaires (Google, Meta, TikTok). " +
       'Vous pouvez accepter, refuser ou personnaliser. Voir notre <a href="/confidentialite.html">politique de confidentialite</a>.</p>' +
       "</div>" +
       '<div class="cc-actions">' +
@@ -91,7 +91,7 @@
       "</div>" +
       '<div class="cc-custom" hidden>' +
       "<label><input type=\"checkbox\" id=\"cc-analytics\" /> Mesure d'audience (analytics)</label>" +
-      '<label><input type="checkbox" id="cc-ads" /> Publicite / retargeting (Google, Meta)</label>' +
+      '<label><input type="checkbox" id="cc-ads" /> Publicite / retargeting (Google, Meta, TikTok)</label>' +
       '<button class="cc-btn cc-btn--primary" data-cc="save">Enregistrer mes choix</button>' +
       "</div>" +
       "</div>";

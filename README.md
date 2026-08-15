@@ -100,6 +100,11 @@ pour une installation sans souci.
 | `PARTNER_WEBHOOK_SECRET` | Secret HMAC-SHA256 (en-tête `X-Signature`) | non signé |
 | `WEBHOOK_MAX_ATTEMPTS` | Nombre d'essais avec backoff | `3` |
 | `PARTNER_API_KEYS` | Clés API d'intake affilié, format `cle:Nom,cle2:Nom2` | aucune |
+| `META_PIXEL_ID` | ID du pixel Meta (Facebook/Instagram) | désactivé |
+| `META_CAPI_TOKEN` | Jeton API Conversions Meta (serveur) | désactivé |
+| `TIKTOK_PIXEL_ID` | ID du pixel TikTok | désactivé |
+| `TIKTOK_ACCESS_TOKEN` | Jeton Events API TikTok (serveur) | désactivé |
+| `META_TEST_EVENT_CODE` / `TIKTOK_TEST_EVENT_CODE` | Codes « Test events » (à retirer en prod) | — |
 
 > Sans SMTP/SMS configuré, les messages de confirmation sont écrits dans `data/outbox.log` et
 > tracés dans la table `outbound_messages` (utile en développement).
@@ -129,6 +134,30 @@ double opt-in.
 Pages : `/` (landing), `/admin.html` (CRM), `/confidentialite.html` (confidentialité),
 `/mentions-legales.html` (mentions légales). Bandeau cookies (Google Consent Mode v2) sur les
 pages publiques.
+
+## Pixels Meta et TikTok (mesure des campagnes pub)
+
+Les pixels ne se chargent **qu'après** le consentement cookies « publicité / retargeting ».
+Sans `META_PIXEL_ID` / `TIKTOK_PIXEL_ID`, rien n'est chargé (le site fonctionne normalement).
+
+| Où | Quoi |
+|---|---|
+| Navigateur (`public/pixels.js`) | PageView, InitiateCheckout (étape contact du formulaire), Contact (clic WhatsApp), Lead (devis envoyé) |
+| Serveur (`src/pixels.js`) | Même événement Lead via **API Conversions Meta** et **Events API TikTok**, avec email/téléphone hashés SHA-256 |
+
+Le même `event_id` est envoyé des deux côtés : Meta et TikTok dédupliquent, tu ne comptes pas le lead en double.
+
+**À renseigner (Events Manager) :**
+
+1. Crée un pixel Meta (Events Manager → Sources de données) → copie l'ID dans `META_PIXEL_ID`.
+2. (Recommandé) Génère un jeton d'accès **API Conversions** → `META_CAPI_TOKEN`.
+3. Crée un pixel TikTok (TikTok Ads → Events) → `TIKTOK_PIXEL_ID`.
+4. (Recommandé) Access Token Events API → `TIKTOK_ACCESS_TOKEN`.
+5. Dans Meta / TikTok, indique l'événement de conversion : **Lead** (Meta) / **SubmitForm** (TikTok).
+6. Teste avec `META_TEST_EVENT_CODE` / `TIKTOK_TEST_EVENT_CODE` puis retire-les en production.
+
+Sans le jeton serveur, seul le pixel navigateur tourne (suffisant pour un premier test, moins fiable
+sur iPhone / bloqueurs de pub).
 
 ## Transmission vers le CRM d'un courtier partenaire (webhook)
 

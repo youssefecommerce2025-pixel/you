@@ -73,6 +73,8 @@ test("GET /api/config expose la version et le libelle de consentement", async ()
   assert.ok(r.json.consentVersion);
   assert.match(r.json.consentCheckboxLabel, /t[ée]l[ée]phone/i);
   assert.match(r.json.consentCheckboxLabel, /ORIAS/);
+  assert.equal(typeof r.json.metaPixelId, "string");
+  assert.equal(typeof r.json.tiktokPixelId, "string");
 });
 
 test("POST /api/leads refuse sans consentement", async () => {
@@ -126,6 +128,7 @@ test("POST /api/leads cree un lead avec opt-in et enregistre la preuve", async (
   });
   assert.equal(r.status, 201);
   assert.ok(r.json.leadId);
+  assert.ok(r.json.eventId);
 
   const proof = await req("GET", `/api/admin/leads/${r.json.leadId}/consent`, admin);
   assert.equal(proof.status, 200);
@@ -241,6 +244,7 @@ test("Variantes : /lp/:slug sert la landing page (HTML)", async () => {
   assert.equal(res.status, 200);
   const html = await res.text();
   assert.match(html, /<title>/i);
+  assert.match(html, /pixels\.js/);
 });
 
 test("Lead avec ile/persona : bien enregistre et visible dans l'analytics par ile", async () => {
@@ -251,6 +255,14 @@ test("Lead avec ile/persona : bien enregistre et visible dans l'analytics par il
   const mq = a.json.parIle.find((x) => x.cle === "Martinique");
   assert.ok(mq, "l'ile Martinique doit apparaitre");
   assert.ok(mq.leads >= 1);
+});
+
+test("POST /api/leads avec ads_consent renvoie un eventId (CAPI no-op si non configure)", async () => {
+  const r = await req("POST", "/api/leads", {
+    body: { ...validLead(), ads_consent: true, event_id: "evt-test-1" },
+  });
+  assert.equal(r.status, 201);
+  assert.equal(r.json.eventId, "evt-test-1");
 });
 
 test("Tracking WhatsApp : enregistre un clic", async () => {
