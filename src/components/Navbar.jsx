@@ -7,6 +7,7 @@ const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/shop', label: 'Shop' },
   { to: '/custom-order', label: 'Custom Order' },
+  { to: '/payment-methods', label: 'Payments' },
   { to: '/about', label: 'Our Story' },
   { to: '/faq', label: 'FAQ' },
   { to: '/contact', label: 'Contact' },

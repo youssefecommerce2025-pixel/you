@@ -200,7 +200,7 @@ function ProductDetail({ product, addToCart }) {
 
           {/* Trust micro badges */}
           <div className="grid grid-cols-3 gap-2 mt-6 pt-6 border-t border-gray-100 text-center">
-            {[['🚀', 'Fast Ship', '2-3 days'], ['↩️', 'Easy Return', '30 days'], ['🔒', 'Secure', 'SSL encrypted']].map(([icon, title, sub]) => (
+            {[['📦', 'Tracked Delivery', '3-7 business days'], ['↩️', 'Easy Return', '30-day guarantee'], ['🔒', 'Secure Checkout', 'Stripe & PayPal']].map(([icon, title, sub]) => (
               <div key={title}>
                 <p className="text-lg">{icon}</p>
                 <p className="text-xs font-bold text-gray-700">{title}</p>
@@ -273,8 +273,9 @@ function ProductDetail({ product, addToCart }) {
           {activeTab === 'care' && (
             <div className="space-y-4">
               <div><p className="font-bold text-sm mb-1">Care Instructions</p><p className="text-gray-500 text-sm">{product.care}</p></div>
-              <div><p className="font-bold text-sm mb-1">Shipping</p><p className="text-gray-500 text-sm">{product.shipping}</p></div>
-              <div><p className="font-bold text-sm mb-1">Returns</p><p className="text-gray-500 text-sm">Not satisfied? We accept returns within 30 days of delivery. Items must be unworn and unwashed. Contact us at hello@kandoulcustomz.com.</p></div>
+              <div><p className="font-bold text-sm mb-1">US Delivery Time</p><p className="text-gray-500 text-sm">Delivered to your door in 3 to 7 business days via USPS/FedEx tracked service. Free shipping applies on all US orders over $75.</p></div>
+              <div><p className="font-bold text-sm mb-1">Accepted Payment Methods</p><p className="text-gray-500 text-sm">Stripe (Visa, Mastercard, Amex, Discover), PayPal, Wise, Payoneer, and Apple Pay.</p></div>
+              <div><p className="font-bold text-sm mb-1">Returns & Satisfaction</p><p className="text-gray-500 text-sm">Not completely thrilled? We accept returns within 30 days of delivery. Items must be unworn and unwashed. Contact us at hello@kandoulcustomz.com or via WhatsApp.</p></div>
             </div>
           )}
         </div>

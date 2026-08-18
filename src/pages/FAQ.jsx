@@ -32,24 +32,24 @@ const faqGroups = [
   },
   {
     category: 'Shipping & Delivery',
-    icon: '🚀',
+    icon: '📦',
     id: 'shipping',
     faqs: [
       {
-        q: 'How long does shipping take?',
-        a: "Standard products (hoodies, tees from our collection): 2-3 business days. Custom orders: 5-7 business days for production + 2-3 days shipping. Rush production is available — contact us for pricing."
+        q: 'How long does US delivery take?',
+        a: "Depending on your state and address location in the USA, your order will be delivered within 3 to 7 business days via tracked USPS or FedEx service."
       },
       {
         q: 'Do you offer free shipping?',
-        a: "Yes! All US orders over $75 qualify for free standard shipping. Orders under $75 have a flat $7.99 shipping fee."
+        a: "Yes! All US orders of $75 or more automatically qualify for FREE tracked shipping."
       },
       {
         q: 'Do you ship internationally?',
-        a: "Currently, we ship exclusively within the United States. International shipping is on our roadmap — sign up for our newsletter to be notified when we launch worldwide shipping."
+        a: "Currently, our primary focus is fast, premium fulfillment across the United States. For special international custom orders, contact us directly on WhatsApp."
       },
       {
         q: 'How do I track my order?',
-        a: "Once your order ships, you'll receive a tracking number via email. You can track your package directly on our website or via USPS/FedEx tracking."
+        a: "Once your order is dispatched, you receive an automated shipping confirmation email with an active tracking link."
       },
     ]
   },
@@ -109,8 +109,8 @@ const faqGroups = [
         a: "Our prints are designed to last. We use industry-leading screen printing and DTG techniques with fade-resistant inks. Wash inside out on cold and tumble dry low to maximize longevity. Embroidered pieces are especially durable."
       },
       {
-        q: 'What is DTG printing vs screen printing vs embroidery?',
-        a: "DTG (Direct to Garment) is ideal for photorealistic, full-color designs and small quantities. Screen printing is best for bold, simple designs and larger orders — it's cost-effective and long-lasting. Embroidery uses thread to stitch the design — premium, textured, and extremely durable. We'll recommend the best method for your design."
+        q: 'What payment methods do you accept?',
+        a: "We accept all major credit/debit cards via Stripe (Visa, Mastercard, Amex, Discover), PayPal, Wise, Payoneer, and Apple Pay."
       },
     ]
   },

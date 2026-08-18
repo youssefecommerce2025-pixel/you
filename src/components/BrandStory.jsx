@@ -48,7 +48,7 @@ export default function BrandStory() {
                 style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C97A)' }}
               >
                 <p className="text-xs text-black/60 font-medium">Made in the</p>
-                <p className="text-black font-black">🇺🇸 USA</p>
+                <p className="text-black font-black">USA</p>
               </div>
             </div>
           </div>
