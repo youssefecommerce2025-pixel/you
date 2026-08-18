@@ -17,9 +17,10 @@ services:
       # SMTP_USER: "..."
       # SMTP_PASS: "..."
       # MAIL_FROM: "no-reply@ton-domaine.fr"
-      # SMS_API_URL: "https://api.fournisseur-sms.fr/send"
+      # WHATSAPP_NUMBER: "32470000000"
+      # SMS_API_URL: "https://api.fournisseur-sms.be/send"
       # SMS_API_KEY: "..."
-      # PARTNER_WEBHOOK_URL: "https://crm-courtier.fr/webhook"
+      # PARTNER_WEBHOOK_URL: "https://crm-partenaire.be/webhook"
       # PARTNER_WEBHOOK_SECRET: "secret-hmac"
       # PARTNER_API_KEYS: "cle1:Affilie1,cle2:Affilie2"
     volumes:

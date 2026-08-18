@@ -1,7 +1,7 @@
 {
-  "name": "leads-mutuelle-sante",
+  "name": "leads-fibre-proximus-belgique",
   "version": "1.0.0",
-  "description": "Plateforme de generation de leads mutuelle sante conforme (opt-in RGPD, preuve de consentement horodatee, CRM de qualification) - conforme a la loi du 30 juin 2025 (opt-in au 11 aout 2026).",
+  "description": "Plateforme de generation de leads fibre / telecom Proximus pour le marche belge : verification d'eligibilite, formulaire opt-in (RGPD, preuve de consentement horodatee, contexte DNCM), CRM de qualification speed-to-lead, analytics CPL par region.",
   "type": "module",
   "main": "server.cjs",
   "scripts": {
@@ -12,11 +12,13 @@
   },
   "keywords": [
     "leads",
-    "mutuelle",
+    "fibre",
+    "proximus",
+    "belgique",
+    "telecom",
     "rgpd",
     "opt-in",
-    "consentement",
-    "assurance"
+    "dncm"
   ],
   "license": "MIT",
   "dependencies": {

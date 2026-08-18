@@ -1,4 +1,4 @@
-# Image de production pour la plateforme de leads mutuelle sante.
+# Image de production pour la plateforme de leads fibre Proximus (marche belge).
 # better-sqlite3 est un module natif : on installe les outils de build necessaires,
 # puis on garde une image finale legere.
 

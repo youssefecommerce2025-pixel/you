@@ -1,11 +1,10 @@
-// Transmission automatique d'un lead qualifie vers le CRM d'un courtier partenaire.
+// Transmission automatique d'un lead qualifie vers le CRM de la societe partenaire.
 //
-// - URL cible : PARTNER_WEBHOOK_URL (globale) ou par courtier (voir resolveUrl).
+// - URL cible : PARTNER_WEBHOOK_URL (globale) ou par partenaire (voir resolveUrl).
 // - Signature HMAC-SHA256 (en-tete X-Signature) si PARTNER_WEBHOOK_SECRET est defini,
 //   pour que le partenaire verifie l'authenticite du payload.
 // - Retries avec backoff, et tracabilite complete dans la table webhook_deliveries.
-// - Le payload NE CONTIENT AUCUNE donnee de sante ; il inclut un resume de la preuve
-//   de consentement (obligation de la chaine de distribution assurance).
+// - Le payload inclut un resume de la preuve de consentement (RGPD / DNCM).
 
 import crypto from "node:crypto";
 import db from "./db.js";
@@ -17,11 +16,11 @@ export function webhookConfigured() {
   return Boolean(process.env.PARTNER_WEBHOOK_URL);
 }
 
-// Permet de router vers des URLs differentes selon le courtier (optionnel).
+// Permet de router vers des URLs differentes selon le partenaire (optionnel).
 // Convention : variable d'env PARTNER_WEBHOOK_URL__<SLUG> (slug en MAJUSCULES, non-alnum -> _).
-function resolveUrl(courtier) {
-  if (courtier) {
-    const slug = String(courtier)
+function resolveUrl(partenaire) {
+  if (partenaire) {
+    const slug = String(partenaire)
       .toUpperCase()
       .replace(/[^A-Z0-9]+/g, "_")
       .replace(/^_+|_+$/g, "");

@@ -64,7 +64,7 @@ app.get("/api/config", (req, res) => {
 });
 
 /* --------------------------------------------------------------------------
- * Variantes de landing par ile / persona (DOM-TOM)
+ * Variantes de landing par region / persona (marché belge)
  * ------------------------------------------------------------------------ */
 app.get("/api/variants", (req, res) => res.json({ variants: listVariants() }));
 
@@ -519,7 +519,7 @@ app.patch("/api/admin/leads/:id", requireAdmin, async (req, res) => {
 
   const updated = db.prepare("SELECT * FROM leads WHERE id = ?").get(id);
 
-  // Transmission automatique vers le CRM du courtier partenaire lorsque le lead
+  // Transmission automatique vers le CRM de la société partenaire lorsque le lead
   // vient de passer au statut "transmis".
   let webhook = null;
   const justTransmis = b.statut === "transmis" && lead.statut !== "transmis";
@@ -531,7 +531,7 @@ app.patch("/api/admin/leads/:id", requireAdmin, async (req, res) => {
 });
 
 /* --------------------------------------------------------------------------
- * Transmission manuelle (re-envoi) d'un lead vers le CRM courtier
+ * Transmission manuelle (re-envoi) d'un lead vers le CRM partenaire
  * ------------------------------------------------------------------------ */
 app.post("/api/admin/leads/:id/transmettre", requireAdmin, async (req, res) => {
   const id = Number(req.params.id);
@@ -786,7 +786,7 @@ if (isMain && process.env.NODE_ENV !== "test") {
     const mode = mailerMode();
     console.log(`  Notifications : email=${mode.email}, sms=${mode.sms}`);
     console.log(
-      `  Webhook courtier : ${webhookConfigured() ? "configure" : "non configure"}\n`
+      `  Webhook partenaire : ${webhookConfigured() ? "configure" : "non configure"}\n`
     );
   });
 }
