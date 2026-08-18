@@ -60,10 +60,11 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { to: '/about', label: 'Our Story' },
+                { to: '/payment-methods', label: 'Payment Methods' },
                 { to: '/faq', label: 'FAQ' },
                 { to: '/contact', label: 'Contact Us' },
-                { to: '/faq#shipping', label: 'Shipping Info' },
-                { to: '/faq#returns', label: 'Returns & Exchanges' },
+                { to: '/faq#shipping', label: 'Delivery & Shipping' },
+                { to: '/faq#returns', label: 'Returns & Guarantee' },
                 { to: '/faq#sizing', label: 'Size Guide' },
               ].map(link => (
                 <li key={link.to + link.label}>
@@ -100,11 +101,21 @@ export default function Footer() {
       <div className="border-t border-white/5 py-6">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
-            {['🔒 SSL Secure', '💳 Visa', '💳 Mastercard', '🅿️ PayPal', '🍎 Apple Pay'].map(b => (
-              <span key={b} className="text-white/30 text-xs font-medium px-3 py-1 border border-white/10 rounded-full">
-                {b}
-              </span>
-            ))}
+            <Link to="/payment-methods" className="text-white/40 hover:text-yellow-400 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
+              🔒 Stripe Verified
+            </Link>
+            <Link to="/payment-methods" className="text-white/40 hover:text-yellow-400 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
+              💳 Visa / Mastercard / Amex
+            </Link>
+            <Link to="/payment-methods" className="text-white/40 hover:text-yellow-400 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
+              🅿️ PayPal Protected
+            </Link>
+            <Link to="/payment-methods" className="text-white/40 hover:text-yellow-400 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
+              ⚡ Wise & Payoneer
+            </Link>
+            <Link to="/payment-methods" className="text-white/40 hover:text-yellow-400 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
+              🍎 Apple Pay & Google Pay
+            </Link>
           </div>
           <p className="text-white/20 text-xs text-center">
             © {year} Kandoul Customz. All rights reserved.

@@ -90,8 +90,8 @@ export default function Hero() {
           </div>
           <div className="hidden sm:block w-px h-10 bg-white/10" />
           <div className="text-center">
-            <p className="text-3xl font-black text-white">48h</p>
-            <p className="text-xs text-white/40 uppercase tracking-widest mt-1">Standard Shipping</p>
+            <p className="text-3xl font-black text-white">3-7 Days</p>
+            <p className="text-xs text-white/40 uppercase tracking-widest mt-1">US Delivery Time</p>
           </div>
           <div className="hidden sm:block w-px h-10 bg-white/10" />
           <div className="text-center">

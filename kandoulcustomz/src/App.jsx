@@ -11,6 +11,8 @@ import CustomOrder from './pages/CustomOrder'
 import About from './pages/About'
 import FAQ from './pages/FAQ'
 import Contact from './pages/Contact'
+import PaymentMethods from './pages/PaymentMethods'
+import ThankYou from './pages/ThankYou'
 import ScrollToTop from './components/ScrollToTop'
 
 export default function App() {
@@ -90,6 +92,8 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/payment-methods" element={<PaymentMethods />} />
+          <Route path="/thank-you" element={<ThankYou />} />
         </Routes>
       </main>
       <Footer />

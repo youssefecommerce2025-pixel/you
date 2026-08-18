@@ -76,6 +76,21 @@ export default function Contact() {
               </div>
             ))}
 
+            {/* Social & WhatsApp */}
+            <div className="bg-emerald-950 border border-emerald-800 rounded-2xl p-6 text-white shadow-md">
+              <p className="font-extrabold text-sm mb-2 text-emerald-400 uppercase tracking-wider">Fastest Response</p>
+              <h4 className="font-bold text-base text-white mb-2">WhatsApp Direct Support</h4>
+              <p className="text-xs text-emerald-100/70 mb-4">Chat with our team directly on WhatsApp for real-time order inquiries and custom mockups.</p>
+              <a
+                href="https://wa.me/15550192834?text=Hello%20Kandoul%20Customz%20Team!%20I%20have%20a%20question."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-md"
+              >
+                Chat on WhatsApp
+              </a>
+            </div>
+
             {/* Social */}
             <div className="bg-black rounded-2xl p-6 text-white">
               <p className="font-bold text-sm mb-4">Follow the Journey</p>

@@ -1,10 +1,10 @@
 const badges = [
-  { icon: '🚀', title: 'Fast US Shipping', sub: '2-3 business days standard' },
-  { icon: '✅', title: '100% Satisfaction', sub: 'Love it or we fix it' },
+  { icon: '📦', title: 'Tracked US Delivery', sub: '3 to 7 business days' },
+  { icon: '✅', title: '100% Satisfaction', sub: 'Love it or we replace it' },
   { icon: '🌿', title: 'Organic Cotton', sub: 'GOTS-certified & ethical' },
-  { icon: '🔒', title: 'Secure Checkout', sub: 'SSL encrypted payments' },
-  { icon: '🎁', title: 'Gift Wrapping', sub: 'Add a personal message' },
-  { icon: '↩️', title: 'Easy Returns', sub: '30-day hassle-free returns' },
+  { icon: '🔒', title: 'Secure Checkout', sub: 'Stripe, PayPal, Wise, Payoneer' },
+  { icon: '🎁', title: 'Gift Packaging', sub: 'Add custom notes & wrap' },
+  { icon: '↩️', title: 'Easy Returns', sub: '30-day hassle-free guarantee' },
 ]
 
 export default function TrustBadges() {
