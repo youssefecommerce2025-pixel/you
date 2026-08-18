@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Merci — AssurDom</title>
+    <title>Merci — ProxiFibre</title>
     <meta name="robots" content="noindex" />
     <link rel="icon" href="/logo.png" />
     <link rel="stylesheet" href="/styles.css" />
@@ -14,15 +14,15 @@
         place-items: center;
         padding: 40px 16px;
         background:
-          radial-gradient(900px 420px at 10% -10%, #1aa89a 0%, transparent 55%),
-          radial-gradient(800px 380px at 100% 0%, #ff8a65 0%, transparent 50%),
-          linear-gradient(160deg, #0c3a48 0%, #0e6e66 45%, #124b58 100%);
+          radial-gradient(900px 420px at 10% -10%, #7a2fb8 0%, transparent 55%),
+          radial-gradient(800px 380px at 100% 0%, #e5007d 0%, transparent 50%),
+          linear-gradient(160deg, #241245 0%, #4d1f77 45%, #33195e 100%);
       }
       .thanks__card {
         width: min(560px, 100%);
         background: #fff;
         border-radius: 28px;
-        box-shadow: 0 30px 70px rgba(8, 40, 50, 0.35);
+        box-shadow: 0 30px 70px rgba(20, 8, 40, 0.35);
         padding: 40px 32px 34px;
         text-align: center;
         position: relative;
@@ -33,20 +33,20 @@
         position: absolute;
         inset: 0 0 auto 0;
         height: 6px;
-        background: linear-gradient(90deg, #0e9e92, #ffb020, #ff6f4d);
+        background: linear-gradient(90deg, #6a2ca0, #e5007d, #ffb020);
       }
       .thanks__logo {
         width: 84px;
         height: 84px;
         border-radius: 22px;
         margin: 0 auto 14px;
-        box-shadow: 0 12px 28px rgba(14, 158, 146, 0.28);
+        box-shadow: 0 12px 28px rgba(106, 44, 160, 0.28);
       }
       .thanks__brand {
         display: block;
         font-weight: 800;
         font-size: 1.35rem;
-        color: #0c3a48;
+        color: #241245;
         letter-spacing: -0.02em;
         margin-bottom: 18px;
       }
@@ -54,9 +54,9 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background: #e8f8f1;
-        color: #04724d;
-        border: 1px solid #a9e6cd;
+        background: #f3ecfb;
+        color: #4d1f77;
+        border: 1px solid #d7c4ef;
         padding: 8px 14px;
         border-radius: 999px;
         font-weight: 700;
@@ -67,13 +67,13 @@
         margin: 0 0 12px;
         font-size: clamp(1.7rem, 4vw, 2.15rem);
         line-height: 1.15;
-        color: #0c3a48;
+        color: #241245;
         letter-spacing: -0.02em;
       }
-      .thanks__card h1 span { color: #0e9e92; }
+      .thanks__card h1 span { color: #6a2ca0; }
       .thanks__lead {
         margin: 0 0 22px;
-        color: #5b7683;
+        color: #6b6486;
         font-size: 1.05rem;
         line-height: 1.55;
       }
@@ -89,11 +89,11 @@
         display: flex;
         gap: 12px;
         align-items: flex-start;
-        background: #f4fbfa;
-        border: 1px solid #d7efeb;
+        background: #f8f5fd;
+        border: 1px solid #e3d8f4;
         border-radius: 14px;
         padding: 14px 14px;
-        color: #12333d;
+        color: #1f1533;
         font-weight: 600;
       }
       .thanks__points li .ico {
@@ -103,18 +103,18 @@
         border-radius: 10px;
         display: grid;
         place-items: center;
-        background: linear-gradient(135deg, #0e9e92, #14b8a6);
+        background: linear-gradient(135deg, #6a2ca0, #e5007d);
         color: #fff;
         font-size: 1rem;
       }
-      .thanks__points li b { color: #0e9e92; }
+      .thanks__points li b { color: #6a2ca0; }
       .thanks__wish {
         margin: 0 0 24px;
         padding: 16px;
         border-radius: 16px;
-        background: linear-gradient(135deg, #fff7ed, #ffedd5);
-        border: 1px solid #fdba74;
-        color: #9a3412;
+        background: linear-gradient(135deg, #fdf2f9, #fce1f0);
+        border: 1px solid #f3a8d3;
+        color: #9a1163;
         font-weight: 700;
         font-size: 1.02rem;
       }
@@ -127,7 +127,7 @@
       .thanks__note {
         margin: 18px 0 0;
         font-size: 0.85rem;
-        color: #7a909a;
+        color: #8a83a0;
       }
       #double-optin { display: none; }
       #double-optin.show { display: list-item; }
@@ -136,47 +136,47 @@
   <body>
     <main class="thanks">
       <section class="thanks__card" aria-labelledby="thanks-title">
-        <img class="thanks__logo" src="/logo.png" alt="AssurDom" />
-        <span class="thanks__brand">AssurDom</span>
+        <img class="thanks__logo" src="/logo.png" alt="ProxiFibre" />
+        <span class="thanks__brand">ProxiFibre</span>
 
         <div class="thanks__badge">✅ Demande bien reçue</div>
 
         <h1 id="thanks-title">Merci <span id="prenom-slot">!</span></h1>
         <p class="thanks__lead">
-          Votre demande de devis mutuelle est bien enregistrée.
-          Un conseiller AssurDom s’occupe de vous.
+          Votre demande de vérification d'éligibilité à la fibre est bien enregistrée.
+          Un conseiller ProxiFibre s'occupe de vous.
         </p>
 
         <ul class="thanks__points">
           <li>
             <span class="ico">📞</span>
-            <span>Un conseiller vous rappelle <b>dans l’heure qui vient</b>.</span>
+            <span>Un conseiller vous rappelle <b>sous 15 minutes</b> (heures d'ouverture).</span>
           </li>
           <li>
-            <span class="ico">🇫🇷</span>
-            <span>Le numéro affiché sera un <b>numéro de métropole</b> (France hexagone).</span>
+            <span class="ico">🔌</span>
+            <span>Il vérifie votre <b>éligibilité fibre</b> à votre adresse et vos meilleures options.</span>
           </li>
           <li id="double-optin">
             <span class="ico">✉️</span>
             <span>Pensez à <b>confirmer le lien</b> reçu par e-mail / SMS pour finaliser.</span>
           </li>
           <li>
-            <span class="ico">🌴</span>
-            <span>Comparaison gratuite, sans engagement, adaptée à l’Outre-mer.</span>
+            <span class="ico">🚫</span>
+            <span>Vérification gratuite, sans engagement. Vous pouvez vous rétracter à tout moment.</span>
           </li>
         </ul>
 
         <p class="thanks__wish">
-          🌞 Nous vous souhaitons une excellente expérience chez AssurDom.
+          ⚡ Bientôt une connexion ultra-stable chez vous. À tout de suite&nbsp;!
         </p>
 
         <div class="thanks__actions">
-          <a class="btn btn--primary" href="/">Retour à l’accueil</a>
+          <a class="btn btn--primary" href="/">Retour à l'accueil</a>
           <a class="btn btn--soft" href="/#faq">Voir la FAQ</a>
         </div>
 
         <p class="thanks__note">
-          Gardez votre téléphone à proximité. Si vous manquez l’appel, nous pourrons vous recontacter.
+          Gardez votre téléphone à proximité. Si vous manquez l'appel, nous pourrons vous recontacter.
         </p>
       </section>
     </main>
@@ -186,11 +186,7 @@
         const params = new URLSearchParams(window.location.search);
         const prenom = (params.get("prenom") || "").trim();
         const slot = document.getElementById("prenom-slot");
-        if (prenom) {
-          slot.textContent = prenom + " !";
-        } else {
-          slot.textContent = "!";
-        }
+        slot.textContent = prenom ? prenom + " !" : "!";
         if (params.get("mode") === "double_optin") {
           document.getElementById("double-optin").classList.add("show");
         }

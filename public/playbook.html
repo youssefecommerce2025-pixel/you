@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playbook acquisition — Leads fibre via les réseaux sociaux | ProxiFibre</title>
+    <meta
+      name="description"
+      content="Playbook complet pour générer des leads fibre Proximus depuis les réseaux sociaux : angles d'annonces Meta, configuration du formulaire, script d'appel et setup Ads Manager."
+    />
+    <link rel="icon" href="/logo.png" />
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      .pb { width: min(960px, 92%); margin: 0 auto; padding: 20px 0 60px; }
+      .pb h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); letter-spacing: -0.02em; margin: 0 0 8px; color: var(--navy); }
+      .pb .sub { color: var(--muted); font-size: 1.05rem; margin: 0 0 8px; }
+      .pb .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 8px; }
+      .pb .toc a { text-decoration: none; background: #efe9fb; color: var(--brand-dark); padding: 7px 13px; border-radius: 999px; font-weight: 700; font-size: 0.85rem; }
+      .pb .toc a:hover { background: #e4d9f7; }
+      .pb section { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 28px; margin: 20px 0; box-shadow: var(--shadow); }
+      .pb h2 { margin: 0 0 6px; font-size: 1.35rem; color: var(--navy); }
+      .pb h2 .tag { font-size: 0.72rem; background: var(--accent); color: #fff; border-radius: 6px; padding: 2px 8px; vertical-align: middle; margin-left: 8px; }
+      .pb h3 { margin: 22px 0 8px; font-size: 1.05rem; color: var(--brand-dark); }
+      .pb p, .pb li { color: #3a3350; }
+      .pb ul, .pb ol { padding-left: 20px; }
+      .pb li { margin: 5px 0; }
+      .adcard { border: 1px solid var(--line); border-radius: 14px; margin: 14px 0; overflow: hidden; }
+      .adcard__head { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #f8f5fd; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+      .adcard__head b { color: var(--navy); }
+      .adcard__body { padding: 14px; }
+      .adcard__label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 10px 0 3px; font-weight: 700; }
+      pre { white-space: pre-wrap; background: #1f1533; color: #f3ecff; border-radius: 10px; padding: 14px 16px; font-size: 0.9rem; line-height: 1.5; overflow-x: auto; margin: 4px 0 0; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+      .copy-btn { border: none; cursor: pointer; background: var(--brand); color: #fff; font-weight: 700; font-size: 0.78rem; padding: 6px 12px; border-radius: 8px; }
+      .copy-btn:hover { background: var(--brand-dark); }
+      table.pbt { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.9rem; }
+      table.pbt th, table.pbt td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+      table.pbt th { background: #f8f5fd; color: var(--navy); }
+      .callout { background: #f3ecfb; border-left: 4px solid var(--brand); border-radius: 10px; padding: 12px 16px; margin: 14px 0; }
+      .callout--warn { background: #fdf2f9; border-left-color: var(--accent); }
+      .script { border: 1px solid var(--line); border-radius: 12px; padding: 4px 16px 14px; margin: 10px 0; }
+      .script .who { font-weight: 800; color: var(--brand-dark); }
+      .back { display: inline-block; margin: 0 0 4px; color: var(--brand-dark); text-decoration: none; font-weight: 700; }
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <div class="container nav__inner">
+        <a class="brand" href="/"><img src="/logo.png" alt="ProxiFibre" class="brand__logo" /><span class="brand__name">ProxiFibre</span></a>
+        <nav class="nav__links">
+          <a href="/">Accueil</a>
+          <a href="#angles">Annonces</a>
+          <a href="#form">Formulaire</a>
+          <a href="#script">Script d'appel</a>
+          <a href="#ads">Ads Manager</a>
+        </nav>
+        <a href="/admin.html" class="btn btn--primary btn--sm">Espace conseiller</a>
+      </div>
+    </header>
+
+    <main class="pb">
+      <a class="back" href="/">&larr; Retour au site</a>
+      <h1>Playbook : générer des leads fibre depuis les réseaux sociaux</h1>
+      <p class="sub">
+        La méthode complète pour un télévendeur freelance : transformer des euros de publicité
+        Meta en <strong>demandes de rappel qualifiées</strong>, puis en ventes. Tout est prêt à
+        copier-coller.
+      </p>
+      <div class="callout">
+        <strong>Le principe :</strong> une pub « Vérifiez si la fibre est chez vous » → un
+        formulaire instantané (le prospect laisse son numéro) → <strong>vous rappelez sous 15
+        minutes</strong>. Le rappel ultra-rapide est votre vrai avantage concurrentiel.
+      </div>
+
+      <div class="toc">
+        <a href="#canal">1. Le canal</a>
+        <a href="#angles">2. Annonces prêtes</a>
+        <a href="#form">3. Formulaire</a>
+        <a href="#script">4. Script d'appel</a>
+        <a href="#ads">5. Setup Ads Manager</a>
+        <a href="#kpi">6. Routine &amp; KPI</a>
+      </div>
+
+      <!-- 1. CANAL -->
+      <section id="canal">
+        <h2>1. Le meilleur canal pour vous</h2>
+        <p>
+          <strong>Meta Lead Ads (Facebook + Instagram) avec rappel sous 15 minutes.</strong> C'est
+          le levier le plus rentable pour un freelance télécom en Belgique :
+        </p>
+        <ul>
+          <li>Le prospect <strong>demande</strong> un rappel : ce n'est pas du cold call aveugle.</li>
+          <li>Formulaire natif dans l'app → beaucoup plus de conversions.</li>
+          <li>Coût par lead souvent <strong>~3–10 €</strong> en Belgique si l'offre est bien ciblée.</li>
+          <li>Vous gardez le contrôle : vous appelez, vous closez, vous touchez la commission.</li>
+        </ul>
+        <p class="callout callout--warn">
+          Avant de lancer : validez avec votre société (utilisation de la marque Proximus, mode
+          d'attribution de vos ventes) et assurez-vous d'être couvert par sa <strong>licence
+          DNCM</strong>. Respectez les horaires et l'opt-out.
+        </p>
+      </section>
+
+      <!-- 2. ANNONCES -->
+      <section id="angles">
+        <h2>2. Trois annonces prêtes à copier <span class="tag">A/B/C</span></h2>
+        <p>Lancez les 3 angles en parallèle, même formulaire. Coupez les perdants après ~20–30 leads.</p>
+
+        <div class="adcard">
+          <div class="adcard__head"><b>Angle A — Fibre / éligibilité</b><button class="copy-btn" data-copy="adA">Copier</button></div>
+          <div class="adcard__body">
+            <div class="adcard__label">Titre</div>
+            <pre id="adA-titre">Fibre Proximus : vérifiez votre adresse</pre>
+            <div class="adcard__label">Texte principal</div>
+            <pre id="adA">La fibre arrive dans de plus en plus de communes en Wallonie et à Bruxelles.
+
+Vous voulez savoir si elle est disponible chez vous ?
+Je vérifie votre adresse gratuitement et je vous rappelle sous 15 minutes avec les meilleures options.
+
+✅ Sans engagement
+✅ Check fibre + packs internet / TV / mobile
+✅ Réponse claire : éligible ou pas
+
+👉 Cliquez et laissez votre numéro.</pre>
+            <div class="adcard__label">Description</div>
+            <pre id="adA-desc">Rappel gratuit sous 15 min</pre>
+          </div>
+        </div>
+
+        <div class="adcard">
+          <div class="adcard__head"><b>Angle B — Débit qui chute le soir</b><button class="copy-btn" data-copy="adB">Copier</button></div>
+          <div class="adcard__body">
+            <div class="adcard__label">Titre</div>
+            <pre id="adB-titre">Débit qui chute le soir ? On regarde ça</pre>
+            <div class="adcard__label">Texte principal</div>
+            <pre id="adB">Si votre internet ralentit dès que toute la famille est connectée, ce n'est pas forcément "normal".
+
+Je peux vérifier :
+• si la fibre est dispo à votre adresse
+• quelle offre Proximus correspond à votre usage
+• si un changement vaut vraiment le coup
+
+Demande de rappel gratuite. Je vous contacte rapidement.</pre>
+            <div class="adcard__label">Description</div>
+            <pre id="adB-desc">Check fibre + rappel gratuit</pre>
+          </div>
+        </div>
+
+        <div class="adcard">
+          <div class="adcard__head"><b>Angle C — Pack complet</b><button class="copy-btn" data-copy="adC">Copier</button></div>
+          <div class="adcard__body">
+            <div class="adcard__label">Titre</div>
+            <pre id="adC-titre">Internet + TV + mobile : 1 seul interlocuteur</pre>
+            <div class="adcard__label">Texte principal</div>
+            <pre id="adC">Vous payez peut-être trop cher en séparant internet, TV et mobile.
+
+Laissez-moi vérifier votre situation actuelle et vous proposer une offre claire chez Proximus (si elle est intéressante pour vous).
+
+📞 Rappel sous 15 minutes
+📍 Wallonie & Bruxelles
+
+Cliquez pour laisser votre numéro.</pre>
+            <div class="adcard__label">Description</div>
+            <pre id="adC-desc">Étude gratuite de votre offre</pre>
+          </div>
+        </div>
+
+        <h3>Ciblage recommandé</h3>
+        <ul>
+          <li><strong>Zone :</strong> Bruxelles + provinces wallonnes (resserrez sur les communes où la fibre se déploie).</li>
+          <li><strong>Âge :</strong> 25–55 ans · <strong>Langue :</strong> français.</li>
+          <li><strong>Intérêts :</strong> internet, streaming, smart TV, gaming, télétravail, famille (laissez large au début).</li>
+        </ul>
+      </section>
+
+      <!-- 3. FORMULAIRE -->
+      <section id="form">
+        <h2>3. Le formulaire instantané qui filtre les curieux</h2>
+        <ul>
+          <li>Type : <strong>« Intention plus élevée »</strong> (Higher intent) — moins de faux leads.</li>
+          <li>Téléphone <strong>obligatoire</strong> · 3–4 questions max.</li>
+          <li>Activez la vérification SMS si trop de faux numéros.</li>
+        </ul>
+        <table class="pbt">
+          <thead><tr><th>Champ</th><th>Type</th><th>Options</th></tr></thead>
+          <tbody>
+            <tr><td>Prénom / Nom / Téléphone</td><td>préremplis Meta</td><td>téléphone obligatoire</td></tr>
+            <tr><td>Code postal</td><td>question courte</td><td>obligatoire</td></tr>
+            <tr><td>Opérateur actuel ?</td><td>QCM</td><td>Proximus / VOO-Orange / Telenet-BASE / Autre / Je ne sais pas</td></tr>
+            <tr><td>Que souhaitez-vous ?</td><td>QCM</td><td>Vérifier la fibre / Pack complet / Mobile / Juste des infos</td></tr>
+            <tr><td>Consentement</td><td>case à cocher</td><td>« J'accepte d'être rappelé(e) au sujet d'une offre télécom / fibre. »</td></tr>
+          </tbody>
+        </table>
+        <div class="adcard__label">Écran d'intro</div>
+        <pre>Check fibre gratuit + rappel sous 15 minutes
+Indiquez votre code postal et votre numéro. Un conseiller vous contacte rapidement.</pre>
+        <div class="adcard__label">Écran de remerciement (bouton « Appeler »)</div>
+        <pre>Merci ! Votre demande est bien reçue.
+Je vous rappelle dans les 15 minutes.
+Si vous préférez, vous pouvez aussi m'appeler maintenant.</pre>
+        <p class="callout">
+          Ce site reproduit exactement ce formulaire (page d'accueil) : vous pouvez y envoyer votre
+          trafic Meta au lieu du formulaire natif, pour capturer la <strong>preuve de
+          consentement</strong> et centraliser vos leads dans le CRM.
+        </p>
+      </section>
+
+      <!-- 4. SCRIPT -->
+      <section id="script">
+        <h2>4. Script d'appel (4–6 minutes)</h2>
+        <p>Objectif : rappeler vite, confirmer l'éligibilité, créer le besoin, closer ou fixer le RDV technique.</p>
+
+        <h3>Ouverture (0:00–0:30)</h3>
+        <div class="script">
+          <p><span class="who">Vous :</span> « Bonjour {Prénom}, {votre nom} de la part de ProxiFibre. Vous venez de demander une vérification fibre sur Facebook, je vous rappelle comme promis — vous avez 2 minutes&nbsp;? »</p>
+        </div>
+
+        <h3>Éligibilité (0:30–1:30)</h3>
+        <div class="script">
+          <p><span class="who">Vous :</span> « Je regarde tout de suite à votre adresse. Vous êtes bien à {code postal} ? Quelle rue et numéro&nbsp;? »</p>
+          <p>→ Vérifiez l'éligibilité fibre. Annoncez le résultat clairement : <em>disponible</em>, <em>en cours</em>, ou <em>planifié</em>.</p>
+        </div>
+
+        <h3>Qualification (1:30–3:00)</h3>
+        <div class="script">
+          <p><span class="who">Vous :</span> « Vous êtes chez quel opérateur aujourd'hui&nbsp;? Et qu'est-ce qui vous dérange le plus — le prix, le débit le soir, le service&nbsp;? »</p>
+          <p>→ Notez opérateur actuel + douleur. Combien de personnes/appareils, TV, mobile&nbsp;?</p>
+        </div>
+
+        <h3>Proposition &amp; closing (3:00–5:00)</h3>
+        <div class="script">
+          <p><span class="who">Vous :</span> « Vu votre usage, l'offre la plus adaptée c'est {offre}. Vous avez la fibre dédiée — pas partagée avec le quartier — pour {bénéfice concret}. On vous installe {délai}. Je vous réserve le raccordement&nbsp;? »</p>
+        </div>
+
+        <h3>Objections fréquentes</h3>
+        <ul>
+          <li><strong>« Je vais réfléchir » →</strong> « Bien sûr. Juste pour être sûr : c'est le prix, l'engagement, ou le moment&nbsp;? On règle ça ensemble maintenant. »</li>
+          <li><strong>« Je suis déjà chez X » →</strong> « Parfait, c'est justement pour comparer. Si ce n'est pas mieux, je vous le dis honnêtement. »</li>
+          <li><strong>« C'est cher » →</strong> « Regardons votre facture actuelle tout compris — souvent le pack revient moins cher pour plus de débit. »</li>
+          <li><strong>« Pas le temps » →</strong> « Je vous rappelle à {heure} précise, ça vous va&nbsp;? » (fixez, ne lâchez pas dans le vide).</li>
+        </ul>
+        <p class="callout callout--warn">
+          Règle d'or : un lead non rappelé dans l'heure est quasiment mort. Relancez J+0 (soir),
+          J+1, J+3, puis via WhatsApp. Au-delà, passez le statut « non joignable ».
+        </p>
+      </section>
+
+      <!-- 5. ADS MANAGER -->
+      <section id="ads">
+        <h2>5. Setup Ads Manager, étape par étape</h2>
+        <ol>
+          <li><strong>Campagne</strong> — Objectif <em>Prospects / Leads</em>, conversion <em>Formulaire instantané</em>. Désactivez Advantage+ budget au début.</li>
+          <li><strong>Ensemble de pubs</strong> — Budget test <strong>10–15 €/jour</strong> pendant 7 jours. Localisation : Wallonie + Bruxelles. Âge 25–55, langue FR. Placements Advantage+. Optimisation « Prospects ».</li>
+          <li><strong>Formulaire</strong> — Type « Intention plus élevée », champs ci-dessus, politique de confidentialité obligatoire, écran merci « Appeler ».</li>
+          <li><strong>3 annonces</strong> — une par angle (A/B/C), 1 visuel chacune (vidéo 15–20 s ou image claire).</li>
+          <li><strong>Publier</strong>, puis activer une <strong>alerte instantanée</strong> des leads (notifications Meta ou Zapier/Make → email/SMS/Telegram).</li>
+        </ol>
+        <div class="callout">
+          <strong>Réglages à ne pas rater :</strong> formulaire = Higher Intent · téléphone
+          obligatoire · consentement obligatoire · budget ≥ 10 €/jour (sinon Meta n'apprend pas) ·
+          rappel immédiat.
+        </div>
+      </section>
+
+      <!-- 6. KPI -->
+      <section id="kpi">
+        <h2>6. Routine quotidienne &amp; KPI</h2>
+        <ul>
+          <li>Dès qu'un lead tombe → <strong>appel &lt; 15 min</strong>, sinon WhatsApp.</li>
+          <li>Notez dans le CRM : opérateur, éligibilité, résultat.</li>
+          <li>Chaque soir : coût par lead, % de leads joignables, ventes.</li>
+        </ul>
+        <h3>Objectifs réalistes (10–15 €/jour, bien ciblé)</h3>
+        <table class="pbt">
+          <thead><tr><th>Indicateur</th><th>Repère</th></tr></thead>
+          <tbody>
+            <tr><td>Leads / jour</td><td>~2–6</td></tr>
+            <tr><td>Coût par lead</td><td>~3–10 €</td></tr>
+            <tr><td>Taux de joignables</td><td>30–40 %</td></tr>
+            <tr><td>Closing (sur joignables)</td><td>10–20 %</td></tr>
+          </tbody>
+        </table>
+        <p>
+          Suivez tout ça dans l'<a href="/admin.html">espace conseiller</a> : entonnoir, CPL par
+          région, et budget publicitaire.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div class="footer__brand"><img src="/logo.png" alt="ProxiFibre" /><span>ProxiFibre</span></div>
+        <span class="footer__links">
+          <a href="/">Accueil</a>
+          <a href="/mentions-legales.html">Mentions légales</a>
+          <a href="/confidentialite.html">Confidentialité</a>
+          <a href="/admin.html">Espace conseiller</a>
+        </span>
+      </div>
+    </footer>
+
+    <script>
+      // Copie un bloc d'annonce (titre + texte + description) dans le presse-papier.
+      document.querySelectorAll(".copy-btn").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const id = btn.dataset.copy;
+          const titre = document.getElementById(id + "-titre")?.textContent || "";
+          const corps = document.getElementById(id)?.textContent || "";
+          const desc = document.getElementById(id + "-desc")?.textContent || "";
+          const text = `TITRE : ${titre}\n\n${corps}\n\nDESCRIPTION : ${desc}`;
+          try {
+            await navigator.clipboard.writeText(text);
+            const old = btn.textContent;
+            btn.textContent = "Copié ✓";
+            setTimeout(() => (btn.textContent = old), 1500);
+          } catch {
+            btn.textContent = "Sélectionnez et copiez";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

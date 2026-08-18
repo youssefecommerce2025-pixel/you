@@ -125,25 +125,25 @@ export async function sendSms({ to, text, lead_id }) {
 // Envoi du lien de confirmation double opt-in (email + SMS si telephone fourni).
 export async function sendDoubleOptinConfirmation({ lead, confirmUrl }) {
   const results = {};
-  const subject = "Confirmez votre demande de devis mutuelle sante";
+  const subject = "Confirmez votre demande de vérification fibre";
   const text =
     `Bonjour ${lead.prenom},\n\n` +
-    `Pour finaliser votre demande de devis mutuelle sante et etre recontacte(e) par un conseiller, ` +
+    `Pour finaliser votre demande de vérification d'éligibilité à la fibre et être rappelé(e) par un conseiller, ` +
     `merci de confirmer en cliquant sur ce lien :\n${confirmUrl}\n\n` +
-    `Si vous n'etes pas a l'origine de cette demande, ignorez ce message.`;
+    `Si vous n'êtes pas à l'origine de cette demande, ignorez ce message.`;
   const html =
     `<p>Bonjour ${lead.prenom},</p>` +
-    `<p>Pour finaliser votre demande de devis mutuelle sante et etre recontacte(e) par un conseiller, ` +
+    `<p>Pour finaliser votre demande de vérification d'éligibilité à la fibre et être rappelé(e) par un conseiller, ` +
     `merci de confirmer en cliquant sur ce lien :</p>` +
     `<p><a href="${confirmUrl}">Confirmer ma demande</a></p>` +
-    `<p style="color:#64748b;font-size:12px">Si vous n'etes pas a l'origine de cette demande, ignorez ce message.</p>`;
+    `<p style="color:#64748b;font-size:12px">Si vous n'êtes pas à l'origine de cette demande, ignorez ce message.</p>`;
 
   if (lead.email) {
     results.email = await sendEmail({ to: lead.email, subject, text, html, lead_id: lead.id });
   }
   if (lead.telephone) {
     const sms =
-      `Mutuelle sante : confirmez votre demande de devis ici ${confirmUrl} ` +
+      `Fibre : confirmez votre demande de vérification ici ${confirmUrl} ` +
       `(ignorez si ce n'est pas vous).`;
     results.sms = await sendSms({ to: lead.telephone, text: sms, lead_id: lead.id });
   }

@@ -1,5 +1,6 @@
-// Logique partagee de creation d'un lead + preuve de consentement.
-// Utilisee par le formulaire public (/api/leads) et l'intake affilie (/api/partner/leads).
+// Logique partagée de création d'un lead + preuve de consentement.
+// Utilisée par le formulaire public (/api/leads) et l'intake affilié (/api/partner/leads).
+// Domaine : leads fibre / télécom Proximus sur le marché belge.
 
 import crypto from "node:crypto";
 import db from "./db.js";
@@ -7,67 +8,65 @@ import { buildConsentSnapshot } from "./consent.js";
 
 const nowIso = () => new Date().toISOString();
 
-// Derive une tranche d'age a partir d'une date de naissance (YYYY-MM-DD).
-export function trancheFromDOB(dob) {
-  if (!dob) return null;
-  const d = new Date(dob);
-  if (isNaN(d.getTime())) return null;
-  const age = Math.floor((Date.now() - d.getTime()) / (365.25 * 24 * 3600 * 1000));
-  if (age < 0 || age > 120) return null;
-  if (age < 35) return "18-34";
-  if (age < 55) return "35-54";
-  if (age < 65) return "55-64";
-  if (age < 75) return "65-74";
-  return "75+";
+/* --------------------------------------------------------------------------
+ * Référentiels métier (valeurs autorisées)
+ * ------------------------------------------------------------------------ */
+export const OPERATEURS = ["proximus", "voo_orange", "telenet_base", "autre", "aucun"];
+export const OBJECTIFS = ["fibre", "pack", "mobile", "infos"];
+export const TYPES_CLIENT = ["residentiel", "soho"];
+export const ELIGIBILITES = ["disponible", "en_cours", "planifie", "inconnu"];
+
+/** Déduit la région belge à partir du code postal (4 chiffres). */
+export function regionFromPostalCode(cp) {
+  const n = Number(String(cp || "").trim());
+  if (!Number.isInteger(n) || n < 1000 || n > 9999) return null;
+  if (n >= 1000 && n <= 1299) return "Bruxelles";
+  // Brabant wallon (1300–1499) + Liège/Namur/Hainaut/Luxembourg (4000–7999)
+  if ((n >= 1300 && n <= 1499) || (n >= 4000 && n <= 7999)) return "Wallonie";
+  return "Flandre";
 }
 
-export function computeScore(l) {
-  let s = 0;
-  if (l.telephone) s += 20;
-  if (l.email) s += 10;
-  if (l.code_postal) s += 10;
-  if (l.tranche_age) s += 15;
-  if (l.situation) s += 10;
-  if (l.mutuelle_actuelle) s += 15;
-  if (["30-60", "60-100", "100+"].includes(l.budget_mensuel)) s += 20;
-  return Math.min(100, s);
-}
-
-/** Normalise un numero (retire espaces, +, 00…). */
+/** Normalise un numéro (retire espaces, +, 00…). */
 export function normalizePhoneDigits(telephone) {
-  let d = String(telephone || "").replace(/[\s.\-()]/g, "");
+  let d = String(telephone || "").replace(/[\s.\-()/]/g, "");
   if (d.startsWith("+")) d = d.slice(1);
   if (d.startsWith("00")) d = d.slice(2);
   return d;
 }
 
 /**
- * Accepte uniquement les numeros DOM-TOM (pas la metropole).
- * Formats locaux (0696…) et internationaux (+596, +590, +594, +262…).
+ * Numéro belge uniquement (rejette la métropole française et l'étranger).
+ *  - fixe national    : 0 + 8 chiffres  (ex. Bruxelles 02 xxx xx xx)
+ *  - mobile national  : 04 + 8 chiffres (ex. 0470 12 34 56)
+ *  - international     : 32 + forme nationale sans le 0
  */
-export function isDomTomPhone(telephone) {
-  const d = normalizePhoneDigits(telephone);
-  // Format national a 10 chiffres (0 + indicatif local DOM-TOM)
-  if (
-    /^0(?:590|690|691|596|696|697|594|694|262|692|693|269|639|508)\d{6}$/.test(d)
-  ) {
-    return true;
-  }
-  // Format international (sans +)
-  if (/^590(?:590|690|691)\d{6}$/.test(d)) return true; // Guadeloupe / Saint-Martin / Saint-Barthelemy
-  if (/^596(?:596|696|697)\d{6}$/.test(d)) return true; // Martinique
-  if (/^594(?:594|694)\d{6}$/.test(d)) return true; // Guyane
-  if (/^262(?:262|692|693|269|639)\d{6}$/.test(d)) return true; // Reunion / Mayotte
-  if (/^508\d{6}$/.test(d)) return true; // Saint-Pierre-et-Miquelon
-  if (/^687\d{6}$/.test(d)) return true; // Nouvelle-Caledonie
-  if (/^689\d{8}$/.test(d)) return true; // Polynesie francaise
-  if (/^681\d{6}$/.test(d)) return true; // Wallis-et-Futuna
+export function isBelgianPhone(telephone) {
+  let d = normalizePhoneDigits(telephone);
+  if (/^32/.test(d)) d = "0" + d.slice(2); // +32 -> forme nationale
+  if (/^04\d{8}$/.test(d)) return true; // mobile (10 chiffres)
+  if (/^0[1-9]\d{7}$/.test(d)) return true; // fixe (9 chiffres)
   return false;
 }
 
-/** Codes postaux DOM-TOM : 971–978 et 986–988. */
-export function isDomTomPostalCode(cp) {
-  return /^(?:97[1-8]|98[6-8])\d{2}$/.test(String(cp || "").trim());
+/** Code postal belge : 4 chiffres (1000–9999). */
+export function isBelgianPostalCode(cp) {
+  return /^[1-9]\d{3}$/.test(String(cp || "").trim());
+}
+
+/** Score de qualification 0–100 (signaux commerciaux fibre). */
+export function computeScore(l) {
+  let s = 0;
+  if (l.telephone) s += 25;
+  if (l.code_postal) s += 10;
+  if (["Bruxelles", "Wallonie"].includes(l.region)) s += 10; // niche francophone prioritaire
+  if (["voo_orange", "telenet_base", "autre"].includes(l.operateur_actuel)) s += 20; // switcher
+  else if (l.operateur_actuel === "aucun") s += 10;
+  else if (l.operateur_actuel === "proximus") s += 5;
+  if (["fibre", "pack"].includes(l.objectif)) s += 20;
+  else if (l.objectif === "mobile") s += 10;
+  if (l.type_client === "soho") s += 10;
+  if (l.eligibilite_fibre === "disponible") s += 5;
+  return Math.min(100, s);
 }
 
 export function validateLead(body) {
@@ -75,34 +74,39 @@ export function validateLead(body) {
   const email = String(body.email || "").trim();
   const telephone = String(body.telephone || "").trim();
   const code_postal = String(body.code_postal || "").trim();
-  if (!String(body.prenom || "").trim()) errors.push("prenom requis");
+  if (!String(body.prenom || "").trim()) errors.push("prénom requis");
   if (!String(body.nom || "").trim()) errors.push("nom requis");
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) errors.push("email invalide");
-  if (!isDomTomPhone(telephone)) {
+  // Email facultatif pour un lead fibre (le rappel se fait par téléphone) ; validé si fourni.
+  if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) errors.push("email invalide");
+  if (!isBelgianPhone(telephone)) {
     errors.push(
-      "telephone invalide : uniquement un numero Outre-mer (DOM-TOM), pas de metropole"
+      "téléphone invalide : indiquez un numéro belge (ex. 0470 12 34 56 ou 02 123 45 67)"
     );
   }
   if (!code_postal) {
     errors.push("code postal requis");
-  } else if (!isDomTomPostalCode(code_postal)) {
-    errors.push(
-      "code postal invalide : uniquement DOM-TOM (971 a 978, 986 a 988)"
-    );
+  } else if (!isBelgianPostalCode(code_postal)) {
+    errors.push("code postal invalide : 4 chiffres (Belgique, 1000 à 9999)");
   }
   return { errors, email, telephone };
 }
 
+/** Restreint une valeur à une liste blanche (sinon null). */
+function oneOf(value, allowed) {
+  const v = String(value || "").trim().toLowerCase();
+  return allowed.includes(v) ? v : null;
+}
+
 const insertLead = db.prepare(`
   INSERT INTO leads (
-    created_at, updated_at, civilite, prenom, nom, email, telephone, code_postal,
-    date_naissance, tranche_age, situation, mutuelle_actuelle, budget_mensuel,
-    source, ile, persona, utm_source, utm_medium, utm_campaign, utm_term, utm_content,
+    created_at, updated_at, civilite, prenom, nom, email, telephone, code_postal, adresse,
+    region, operateur_actuel, objectif, type_client, eligibilite_fibre,
+    source, persona, utm_source, utm_medium, utm_campaign, utm_term, utm_content,
     statut, score, double_optin_confirme
   ) VALUES (
-    @created_at, @updated_at, @civilite, @prenom, @nom, @email, @telephone, @code_postal,
-    @date_naissance, @tranche_age, @situation, @mutuelle_actuelle, @budget_mensuel,
-    @source, @ile, @persona, @utm_source, @utm_medium, @utm_campaign, @utm_term, @utm_content,
+    @created_at, @updated_at, @civilite, @prenom, @nom, @email, @telephone, @code_postal, @adresse,
+    @region, @operateur_actuel, @objectif, @type_client, @eligibilite_fibre,
+    @source, @persona, @utm_source, @utm_medium, @utm_campaign, @utm_term, @utm_content,
     @statut, @score, @double_optin_confirme
   )
 `);
@@ -118,13 +122,7 @@ const insertConsent = db.prepare(`
 `);
 
 /**
- * Cree un lead et sa preuve de consentement dans une transaction.
- * @param {object} opts
- * @param {object} opts.body     - champs du prospect (deja valides)
- * @param {string} opts.email
- * @param {string} opts.telephone
- * @param {string} opts.source   - 'formulaire' | 'affilie:<nom>'
- * @param {object} opts.consent  - { ip, userAgent, sourceUrl, referer, method, collectedAt, confirmedAt, confirmIp }
+ * Crée un lead et sa preuve de consentement dans une transaction.
  * @returns {{leadId:number, confirmToken:string|null, snapshot:object}}
  */
 export function createLeadWithConsent({ body, email, telephone, source, consent }) {
@@ -136,22 +134,23 @@ export function createLeadWithConsent({ body, email, telephone, source, consent 
       ? crypto.randomBytes(24).toString("hex")
       : null;
 
+  const code_postal = body.code_postal ? String(body.code_postal).trim() : null;
   const leadData = {
     created_at: ts,
     updated_at: ts,
     civilite: body.civilite || null,
     prenom: String(body.prenom).trim(),
     nom: String(body.nom).trim(),
-    email,
+    email: email || null,
     telephone,
-    code_postal: body.code_postal ? String(body.code_postal).trim() : null,
-    date_naissance: body.date_naissance || null,
-    tranche_age: body.tranche_age || trancheFromDOB(body.date_naissance) || null,
-    situation: body.situation || null,
-    mutuelle_actuelle: body.mutuelle_actuelle || null,
-    budget_mensuel: body.budget_mensuel || null,
+    code_postal,
+    adresse: body.adresse ? String(body.adresse).trim() : null,
+    region: body.region || regionFromPostalCode(code_postal) || null,
+    operateur_actuel: oneOf(body.operateur_actuel, OPERATEURS),
+    objectif: oneOf(body.objectif, OBJECTIFS),
+    type_client: oneOf(body.type_client, TYPES_CLIENT) || "residentiel",
+    eligibilite_fibre: oneOf(body.eligibilite_fibre, ELIGIBILITES) || "inconnu",
     source: source || body.source || "formulaire",
-    ile: body.ile || null,
     persona: body.persona || null,
     utm_source: body.utm_source || null,
     utm_medium: body.utm_medium || null,

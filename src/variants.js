@@ -1,85 +1,70 @@
-// Variantes de landing page par ile / persona (DOM-TOM).
-// Chaque variante personnalise le hero, pre-remplit des champs et fixe l'attribution.
+// Variantes de landing page par région / persona (marché belge, fibre Proximus).
+// Chaque variante personnalise le hero, préremplit des champs et fixe l'attribution.
 //
-// Numero WhatsApp : WHATSAPP_NUMBER (format international sans + ni espaces, ex: 596696XXXXXX).
+// Numéro WhatsApp : WHATSAPP_NUMBER (format international sans + ni espaces, ex: 32470000000).
 
 export const WHATSAPP_NUMBER = (process.env.WHATSAPP_NUMBER || "").replace(/[^0-9]/g, "");
 
 export const VARIANTS = {
-  "martinique-senior": {
-    ile: "Martinique",
-    persona: "senior",
-    tranche_age: "65-74",
-    title: "Mutuelle senior en Martinique : mieux remboursé, sans payer plus cher",
+  "wallonie-fibre": {
+    region: "Wallonie",
+    persona: "fibre-neuve",
+    objectif: "fibre",
+    title: "La fibre Proximus arrive en Wallonie : êtes-vous éligible ?",
     subtitle:
-      "Optique, dentaire, hospitalisation : comparez les mutuelles adaptées aux seniors et recevez un devis gratuit. Un conseiller vous rappelle.",
+      "Vérifiez gratuitement si la fibre est disponible à votre adresse et recevez la meilleure offre internet, TV et mobile. Un conseiller vous rappelle sous 15 minutes.",
     bullets: [
-      "Spécial 60 ans et + en Martinique",
-      "Meilleurs remboursements lunettes, dents, hospitalisation",
-      "Devis gratuit et sans engagement",
+      "Vérification d'éligibilité fibre gratuite",
+      "Internet ultra-stable jusqu'à plusieurs Gbps",
+      "Rappel d'un conseiller sous 15 minutes",
     ],
     wa_message:
-      "Bonjour, je souhaite comparer les mutuelles senior en Martinique et recevoir un devis.",
+      "Bonjour, je souhaite vérifier si la fibre Proximus est disponible à mon adresse en Wallonie.",
   },
-  "guadeloupe-senior": {
-    ile: "Guadeloupe",
-    persona: "senior",
-    tranche_age: "65-74",
-    title: "Mutuelle senior en Guadeloupe : payez le juste prix",
+  "bruxelles-fibre": {
+    region: "Bruxelles",
+    persona: "fibre-neuve",
+    objectif: "fibre",
+    title: "Fibre Proximus à Bruxelles : passez à la vitesse supérieure",
     subtitle:
-      "Comparez les offres adaptées aux seniors guadeloupéens (optique, dentaire, hospitalisation) et recevez un devis gratuit.",
+      "Internet lent aux heures de pointe ? Vérifiez votre éligibilité à la fibre et comparez les packs. Un conseiller vous rappelle rapidement.",
     bullets: [
-      "Spécial 60 ans et + en Guadeloupe",
-      "Économisez sur votre complémentaire santé",
-      "Un conseiller local vous rappelle rapidement",
+      "Éligibilité fibre vérifiée à votre adresse",
+      "Packs internet + TV + mobile au meilleur prix",
+      "Sans engagement, rappel sous 15 minutes",
     ],
     wa_message:
-      "Bonjour, je souhaite comparer les mutuelles senior en Guadeloupe et recevoir un devis.",
+      "Bonjour, je veux vérifier mon éligibilité à la fibre Proximus à Bruxelles et comparer les offres.",
   },
-  "reunion-famille": {
-    ile: "La Réunion",
-    persona: "famille",
-    tranche_age: "35-54",
-    title: "Une bonne mutuelle pour toute la famille à La Réunion, sans exploser le budget",
+  "switch-voo": {
+    region: "Wallonie",
+    persona: "switch-voo",
+    objectif: "fibre",
+    title: "Encore chez VOO / Orange ? Votre débit chute le soir ?",
     subtitle:
-      "Comparez les mutuelles familiales et trouvez la meilleure couverture au meilleur prix. Devis gratuit, un conseiller vous rappelle.",
+      "Découvrez ce que la fibre Proximus peut vous apporter : stabilité, débit et un pack adapté à votre foyer. Vérification gratuite, un conseiller vous rappelle.",
     bullets: [
-      "Couverture pour toute la famille",
-      "Le meilleur rapport garanties / prix",
-      "Gratuit et sans engagement",
+      "Comparez votre offre actuelle à la fibre Proximus",
+      "Un câble dédié, pas partagé avec le quartier",
+      "Rappel gratuit sous 15 minutes",
     ],
     wa_message:
-      "Bonjour, je cherche une mutuelle pour ma famille à La Réunion et je souhaite un devis.",
+      "Bonjour, je suis chez VOO/Orange et je souhaite comparer avec la fibre Proximus.",
   },
-  "guyane-famille": {
-    ile: "Guyane",
-    persona: "famille",
-    tranche_age: "35-54",
-    title: "Mutuelle famille en Guyane : bien couvert, au meilleur prix",
+  "soho-independants": {
+    region: "Wallonie",
+    persona: "soho",
+    objectif: "pack",
+    title: "Indépendants & TPE : une connexion pro qui ne lâche jamais",
     subtitle:
-      "Comparez les offres et recevez un devis gratuit adapté à votre famille. Un conseiller vous rappelle.",
+      "Internet fibre professionnel avec back-up 4G/5G, ligne fixe et mobile. Vérifiez votre éligibilité et recevez une offre adaptée à votre activité.",
     bullets: [
-      "Adapté aux familles guyanaises",
-      "Comparaison gratuite de plusieurs assureurs",
-      "Sans engagement",
+      "Fibre pro + back-up mobile (jamais hors ligne)",
+      "Internet, TV et mobile sur une seule facture",
+      "Un conseiller dédié vous rappelle rapidement",
     ],
     wa_message:
-      "Bonjour, je souhaite comparer les mutuelles famille en Guyane et recevoir un devis.",
-  },
-  "dom-fonctionnaire": {
-    ile: "DOM-TOM",
-    persona: "fonctionnaire",
-    tranche_age: "35-54",
-    title: "Fonctionnaires en Outre-mer : optimisez votre mutuelle santé",
-    subtitle:
-      "Comparez les meilleures complémentaires santé adaptées aux agents de la fonction publique en DOM. Devis gratuit.",
-    bullets: [
-      "Offres adaptées aux fonctionnaires en Outre-mer",
-      "Garanties renforcées possibles",
-      "Devis gratuit, un conseiller vous rappelle",
-    ],
-    wa_message:
-      "Bonjour, je suis fonctionnaire en Outre-mer et je souhaite optimiser ma mutuelle santé.",
+      "Bonjour, je suis indépendant/TPE et je cherche une offre internet pro Proximus (fibre + mobile).",
   },
 };
 
@@ -92,7 +77,7 @@ export function getVariant(slug) {
 export function listVariants() {
   return Object.keys(VARIANTS).map((slug) => ({
     slug,
-    ile: VARIANTS[slug].ile,
+    region: VARIANTS[slug].region,
     persona: VARIANTS[slug].persona,
     title: VARIANTS[slug].title,
   }));

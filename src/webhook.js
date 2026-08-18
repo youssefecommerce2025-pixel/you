@@ -43,15 +43,17 @@ function buildPayload(lead, proof) {
       email: lead.email,
       telephone: lead.telephone,
       code_postal: lead.code_postal,
-      tranche_age: lead.tranche_age,
-      situation: lead.situation,
-      mutuelle_actuelle: lead.mutuelle_actuelle,
-      budget_mensuel: lead.budget_mensuel,
+      adresse: lead.adresse,
+      region: lead.region,
+      operateur_actuel: lead.operateur_actuel,
+      objectif: lead.objectif,
+      type_client: lead.type_client,
+      eligibilite_fibre: lead.eligibilite_fibre,
       score: lead.score,
       created_at: lead.created_at,
     },
-    courtier_orias: lead.courtier_orias || null,
-    // Resume de preuve de consentement (pas de donnees de sante)
+    partenaire: lead.partenaire || null,
+    // Résumé de preuve de consentement
     consentement: proof
       ? {
           horodatage: proof.collected_at,
@@ -91,7 +93,7 @@ function record({ lead_id, url, status, http_status, attempts, response, error }
 
 // Transmet un lead. Retourne { ok, status, http_status, ... }.
 export async function dispatchLead(lead) {
-  const url = resolveUrl(lead.courtier_orias);
+  const url = resolveUrl(lead.partenaire);
   if (!url) {
     record({
       lead_id: lead.id,

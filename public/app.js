@@ -1,5 +1,6 @@
-// Front public : recupere le texte de consentement officiel, capture le contexte
+// Front public : récupère le texte de consentement officiel, capture le contexte
 // (URL exacte de la page) et envoie le lead avec le consentement opt-in.
+// Domaine : leads fibre / télécom Proximus (marché belge).
 
 const form = document.getElementById("lead-form");
 const messageEl = document.getElementById("form-message");
@@ -21,7 +22,32 @@ function currentUtm() {
   };
 }
 
-// Detecte le slug de variante : /lp/<slug> ou ?v=<slug>
+/* --------------------------------------------------------------------------
+ * Validation client (miroir de src/leads.js)
+ * ------------------------------------------------------------------------ */
+function isBelgianPhoneClient(telephone) {
+  let d = String(telephone || "").replace(/[\s.\-()/]/g, "");
+  if (d.startsWith("+")) d = d.slice(1);
+  if (d.startsWith("00")) d = d.slice(2);
+  if (/^32/.test(d)) d = "0" + d.slice(2);
+  if (/^04\d{8}$/.test(d)) return true; // mobile
+  if (/^0[1-9]\d{7}$/.test(d)) return true; // fixe
+  return false;
+}
+
+function isBelgianPostalCodeClient(cp) {
+  return /^[1-9]\d{3}$/.test(String(cp || "").trim());
+}
+
+function regionFromPostalCodeClient(cp) {
+  const n = Number(String(cp || "").trim());
+  if (!Number.isInteger(n) || n < 1000 || n > 9999) return null;
+  if (n >= 1000 && n <= 1299) return "Bruxelles";
+  if ((n >= 1300 && n <= 1499) || (n >= 4000 && n <= 7999)) return "Wallonie";
+  return "Flandre";
+}
+
+// Détecte le slug de variante : /lp/<slug> ou ?v=<slug>
 function variantSlug() {
   const m = window.location.pathname.match(/\/lp\/([a-z0-9-]+)/i);
   if (m) return m[1];
@@ -43,13 +69,17 @@ async function loadVariant() {
         .map((b) => `<li>${b}</li>`)
         .join("");
     }
-    // Pre-remplissage + attribution
-    document.getElementById("f-ile").value = variant.ile || "";
+    // Préremplissage + attribution
+    document.getElementById("f-region").value = variant.region || "";
     document.getElementById("f-persona").value = variant.persona || "";
     document.getElementById("f-source").value = "lp:" + variant.slug;
-    if (variant.tranche_age) {
-      const sel = document.querySelector('[name="tranche_age"]');
-      if (sel) sel.value = variant.tranche_age;
+    if (variant.objectif) {
+      const radio = form.querySelector(`[name="objectif"][value="${variant.objectif}"]`);
+      if (radio) radio.checked = true;
+    }
+    if (variant.persona === "soho") {
+      const t = form.querySelector('[name="type_client"][value="soho"]');
+      if (t) t.checked = true;
     }
   } catch (e) {}
 }
@@ -60,23 +90,18 @@ function setupWhatsApp() {
     Boolean
   );
   if (!buttons.length) return;
-
-  // Toujours visibles (hero + bouton flottant).
-  buttons.forEach((btn) => {
-    btn.hidden = false;
-  });
-
+  buttons.forEach((btn) => (btn.hidden = false));
   if (!num) return;
 
   const msg =
     (variant && variant.wa_message) ||
-    "Bonjour, je souhaite comparer les mutuelles sante et recevoir un devis.";
+    "Bonjour, je souhaite vérifier si la fibre Proximus est disponible à mon adresse.";
   const href = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
   buttons.forEach((btn) => {
     btn.href = href;
     btn.addEventListener("click", () => {
       const payload = {
-        ile: variant?.ile,
+        region: variant?.region || document.getElementById("f-region")?.value,
         persona: variant?.persona || document.getElementById("f-persona")?.value,
         variant: variant?.slug,
         source: variant ? "lp:" + variant.slug : "whatsapp",
@@ -91,330 +116,48 @@ function setupWhatsApp() {
   });
 }
 
-// Boutons "Je suis senior / famille / fonctionnaire" : préremplissent persona caché
-// et amènent au formulaire.
-function setupSegments() {
+// Boutons d'angle ("La fibre arrive / Mon débit chute / Je regroupe") :
+// présélectionnent objectif + persona et amènent au formulaire.
+function setupAngles() {
   const fPersona = document.getElementById("f-persona");
-  const fSituation = document.getElementById("f-situation");
-  const ageSel = document.querySelector('[name="tranche_age"]');
-
-  function applyPersona(persona, age) {
-    if (fPersona) fPersona.value = persona || "";
-    if (fSituation) fSituation.value = persona || "";
-    if (age && ageSel && !ageSel.value) ageSel.value = age;
-  }
-
-  document.querySelectorAll(".js-segment").forEach((btn) => {
+  document.querySelectorAll(".js-angle").forEach((btn) => {
     btn.addEventListener("click", () => {
-      applyPersona(btn.dataset.persona, btn.dataset.age);
+      const obj = btn.dataset.objectif;
+      if (obj) {
+        const radio = form.querySelector(`[name="objectif"][value="${obj}"]`);
+        if (radio) radio.checked = true;
+      }
+      if (btn.dataset.persona && fPersona) fPersona.value = btn.dataset.persona;
       const devis = document.getElementById("devis");
       if (devis) devis.scrollIntoView({ behavior: "smooth", block: "start" });
-      const first = document.querySelector('#lead-form [name="prenom"]');
-      if (first) setTimeout(() => first.focus(), 400);
+      const cp = document.querySelector('#lead-form [name="code_postal"]');
+      if (cp && !cp.value) setTimeout(() => cp.focus(), 400);
     });
   });
 }
 
-function showSocialMsg(text, type) {
-  const el = document.getElementById("social-fill-msg");
-  if (!el) return;
-  el.textContent = text || "";
-  el.className = "form-message" + (type ? " " + type : "");
-}
-
-/** Préremplit les champs du formulaire via SSO. */
-function applySocialProfile(profile, provider) {
-  const setVal = (name, value) => {
-    const el = form.querySelector(`[name="${name}"]`);
-    if (!el || el.type === "hidden") return;
-    if (value == null || value === "") return;
-    el.value = value;
-  };
-
-  setVal("prenom", profile.prenom);
-  setVal("nom", profile.nom);
-  setVal("email", profile.email);
-  if (profile.civilite) setVal("civilite", profile.civilite);
-  setVal("date_naissance", profile.date_naissance);
-  setVal("code_postal", profile.code_postal);
-
-  const socialField = document.getElementById("f-social-login");
-  if (socialField) socialField.value = provider || "";
-
-  const missing = [];
-  if (!profile.date_naissance) missing.push("date de naissance");
-  if (!profile.code_postal) missing.push("code postal");
-  const extra =
-    missing.length > 0
-      ? ` Merci de compléter aussi : ${missing.join(" et ")}.`
-      : "";
-
-  showSocialMsg("Informations préremplies." + extra, "ok");
-
-  const tel = form.querySelector('[name="telephone"]');
-  if (tel && !tel.value) setTimeout(() => tel.focus(), 200);
-}
-
-function pad2(n) {
-  return String(n).padStart(2, "0");
-}
-
-/** Convertit une date Google/Facebook en YYYY-MM-DD si possible. */
-function toIsoDate(input) {
-  if (!input) return "";
-  if (typeof input === "string") {
-    // Facebook : MM/DD/YYYY
-    const m = input.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-    if (m) return `${m[3]}-${pad2(m[1])}-${pad2(m[2])}`;
-    // Déjà ISO
-    if (/^\d{4}-\d{2}-\d{2}$/.test(input)) return input;
-    return "";
-  }
-  if (typeof input === "object" && input.year && input.month && input.day) {
-    return `${input.year}-${pad2(input.month)}-${pad2(input.day)}`;
-  }
-  return "";
-}
-
-function extractGooglePostalCode(addresses) {
-  if (!Array.isArray(addresses)) return "";
-  for (const a of addresses) {
-    const cp = String(a.postalCode || a.postal_code || "").trim();
-    if (cp) return cp;
-  }
-  return "";
-}
-
-function extractGoogleBirthday(birthdays) {
-  if (!Array.isArray(birthdays)) return "";
-  for (const b of birthdays) {
-    const iso = toIsoDate(b.date);
-    if (iso) return iso;
-  }
-  return "";
-}
-
-async function fetchGooglePeople(accessToken) {
-  const fields = "names,emailAddresses,birthdays,addresses";
-  const res = await fetch(
-    `https://people.googleapis.com/v1/people/me?personFields=${encodeURIComponent(fields)}`,
-    { headers: { Authorization: "Bearer " + accessToken } }
-  );
-  if (!res.ok) {
-    // Repli userinfo si People API non activee
-    const uRes = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-      headers: { Authorization: "Bearer " + accessToken },
-    });
-    const u = await uRes.json();
-    return {
-      prenom: u.given_name || (u.name || "").split(" ")[0] || "",
-      nom: u.family_name || (u.name || "").split(" ").slice(1).join(" ") || "",
-      email: u.email || "",
-      date_naissance: "",
-      code_postal: "",
-    };
-  }
-  const p = await res.json();
-  const name =
-    (p.names || []).find((n) => n.metadata?.primary) || (p.names || [])[0] || {};
-  const email =
-    (p.emailAddresses || []).find((e) => e.metadata?.primary)?.value ||
-    (p.emailAddresses || [])[0]?.value ||
-    "";
-  return {
-    prenom: name.givenName || "",
-    nom: name.familyName || "",
-    email,
-    date_naissance: extractGoogleBirthday(p.birthdays),
-    code_postal: extractGooglePostalCode(p.addresses),
-  };
-}
-
-function loadScript(src, id) {
-  return new Promise((resolve, reject) => {
-    if (id && document.getElementById(id)) return resolve();
-    const s = document.createElement("script");
-    if (id) s.id = id;
-    s.src = src;
-    s.async = true;
-    s.onload = () => resolve();
-    s.onerror = () => reject(new Error("Script indisponible : " + src));
-    document.head.appendChild(s);
-  });
-}
-
-function decodeJwtPayload(token) {
-  try {
-    const part = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
-    return JSON.parse(atob(part));
-  } catch {
-    return null;
-  }
-}
-
-async function loginWithGoogle() {
-  const clientId = config?.googleClientId;
-  if (!clientId) {
-    showSocialMsg(
-      "Gmail n'est pas encore configuré (GOOGLE_CLIENT_ID). Ajoutez la clé dans Hostinger / .env.",
-      "err"
-    );
-    return;
-  }
-  await loadScript("https://accounts.google.com/gsi/client", "google-gsi");
-
-  const scopes = [
-    "openid",
-    "email",
-    "profile",
-    "https://www.googleapis.com/auth/user.birthday.read",
-    "https://www.googleapis.com/auth/user.addresses.read",
-  ].join(" ");
-
-  await new Promise((resolve, reject) => {
-    try {
-      const tokenClient = window.google.accounts.oauth2.initTokenClient({
-        client_id: clientId,
-        scope: scopes,
-        callback: async (tokenResponse) => {
-          if (!tokenResponse.access_token) {
-            showSocialMsg("Connexion Google annulée.", "err");
-            return reject(new Error("cancel"));
-          }
-          try {
-            const profile = await fetchGooglePeople(tokenResponse.access_token);
-            applySocialProfile(profile, "gmail");
-            resolve();
-          } catch (e) {
-            showSocialMsg("Erreur lors de la récupération du profil Google.", "err");
-            reject(e);
-          }
-        },
-      });
-      tokenClient.requestAccessToken({ prompt: "consent" });
-    } catch (e) {
-      showSocialMsg("Connexion Google indisponible pour le moment.", "err");
-      reject(e);
+// Indice de région en direct sous le code postal.
+function setupRegionHint() {
+  const cp = form.querySelector('[name="code_postal"]');
+  const hint = document.getElementById("region-hint");
+  const fRegion = document.getElementById("f-region");
+  if (!cp) return;
+  cp.addEventListener("input", () => {
+    const region = regionFromPostalCodeClient(cp.value);
+    if (region) {
+      if (fRegion && !fRegion.value) fRegion.value = region;
+      else if (fRegion) fRegion.value = region;
+      if (hint) {
+        hint.textContent = "📍 " + region;
+        hint.className = "field__hint field__hint--ok";
+      }
+    } else if (hint) {
+      hint.textContent = "";
     }
   });
 }
 
-async function loginWithMeta(providerLabel) {
-  const appId = config?.facebookAppId;
-  if (!appId) {
-    showSocialMsg(
-      "Facebook n'est pas encore configuré (FACEBOOK_APP_ID). Ajoutez la clé Meta dans Hostinger / .env.",
-      "err"
-    );
-    return;
-  }
-
-  window.fbAsyncInit = function () {
-    window.FB.init({ appId, cookie: true, xfbml: false, version: "v21.0" });
-  };
-  if (!window.FB) {
-    await loadScript("https://connect.facebook.net/fr_FR/sdk.js", "facebook-jssdk");
-    if (window.FB) window.FB.init({ appId, cookie: true, xfbml: false, version: "v21.0" });
-  }
-
-  await new Promise((resolve, reject) => {
-    window.FB.login(
-      (response) => {
-        if (!response.authResponse) {
-          showSocialMsg("Connexion annulée.", "err");
-          return reject(new Error("cancel"));
-        }
-        // Permissions de base seulement (pas d'App Review Meta) :
-        // public_profile + email → nom, prénom, e-mail.
-        window.FB.api(
-          "/me",
-          { fields: "first_name,last_name,email,name" },
-          (u) => {
-            if (!u || u.error) {
-              showSocialMsg("Impossible de lire le profil Meta.", "err");
-              return reject(new Error("api"));
-            }
-            applySocialProfile(
-              {
-                prenom: u.first_name || (u.name || "").split(" ")[0] || "",
-                nom: u.last_name || (u.name || "").split(" ").slice(1).join(" ") || "",
-                email: u.email || "",
-                date_naissance: "",
-                code_postal: "",
-              },
-              providerLabel
-            );
-            resolve();
-          }
-        );
-      },
-      { scope: "public_profile,email" }
-    );
-  });
-}
-
-async function loginWithApple() {
-  const clientId = config?.appleClientId;
-  if (!clientId) {
-    showSocialMsg(
-      "Apple n'est pas encore configuré (APPLE_CLIENT_ID). Ajoutez le Services ID Apple dans Hostinger / .env.",
-      "err"
-    );
-    return;
-  }
-  await loadScript(
-    "https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/fr_FR/appleid.auth.js",
-    "apple-auth"
-  );
-  const redirectURI =
-    (config.publicBaseUrl || window.location.origin).replace(/\/$/, "") + "/";
-  window.AppleID.auth.init({
-    clientId,
-    scope: "name email",
-    redirectURI,
-    usePopup: true,
-  });
-  try {
-    const data = await window.AppleID.auth.signIn();
-    const payload = decodeJwtPayload(data?.authorization?.id_token || "");
-    const prenom = data?.user?.name?.firstName || "";
-    const nom = data?.user?.name?.lastName || "";
-    const email = data?.user?.email || payload?.email || "";
-    applySocialProfile(
-      {
-        prenom,
-        nom,
-        email,
-        date_naissance: "",
-        code_postal: "",
-      },
-      "apple"
-    );
-  } catch (e) {
-    const code = e?.error || e?.message || "";
-    if (String(code).includes("popup_closed") || String(code).includes("user_cancelled")) {
-      showSocialMsg("Connexion annulée.", "err");
-    } else {
-      showSocialMsg("Connexion Apple impossible pour le moment.", "err");
-    }
-  }
-}
-
-function setupSocialFill() {
-  const g = document.getElementById("btn-google");
-  if (g) {
-    g.addEventListener("click", async () => {
-      showSocialMsg("Connexion Google…", "");
-      try {
-        await loginWithGoogle();
-        // Après Google, on va directement à l'étape contact si besoin
-        if (typeof window.__goFormStep === "function") window.__goFormStep(3);
-      } catch (e) {}
-    });
-  }
-}
-
-/** Formulaire multi-étapes : CP → âge → contact */
+/** Formulaire multi-étapes : localisation → besoin → contact */
 function setupMultiStep() {
   const steps = Array.from(document.querySelectorAll(".form-step"));
   if (!steps.length) return;
@@ -440,11 +183,8 @@ function setupMultiStep() {
   function validateStep(n) {
     if (n === 1) {
       const cp = form.querySelector('[name="code_postal"]');
-      if (!cp?.value || !isDomTomPostalCodeClient(cp.value)) {
-        showMessage(
-          "Merci d'indiquer un code postal d'Outre-mer (971–978 ou 986–988).",
-          "err"
-        );
+      if (!cp?.value || !isBelgianPostalCodeClient(cp.value)) {
+        showMessage("Merci d'indiquer un code postal belge (4 chiffres, ex. 1000 ou 4000).", "err");
         cp?.focus();
         return false;
       }
@@ -452,10 +192,9 @@ function setupMultiStep() {
     if (n === 3) {
       const prenom = form.querySelector('[name="prenom"]');
       const nom = form.querySelector('[name="nom"]');
-      const email = form.querySelector('[name="email"]');
       const tel = form.querySelector('[name="telephone"]');
-      if (!prenom?.value?.trim() || !nom?.value?.trim() || !email?.value?.trim() || !tel?.value?.trim()) {
-        showMessage("Merci de remplir prénom, nom, email et téléphone.", "err");
+      if (!prenom?.value?.trim() || !nom?.value?.trim() || !tel?.value?.trim()) {
+        showMessage("Merci de remplir prénom, nom et téléphone.", "err");
         return false;
       }
     }
@@ -487,9 +226,7 @@ function setupMobileCta() {
   const devis = document.getElementById("devis");
   if (!bar || !devis || !window.IntersectionObserver) return;
   const io = new IntersectionObserver(
-    ([entry]) => {
-      bar.classList.toggle("is-hidden", entry.isIntersecting);
-    },
+    ([entry]) => bar.classList.toggle("is-hidden", entry.isIntersecting),
     { threshold: 0.25 }
   );
   io.observe(devis);
@@ -507,16 +244,16 @@ async function loadConfig() {
     const res = await fetch("/api/config");
     config = await res.json();
 
-    // Le libelle de la case opt-in vient du serveur (source de verite / versionne).
     consentLabel.textContent = config.consentCheckboxLabel;
 
-    // Marque
-    if (config.org?.siteComparateur && config.org.siteComparateur[0] !== "[") {
-      document.getElementById("brand-name").textContent = config.org.siteComparateur;
-      document.getElementById("footer-brand").textContent = config.org.siteComparateur;
+    const brand = config.org?.marque;
+    if (brand && brand[0] !== "[") {
+      const bn = document.getElementById("brand-name");
+      const fb = document.getElementById("footer-brand");
+      if (bn) bn.textContent = brand;
+      if (fb) fb.textContent = brand;
     }
 
-    // Mentions RGPD
     legalList.innerHTML = "";
     (config.informationNotice || []).forEach((line) => {
       const li = document.createElement("li");
@@ -525,72 +262,42 @@ async function loadConfig() {
     });
   } catch (e) {
     consentLabel.textContent =
-      "J'accepte d'etre contacte(e) par telephone pour ma demande de mutuelle sante.";
+      "J'accepte d'être contacté(e) par téléphone au sujet de mon éligibilité à la fibre.";
   }
 }
 
 function showMessage(text, type) {
   messageEl.textContent = text;
-  messageEl.className = "form-message " + type;
-}
-
-function isDomTomPhoneClient(telephone) {
-  let d = String(telephone || "").replace(/[\s.\-()]/g, "");
-  if (d.startsWith("+")) d = d.slice(1);
-  if (d.startsWith("00")) d = d.slice(2);
-  if (/^0(?:590|690|691|596|696|697|594|694|262|692|693|269|639|508)\d{6}$/.test(d)) return true;
-  if (/^590(?:590|690|691)\d{6}$/.test(d)) return true;
-  if (/^596(?:596|696|697)\d{6}$/.test(d)) return true;
-  if (/^594(?:594|694)\d{6}$/.test(d)) return true;
-  if (/^262(?:262|692|693|269|639)\d{6}$/.test(d)) return true;
-  if (/^508\d{6}$/.test(d)) return true;
-  if (/^687\d{6}$/.test(d)) return true;
-  if (/^689\d{8}$/.test(d)) return true;
-  if (/^681\d{6}$/.test(d)) return true;
-  return false;
-}
-
-function isDomTomPostalCodeClient(cp) {
-  return /^(?:97[1-8]|98[6-8])\d{2}$/.test(String(cp || "").trim());
+  messageEl.className = "form-message " + (type || "");
 }
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   showMessage("", "");
 
-  const consentChecked = document.getElementById("consent_telephone").checked;
-  if (!consentChecked) {
-    showMessage(
-      "Merci de cocher la case de consentement pour etre recontacte (obligatoire).",
-      "err"
-    );
+  if (!document.getElementById("consent_telephone").checked) {
+    showMessage("Merci de cocher la case de consentement pour être rappelé(e) (obligatoire).", "err");
     return;
   }
 
   const data = Object.fromEntries(new FormData(form).entries());
 
-  if (!isDomTomPhoneClient(data.telephone)) {
-    showMessage(
-      "Merci d'indiquer un numéro de téléphone d'Outre-mer (DOM-TOM). Les numéros de métropole ne sont pas acceptés.",
-      "err"
-    );
+  if (!isBelgianPhoneClient(data.telephone)) {
+    showMessage("Merci d'indiquer un numéro de téléphone belge valide (ex. 0470 12 34 56 ou 02 123 45 67).", "err");
     return;
   }
-  if (!isDomTomPostalCodeClient(data.code_postal)) {
-    showMessage(
-      "Merci d'indiquer un code postal d'Outre-mer (971 à 978, ou 986 à 988).",
-      "err"
-    );
+  if (!isBelgianPostalCodeClient(data.code_postal)) {
+    showMessage("Merci d'indiquer un code postal belge (4 chiffres, 1000 à 9999).", "err");
     return;
   }
+
+  if (!data.region) data.region = regionFromPostalCodeClient(data.code_postal) || "";
 
   const params = new URLSearchParams(window.location.search);
   const payload = {
     ...data,
     consent_telephone: true,
-    // On capture l'URL EXACTE de la page de capture (preuve de consentement).
     source_url: window.location.href,
-    // Attribution marketing (UTM) pour l'analytics de conversion.
     utm_source: params.get("utm_source") || undefined,
     utm_medium: params.get("utm_medium") || undefined,
     utm_campaign: params.get("utm_campaign") || undefined,
@@ -614,26 +321,23 @@ form.addEventListener("submit", async (e) => {
     } else {
       form.reset();
       const prenom = encodeURIComponent(data.prenom || "");
-      if (result.method === "double_optin") {
-        window.location.href = `/merci.html?mode=double_optin&prenom=${prenom}`;
-      } else {
-        window.location.href = `/merci.html?prenom=${prenom}`;
-      }
+      const mode = result.method === "double_optin" ? "&mode=double_optin" : "";
+      window.location.href = `/merci.html?prenom=${prenom}${mode}`;
       return;
     }
   } catch (err) {
-    showMessage("Impossible d'envoyer le formulaire. Reessayez.", "err");
+    showMessage("Impossible d'envoyer le formulaire. Réessayez.", "err");
   } finally {
     submitBtn.disabled = false;
-    submitBtn.textContent = "Recevoir mon devis gratuit";
+    submitBtn.textContent = "Être rappelé(e) sous 15 min →";
   }
 });
 
 (async function init() {
   await Promise.all([loadConfig(), loadVariant()]);
   setupWhatsApp();
-  setupSegments();
-  setupSocialFill();
+  setupAngles();
+  setupRegionHint();
   setupIslands();
   setupMultiStep();
   setupMobileCta();

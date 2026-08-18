@@ -41,12 +41,12 @@ if (forced !== "sqljs") {
 /**
  * Schema
  * -----
- * leads              : la fiche prospect + son statut de qualification (CRM)
- * consent_proofs     : la PREUVE de consentement horodatee (RGPD / loi 30 juin 2025)
+ * leads              : la fiche prospect fibre/telecom + son statut de qualification (CRM)
+ * consent_proofs     : la PREUVE de consentement horodatee (RGPD / opt-in by design)
  *                      liee 1-1 a un lead, conservee meme si le lead est supprime/anonymise
  *
- * IMPORTANT : aucune donnee de sante (pathologie, traitement...) n'est stockee.
- * On ne conserve que des donnees non sensibles : age, situation, mutuelle actuelle, budget.
+ * IMPORTANT : aucune donnee sensible n'est stockee. On ne conserve que des donnees
+ * de qualification commerciale (region, operateur actuel, objectif, type de client, eligibilite).
  */
 function init() {
   db.exec(`
@@ -55,38 +55,39 @@ function init() {
       created_at        TEXT    NOT NULL,
       updated_at        TEXT    NOT NULL,
 
-      -- Identite / contact (donnees non sensibles)
+      -- Identite / contact
       civilite          TEXT,
       prenom            TEXT    NOT NULL,
       nom               TEXT    NOT NULL,
-      email             TEXT    NOT NULL,
+      email             TEXT,             -- facultatif (le rappel se fait par telephone)
       telephone         TEXT    NOT NULL,
       code_postal       TEXT,
+      adresse           TEXT,             -- rue + numero (facultatif, pour le check fibre)
 
-      -- Qualification metier (PAS de donnees de sante)
-      date_naissance    TEXT,   -- 'YYYY-MM-DD'
-      tranche_age       TEXT,   -- derive de la date de naissance : '55-64', '65-74', '75+'
-      situation         TEXT,   -- ex: 'actif', 'retraite', 'independant'
-      mutuelle_actuelle TEXT,   -- ex: 'oui', 'non'
-      budget_mensuel    TEXT,   -- ex: '30-60', '60-100', '100+'
+      -- Qualification metier fibre / telecom
+      region            TEXT,   -- 'Bruxelles' | 'Wallonie' | 'Flandre' (derive du code postal)
+      operateur_actuel  TEXT,   -- 'proximus' | 'voo_orange' | 'telenet_base' | 'autre' | 'aucun'
+      objectif          TEXT,   -- 'fibre' | 'pack' | 'mobile' | 'infos'
+      type_client       TEXT,   -- 'residentiel' | 'soho'
+      eligibilite_fibre TEXT,   -- 'disponible' | 'en_cours' | 'planifie' | 'inconnu'
 
       -- Attribution / acquisition
       source            TEXT,   -- 'formulaire' | 'affilie:<nom>' | 'lp:<slug>' | 'whatsapp'
-      ile               TEXT,   -- 'Martinique' | 'Guadeloupe' | 'La Reunion' | ...
-      persona           TEXT,   -- 'senior' | 'famille' | 'fonctionnaire' | 'autres'
+      persona           TEXT,   -- segment marketing ('switch-voo', 'famille', 'soho', ...)
       utm_source        TEXT,
       utm_medium        TEXT,
       utm_campaign      TEXT,
       utm_term          TEXT,
       utm_content       TEXT,
 
-      -- CRM
+      -- CRM (speed-to-lead : premier_contact_at pour mesurer le delai de rappel)
       statut            TEXT    NOT NULL DEFAULT 'nouveau',
                                 -- nouveau | a_rappeler | qualifie | non_joignable | non_interesse | transmis | rejete
       score             INTEGER,          -- score de qualification 0-100 (calcule)
       notes             TEXT,
-      assigne_a         TEXT,             -- teleconseiller
-      courtier_orias    TEXT,             -- courtier ORIAS destinataire une fois transmis
+      assigne_a         TEXT,             -- televendeur
+      partenaire        TEXT,             -- societe partenaire destinataire une fois transmis
+      premier_contact_at TEXT,           -- horodatage du 1er appel (speed-to-lead)
       transmis_at       TEXT,
 
       -- Etat du consentement
@@ -145,8 +146,8 @@ function init() {
     CREATE TABLE IF NOT EXISTS ad_spend (
       id          INTEGER PRIMARY KEY AUTOINCREMENT,
       jour        TEXT    NOT NULL,   -- 'YYYY-MM-DD'
-      ile         TEXT,
-      source      TEXT,               -- 'meta' | 'tiktok' | 'google' | 'radio' ...
+      region      TEXT,
+      source      TEXT,               -- 'meta' | 'instagram' | 'tiktok' | 'google' ...
       montant_eur REAL    NOT NULL,
       note        TEXT,
       created_at  TEXT    NOT NULL
@@ -154,7 +155,7 @@ function init() {
 
     CREATE TABLE IF NOT EXISTS wa_clicks (
       id          INTEGER PRIMARY KEY AUTOINCREMENT,
-      ile         TEXT,
+      region      TEXT,
       persona     TEXT,
       source      TEXT,
       utm_source  TEXT,
@@ -167,17 +168,23 @@ function init() {
 
     CREATE INDEX IF NOT EXISTS idx_outbound_lead ON outbound_messages(lead_id);
     CREATE INDEX IF NOT EXISTS idx_webhook_lead ON webhook_deliveries(lead_id);
-    CREATE INDEX IF NOT EXISTS idx_spend_jour ON ad_spend(jour, ile);
-    CREATE INDEX IF NOT EXISTS idx_waclicks_created ON wa_clicks(created_at, ile);
+    CREATE INDEX IF NOT EXISTS idx_spend_jour ON ad_spend(jour, region);
+    CREATE INDEX IF NOT EXISTS idx_waclicks_created ON wa_clicks(created_at, region);
   `);
 
-  // Migration legere : ajoute les colonnes d'attribution si absentes (bases existantes).
+  // Migration legere : ajoute les colonnes d'attribution/qualification si absentes.
   const cols = db.prepare("PRAGMA table_info(leads)").all().map((c) => c.name);
   const toAdd = {
     source: "TEXT",
-    ile: "TEXT",
+    region: "TEXT",
     persona: "TEXT",
-    date_naissance: "TEXT",
+    adresse: "TEXT",
+    operateur_actuel: "TEXT",
+    objectif: "TEXT",
+    type_client: "TEXT",
+    eligibilite_fibre: "TEXT",
+    partenaire: "TEXT",
+    premier_contact_at: "TEXT",
     utm_source: "TEXT",
     utm_medium: "TEXT",
     utm_campaign: "TEXT",
@@ -189,7 +196,7 @@ function init() {
   }
   db.exec("CREATE INDEX IF NOT EXISTS idx_leads_utm ON leads(utm_source, utm_campaign)");
   db.exec("CREATE INDEX IF NOT EXISTS idx_leads_source ON leads(source)");
-  db.exec("CREATE INDEX IF NOT EXISTS idx_leads_ile ON leads(ile)");
+  db.exec("CREATE INDEX IF NOT EXISTS idx_leads_region ON leads(region)");
 }
 
 init();
