@@ -65,8 +65,9 @@ export default function App() {
   const cartCount = cart.reduce((sum, i) => sum + i.qty, 0)
   const cartTotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0)
 
+  const isGHPages = import.meta.env.PROD
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={isGHPages ? '/you' : '/'}>
       <ScrollToTop />
       <AnnouncementBar />
       <Navbar cartCount={cartCount} onCartClick={() => setCartOpen(true)} />
