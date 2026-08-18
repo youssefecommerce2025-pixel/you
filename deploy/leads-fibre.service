@@ -1,25 +1,25 @@
 # Service systemd pour lancer l'application au demarrage et la relancer si elle plante.
-# Copier vers : /etc/systemd/system/leads-mutuelle.service
+# Copier vers : /etc/systemd/system/leads-fibre.service
 # Puis :
 #   sudo systemctl daemon-reload
-#   sudo systemctl enable --now leads-mutuelle
-#   sudo systemctl status leads-mutuelle
+#   sudo systemctl enable --now leads-fibre
+#   sudo systemctl status leads-fibre
 
 [Unit]
-Description=Plateforme leads mutuelle sante (Node.js)
+Description=Plateforme leads fibre Proximus (Node.js)
 After=network.target
 
 [Service]
 Type=simple
 # Adapte l'utilisateur et le chemin a ton installation.
 User=deploy
-WorkingDirectory=/var/www/leads-mutuelle
+WorkingDirectory=/var/www/leads-fibre
 ExecStart=/usr/bin/node src/server.js
 Restart=always
 RestartSec=3
 
 # Variables d'environnement chargees depuis un fichier (voir .env.example).
-EnvironmentFile=/var/www/leads-mutuelle/.env
+EnvironmentFile=/var/www/leads-fibre/.env
 
 # Securite de base
 NoNewPrivileges=true

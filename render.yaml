@@ -7,14 +7,14 @@
 
 services:
   - type: web
-    name: leads-mutuelle-sante
+    name: leads-fibre-proximus-belgique
     runtime: node
     # Plan "starter" (payant) requis pour le disque persistant ci-dessous.
     # Pour un essai GRATUIT : mets "plan: free" ET supprime le bloc "disk"
     # (attention : sans disque, la base SQLite est reinitialisee a chaque redeploiement).
     plan: starter
     region: frankfurt          # hebergement UE (RGPD)
-    branch: cursor/leads-mutuelle-sante-optin
+    branch: cursor/site-leads-fibre-proximus-belgique-5ad5
     buildCommand: npm ci
     startCommand: node src/server.js
     healthCheckPath: /health
@@ -29,7 +29,7 @@ services:
         generateValue: true
       # PUBLIC_BASE_URL : mets ici l'URL publique fournie par Render (pour les liens double opt-in).
       # - key: PUBLIC_BASE_URL
-      #   value: https://leads-mutuelle-sante.onrender.com
+      #   value: https://leads-fibre-proximus-belgique.onrender.com
     disk:
       name: leads-data
       mountPath: /var/data     # doit correspondre a DATA_DIR

@@ -10,7 +10,7 @@ import {
 } from "./consent.js";
 import { sendDoubleOptinConfirmation, mailerMode } from "./notifier.js";
 import { dispatchLead, deliveriesForLead, webhookConfigured } from "./webhook.js";
-import { createLeadWithConsent, validateLead, computeScore, trancheFromDOB } from "./leads.js";
+import { createLeadWithConsent, validateLead, computeScore, regionFromPostalCode } from "./leads.js";
 import { getVariant, listVariants, WHATSAPP_NUMBER } from "./variants.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -64,7 +64,7 @@ app.get("/api/config", (req, res) => {
 });
 
 /* --------------------------------------------------------------------------
- * Variantes de landing par ile / persona (DOM-TOM)
+ * Variantes de landing par region / persona (marché belge)
  * ------------------------------------------------------------------------ */
 app.get("/api/variants", (req, res) => res.json({ variants: listVariants() }));
 
@@ -85,10 +85,10 @@ app.get("/lp/:slug", (req, res) => {
 app.post("/api/track/whatsapp", (req, res) => {
   const b = req.body || {};
   db.prepare(
-    `INSERT INTO wa_clicks (ile, persona, source, utm_source, utm_campaign, variant, ip, user_agent, created_at)
+    `INSERT INTO wa_clicks (region, persona, source, utm_source, utm_campaign, variant, ip, user_agent, created_at)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
   ).run(
-    b.ile || null,
+    b.region || null,
     b.persona || null,
     b.source || "whatsapp",
     b.utm_source || null,
@@ -200,7 +200,7 @@ app.get("/api/leads/confirm", (req, res) => {
   res
     .status(200)
     .send(
-      "<h1>Consentement confirme</h1><p>Merci, votre demande de devis mutuelle sante est bien enregistree. Un conseiller pourra vous rappeler.</p>"
+      "<h1>Consentement confirmé</h1><p>Merci, votre demande de vérification fibre est bien enregistrée. Un conseiller pourra vous rappeler.</p>"
     );
 });
 
@@ -376,24 +376,24 @@ app.get("/api/admin/analytics", requireAdmin, (req, res) => {
     )
     .all(since);
 
-  // CPL par ile : croise le nombre de leads avec le budget pub saisi (ad_spend).
-  const leadsParIle = agg("ile");
+  // CPL par région : croise le nombre de leads avec le budget pub saisi (ad_spend).
+  const leadsParRegion = agg("region");
   const spendRows = db
     .prepare(
-      `SELECT COALESCE(NULLIF(ile,''),'(non renseigne)') AS cle, SUM(montant_eur) AS depense
+      `SELECT COALESCE(NULLIF(region,''),'(non renseigne)') AS cle, SUM(montant_eur) AS depense
        FROM ad_spend WHERE jour >= ? GROUP BY cle`
     )
     .all(since.slice(0, 10));
   const spendMap = Object.fromEntries(spendRows.map((r) => [r.cle, r.depense]));
   const waRows = db
     .prepare(
-      `SELECT COALESCE(NULLIF(ile,''),'(non renseigne)') AS cle, COUNT(*) AS clics
+      `SELECT COALESCE(NULLIF(region,''),'(non renseigne)') AS cle, COUNT(*) AS clics
        FROM wa_clicks WHERE created_at >= ? GROUP BY cle`
     )
     .all(since);
   const waMap = Object.fromEntries(waRows.map((r) => [r.cle, r.clics]));
 
-  const parIle = leadsParIle.map((r) => {
+  const parRegion = leadsParRegion.map((r) => {
     const depense = spendMap[r.cle] || 0;
     return {
       ...r,
@@ -417,9 +417,11 @@ app.get("/api/admin/analytics", requireAdmin, (req, res) => {
       clics_whatsapp: totalWa,
       cpl_eur: total ? Math.round((totalSpend / total) * 100) / 100 : 0,
     },
-    parIle,
+    parRegion,
     parSource: agg("source"),
     parPersona: agg("persona"),
+    parOperateur: agg("operateur_actuel"),
+    parObjectif: agg("objectif"),
     parUtmSource: agg("utm_source"),
     parUtmCampaign: agg("utm_campaign"),
     parJour,
@@ -448,10 +450,10 @@ app.post("/api/admin/spend", requireAdmin, (req, res) => {
   }
   const info = db
     .prepare(
-      `INSERT INTO ad_spend (jour, ile, source, montant_eur, note, created_at)
+      `INSERT INTO ad_spend (jour, region, source, montant_eur, note, created_at)
        VALUES (?, ?, ?, ?, ?, ?)`
     )
-    .run(jour, b.ile || null, b.source || null, montant, b.note || null, nowIso());
+    .run(jour, b.region || null, b.source || null, montant, b.note || null, nowIso());
   res.status(201).json({ ok: true, id: info.lastInsertRowid });
 });
 
@@ -480,24 +482,26 @@ app.patch("/api/admin/leads/:id", requireAdmin, async (req, res) => {
     return res.status(400).json({ error: "statut invalide" });
   }
 
-  const date_naissance = b.date_naissance ?? lead.date_naissance;
   const fields = {
     statut: b.statut ?? lead.statut,
     notes: b.notes ?? lead.notes,
     assigne_a: b.assigne_a ?? lead.assigne_a,
-    courtier_orias: b.courtier_orias ?? lead.courtier_orias,
-    date_naissance,
-    // La tranche d'age est recalculee a partir de la date de naissance si fournie.
-    tranche_age: b.date_naissance
-      ? trancheFromDOB(b.date_naissance) || lead.tranche_age
-      : b.tranche_age ?? lead.tranche_age,
-    situation: b.situation ?? lead.situation,
+    partenaire: b.partenaire ?? lead.partenaire,
+    region: b.region ?? lead.region ?? regionFromPostalCode(lead.code_postal),
+    operateur_actuel: b.operateur_actuel ?? lead.operateur_actuel,
+    objectif: b.objectif ?? lead.objectif,
+    type_client: b.type_client ?? lead.type_client,
+    eligibilite_fibre: b.eligibilite_fibre ?? lead.eligibilite_fibre,
     persona: b.persona ?? lead.persona,
-    mutuelle_actuelle: b.mutuelle_actuelle ?? lead.mutuelle_actuelle,
-    budget_mensuel: b.budget_mensuel ?? lead.budget_mensuel,
   };
 
-  // Transmission a un courtier ORIAS : on horodate.
+  // Speed-to-lead : on horodate le 1er contact quand le lead quitte "nouveau".
+  let premier_contact_at = lead.premier_contact_at;
+  if (!premier_contact_at && b.statut && b.statut !== "nouveau" && lead.statut === "nouveau") {
+    premier_contact_at = nowIso();
+  }
+
+  // Transmission à la société partenaire : on horodate.
   let transmis_at = lead.transmis_at;
   if (b.statut === "transmis" && lead.statut !== "transmis") {
     transmis_at = nowIso();
@@ -507,14 +511,15 @@ app.patch("/api/admin/leads/:id", requireAdmin, async (req, res) => {
 
   db.prepare(
     `UPDATE leads SET statut=@statut, notes=@notes, assigne_a=@assigne_a,
-      courtier_orias=@courtier_orias, date_naissance=@date_naissance, tranche_age=@tranche_age,
-      situation=@situation, persona=@persona, mutuelle_actuelle=@mutuelle_actuelle, budget_mensuel=@budget_mensuel,
-      score=@score, transmis_at=@transmis_at, updated_at=@updated_at WHERE id=@id`
-  ).run({ ...fields, score, transmis_at, updated_at: nowIso(), id });
+      partenaire=@partenaire, region=@region, operateur_actuel=@operateur_actuel,
+      objectif=@objectif, type_client=@type_client, eligibilite_fibre=@eligibilite_fibre,
+      persona=@persona, score=@score, premier_contact_at=@premier_contact_at,
+      transmis_at=@transmis_at, updated_at=@updated_at WHERE id=@id`
+  ).run({ ...fields, score, premier_contact_at, transmis_at, updated_at: nowIso(), id });
 
   const updated = db.prepare("SELECT * FROM leads WHERE id = ?").get(id);
 
-  // Transmission automatique vers le CRM du courtier partenaire lorsque le lead
+  // Transmission automatique vers le CRM de la société partenaire lorsque le lead
   // vient de passer au statut "transmis".
   let webhook = null;
   const justTransmis = b.statut === "transmis" && lead.statut !== "transmis";
@@ -526,7 +531,7 @@ app.patch("/api/admin/leads/:id", requireAdmin, async (req, res) => {
 });
 
 /* --------------------------------------------------------------------------
- * Transmission manuelle (re-envoi) d'un lead vers le CRM courtier
+ * Transmission manuelle (re-envoi) d'un lead vers le CRM partenaire
  * ------------------------------------------------------------------------ */
 app.post("/api/admin/leads/:id/transmettre", requireAdmin, async (req, res) => {
   const id = Number(req.params.id);
@@ -583,11 +588,12 @@ app.get("/api/admin/leads/export.csv", requireAdmin, (req, res) => {
     "email",
     "telephone",
     "code_postal",
-    "date_naissance",
-    "tranche_age",
-    "situation",
-    "mutuelle_actuelle",
-    "budget_mensuel",
+    "adresse",
+    "region",
+    "operateur_actuel",
+    "objectif",
+    "type_client",
+    "eligibilite_fibre",
     "source",
     "utm_source",
     "utm_medium",
@@ -595,7 +601,8 @@ app.get("/api/admin/leads/export.csv", requireAdmin, (req, res) => {
     "statut",
     "score",
     "assigne_a",
-    "courtier_orias",
+    "partenaire",
+    "premier_contact_at",
     "transmis_at",
     "double_optin_confirme",
     "desinscrit_at",
@@ -609,7 +616,7 @@ app.get("/api/admin/leads/export.csv", requireAdmin, (req, res) => {
   res.setHeader("Content-Type", "text/csv; charset=utf-8");
   res.setHeader(
     "Content-Disposition",
-    `attachment; filename="leads-mutuelle-${date}.csv"`
+    `attachment; filename="leads-fibre-${date}.csv"`
   );
   res.send(csv);
 });
@@ -705,10 +712,10 @@ app.get("/api/admin/leads/:id/consent/certificate", requireAdmin, (req, res) => 
   <div class="actions"><button class="btn" onclick="window.print()">Imprimer / Enregistrer en PDF</button></div>
   <div class="sheet">
     <div class="head">
-      <img src="/logo.png" alt="AssurDom" />
+      <img src="/logo.png" alt="${esc(ORG.marque)}" />
       <div>
         <h1>Certificat de consentement</h1>
-        <span>Preuve de consentement au démarchage téléphonique &middot; ${esc(ORG.siteComparateur)}</span>
+        <span>Preuve de consentement à la prospection téléphonique &middot; ${esc(ORG.marque)}</span>
       </div>
     </div>
 
@@ -745,9 +752,9 @@ app.get("/api/admin/leads/:id/consent/certificate", requireAdmin, (req, res) => 
     <div class="quote">${esc(snap.information_notice || "")}</div>
 
     <div class="foot">
-      Ce certificat atteste du recueil du consentement conformément au RGPD et à la loi n° 2025-594
-      du 30 juin 2025. Document généré le ${fmtDate(nowIso())} par ${esc(ORG.siteComparateur)}.
-      À conserver à titre de preuve (durée recommandée : 5 ans).
+      Ce certificat atteste du recueil du consentement conformément au RGPD et aux articles VI.110 et
+      suivants du Code de droit économique belge (prospection directe). Document généré le
+      ${fmtDate(nowIso())} par ${esc(ORG.marque)}. À conserver à titre de preuve (durée recommandée : 5 ans).
     </div>
   </div>
 </body></html>`;
@@ -769,7 +776,7 @@ const isMain =
 if (isMain && process.env.NODE_ENV !== "test") {
   // 0.0.0.0 : obligatoire chez certains hebergeurs (Hostinger) pour que le proxy voie l'app.
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`\n  Plateforme leads mutuelle sante`);
+    console.log(`\n  Plateforme leads fibre Proximus (marché belge)`);
     console.log(`  ------------------------------------`);
     console.log(`  Landing page : http://localhost:${PORT}/`);
     console.log(`  CRM (admin)  : http://localhost:${PORT}/admin.html`);
@@ -779,7 +786,7 @@ if (isMain && process.env.NODE_ENV !== "test") {
     const mode = mailerMode();
     console.log(`  Notifications : email=${mode.email}, sms=${mode.sms}`);
     console.log(
-      `  Webhook courtier : ${webhookConfigured() ? "configure" : "non configure"}\n`
+      `  Webhook partenaire : ${webhookConfigured() ? "configure" : "non configure"}\n`
     );
   });
 }

@@ -1,71 +1,83 @@
 /**
- * POINT 3 - Modele de mentions de consentement RGPD / mutuelle sante
- * ------------------------------------------------------------------
- * Source de verite unique du texte de consentement.
+ * Source de vérité unique du texte de consentement (prospection téléphonique télécom).
+ * ---------------------------------------------------------------------------------
+ * Contexte marché belge (fibre / packs Proximus commercialisés par un partenaire agréé) :
  *
- * Regles legales respectees ici (loi n° 2025-594 du 30 juin 2025, RGPD, exigences ACPR) :
- *  - consentement LIBRE : la coche n'est pas une condition d'achat.
- *  - SPECIFIQUE : le consentement vise uniquement la prospection "mutuelle sante" par telephone.
- *  - ECLAIRE : identite du responsable, finalite, destinataires, duree, droits sont indiques.
- *  - UNIVOQUE / acte positif clair : case a cocher NON pre-cochee (gere cote UI/serveur).
- *  - REVOCABLE : lien / procede de desinscription mentionne.
- *  - PREUVE : la version + le texte exact sont figes et stockes avec chaque lead.
+ *  - En Belgique, le démarchage téléphonique est aujourd'hui en régime d'OPT-OUT :
+ *    l'appel est autorisé sauf si le numéro figure sur la liste « Ne m'appelez plus ! »
+ *    (DNCM asbl). Toute entreprise DOIT consulter cette liste avant campagne
+ *    (art. VI.111 à VI.114 du Code de droit économique) sous peine d'amende (jusqu'à 80.000 €).
  *
- * A CHAQUE MODIFICATION DU TEXTE -> incrementer CONSENT_VERSION.
- * Les anciens leads gardent la version sous laquelle ils ont consenti (tracabilite).
+ *  - Une proposition de loi (Doc. 1081, inspirée de la loi française du 30 juin 2025) vise
+ *    à basculer la Belgique vers l'OPT-IN (consentement préalable). Ce site est donc conçu
+ *    « opt-in by design » : on recueille un consentement libre, spécifique, éclairé et
+ *    univoque (case NON pré-cochée) — conforme dès aujourd'hui et déjà prêt pour l'opt-in.
+ *
+ * Règles respectées :
+ *  - LIBRE : la coche n'est pas une condition d'obtention du devis.
+ *  - SPÉCIFIQUE : consentement dédié à la prospection télécom (fibre / internet / TV / mobile) par téléphone.
+ *  - ÉCLAIRÉ : identité du responsable, finalité, destinataires, durée et droits indiqués.
+ *  - UNIVOQUE : case à cocher NON pré-cochée (acte positif clair) — géré côté UI + serveur.
+ *  - RÉVOCABLE : retrait à tout moment (email/désinscription) mentionné.
+ *  - PREUVE : version + texte exact figés et stockés avec chaque lead.
+ *
+ * À CHAQUE MODIFICATION DU TEXTE -> incrémenter CONSENT_VERSION.
  */
 
-export const CONSENT_VERSION = "2026-08-v3";
+export const CONSENT_VERSION = "2026-08-be-v1";
 
-// Mentions AssurDom (confidentialite / mentions legales / consentement).
+// Identité (à personnaliser avec la société belge licenciée qui vous mandate).
+// Ces valeurs alimentent la landing, les mentions légales et le certificat de consentement.
 export const ORG = {
-  raisonSociale: "Auto-entrepreneur",
-  formeJuridique: "",
-  adresse: "Bordeaux",
-  email: "contact@assurdom.fr",
-  emailDpo: "contact@assurdom.fr",
-  telephone: "+33 759 10 59 12",
-  siteComparateur: "AssurDom",
-  // Mentions legales complementaires
-  capitalSocial: "1000 €",
-  rcs: "",
-  siret: "",
-  tvaIntra: "",
-  directeurPublication: "",
-  orias: "",
+  marque: process.env.ORG_BRAND || "ProxiFibre",
+  raisonSociale: process.env.ORG_LEGAL_NAME || "ProxiFibre (partenaire agréé)",
+  formeJuridique: process.env.ORG_LEGAL_FORM || "",
+  // Numéro d'entreprise BCE / KBO (10 chiffres) de la société qui détient la licence.
+  numeroEntreprise: process.env.ORG_BCE || "BE 0XXX.XXX.XXX",
+  adresse: process.env.ORG_ADDRESS || "Belgique",
+  email: process.env.ORG_EMAIL || "contact@proxifibre.be",
+  emailDpo: process.env.ORG_DPO_EMAIL || "privacy@proxifibre.be",
+  telephone: process.env.ORG_PHONE || "+32 2 000 00 00",
+  // Marque du produit commercialisé (réseau / opérateur).
+  operateur: process.env.ORG_OPERATOR || "Proximus",
+  // Licence DNCM (« Ne m'appelez plus ! ») — obligatoire pour l'outbound en Belgique.
+  licenceDncm: process.env.ORG_DNCM_LICENSE || "",
   hebergeur: {
-    nom: "HOSTINGER operations, UAB",
-    adresse: "Švitrigailos str. 34, Vilnius 03230 Lithuania",
-    telephone: "37064503378",
+    nom: process.env.HOST_NAME || "Hébergeur (Union européenne)",
+    adresse: process.env.HOST_ADDRESS || "Union européenne",
+    telephone: process.env.HOST_PHONE || "",
   },
 };
 
-// Case a cocher obligatoire (opt-in telephonique specifique) - decochee par defaut.
+// Case à cocher obligatoire (opt-in téléphonique spécifique télécom) — décochée par défaut.
 export const CONSENT_TELEPHONE =
-  "J'accepte d'être contacté(e) par téléphone par un courtier en assurance partenaire " +
-  "immatriculé à l'ORIAS, afin de recevoir un devis et des offres de mutuelle santé " +
-  "correspondant à ma demande. Je comprends que je peux retirer ce consentement à tout moment.";
+  `J'accepte d'être contacté(e) par téléphone par ${ORG.marque} ` +
+  `(ou un conseiller partenaire agréé) afin de vérifier mon éligibilité à la fibre et de recevoir ` +
+  `une offre télécom ${ORG.operateur} (internet, TV, mobile) adaptée à ma demande. ` +
+  `Je comprends que je peux retirer ce consentement à tout moment, sans frais.`;
 
-// Mention d'information (RGPD) affichee sous le formulaire - non cochable, informative.
+// Mentions d'information (RGPD) affichées sous le formulaire — informatives, non cochables.
 export function mentionInformation() {
   return [
-    `Les informations recueillies via ce formulaire sont enregistrees par ${ORG.raisonSociale}` +
+    `Les informations recueillies via ce formulaire sont enregistrées par ${ORG.raisonSociale}` +
       (ORG.formeJuridique ? ` (${ORG.formeJuridique})` : "") +
-      `, responsable de traitement, aux seules fins de traiter votre demande de devis de mutuelle sante ` +
-      `et de vous mettre en relation avec un courtier en assurance partenaire immatricule a l'ORIAS.`,
-    `Base legale : votre consentement (art. 6.1.a RGPD) et l'execution de mesures precontractuelles a votre demande.`,
-    `Nous ne collectons AUCUNE donnee de sante (pathologie, traitement, antecedent). Merci de ne pas en communiquer.`,
-    `Destinataires : nos equipes habilitees et, le cas echeant, le courtier partenaire selectionne pour votre devis.`,
-    `Duree de conservation : la fiche prospect est conservee 3 ans a compter du dernier contact ; ` +
-      `la preuve de consentement est conservee 5 ans a titre probatoire.`,
-    `Hebergement des donnees : Union europeenne.`,
-    `Vos droits : acces, rectification, effacement, opposition, limitation et portabilite. ` +
+      `, responsable de traitement, aux seules fins de vérifier votre éligibilité à la fibre, ` +
+      `de vous rappeler et de vous proposer une offre télécom ${ORG.operateur} correspondant à votre demande.`,
+    `Base légale : votre consentement (art. 6.1.a RGPD) et l'exécution de mesures précontractuelles à votre demande.`,
+    `Aucune donnée sensible n'est collectée. Merci de ne pas en communiquer.`,
+    `Destinataires : nos équipes commerciales habilitées et, le cas échéant, la société partenaire agréée chargée de traiter votre demande d'abonnement.`,
+    `Prospection téléphonique en Belgique : nous respectons la liste « Ne m'appelez plus ! » (DNCM) ` +
+      `et n'appelons que les personnes ayant donné leur accord.`,
+    `Durée de conservation : la fiche prospect est conservée 3 ans à compter du dernier contact ; ` +
+      `la preuve de consentement est conservée 5 ans à titre probatoire.`,
+    `Hébergement des données : Union européenne.`,
+    `Vos droits : accès, rectification, effacement, opposition, limitation et portabilité. ` +
       `Pour les exercer ou retirer votre consentement : ${ORG.emailDpo}. ` +
-      `Vous pouvez introduire une reclamation aupres de la CNIL (www.cnil.fr).`,
+      `Vous pouvez introduire une réclamation auprès de l'Autorité de protection des données (APD/GBA, www.autoriteprotectiondonnees.be).`,
   ];
 }
 
-// Bloc de consentement complet (texte fige) stocke comme PREUVE avec chaque lead.
+// Bloc de consentement complet (texte figé) stocké comme PREUVE avec chaque lead.
 export function buildConsentSnapshot() {
   return {
     version: CONSENT_VERSION,

@@ -1,15 +1,15 @@
 # Configuration Nginx : reverse proxy vers l'app Node (port 3000) + HTTPS.
-# Copier vers : /etc/nginx/sites-available/leads-mutuelle
-# Activer     : sudo ln -s /etc/nginx/sites-available/leads-mutuelle /etc/nginx/sites-enabled/
+# Copier vers : /etc/nginx/sites-available/leads-fibre
+# Activer     : sudo ln -s /etc/nginx/sites-available/leads-fibre /etc/nginx/sites-enabled/
 # Tester      : sudo nginx -t  &&  sudo systemctl reload nginx
 #
-# Remplace "ton-domaine.fr" par ton vrai domaine.
+# Remplace "ton-domaine.be" par ton vrai domaine.
 # Le HTTPS (blocs 443 / certificats) est ajoute AUTOMATIQUEMENT par certbot (voir guide).
 
 server {
     listen 80;
     listen [::]:80;
-    server_name ton-domaine.fr www.ton-domaine.fr;
+    server_name ton-domaine.be www.ton-domaine.be;
 
     # Taille max des requetes (formulaires legers).
     client_max_body_size 1m;

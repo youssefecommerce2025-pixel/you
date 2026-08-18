@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CRM &mdash; Qualification des leads mutuelle sante</title>
+    <title>CRM &mdash; Qualification des leads fibre Proximus</title>
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/admin.css" />
   </head>
@@ -12,7 +12,7 @@
       <div class="container topbar__inner">
         <a class="brand" href="/admin.html">
           <span class="brand__dot"></span>
-          <span>CRM &middot; Leads mutuelle sante</span>
+          <span>CRM &middot; Leads fibre Proximus</span>
         </a>
         <a class="topbar__badge" href="/">Voir la landing page</a>
       </div>
@@ -34,7 +34,7 @@
       <div class="tabs">
         <button class="tab tab--active" data-view="leads">Leads</button>
         <button class="tab" data-view="analytics">Analytics</button>
-        <button class="tab" data-view="simulateur">Simulateur CA</button>
+        <button class="tab" data-view="simulateur">Simulateur revenus</button>
       </div>
 
       <div class="stats" id="stats"></div>
@@ -55,37 +55,35 @@
         <div id="funnel" class="funnel"></div>
 
         <div class="acard">
-          <h3>CPL par île (coût par lead)</h3>
-          <div id="an-ile"></div>
+          <h3>CPL par région (coût par lead)</h3>
+          <div id="an-region"></div>
           <form id="spend-form" class="spend-form">
             <input type="date" id="sp-jour" required />
-            <select id="sp-ile">
-              <option value="">Île...</option>
-              <option>Martinique</option>
-              <option>Guadeloupe</option>
-              <option>La Réunion</option>
-              <option>Guyane</option>
-              <option>Mayotte</option>
-              <option>DOM-TOM</option>
+            <select id="sp-region">
+              <option value="">Région...</option>
+              <option>Bruxelles</option>
+              <option>Wallonie</option>
+              <option>Flandre</option>
             </select>
             <select id="sp-source">
               <option value="">Canal...</option>
-              <option value="meta">Meta</option>
+              <option value="meta">Meta (Facebook)</option>
+              <option value="instagram">Instagram</option>
               <option value="tiktok">TikTok</option>
               <option value="google">Google</option>
-              <option value="radio">Radio</option>
               <option value="autre">Autre</option>
             </select>
             <input type="number" id="sp-montant" placeholder="Budget €" min="0" step="0.01" required />
             <button class="btn btn--primary" type="submit" style="width:auto">Ajouter le budget</button>
           </form>
           <p class="muted" style="font-size:0.8rem;margin:6px 0 0">
-            Saisis ici tes dépenses publicitaires (par jour/île) pour calculer automatiquement le CPL.
+            Saisis ici tes dépenses publicitaires (par jour/région) pour calculer automatiquement le CPL.
           </p>
         </div>
 
         <div class="analytics-grid">
-          <div class="acard"><h3>Par persona</h3><div id="an-persona"></div></div>
+          <div class="acard"><h3>Par opérateur actuel</h3><div id="an-operateur"></div></div>
+          <div class="acard"><h3>Par objectif</h3><div id="an-objectif"></div></div>
           <div class="acard"><h3>Par source</h3><div id="an-source"></div></div>
           <div class="acard"><h3>Par campagne (UTM)</h3><div id="an-utm-campaign"></div></div>
         </div>
@@ -98,27 +96,27 @@
             <h3>Vos hypothèses</h3>
             <div class="sim-form">
               <label>Budget publicitaire / mois (€)
-                <input type="number" id="sim-budget" value="5000" min="0" step="100" />
+                <input type="number" id="sim-budget" value="450" min="0" step="50" />
               </label>
-              <label>Coût par lead acquis — CPL (€)
-                <input type="number" id="sim-cpl" value="12" min="0" step="0.5" />
+              <label>Coût par lead — CPL (€)
+                <input type="number" id="sim-cpl" value="7" min="0" step="0.5" />
               </label>
-              <label>Part de leads vendables (%)
-                <input type="number" id="sim-taux" value="55" min="0" max="100" step="1" />
+              <label>Part de leads joignables (%)
+                <input type="number" id="sim-joignables" value="40" min="0" max="100" step="1" />
               </label>
-              <label>Prix de vente d'un lead (€)
-                <input type="number" id="sim-prix" value="30" min="0" step="1" />
+              <label>Taux de closing sur joignables (%)
+                <input type="number" id="sim-closing" value="15" min="0" max="100" step="1" />
               </label>
-              <label>Reventes par lead (1 = exclusif)
-                <input type="number" id="sim-reventes" value="1" min="1" max="5" step="1" />
+              <label>Commission par vente (€)
+                <input type="number" id="sim-commission" value="45" min="0" step="1" />
               </label>
               <label>Autres frais fixes / mois (€)
-                <input type="number" id="sim-frais" value="200" min="0" step="50" />
+                <input type="number" id="sim-frais" value="0" min="0" step="10" />
               </label>
             </div>
             <p class="muted" style="font-size:0.8rem;margin:10px 0 0">
-              Astuce : mets un CPL réaliste (8–20 € au DOM) et un prix de vente selon l'exclusivité
-              (25–50 € exclusif, 8–20 € mutualisé). Passe « Reventes » à 2-3 pour simuler le mutualisé.
+              Astuce : CPL réaliste 3–10 € en Belgique. Ajuste « joignables » (30–40 %) et « closing »
+              (10–20 %) selon ta performance, et la commission selon ton contrat avec la société.
             </p>
           </div>
 
@@ -126,8 +124,8 @@
             <h3>Résultats estimés / mois</h3>
             <div class="sim-results" id="sim-results"></div>
             <p class="muted" style="font-size:0.78rem;margin:12px 0 0">
-              Estimations indicatives. Les résultats réels dépendent de la performance des campagnes
-              et de tes acheteurs (courtiers).
+              Estimations indicatives. Les résultats réels dépendent de la qualité de tes campagnes,
+              de ta rapidité de rappel (speed-to-lead) et de ton closing.
             </p>
           </div>
         </div>
@@ -142,7 +140,7 @@
           <option value="qualifie">Qualifie</option>
           <option value="non_joignable">Non joignable</option>
           <option value="non_interesse">Non interesse</option>
-          <option value="transmis">Transmis courtier</option>
+          <option value="transmis">Transmis partenaire</option>
           <option value="rejete">Rejete</option>
         </select>
         <button class="btn btn--ghost" id="refresh-btn">Actualiser</button>

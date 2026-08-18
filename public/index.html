@@ -3,36 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AssurDom — Votre mutuelle santé en Outre-mer, au meilleur prix</title>
+    <title>ProxiFibre — Fibre Proximus en Belgique : vérifiez votre éligibilité</title>
     <meta
       name="description"
-      content="AssurDom compare gratuitement les mutuelles santé adaptées à l'Outre-mer (Martinique, Guadeloupe, Réunion, Guyane). Devis gratuit, un conseiller vous rappelle. Sans engagement."
+      content="ProxiFibre vérifie gratuitement si la fibre Proximus est disponible à votre adresse en Belgique (Bruxelles, Wallonie). Internet, TV et mobile au meilleur prix. Un conseiller vous rappelle sous 15 minutes."
     />
     <link rel="icon" href="/logo.png" />
-    <link rel="stylesheet" href="/styles.css?v=multistep-1" />
+    <link rel="stylesheet" href="/styles.css?v=fibre-1" />
     <link rel="stylesheet" href="/cookies.css" />
   </head>
   <body>
     <!-- Bandeau d'annonce -->
     <div class="announce">
-      💙 Comparateur 100 % gratuit &middot; Adapté à l'Outre-mer &middot; Un conseiller vous rappelle
+      🔌 Vérification d'éligibilité fibre 100 % gratuite &middot; Bruxelles &amp; Wallonie &middot; Rappel sous 15 min
     </div>
 
     <!-- En-tête -->
     <header class="nav">
       <div class="container nav__inner">
         <a class="brand" href="#top">
-          <img src="/logo.png" alt="AssurDom" class="brand__logo" />
-          <span class="brand__name" id="brand-name">AssurDom</span>
+          <img src="/logo.png" alt="ProxiFibre" class="brand__logo" />
+          <span class="brand__name" id="brand-name">ProxiFibre</span>
         </a>
         <nav class="nav__links">
-          <a href="#vous-etes-ou">Vous êtes où&nbsp;?</a>
-          <a href="#pour-qui">Pour qui&nbsp;?</a>
-          <a href="#garanties">Garanties</a>
+          <a href="#angles">Votre situation</a>
+          <a href="#regions">Votre région</a>
+          <a href="#marche">Le marché</a>
           <a href="#comment">Comment ça marche</a>
+          <a href="/playbook.html">Playbook</a>
           <a href="#faq">FAQ</a>
         </nav>
-        <a href="#devis" class="btn btn--primary btn--sm">Mon devis gratuit</a>
+        <a href="#devis" class="btn btn--primary btn--sm">Vérifier mon éligibilité</a>
       </div>
     </header>
 
@@ -41,29 +42,29 @@
       <section class="hero">
         <div class="container hero__grid">
           <div class="hero__copy">
-            <span class="hero__eyebrow">Spécial Outre-mer</span>
+            <span class="hero__eyebrow">Fibre Proximus · Belgique</span>
             <h1 id="hero-title">
-              Votre mutuelle santé en Outre-mer, simple et au meilleur prix.
+              La fibre est-elle disponible chez vous&nbsp;? Vérifiez en 2 minutes.
             </h1>
             <p class="hero__lead" id="hero-lead">
-              Que vous soyez senior, en famille ou fonctionnaire, comparez gratuitement les
-              mutuelles adaptées à votre situation en Martinique, Guadeloupe, Réunion et Guyane.
-              Un conseiller vous rappelle rapidement.
+              Indiquez votre adresse : nous vérifions votre éligibilité à la fibre Proximus et
+              vous proposons la meilleure offre internet, TV et mobile. Un conseiller vous
+              rappelle&nbsp;<strong>sous 15 minutes</strong>.
             </p>
             <ul class="hero__points" id="hero-points">
-              <li>Comparaison indépendante de plusieurs assureurs</li>
-              <li>Meilleures couvertures sur l'optique, le dentaire et l'hospitalisation</li>
-              <li>Une économie allant jusqu'à 40 % sur votre budget mensuel</li>
-              <li>Conseiller à votre écoute &middot; données protégées (UE)</li>
+              <li>Vérification d'éligibilité fibre gratuite et sans engagement</li>
+              <li>Internet ultra-stable, câble dédié (pas partagé avec le quartier)</li>
+              <li>Packs internet + TV + mobile sur une seule facture</li>
+              <li>Un vrai conseiller vous rappelle &middot; données protégées (UE)</li>
             </ul>
             <div class="hero__badges">
               <span class="hbadge">✅ 100 % gratuit</span>
+              <span class="hbadge">📞 Rappel &lt; 15 min</span>
               <span class="hbadge">🔒 Données protégées (UE)</span>
-              <span class="hbadge">⚖️ Conforme 2026</span>
               <span class="hbadge">🚫 Sans engagement</span>
             </div>
             <div class="hero__cta">
-              <a href="#devis" class="btn btn--primary btn--lg">Recevoir mon devis gratuit</a>
+              <a href="#devis" class="btn btn--primary btn--lg">Vérifier mon éligibilité</a>
               <a id="wa-cta" class="btn-wa" href="#" aria-label="WhatsApp — cliquez pour discuter">
                 <span class="btn-wa__logo" aria-hidden="true">
                   <svg viewBox="0 0 32 32">
@@ -76,16 +77,15 @@
                 </span>
               </a>
             </div>
-            <div class="hero__logo">
-              <img src="/logo.png" alt="AssurDom" />
-              <span class="hero__logo-name">AssurDom</span>
+            <div class="hero__media">
+              <img src="/hero-fibre.png" alt="Famille belge connectée grâce à la fibre" loading="eager" />
             </div>
           </div>
 
           <!-- FORMULAIRE multi-étapes (conversion) -->
           <div class="card form-card" id="devis">
-            <h2 class="form-card__title">Mon devis gratuit</h2>
-            <p class="form-card__sub">3 questions rapides · sans engagement · rappel conseiller</p>
+            <h2 class="form-card__title">Vérifier mon éligibilité fibre</h2>
+            <p class="form-card__sub">3 questions rapides · gratuit · rappel sous 15 min</p>
 
             <div class="form-progress" id="form-progress" aria-hidden="true">
               <div class="form-progress__bar"><span id="form-progress-fill"></span></div>
@@ -93,44 +93,83 @@
             </div>
 
             <form id="lead-form" novalidate>
-              <!-- ÉTAPE 1 : code postal (micro-engagement) -->
+              <!-- ÉTAPE 1 : localisation + opérateur actuel -->
               <div class="form-step is-active" data-step="1">
-                <p class="form-step__q">Où habitez-vous en Outre-mer&nbsp;?</p>
+                <p class="form-step__q">Où se trouve votre logement&nbsp;?</p>
                 <label class="field">
-                  <span>Code postal Outre-mer *</span>
+                  <span>Code postal *</span>
                   <input
                     name="code_postal"
                     type="text"
                     inputmode="numeric"
-                    maxlength="5"
-                    placeholder="ex. 97200"
-                    pattern="^(97[1-8]|98[6-8])[0-9]{2}$"
-                    title="Code postal DOM-TOM uniquement (971–978, 986–988)"
+                    maxlength="4"
+                    placeholder="ex. 1000, 4000, 5000…"
+                    pattern="^[1-9][0-9]{3}$"
+                    title="Code postal belge (4 chiffres, 1000 à 9999)"
                     required
                     autocomplete="postal-code"
                   />
+                  <small class="field__hint" id="region-hint"></small>
+                </label>
+                <label class="field">
+                  <span>Votre opérateur actuel</span>
+                  <select name="operateur_actuel">
+                    <option value="">— Sélectionnez —</option>
+                    <option value="voo_orange">VOO / Orange</option>
+                    <option value="telenet_base">Telenet / BASE</option>
+                    <option value="proximus">Proximus</option>
+                    <option value="autre">Autre</option>
+                    <option value="aucun">Aucun / je ne sais pas</option>
+                  </select>
                 </label>
                 <button type="button" class="btn btn--primary btn--block js-next-step" data-next="2">
                   Continuer →
                 </button>
               </div>
 
-              <!-- ÉTAPE 2 : âge / date de naissance -->
+              <!-- ÉTAPE 2 : objectif + type de client -->
               <div class="form-step" data-step="2" hidden>
-                <p class="form-step__q">Quel âge avez-vous&nbsp;?</p>
-                <label class="field">
-                  <span>Date de naissance</span>
-                  <input name="date_naissance" type="date" max="2020-12-31" />
-                </label>
+                <p class="form-step__q">Que souhaitez-vous&nbsp;?</p>
+                <div class="choice-grid" role="radiogroup" aria-label="Votre objectif">
+                  <label class="choice">
+                    <input type="radio" name="objectif" value="fibre" />
+                    <span class="choice__body"><b>Passer à la fibre</b><small>Vérifier mon éligibilité</small></span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="objectif" value="pack" />
+                    <span class="choice__body"><b>Pack complet</b><small>Internet + TV + mobile</small></span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="objectif" value="mobile" />
+                    <span class="choice__body"><b>Mobile</b><small>GSM / abonnement</small></span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="objectif" value="infos" />
+                    <span class="choice__body"><b>Juste des infos</b><small>Comparer / me renseigner</small></span>
+                  </label>
+                </div>
+
+                <p class="form-step__q form-step__q--sub">C'est pour&nbsp;:</p>
+                <div class="choice-grid choice-grid--2">
+                  <label class="choice">
+                    <input type="radio" name="type_client" value="residentiel" checked />
+                    <span class="choice__body"><b>Mon domicile</b></span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="type_client" value="soho" />
+                    <span class="choice__body"><b>Mon activité pro</b><small>Indépendant / TPE</small></span>
+                  </label>
+                </div>
+
                 <div class="form-step__nav">
                   <button type="button" class="btn btn--soft js-prev-step" data-prev="1">← Retour</button>
                   <button type="button" class="btn btn--primary js-next-step" data-next="3">Continuer →</button>
                 </div>
               </div>
 
-              <!-- ÉTAPE 3 : contact (email / téléphone en dernier) -->
+              <!-- ÉTAPE 3 : contact -->
               <div class="form-step" data-step="3" hidden>
-                <p class="form-step__q">Où envoyons-nous votre devis&nbsp;?</p>
+                <p class="form-step__q">À quel numéro vous rappelle-t-on&nbsp;?</p>
 
                 <div class="row">
                   <label class="field field--sm">
@@ -153,44 +192,26 @@
                 </label>
 
                 <label class="field">
-                  <span>Email *</span>
-                  <input name="email" type="email" autocomplete="email" required />
-                </label>
-
-                <label class="field">
-                  <span>Téléphone Outre-mer *</span>
+                  <span>Téléphone *</span>
                   <input
                     name="telephone"
                     type="tel"
                     autocomplete="tel"
-                    placeholder="0696 12 34 56"
-                    pattern="^(?:0|\+?590|\+?596|\+?594|\+?262)[\d\s.\-]{8,}$"
-                    title="Numéro Outre-mer uniquement (ex. 0696…, 0690…, 0692…)"
+                    placeholder="0470 12 34 56 ou 02 123 45 67"
+                    title="Numéro belge (mobile 04… ou fixe 0…)"
                     required
                   />
                 </label>
 
-                <div class="social-fill social-fill--inline" id="social-fill">
-                  <div class="social-fill__divider"><span>ou remplir avec</span></div>
-                  <div class="social-fill__btns" role="group" aria-label="Connexion sociale">
-                    <button type="button" class="sso-btn" id="btn-google" aria-label="Continuer avec Google">
-                      <span class="sso-btn__logo sso-btn__logo--google" aria-hidden="true">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" focusable="false">
-                          <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
-                          <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
-                          <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
-                          <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
-                        </svg>
-                      </span>
-                      <span class="sso-btn__text">Continuer avec Google</span>
-                    </button>
-                  </div>
-                  <div id="social-fill-msg" class="form-message" role="status" aria-live="polite"></div>
-                </div>
+                <label class="field">
+                  <span>Email <small>(facultatif)</small></span>
+                  <input name="email" type="email" autocomplete="email" placeholder="pour recevoir l'offre par écrit" />
+                </label>
 
-                <p class="nohealth">
-                  🔒 Aucune info de santé demandée (maladie, traitement).
-                </p>
+                <label class="field">
+                  <span>Adresse <small>(facultatif — accélère le check fibre)</small></span>
+                  <input name="adresse" type="text" autocomplete="street-address" placeholder="Rue et numéro" />
+                </label>
 
                 <label class="consent">
                   <input type="checkbox" id="consent_telephone" name="consent_telephone" />
@@ -200,20 +221,17 @@
                 <div class="form-step__nav">
                   <button type="button" class="btn btn--soft js-prev-step" data-prev="2">← Retour</button>
                   <button class="btn btn--primary" type="submit" id="submit-btn">
-                    Recevoir mon devis gratuit →
+                    Être rappelé(e) sous 15 min →
                   </button>
                 </div>
               </div>
 
               <!-- champs cachés -->
-              <input type="hidden" name="situation" id="f-situation" />
-              <input type="hidden" name="ile" id="f-ile" />
+              <input type="hidden" name="region" id="f-region" />
               <input type="hidden" name="persona" id="f-persona" />
               <input type="hidden" name="source" id="f-source" />
-              <input type="hidden" name="social_login" id="f-social-login" value="" />
-              <input type="hidden" name="mutuelle_actuelle" value="" />
 
-              <p class="form-note">* Champs obligatoires. Contact uniquement pour votre mutuelle santé.</p>
+              <p class="form-note">* Champs obligatoires. Contact uniquement au sujet de votre offre télécom.</p>
               <div id="form-message" class="form-message" role="status" aria-live="polite"></div>
             </form>
           </div>
@@ -223,189 +241,177 @@
       <!-- BARRE DE CONFIANCE -->
       <section class="stats-band">
         <div class="container stats-band__inner">
-          <div class="stat"><b>+150</b><span>offres comparées</span></div>
-          <div class="stat"><b>4</b><span>îles couvertes</span></div>
-          <div class="stat"><b>0 €</b><span>frais de service</span></div>
-          <div class="stat"><b>&lt; 24h</b><span>rappel conseiller</span></div>
+          <div class="stat"><b>~45 %</b><span>part de Proximus sur le fixe (BIPT)</span></div>
+          <div class="stat"><b>2,4 M+</b><span>foyers connectables à la fibre</span></div>
+          <div class="stat"><b>&lt; 15 min</b><span>rappel d'un conseiller</span></div>
+          <div class="stat"><b>0 €</b><span>vérification d'éligibilité</span></div>
         </div>
       </section>
 
-      <!-- VOUS ETES OU ? (4 landings ile) -->
-      <section class="section" id="vous-etes-ou">
+      <!-- VOTRE SITUATION (les 3 angles) -->
+      <section class="section" id="angles">
         <div class="container">
-          <h2 class="section__title">Vous êtes où&nbsp;?</h2>
-          <p class="section__sub">
-            Choisissez votre île : on vous oriente vers la page AssurDom adaptée à votre territoire.
-          </p>
-          <div class="islands">
-            <a class="island" href="/lp/martinique-senior" data-slug="martinique-senior">
-              <span class="island__flag" aria-hidden="true">🇲🇶</span>
-              <span class="island__name">Martinique</span>
-              <span class="island__desc">Spécial seniors · devis local</span>
-              <span class="island__cta">Voir ma page →</span>
-            </a>
-            <a class="island" href="/lp/guadeloupe-senior" data-slug="guadeloupe-senior">
-              <span class="island__flag" aria-hidden="true">🇬🇵</span>
-              <span class="island__name">Guadeloupe</span>
-              <span class="island__desc">Spécial seniors · devis local</span>
-              <span class="island__cta">Voir ma page →</span>
-            </a>
-            <a class="island" href="/lp/reunion-famille" data-slug="reunion-famille">
-              <span class="island__flag" aria-hidden="true">🇷🇪</span>
-              <span class="island__name">La Réunion</span>
-              <span class="island__desc">Spécial familles · devis local</span>
-              <span class="island__cta">Voir ma page →</span>
-            </a>
-            <a class="island" href="/lp/guyane-famille" data-slug="guyane-famille">
-              <span class="island__flag" aria-hidden="true">🇬🇫</span>
-              <span class="island__name">Guyane</span>
-              <span class="island__desc">Spécial familles · devis local</span>
-              <span class="island__cta">Voir ma page →</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- CHIFFRES & ETUDES -->
-      <section class="section section--alt" id="chiffres">
-        <div class="container">
-          <h2 class="section__title">Ce que révèlent <span class="hl">les études</span></h2>
-          <p class="section__sub">Le marché de la mutuelle santé en Outre-mer en quelques chiffres clés.</p>
-          <div class="charts">
-            <div class="chart-card">
-              <div class="donut" style="--val: 68">
-                <div class="donut__hole"><b>68 %</b><span>paient trop cher</span></div>
-              </div>
-              <p>des assurés outre-mer estiment payer leur mutuelle trop cher.</p>
-            </div>
-
-            <div class="chart-card">
-              <h3>Économies moyennes constatées</h3>
-              <div class="barchart">
-                <div class="bar-row"><span>Seniors</span><div class="bar-track"><i style="width: 40%"></i></div><b>40 %</b></div>
-                <div class="bar-row"><span>Familles</span><div class="bar-track"><i style="width: 32%"></i></div><b>32 %</b></div>
-                <div class="bar-row"><span>Indépendants</span><div class="bar-track"><i style="width: 35%"></i></div><b>35 %</b></div>
-              </div>
-              <p>en comparant plusieurs assureurs, à garanties équivalentes.</p>
-            </div>
-
-            <div class="chart-card stat-list">
-              <div class="stat-line"><b>1 sur 3</b><span>a déjà renoncé à des soins pour raisons financières</span></div>
-              <div class="stat-line"><b>+15 %</b><span>d'augmentation moyenne des cotisations ces dernières années</span></div>
-              <div class="stat-line"><b>2 min</b><span>suffisent pour comparer et recevoir votre devis</span></div>
-            </div>
-          </div>
-          <p class="reviews__note">Chiffres indicatifs, à partir de données publiques et sectorielles (INSEE, DREES, France Assureurs).</p>
-        </div>
-      </section>
-
-      <!-- POUR QUI ? (3 segments) -->
-      <section class="section" id="pour-qui">
-        <div class="container">
-          <h2 class="section__title">Une mutuelle adaptée à <span class="hl">votre situation</span></h2>
-          <p class="section__sub">Choisissez votre profil : on vous oriente vers les offres les plus pertinentes.</p>
+          <h2 class="section__title">Dans quelle situation <span class="hl">êtes-vous&nbsp;?</span></h2>
+          <p class="section__sub">Choisissez votre cas : on vous propose la vérification et l'offre les plus adaptées.</p>
 
           <div class="segments">
             <article class="segment">
-              <div class="segment__visual">
-                <img src="/dom-tom-senior-couple.png" alt="Couple de seniors souriant en Outre-mer" loading="lazy" />
-              </div>
               <svg class="segment__icon" viewBox="0 0 64 64" aria-hidden="true">
-                <circle cx="23" cy="19" r="8"></circle>
-                <circle cx="43" cy="21" r="7"></circle>
-                <path d="M8 51c1-11 7-17 15-17s14 6 15 17M32 51c1-10 5-15 11-15 7 0 11 6 13 15"></path>
-                <path d="M15 11c5-6 13-6 17 0M37 14c4-4 9-4 12 0"></path>
+                <path d="M8 40c8-10 40-10 48 0"></path>
+                <path d="M16 46c6-7 26-7 32 0"></path>
+                <path d="M24 52c4-4 12-4 16 0"></path>
+                <circle cx="32" cy="56" r="2.5"></circle>
               </svg>
-              <h3>Seniors (60 ans et +)</h3>
-              <p>Mieux remboursé sur l'optique, le dentaire et l'hospitalisation, sans payer trop cher.</p>
+              <h3>La fibre arrive chez moi</h3>
+              <p>La fibre est peut-être déjà disponible dans votre rue. Vérifiez votre adresse et réservez votre raccordement.</p>
               <ul>
-                <li>Garanties renforcées optique &amp; dentaire</li>
-                <li>Hospitalisation bien couverte</li>
-                <li>Garanties sur-mesure</li>
+                <li>Éligibilité vérifiée gratuitement</li>
+                <li>Débit multi-Gbps, latence minimale</li>
+                <li>Idéal télétravail, streaming, gaming</li>
               </ul>
-              <p class="segment__saving">Une économie allant jusqu'à <strong>40 %</strong> sur votre budget mensuel</p>
-              <button class="btn btn--soft btn--block js-segment" data-persona="senior" data-age="65-74">
-                Je suis senior →
+              <button class="btn btn--soft btn--block js-angle" data-objectif="fibre" data-persona="fibre-neuve">
+                Vérifier ma fibre →
               </button>
             </article>
 
             <article class="segment segment--featured">
               <div class="segment__badge">Le plus demandé</div>
-              <div class="segment__visual">
-                <img src="/dom-tom-family.png" alt="Famille souriante originaire des Outre-mer" loading="lazy" />
-              </div>
               <svg class="segment__icon" viewBox="0 0 64 64" aria-hidden="true">
-                <circle cx="20" cy="17" r="7"></circle>
-                <circle cx="44" cy="17" r="7"></circle>
-                <circle cx="27" cy="34" r="5"></circle>
-                <circle cx="40" cy="35" r="5"></circle>
-                <path d="M7 53c1-11 6-17 13-17s12 6 13 17M31 53c1-11 6-17 13-17s12 6 13 17M18 53c1-8 4-12 9-12s8 4 9 12M32 53c1-8 4-12 8-12s8 4 9 12"></path>
+                <rect x="8" y="14" width="34" height="22" rx="3"></rect>
+                <rect x="40" y="30" width="16" height="24" rx="3"></rect>
+                <path d="M14 44h18M18 44v-8"></path>
               </svg>
-              <h3>Familles</h3>
-              <p>La meilleure couverture pour toute la famille, au meilleur rapport prix / garanties.</p>
+              <h3>Mon débit chute le soir</h3>
+              <p>Encore chez VOO, Orange ou Telenet et l'internet rame quand toute la famille est connectée&nbsp;? Comparez avec la fibre.</p>
               <ul>
-                <li>Toute la famille sur un seul contrat</li>
-                <li>Soins courants, optique, dentaire</li>
-                <li>Garanties sur-mesure</li>
+                <li>Comparaison avec votre offre actuelle</li>
+                <li>Câble dédié, pas partagé</li>
+                <li>On regarde si le changement vaut le coup</li>
               </ul>
-              <p class="segment__saving">Une économie allant jusqu'à <strong>40 %</strong> sur votre budget mensuel</p>
-              <button class="btn btn--primary btn--block js-segment" data-persona="famille" data-age="35-54">
-                Je cherche pour ma famille →
+              <button class="btn btn--primary btn--block js-angle" data-objectif="fibre" data-persona="switch-voo">
+                Comparer mon offre →
               </button>
             </article>
 
             <article class="segment">
-              <div class="segment__visual">
-                <img src="/dom-tom-professionals.png" alt="Fonctionnaire et indépendant souriants en Outre-mer" loading="lazy" />
-              </div>
               <svg class="segment__icon" viewBox="0 0 64 64" aria-hidden="true">
-                <rect x="10" y="21" width="44" height="30" rx="5"></rect>
-                <path d="M23 21v-5c0-3 2-5 5-5h8c3 0 5 2 5 5v5M10 31h44M27 31v6h10v-6"></path>
+                <rect x="12" y="10" width="24" height="40" rx="3"></rect>
+                <path d="M20 18h8M20 26h8M20 34h8"></path>
+                <path d="M36 30h16v20H36z"></path>
+                <path d="M42 38h4M42 44h4"></path>
               </svg>
-              <h3>Fonctionnaires &amp; Indépendants</h3>
-              <p>Optimisez votre complémentaire santé avec des garanties adaptées à votre statut.</p>
+              <h3>Je veux tout regrouper</h3>
+              <p>Internet, TV et mobile chez un seul opérateur, une seule facture, souvent moins cher qu'en séparé.</p>
               <ul>
-                <li>Offres pensées pour les agents publics</li>
-                <li>Solutions pour indépendants (TNS)</li>
-                <li>Garanties sur-mesure</li>
+                <li>Pack internet + TV + mobile</li>
+                <li>Une facture claire, un interlocuteur</li>
+                <li>Options pour indépendants &amp; TPE</li>
               </ul>
-              <p class="segment__saving">Une économie allant jusqu'à <strong>40 %</strong> sur votre budget mensuel</p>
-              <button class="btn btn--soft btn--block js-segment" data-persona="fonctionnaire" data-age="35-54">
-                Optimiser ma mutuelle →
+              <button class="btn btn--soft btn--block js-angle" data-objectif="pack" data-persona="pack">
+                Composer mon pack →
               </button>
             </article>
           </div>
         </div>
       </section>
 
-      <!-- POURQUOI ASSURDOM -->
-      <section class="section section--alt">
-        <div class="container why">
-          <div class="why__media">
-            <img src="/dom-tom-family.png" alt="Famille de trois générations souriante en Outre-mer" loading="lazy" />
-          </div>
-          <div class="why__copy">
-            <h2 class="section__title">Pourquoi choisir <span class="hl">AssurDom</span>&nbsp;?</h2>
-            <div class="why__item"><span>💰</span><div><b>Vous payez le juste prix</b><p>On compare pour vous plusieurs assureurs et on trouve le meilleur tarif à garanties égales.</p></div></div>
-            <div class="why__item"><span>📞</span><div><b>Un conseiller à votre écoute</b><p>Pas de robot : une vraie personne vous rappelle pour vous expliquer, sans jargon.</p></div></div>
-            <div class="why__item"><span>🌴</span><div><b>Pensé pour l'Outre-mer</b><p>Des offres et un accompagnement adaptés à la réalité de la Martinique, Guadeloupe, Réunion et Guyane.</p></div></div>
-            <div class="why__item"><span>🔒</span><div><b>Vos données protégées</b><p>Consentement clair, aucune donnée de santé collectée, hébergement en Union européenne.</p></div></div>
+      <!-- VOTRE RÉGION (variantes de landing) -->
+      <section class="section section--alt" id="regions">
+        <div class="container">
+          <h2 class="section__title">Vous êtes <span class="hl">où&nbsp;?</span></h2>
+          <p class="section__sub">
+            Nous accompagnons en priorité Bruxelles et la Wallonie. Choisissez votre page dédiée.
+          </p>
+          <div class="islands">
+            <a class="island" href="/lp/bruxelles-fibre" data-slug="bruxelles-fibre">
+              <span class="island__flag" aria-hidden="true">🏙️</span>
+              <span class="island__name">Bruxelles</span>
+              <span class="island__desc">Fibre en déploiement · check adresse</span>
+              <span class="island__cta">Voir ma page →</span>
+            </a>
+            <a class="island" href="/lp/wallonie-fibre" data-slug="wallonie-fibre">
+              <span class="island__flag" aria-hidden="true">🔴</span>
+              <span class="island__name">Wallonie</span>
+              <span class="island__desc">Unifiber / Proximus · check adresse</span>
+              <span class="island__cta">Voir ma page →</span>
+            </a>
+            <a class="island" href="/lp/switch-voo" data-slug="switch-voo">
+              <span class="island__flag" aria-hidden="true">🔁</span>
+              <span class="island__name">Je quitte VOO/Orange</span>
+              <span class="island__desc">Comparer avec la fibre</span>
+              <span class="island__cta">Comparer →</span>
+            </a>
+            <a class="island" href="/lp/soho-independants" data-slug="soho-independants">
+              <span class="island__flag" aria-hidden="true">💼</span>
+              <span class="island__name">Indépendant / TPE</span>
+              <span class="island__desc">Fibre pro + back-up mobile</span>
+              <span class="island__cta">Voir l'offre pro →</span>
+            </a>
           </div>
         </div>
       </section>
 
-      <!-- GARANTIES -->
-      <section class="section" id="garanties">
+      <!-- LE MARCHÉ BELGE EN CHIFFRES -->
+      <section class="section" id="marche">
         <div class="container">
-          <h2 class="section__title">Ce que votre mutuelle peut <span class="hl">couvrir</span></h2>
-          <p class="section__sub">Selon la formule choisie, vous êtes mieux remboursé sur&nbsp;:</p>
+          <h2 class="section__title">Le marché belge de la fibre <span class="hl">en chiffres</span></h2>
+          <p class="section__sub">Pourquoi c'est le bon moment pour vérifier votre éligibilité.</p>
+          <div class="charts">
+            <div class="chart-card">
+              <div class="donut" style="--val: 45">
+                <div class="donut__hole"><b>~45 %</b><span>haut débit fixe</span></div>
+              </div>
+              <p>Proximus reste le leader du haut débit fixe en Belgique.</p>
+            </div>
+
+            <div class="chart-card">
+              <h3>Déploiement de la fibre (FTTH)</h3>
+              <div class="barchart">
+                <div class="bar-row"><span>Foyers connectables</span><div class="bar-track"><i style="width: 80%"></i></div><b>2,4 M+</b></div>
+                <div class="bar-row"><span>Objectif Flandre (2028)</span><div class="bar-track"><i style="width: 100%"></i></div><b>1,5 M</b></div>
+                <div class="bar-row"><span>Objectif Wallonie (2028)</span><div class="bar-track"><i style="width: 40%"></i></div><b>600 k</b></div>
+              </div>
+              <p>Le réseau fibre s'étend rue par rue : de nouveaux foyers deviennent éligibles chaque mois.</p>
+            </div>
+
+            <div class="chart-card stat-list">
+              <div class="stat-line"><b>&lt; 15 min</b><span>rappel après votre demande (speed-to-lead)</span></div>
+              <div class="stat-line"><b>Câble dédié</b><span>la fibre n'est pas partagée avec vos voisins</span></div>
+              <div class="stat-line"><b>2 min</b><span>suffisent pour vérifier votre éligibilité</span></div>
+            </div>
+          </div>
+          <p class="reviews__note">Chiffres indicatifs, sources publiques (BIPT/IBPT 2025-2026, Proximus, presse sectorielle).</p>
+        </div>
+      </section>
+
+      <!-- POURQUOI LA FIBRE -->
+      <section class="section section--alt">
+        <div class="container why">
+          <div class="why__media">
+            <img src="/hero-fibre.png" alt="Foyer belge connecté en fibre" loading="lazy" />
+          </div>
+          <div class="why__copy">
+            <h2 class="section__title">Pourquoi passer par <span class="hl">ProxiFibre</span>&nbsp;?</h2>
+            <div class="why__item"><span>⚡</span><div><b>La bonne offre, du premier coup</b><p>On vérifie votre éligibilité réelle et on vous propose l'offre Proximus adaptée à votre usage.</p></div></div>
+            <div class="why__item"><span>📞</span><div><b>Un conseiller, pas un robot</b><p>Vous êtes rappelé rapidement par une vraie personne qui répond à vos questions, sans jargon.</p></div></div>
+            <div class="why__item"><span>🇧🇪</span><div><b>Pensé pour la Belgique</b><p>Bruxelles et Wallonie en priorité, avec les spécificités locales du déploiement fibre.</p></div></div>
+            <div class="why__item"><span>🔒</span><div><b>Vos données protégées</b><p>Consentement clair, respect de la liste « Ne m'appelez plus ! », hébergement en Union européenne.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CE QUE VOUS OBTENEZ -->
+      <section class="section" id="offres">
+        <div class="container">
+          <h2 class="section__title">Ce que vous pouvez <span class="hl">obtenir</span></h2>
+          <p class="section__sub">Selon votre éligibilité et l'offre choisie&nbsp;:</p>
           <div class="guarantees">
-            <div class="guarantee"><span>👓</span><b>Optique</b><p>Lunettes, lentilles</p></div>
-            <div class="guarantee"><span>🦷</span><b>Dentaire</b><p>Soins, prothèses, implants</p></div>
-            <div class="guarantee"><span>🏥</span><b>Hospitalisation</b><p>Séjour, chambre particulière</p></div>
-            <div class="guarantee"><span>🩺</span><b>Soins courants</b><p>Médecin, spécialistes</p></div>
-            <div class="guarantee"><span>👂</span><b>Audition</b><p>Appareils auditifs, prothèses</p></div>
-            <div class="guarantee"><span>🧑‍⚕️</span><b>Médecines douces</b><p>Ostéo, etc.</p></div>
+            <div class="guarantee"><span>🌐</span><b>Internet fibre</b><p>Jusqu'à plusieurs Gbps</p></div>
+            <div class="guarantee"><span>📺</span><b>TV</b><p>Décodeur, replay, chaînes</p></div>
+            <div class="guarantee"><span>📱</span><b>Mobile</b><p>GSM, data, appels illimités</p></div>
+            <div class="guarantee"><span>🎁</span><b>Packs</b><p>Tout-en-un, une facture</p></div>
+            <div class="guarantee"><span>🛡️</span><b>Back-up 4G/5G</b><p>Pro : jamais hors ligne</p></div>
+            <div class="guarantee"><span>🔧</span><b>Installation</b><p>Raccordement + activation</p></div>
           </div>
         </div>
       </section>
@@ -415,39 +421,39 @@
         <div class="container">
           <h2 class="section__title">Comment ça marche&nbsp;? <span class="hl">3 étapes</span></h2>
           <div class="steps">
-            <div class="step"><div class="step__n">1</div><b>Vous remplissez le formulaire</b><p>2 minutes, gratuit et sans engagement.</p></div>
-            <div class="step"><div class="step__n">2</div><b>Un conseiller vous rappelle</b><p>Il comprend votre besoin et compare pour vous.</p></div>
-            <div class="step"><div class="step__n">3</div><b>Vous choisissez la meilleure offre</b><p>Vous économisez, bien couvert, l'esprit tranquille.</p></div>
+            <div class="step"><div class="step__n">1</div><b>Vous laissez votre numéro</b><p>2 minutes, gratuit et sans engagement.</p></div>
+            <div class="step"><div class="step__n">2</div><b>On vous rappelle sous 15 min</b><p>Un conseiller vérifie votre éligibilité et vos options.</p></div>
+            <div class="step"><div class="step__n">3</div><b>On active votre offre</b><p>Raccordement et installation planifiés avec vous.</p></div>
           </div>
-          <div class="center"><a href="#devis" class="btn btn--primary btn--lg">Je commence maintenant</a></div>
+          <div class="center"><a href="#devis" class="btn btn--primary btn--lg">Vérifier mon éligibilité</a></div>
         </div>
       </section>
 
       <!-- TEMOIGNAGES -->
       <section class="section" id="avis">
         <div class="container">
-          <h2 class="section__title">Ils nous ont fait <span class="hl">confiance</span></h2>
+          <h2 class="section__title">Ils sont passés à <span class="hl">la fibre</span></h2>
           <div class="reviews">
             <blockquote class="review">
               <div class="review__person">
-                <img src="/testimonial-marie-claire.png" alt="Portrait illustratif de Marie-Claire" loading="lazy" />
-                <footer>Marie-Claire <span>Martinique</span></footer>
+                <img src="/temoignage-fatima.png" alt="Portrait illustratif de Fatima" loading="lazy" />
+                <footer>Fatima <span>Bruxelles</span></footer>
               </div>
-              <p>« J'ai économisé sur ma mutuelle et je suis mieux remboursée pour mes lunettes. Conseiller très clair. »</p>
+              <p>« On m'a rappelée en 10 minutes. La fibre était dispo dans ma rue, installée la semaine suivante. Plus aucune coupure le soir. »</p>
             </blockquote>
             <blockquote class="review">
               <div class="review__person">
-                <img src="/testimonial-jean-pierre.png" alt="Portrait illustratif de Jean-Pierre" loading="lazy" />
-                <footer>Jean-Pierre <span>La Réunion</span></footer>
+                <img src="/temoignage-thomas.png" alt="Portrait illustratif de Thomas" loading="lazy" />
+                <footer>Thomas <span>Namur</span></footer>
               </div>
-              <p>« Rapide et sans prise de tête. On a trouvé une mutuelle pour toute la famille au bon prix. »</p>
+              <p>« J'étais chez VOO, débit en chute libre. Le conseiller a comparé et j'ai un meilleur pack pour moins cher. »</p>
             </blockquote>
             <blockquote class="review">
               <div class="review__person">
-                <img src="/testimonial-sophie.png" alt="Portrait illustratif de Sophie" loading="lazy" />
-                <footer>Sophie <span>Guadeloupe</span></footer>
+                <img src="/temoignage-nadia.png" alt="Portrait illustratif de Nadia" loading="lazy" />
+                <footer>Nadia <span>Liège · indépendante</span></footer>
               </div>
-              <p>« En tant que fonctionnaire, j'ai enfin une couverture adaptée. Je recommande. »</p>
+              <p>« Pour ma boutique, la fibre pro + back-up 4G, c'est zéro stress. Je ne suis jamais hors ligne. »</p>
             </blockquote>
           </div>
           <p class="reviews__note">Portraits et témoignages illustratifs.</p>
@@ -458,20 +464,20 @@
       <section class="section section--alt" id="faq">
         <div class="container container--narrow">
           <h2 class="section__title">Questions <span class="hl">fréquentes</span></h2>
-          <details class="faq"><summary>Est-ce vraiment gratuit&nbsp;?</summary><p>Oui, la comparaison et la mise en relation sont 100 % gratuites et sans engagement.</p></details>
-          <details class="faq"><summary>Qui va m'appeler&nbsp;?</summary><p>Un conseiller en assurance partenaire, uniquement si vous avez donné votre accord dans le formulaire.</p></details>
-          <details class="faq"><summary>Est-ce adapté à mon île&nbsp;?</summary><p>Oui : nous accompagnons la Martinique, la Guadeloupe, La Réunion et la Guyane.</p></details>
-          <details class="faq"><summary>Devez-vous connaître mon état de santé&nbsp;?</summary><p>Non. Nous ne collectons aucune donnée de santé. Merci de ne pas en communiquer.</p></details>
-          <details class="faq"><summary>Puis-je changer d'avis&nbsp;?</summary><p>Oui, à tout moment. Vous pouvez retirer votre consentement et vous désinscrire facilement.</p></details>
+          <details class="faq"><summary>La vérification est-elle vraiment gratuite&nbsp;?</summary><p>Oui, la vérification d'éligibilité et le rappel sont 100 % gratuits et sans engagement.</p></details>
+          <details class="faq"><summary>Qui va m'appeler&nbsp;?</summary><p>Un conseiller ProxiFibre (partenaire agréé pour la commercialisation des offres Proximus), uniquement si vous avez donné votre accord dans le formulaire.</p></details>
+          <details class="faq"><summary>La fibre est-elle disponible partout&nbsp;?</summary><p>Pas encore : le réseau s'étend rue par rue. C'est justement l'objet de la vérification — on vous dit précisément où vous en êtes à votre adresse.</p></details>
+          <details class="faq"><summary>Et si je suis sur la liste « Ne m'appelez plus ! »&nbsp;?</summary><p>Nous respectons la liste DNCM. En laissant votre numéro ici et en cochant le consentement, vous nous autorisez explicitement à vous rappeler pour cette demande.</p></details>
+          <details class="faq"><summary>Puis-je changer d'avis&nbsp;?</summary><p>Oui, à tout moment et sans frais. Vous pouvez retirer votre consentement et être supprimé de nos contacts.</p></details>
         </div>
       </section>
 
       <!-- CTA FINAL -->
       <section class="cta-final">
         <div class="container center">
-          <h2>Prêt à payer moins cher votre mutuelle&nbsp;?</h2>
-          <p>Recevez votre devis gratuit en 2 minutes. Un conseiller vous rappelle.</p>
-          <a href="#devis" class="btn btn--light btn--lg">Recevoir mon devis gratuit</a>
+          <h2>Prêt à savoir si la fibre est chez vous&nbsp;?</h2>
+          <p>Vérification gratuite en 2 minutes. Un conseiller vous rappelle sous 15 minutes.</p>
+          <a href="#devis" class="btn btn--light btn--lg">Vérifier mon éligibilité</a>
         </div>
       </section>
 
@@ -487,10 +493,11 @@
     <footer class="footer">
       <div class="container footer__inner">
         <div class="footer__brand">
-          <img src="/logo.png" alt="AssurDom" />
-          <span id="footer-brand">AssurDom</span>
+          <img src="/logo.png" alt="ProxiFibre" />
+          <span id="footer-brand">ProxiFibre</span>
         </div>
         <span class="footer__links">
+          <a href="/playbook.html">Playbook acquisition</a>
           <a href="/mentions-legales.html">Mentions légales</a>
           <a href="/confidentialite.html">Confidentialité</a>
           <a href="#" onclick="event.preventDefault();window.cookieConsent&&window.cookieConsent.open()">Cookies</a>
@@ -498,20 +505,21 @@
         </span>
       </div>
       <div class="container footer__legal">
-        AssurDom est un service de comparaison et de mise en relation. Les contrats sont distribués
-        par des courtiers partenaires immatriculés à l'ORIAS.
+        ProxiFibre est un service indépendant de vérification d'éligibilité et de mise en relation.
+        Les abonnements sont commercialisés via une société partenaire agréée pour la distribution
+        des offres Proximus. Marques citées à titre informatif.
       </div>
     </footer>
 
-    <!-- CTA mobile sticky (toujours visible au-dessus de la ligne de flottaison) -->
+    <!-- CTA mobile sticky -->
     <div class="mobile-cta" id="mobile-cta">
-      <a href="#devis" class="btn btn--primary btn--block">Recevoir mon devis gratuit →</a>
+      <a href="#devis" class="btn btn--primary btn--block">Vérifier mon éligibilité →</a>
     </div>
 
     <!-- Bouton WhatsApp flottant -->
     <a id="wa-float" class="wa-float" href="#" aria-label="WhatsApp">💬</a>
 
-    <script src="/app.js?v=multistep-1"></script>
+    <script src="/app.js?v=fibre-1"></script>
     <script src="/cookies.js" defer></script>
   </body>
 </html>

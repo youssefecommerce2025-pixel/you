@@ -35,7 +35,7 @@ Deux options, choisis la plus simple pour toi :
 
 **Option A — depuis GitHub (recommandé)**
 - Dans l'écran de l'application Node.js, connecte le dépôt GitHub
-  `youssefecommerce2025-pixel/you` (branche `main` ou `cursor/leads-mutuelle-sante-optin`).
+  `youssefecommerce2025-pixel/you` (branche `main` ou `cursor/site-leads-fibre-proximus-belgique-5ad5`).
 - Hostinger télécharge le code et lance l'installation tout seul.
 
 **Option B — envoi manuel (ZIP)**
@@ -86,5 +86,6 @@ ce fichier de temps en temps par sécurité.
 → Option A (GitHub) : clique **Redéployer**. Option B (ZIP) : renvoie le nouveau ZIP puis
 **Redémarre**.
 
-> Avant d'ouvrir au public : renseigne tes vraies informations dans `src/consent.js` (nom de ta
-> société, n° ORIAS, contact). Ce guide n'est pas un conseil juridique.
+> Avant d'ouvrir au public : renseigne tes vraies informations via les variables `ORG_*` du `.env`
+> (nom de ta société, numéro d'entreprise BCE/KBO, licence DNCM, contact). Ce guide n'est pas un
+> conseil juridique.

@@ -1,19 +1,19 @@
 :root {
-  --brand: #0e9e92;
-  --brand-dark: #0b7d74;
-  --navy: #0c3a48;
-  --navy-2: #10485a;
-  --accent: #ff6f4d;
-  --accent-dark: #ec5a38;
+  --brand: #6a2ca0;
+  --brand-dark: #4d1f77;
+  --navy: #241245;
+  --navy-2: #33195e;
+  --accent: #e5007d;
+  --accent-dark: #c30069;
   --sun: #ffb020;
-  --bg: #f4f9fa;
-  --text: #12333d;
-  --muted: #5b7683;
-  --line: #e3edef;
+  --bg: #f7f5fc;
+  --text: #1f1533;
+  --muted: #6b6486;
+  --line: #e8e3f4;
   --card: #ffffff;
   --radius: 18px;
-  --shadow: 0 10px 30px rgba(12, 58, 72, 0.10);
-  --shadow-lg: 0 26px 60px rgba(12, 58, 72, 0.18);
+  --shadow: 0 10px 30px rgba(36, 18, 69, 0.10);
+  --shadow-lg: 0 26px 60px rgba(36, 18, 69, 0.18);
 }
 
 * { box-sizing: border-box; }
@@ -40,11 +40,11 @@ a { color: var(--brand-dark); }
 
 /* Boutons */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none; cursor: pointer; font-weight: 700; border-radius: 12px; padding: 13px 22px; font-size: 1rem; text-decoration: none; transition: transform 0.08s, background 0.15s, box-shadow 0.15s; }
-.btn--primary { background: var(--accent); color: #fff; box-shadow: 0 10px 22px rgba(255, 111, 77, 0.35); }
+.btn--primary { background: var(--accent); color: #fff; box-shadow: 0 10px 22px rgba(229, 0, 125, 0.32); }
 .btn--primary:hover { background: var(--accent-dark); }
 .btn--primary:active { transform: translateY(1px); }
-.btn--soft { background: #e9f6f4; color: var(--brand-dark); }
-.btn--soft:hover { background: #d8efec; }
+.btn--soft { background: #efe9fb; color: var(--brand-dark); }
+.btn--soft:hover { background: #e4d9f7; }
 .btn--light { background: #fff; color: var(--brand-dark); box-shadow: var(--shadow); }
 .btn--light:hover { background: #f3faf9; }
 .btn--sm { padding: 9px 16px; font-size: 0.9rem; }
@@ -518,3 +518,81 @@ a { color: var(--brand-dark); }
   .wa-float { bottom: 78px; }
   body { padding-bottom: 78px; }
 }
+
+/* ==========================================================================
+   Composants fibre / télécom (ajouts)
+   ========================================================================== */
+
+/* Visuel dans le hero */
+.hero__media {
+  margin-top: 22px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
+  max-width: 520px;
+}
+.hero__media img { width: 100%; height: auto; }
+
+/* Indice de région sous le code postal */
+.field__hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  min-height: 1em;
+}
+.field__hint--ok { color: var(--brand); font-weight: 700; }
+
+/* Choix (radio-cards) pour l'objectif / le type de client */
+.form-step__q--sub {
+  font-size: 0.98rem;
+  margin-top: 18px;
+  color: var(--muted);
+  font-weight: 700;
+}
+.choice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.choice-grid--2 { grid-template-columns: 1fr 1fr; }
+.choice {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+.choice input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  cursor: pointer;
+}
+.choice__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  height: 100%;
+}
+.choice__body b { color: var(--navy); font-size: 0.98rem; }
+.choice__body small { color: var(--muted); font-size: 0.8rem; }
+.choice:hover .choice__body { border-color: var(--brand); }
+.choice input:checked + .choice__body {
+  border-color: var(--brand);
+  background: #f3ecfb;
+  box-shadow: 0 0 0 3px rgba(106, 44, 160, 0.12);
+}
+.choice input:focus-visible + .choice__body {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .hero__media { display: none; } /* allège l'above-the-fold mobile */
+}
+

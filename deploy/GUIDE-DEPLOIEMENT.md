@@ -4,14 +4,14 @@ Ce guide t'accompagne pas à pas pour héberger l'application sur ton propre ser
 domaine et le HTTPS. L'application étant en **Node.js**, il te faut un **VPS** (serveur privé virtuel),
 pas un hébergement mutualisé « PHP » classique.
 
-> ⚠️ RGPD : choisis un hébergeur avec des **serveurs en Union européenne** (données de prospects français).
+> ⚠️ RGPD : choisis un hébergeur avec des **serveurs en Union européenne** (données de prospects belges).
 
 ---
 
 ## 1. Acheter un nom de domaine
 
 Chez un registrar : **OVHcloud**, **Gandi**, **Infomaniak**, **Namecheap**, **Cloudflare**...
-(~10-15 €/an). Exemple : `ma-mutuelle-dom.fr`.
+(~10-15 €/an). Exemple : `proxifibre.be` ou `ma-fibre-belgique.be`.
 
 ## 2. Louer un VPS
 
@@ -67,10 +67,10 @@ node --version   # doit afficher v22.x
 ## 6. Récupérer et configurer l'application
 
 ```bash
-sudo mkdir -p /var/www/leads-mutuelle && sudo chown $USER:$USER /var/www/leads-mutuelle
-git clone https://github.com/youssefecommerce2025-pixel/you.git /var/www/leads-mutuelle
-cd /var/www/leads-mutuelle
-git checkout cursor/leads-mutuelle-sante-optin   # ou main si tu as fusionne la PR
+sudo mkdir -p /var/www/leads-fibre && sudo chown $USER:$USER /var/www/leads-fibre
+git clone https://github.com/youssefecommerce2025-pixel/you.git /var/www/leads-fibre
+cd /var/www/leads-fibre
+git checkout cursor/site-leads-fibre-proximus-belgique-5ad5   # ou main si tu as fusionne la PR
 npm ci --omit=dev
 
 # Configuration
@@ -84,35 +84,35 @@ Teste rapidement : `node src/server.js` puis `Ctrl+C` (tu dois voir « Landing p
 ## 7. Lancer l'app en service (démarrage auto + redémarrage)
 
 ```bash
-sudo cp deploy/leads-mutuelle.service /etc/systemd/system/
-sudo nano /etc/systemd/system/leads-mutuelle.service   # verifie User= et WorkingDirectory=
+sudo cp deploy/leads-fibre.service /etc/systemd/system/
+sudo nano /etc/systemd/system/leads-fibre.service   # verifie User= et WorkingDirectory=
 sudo systemctl daemon-reload
-sudo systemctl enable --now leads-mutuelle
-sudo systemctl status leads-mutuelle                    # doit etre "active (running)"
+sudo systemctl enable --now leads-fibre
+sudo systemctl status leads-fibre                    # doit etre "active (running)"
 ```
 
 ## 8. Mettre Nginx devant l'app
 
 ```bash
-sudo cp deploy/nginx.conf.example /etc/nginx/sites-available/leads-mutuelle
-sudo nano /etc/nginx/sites-available/leads-mutuelle     # remplace ton-domaine.fr
-sudo ln -s /etc/nginx/sites-available/leads-mutuelle /etc/nginx/sites-enabled/
+sudo cp deploy/nginx.conf.example /etc/nginx/sites-available/leads-fibre
+sudo nano /etc/nginx/sites-available/leads-fibre     # remplace ton-domaine.be
+sudo ln -s /etc/nginx/sites-available/leads-fibre /etc/nginx/sites-enabled/
 sudo rm -f /etc/nginx/sites-enabled/default
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
-À ce stade, `http://ton-domaine.fr` doit déjà afficher le site.
+À ce stade, `http://ton-domaine.be` doit déjà afficher le site.
 
 ## 9. Activer le HTTPS (gratuit, Let's Encrypt)
 
 ```bash
 sudo apt install -y certbot python3-certbot-nginx
-sudo certbot --nginx -d ton-domaine.fr -d www.ton-domaine.fr
+sudo certbot --nginx -d ton-domaine.be -d www.ton-domaine.be
 ```
 
 Certbot configure le HTTPS automatiquement et le renouvellement. Ton site est en
-`https://ton-domaine.fr`. Pense à mettre `PUBLIC_BASE_URL=https://ton-domaine.fr` dans `.env` puis
-`sudo systemctl restart leads-mutuelle`.
+`https://ton-domaine.be`. Pense à mettre `PUBLIC_BASE_URL=https://ton-domaine.be` dans `.env` puis
+`sudo systemctl restart leads-fibre`.
 
 ## 10. Pare-feu (recommandé)
 
@@ -127,15 +127,15 @@ sudo ufw enable
 ## Mettre à jour l'application plus tard
 
 ```bash
-cd /var/www/leads-mutuelle
+cd /var/www/leads-fibre
 git pull
 npm ci --omit=dev
-sudo systemctl restart leads-mutuelle
+sudo systemctl restart leads-fibre
 ```
 
 ## Sauvegarder la base de données (leads)
 
-La base est un simple fichier : `/var/www/leads-mutuelle/data/leads.sqlite`.
+La base est un simple fichier : `/var/www/leads-fibre/data/leads.sqlite`.
 
 ```bash
 # Sauvegarde ponctuelle
@@ -147,7 +147,7 @@ Mets en place une sauvegarde régulière (cron + copie hors serveur) pour ne jam
 ## Voir les logs / diagnostiquer
 
 ```bash
-sudo journalctl -u leads-mutuelle -f      # logs de l'application
+sudo journalctl -u leads-fibre -f      # logs de l'application
 sudo tail -f /var/log/nginx/error.log     # logs nginx
 ```
 
@@ -155,10 +155,11 @@ sudo tail -f /var/log/nginx/error.log     # logs nginx
 
 ## Récapitulatif des URLs une fois en ligne
 
-- Landing : `https://ton-domaine.fr/`
-- Landings DOM par île : `https://ton-domaine.fr/lp/martinique-senior`, `/lp/reunion-famille`, ...
-- CRM : `https://ton-domaine.fr/admin.html` (token = `ADMIN_TOKEN`)
+- Landing : `https://ton-domaine.be/`
+- Landings régionales : `https://ton-domaine.be/lp/wallonie-fibre`, `/lp/bruxelles-fibre`, `/lp/switch-voo`, `/lp/soho-independants`
+- Playbook acquisition : `https://ton-domaine.be/playbook.html`
+- CRM : `https://ton-domaine.be/admin.html` (token = `ADMIN_TOKEN`)
 - Confidentialité / mentions légales : `/confidentialite.html`, `/mentions-legales.html`
 
-> Rappel : renseigne tes vraies mentions dans `src/consent.js` (raison sociale, ORIAS, DPO...) avant
-> d'ouvrir au public. Ce guide ne constitue pas un conseil juridique.
+> Rappel : renseigne tes vraies mentions via les variables `ORG_*` du `.env` (raison sociale,
+> BCE/KBO, licence DNCM, DPO...) avant d'ouvrir au public. Ce guide ne constitue pas un conseil juridique.

@@ -9,6 +9,6 @@
 process.env.START_SERVER = "1";
 
 import("./src/server.js").catch((err) => {
-  console.error("Echec demarrage AssurDom:", err);
+  console.error("Echec demarrage ProxiFibre:", err);
   process.exit(1);
 });
