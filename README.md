@@ -64,9 +64,19 @@ dans `docker-compose.yml` (`ADMIN_TOKEN`). La base SQLite est persistée dans le
 ## Déployer en ligne (URL publique)
 
 Le fichier `render.yaml` permet un déploiement en un clic sur [Render](https://render.com) (région
-Frankfurt = UE/RGPD). Guides détaillés (VPS + Nginx + HTTPS, Hostinger) dans `deploy/`.
+Frankfurt = UE/RGPD). Guides détaillés dans `deploy/` :
+
+| Cible | Guide | Remarque |
+|---|---|---|
+| VPS + Nginx + HTTPS | `deploy/GUIDE-DEPLOIEMENT.md` | app complète (front + API + CRM) |
+| Hostinger (Node.js) | `deploy/GUIDE-HOSTINGER.md` | app complète, hébergement mutualisé |
+| **Netlify** (front) | `deploy/GUIDE-NETLIFY.md` | front statique + proxy `/api/*` vers le backend (`netlify.toml`) |
 
 La même image Docker fonctionne sur Railway, Fly.io, Scaleway, un VPS, etc.
+
+> Netlify n'héberge que du statique : la base SQLite et l'API doivent tourner sur un backend
+> (Render, VPS…). `netlify.toml` proxifie déjà `/api/*` et `/health` — il te reste à y renseigner
+> l'URL de ton backend.
 
 ## Configuration (variables d'environnement)
 

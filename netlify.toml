@@ -1,0 +1,50 @@
+# Deploiement Netlify (hebergement du FRONT statique).
+#
+# Netlify sert les pages et les images depuis "public/". L'API et le CRM tournent
+# sur le backend Node (Express + SQLite) : Netlify les PROXIFIE via les regles ci-dessous.
+#
+# ⚠️ AVANT LE DEPLOIEMENT : remplace BACKEND_URL (3 fois ci-dessous) par l'URL publique
+# de ton backend Node. Deux options :
+#   - Render (recommande, voir render.yaml) : https://leads-fibre-proximus-belgique.onrender.com
+#   - Tunnel Cloudflare (temporaire, pour une demo) : https://xxxx.trycloudflare.com
+#
+# Sans backend joignable, la landing s'affiche correctement mais l'envoi du
+# formulaire et le CRM (/admin.html) ne fonctionneront pas.
+
+[build]
+  publish = "public"
+
+# --- API : proxy vers le backend Node ---------------------------------------
+[[redirects]]
+  from = "/api/*"
+  to = "https://BACKEND_URL/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/health"
+  to = "https://BACKEND_URL/health"
+  status = 200
+  force = true
+
+# --- Landings regionales : /lp/<slug> est resolu cote client par app.js ------
+# (app.js lit le slug dans l'URL puis appelle /api/variant/<slug>)
+[[redirects]]
+  from = "/lp/*"
+  to = "/index.html"
+  status = 200
+
+# --- En-tetes de securite ----------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Cache long pour les visuels (ils ne changent pas souvent)
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
