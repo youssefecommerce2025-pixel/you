@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FiCheck, FiShoppingBag, FiStar, FiShield, FiPercent } from 'react-icons/fi'
+import { FiCheck, FiShield, FiPercent } from 'react-icons/fi'
 
 export default function BundleDeals({ addToCart }) {
   const [selectedBundle, setSelectedBundle] = useState('duo')
@@ -8,34 +8,34 @@ export default function BundleDeals({ addToCart }) {
   const bundles = [
     {
       id: 'duo',
-      name: 'The Statement Duo (Hoodie + Tee)',
+      name: 'The Statement Duo (2 Hoodies)',
       popular: true,
-      originalPrice: 73,
-      bundlePrice: 59,
+      originalPrice: 110,
+      bundlePrice: 96,
       savings: 14,
       items: [
-        "1x 'Je Suis Là' Organic Cotton Hoodie ($55 value)",
-        "1x 'Life Goes On' Graphic Tee ($18 value)",
-        "FREE Priority Tracked US Shipping ($7.99 value)",
-        "FREE Gift Message Card Included"
+        "2x 'Je Suis Là' Organic Cotton Hoodies ($110 value)",
+        'Mix any two colors from the collection',
+        'FREE Priority Tracked US Shipping ($7.99 value)',
+        'FREE Gift Message Card Included',
       ],
-      emoji: '👑👕'
+      emoji: '🖤🖤',
     },
     {
       id: 'trio',
-      name: 'The Complete Capsule (Hoodie + 2 Custom Tees)',
+      name: 'The Crew Capsule (3 Hoodies)',
       popular: false,
-      originalPrice: 113,
-      bundlePrice: 89,
+      originalPrice: 165,
+      bundlePrice: 141,
       savings: 24,
       items: [
-        "1x 'Je Suis Là' Organic Cotton Hoodie ($55 value)",
-        "1x 'Life Goes On' Graphic Tee ($18 value)",
-        "1x 100% Custom Designed Tee ($29 value)",
-        "FREE Tracked US Shipping + VIP Packaging"
+        "3x 'Je Suis Là' Organic Cotton Hoodies ($165 value)",
+        'Mix any three colors from the collection',
+        'FREE Tracked US Shipping + VIP Packaging',
+        'Best value — save $24 instantly',
       ],
-      emoji: '👑👕🎨'
-    }
+      emoji: '🖤🖤🖤',
+    },
   ]
 
   const currentBundle = bundles.find(b => b.id === selectedBundle)
@@ -48,7 +48,7 @@ export default function BundleDeals({ addToCart }) {
       size: 'L (Standard)',
       color: 'Black',
       logo: 'Large Logo',
-      emoji: '🎁'
+      emoji: '🎁',
     })
     setAdded(true)
     setTimeout(() => setAdded(false), 2500)
@@ -56,13 +56,10 @@ export default function BundleDeals({ addToCart }) {
 
   return (
     <section className="section-padding bg-gradient-to-b from-gray-900 to-black text-white relative overflow-hidden">
-      {/* Background accents */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 text-xs font-black uppercase tracking-widest mb-4">
             <FiPercent /> Best Value Bundles • Limited US Stock
@@ -71,11 +68,10 @@ export default function BundleDeals({ addToCart }) {
             Bundle & Save Up to $24
           </h2>
           <p className="text-white/60 max-w-xl mx-auto text-sm sm:text-base">
-            Get the full look. Pair our signature Je Suis Là hoodie with a premium graphic tee and unlock instant savings plus free US tracked shipping.
+            Stack our signature Je Suis Là hoodies, mix colors, and unlock instant savings plus free US tracked shipping.
           </p>
         </div>
 
-        {/* Bundle Options Selector */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-8">
           {bundles.map(b => (
             <div
@@ -127,7 +123,6 @@ export default function BundleDeals({ addToCart }) {
           ))}
         </div>
 
-        {/* Action Button */}
         <div className="text-center max-w-md mx-auto">
           <button
             onClick={handleAddBundle}
@@ -141,7 +136,6 @@ export default function BundleDeals({ addToCart }) {
             <FiShield className="text-yellow-400" /> 100% Cotton • Free Tracked US Delivery • 30-Day Money-Back
           </p>
         </div>
-
       </div>
     </section>
   )

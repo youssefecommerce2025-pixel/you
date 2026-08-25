@@ -236,7 +236,7 @@ export default function FeaturedProducts({ addToCart }) {
         </div>
 
         {/* Products grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {products.map(product => (
             <ProductCard key={product.id} product={product} addToCart={addToCart} />
           ))}

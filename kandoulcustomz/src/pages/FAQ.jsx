@@ -10,7 +10,7 @@ const faqGroups = [
     faqs: [
       {
         q: 'Is there a minimum order quantity for custom pieces?',
-        a: "No minimum! You can order just 1 custom piece. We love personal projects as much as bulk orders. Whether it's a single birthday gift or 500 corporate shirts — we've got you covered."
+        a: "No minimum! You can order just 1 custom piece. We love personal projects as much as bulk orders. Whether it's a single birthday gift or 500 corporate hoodies — we've got you covered."
       },
       {
         q: 'How does the custom order process work?',
@@ -18,7 +18,7 @@ const faqGroups = [
       },
       {
         q: 'Can I upload my own design or logo?',
-        a: "Absolutely. You can upload PNG, JPG, PDF, AI, or SVG files directly through our form or email them to hello@kandoulcustomz.com. The higher the resolution, the better the final product."
+        a: "Absolutely. You can upload PNG, JPG, PDF, AI, or SVG files directly through our form or email them to hello@julofficial.com. The higher the resolution, the better the final product."
       },
       {
         q: 'What if I don\'t have a design ready?',
@@ -60,7 +60,7 @@ const faqGroups = [
     faqs: [
       {
         q: 'What is your return policy?',
-        a: "We offer 30-day hassle-free returns on standard (non-custom) items. Items must be unworn, unwashed, and in original condition. Contact hello@kandoulcustomz.com to initiate a return."
+        a: "We offer 30-day hassle-free returns on standard (non-custom) items. Items must be unworn, unwashed, and in original condition. Contact hello@julofficial.com to initiate a return."
       },
       {
         q: 'Can I exchange for a different size?',
@@ -72,7 +72,7 @@ const faqGroups = [
       },
       {
         q: 'My order arrived damaged. What do I do?',
-        a: "We're so sorry! Take a photo and email it to hello@kandoulcustomz.com within 48 hours of delivery. We'll send a replacement immediately at no cost to you."
+        a: "We're so sorry! Take a photo and email it to hello@julofficial.com within 48 hours of delivery. We'll send a replacement immediately at no cost to you."
       },
     ]
   },
@@ -83,7 +83,7 @@ const faqGroups = [
     faqs: [
       {
         q: 'How do your sizes run?',
-        a: "Our hoodies are true to size with a slightly relaxed fit — great for layering. Our tees run true to size with a comfortable, unisex cut. If you're between sizes, we recommend sizing up."
+        a: "Our hoodies are true to size with a slightly relaxed fit — great for layering. If you're between sizes, we recommend sizing up."
       },
       {
         q: 'Where can I find the size chart?',
@@ -102,7 +102,7 @@ const faqGroups = [
     faqs: [
       {
         q: 'What materials do you use?',
-        a: "Our Je Suis Là hoodie is made from 100% GOTS-certified organic cotton — 400gsm heavyweight fleece. Our tees use 180gsm ring-spun combed cotton. Custom orders use premium 200gsm cotton blend. All materials are ethically sourced."
+        a: "Our Je Suis Là hoodie is made from 100% GOTS-certified organic cotton — 400gsm heavyweight fleece. Custom hoodies use the same premium organic cotton blend. All materials are ethically sourced."
       },
       {
         q: 'Will the print fade after washing?',
@@ -209,10 +209,10 @@ export default function FAQ() {
             <Link to="/contact" className="px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm btn-gold">
               Contact Us
             </Link>
-            <a href="mailto:hello@kandoulcustomz.com"
+            <a href="mailto:hello@julofficial.com"
               className="px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm border-2 border-white/20 hover:border-yellow-400/50 hover:text-yellow-400 transition-all text-sm"
             >
-              hello@kandoulcustomz.com
+              hello@julofficial.com
             </a>
           </div>
         </div>

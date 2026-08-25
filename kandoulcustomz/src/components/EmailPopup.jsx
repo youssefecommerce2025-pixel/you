@@ -67,7 +67,7 @@ export default function EmailPopup({ onClose }) {
               <div className="text-5xl mb-4">🎉</div>
               <h3 className="text-xl font-black mb-2">You're In!</h3>
               <p className="text-gray-500 text-sm">
-                Check your email for your exclusive 15% discount code. Welcome to the Kandoul family!
+                Check your email for your exclusive 15% discount code. Welcome to the JUL family!
               </p>
             </div>
           )}

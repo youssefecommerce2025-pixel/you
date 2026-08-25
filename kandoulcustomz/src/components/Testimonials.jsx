@@ -23,8 +23,8 @@ const reviews = [
     name: 'Carlos M.',
     location: 'Miami, FL',
     rating: 5,
-    text: "Ordered 25 custom shirts for our company event. The quality was unbelievable for the price. Everyone asked where we got them. Will definitely be ordering again.",
-    product: 'Custom T-Shirts × 25',
+    text: "Ordered 25 custom hoodies for our company event. The quality was unbelievable for the price. Everyone asked where we got them. Will definitely be ordering again.",
+    product: 'Custom Hoodies × 25',
     avatar: 'CM',
     verified: true,
   },
@@ -32,8 +32,8 @@ const reviews = [
     name: 'Aaliyah K.',
     location: 'New York, NY',
     rating: 5,
-    text: "Got a custom shirt with my sister's favorite quote for her birthday. She cried when she saw it. The print quality is sharp and it washes perfectly. 10/10 experience.",
-    product: 'Custom T-Shirt — Personal Gift',
+    text: "Got a custom hoodie with my sister's favorite quote for her birthday. She cried when she saw it. The print quality is sharp and it washes perfectly. 10/10 experience.",
+    product: 'Custom Hoodie — Personal Gift',
     avatar: 'AK',
     verified: true,
   },
@@ -50,8 +50,8 @@ const reviews = [
     name: 'Brianna L.',
     location: 'Los Angeles, CA',
     rating: 5,
-    text: "Life Goes On tee is my everyday go-to now. Super soft, holds its shape after washing, and the bold print hasn't faded at all. Message is everything right now.",
-    product: 'Life Goes On Tee — Black',
+    text: "This black hoodie is my everyday go-to now. Super soft, holds its shape after washing, and the embroidery hasn't faded at all. Message is everything right now.",
+    product: 'Je Suis Là Hoodie — Black',
     avatar: 'BL',
     verified: true,
   },
@@ -89,7 +89,7 @@ export default function Testimonials() {
             <span className="text-gray-400">(500+ reviews)</span>
           </div>
           <p className="text-gray-500 max-w-lg mx-auto">
-            Real customers, real stories. Here's what the Kandoul family is saying.
+            Real customers, real stories. Here's what the JUL family is saying.
           </p>
         </div>
 

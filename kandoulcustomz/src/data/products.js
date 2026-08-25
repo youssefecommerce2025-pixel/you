@@ -1,0 +1,86 @@
+export const products = [
+  {
+    id: 'jsl-hoodie',
+    name: "Je Suis Là Hoodie",
+    tagline: "Statement. Confidence. Presence.",
+    price: 55,
+    comparePrice: 80,
+    emoji: '🖤',
+    badge: 'BESTSELLER',
+    description: `Our exclusive 'Je Suis Là' hoodie is more than a piece of clothing — it's a statement of presence, power, and confidence. Crafted from 100% premium organic cotton, this hoodie combines European design with American street culture.`,
+    features: [
+      '100% GOTS-certified organic cotton',
+      'Heavyweight 400gsm fleece — warm all year',
+      'Signature "Je Suis Là" embroidered graphic',
+      'Kangaroo front pocket',
+      'Ribbed cuffs and hem for a premium fit',
+      'Ethically made — fair trade certified',
+    ],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    colors: ['Black', 'Olive Green', 'Brown', 'Tan', 'White', 'Forest Green'],
+    logos: ['Large Logo (Chest)', 'Small Corner Logo'],
+    sizeChart: {
+      headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],
+      rows: [
+        ['XS', '34-36', '26', '32'],
+        ['S', '36-38', '27', '33'],
+        ['M', '38-40', '28', '34'],
+        ['L', '42-44', '29', '35'],
+        ['XL', '46-48', '30', '36'],
+        ['2XL', '50-52', '31', '37'],
+      ]
+    },
+    care: 'Machine wash cold, tumble dry low. Do not bleach.',
+    shipping: 'Delivered in 3-7 business days across the USA. Free shipping on orders over $75.',
+    reviews: [
+      { name: 'Marcus T.', city: 'Atlanta, GA', rating: 5, text: "Best hoodie I've ever owned. The quality is insane — thick, soft, and the embroidery is clean. Got so many compliments the first day I wore it.", date: '2 weeks ago' },
+      { name: 'Jasmine R.', city: 'Houston, TX', rating: 5, text: "Ordered the olive green and I'm obsessed. The fit is perfect, true to size. Will definitely be ordering more colors!", date: '1 month ago' },
+      { name: 'DeShawn M.', city: 'Chicago, IL', rating: 5, text: "Statement piece. People ask about it everywhere I go. The 'Je Suis Là' meaning hits different once you understand it.", date: '3 weeks ago' },
+    ],
+    images: ['🖤', '🟤', '🫒'],
+  },
+  {
+    id: 'custom-hoodie',
+    name: "100% Custom Hoodie",
+    tagline: "Your Vision. Your Brand.",
+    price: 69,
+    comparePrice: 95,
+    emoji: '🎨',
+    badge: 'MOST POPULAR',
+    description: `You bring the idea, we bring it to life. Perfect for personal gifts, company merch, events, team uniforms, or anything you can dream up. No minimum order required.`,
+    features: [
+      'Premium heavyweight organic cotton fleece',
+      'Full-color print or embroidery',
+      'Upload your own design or logo',
+      'Custom text, names, or numbers',
+      'No minimum order — 1 piece welcome',
+      '100% satisfaction guarantee',
+    ],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
+    colors: ['White', 'Black', 'Navy', 'Red', 'Gray', 'Royal Blue', 'Maroon', 'Forest Green', 'Yellow', 'Orange'],
+    logos: [],
+    sizeChart: {
+      headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],
+      rows: [
+        ['XS', '34-36', '26', '32'],
+        ['S', '36-38', '27', '33'],
+        ['M', '38-40', '28', '34'],
+        ['L', '42-44', '29', '35'],
+        ['XL', '46-48', '30', '36'],
+        ['2XL', '50-52', '31', '37'],
+        ['3XL', '54-56', '32', '38'],
+      ]
+    },
+    care: 'Wash inside out. Cold water. Tumble dry low.',
+    shipping: 'Custom crafted & delivered in 3-7 business days across the USA.',
+    reviews: [
+      { name: 'Carlos M.', city: 'Miami, FL', rating: 5, text: "Ordered 25 custom hoodies for our company event. The quality was unbelievable for the price. Everyone loved them. Will order again.", date: '2 weeks ago' },
+      { name: 'Destiny J.', city: 'Philadelphia, PA', rating: 5, text: "Made one for my dad's birthday with his favorite quote. He absolutely loved it. The print quality is sharp and the hoodie itself is really soft.", date: '1 month ago' },
+      { name: 'Noah R.', city: 'Seattle, WA', rating: 5, text: "Team basketball hoodies came out perfect. Exact colors, crisp numbers, fast shipping. This is our go-to now.", date: '3 weeks ago' },
+    ],
+    images: ['🎨', '✏️', '🖨️'],
+    isCustom: true,
+  },
+]
+
+export const getProduct = (id) => products.find(p => p.id === id)

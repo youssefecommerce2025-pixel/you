@@ -35,7 +35,7 @@ export default function HowItWorks() {
             Simple. Personal. Perfect.
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto">
-            Getting a custom piece from Kandoul Customz is simple, fast, and stress-free. Here's how it works:
+            Getting a custom piece from JUL is simple, fast, and stress-free. Here's how it works:
           </p>
         </div>
 

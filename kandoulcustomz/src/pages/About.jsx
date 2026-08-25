@@ -48,7 +48,7 @@ export default function About() {
                   <p className="text-yellow-400 text-lg mt-2 font-medium">"I Am Here."</p>
                 </div>
                 <div className="absolute -bottom-4 -right-4 bg-yellow-400 rounded-2xl px-4 py-3 shadow-xl">
-                  <p className="text-black font-black text-sm">🇺🇸 Made in USA</p>
+                  <p className="text-black font-black text-sm">Made in USA</p>
                 </div>
               </div>
             </div>
@@ -61,13 +61,13 @@ export default function About() {
               </h2>
               <div className="space-y-4 text-white/60 leading-relaxed">
                 <p>
-                  Kandoul Customz was born from a simple but powerful frustration: generic clothing that says nothing about who you actually are. We believed clothing could be more — a statement, a keepsake, a conversation starter.
+                  JUL was born from a simple but powerful frustration: generic clothing that says nothing about who you actually are. We believed clothing could be more — a statement, a keepsake, a conversation starter.
                 </p>
                 <p>
                   The name <strong className="text-white">"Je Suis Là"</strong> — I Am Here — became our signature. It's what you say when you refuse to blend in. When you decide your story matters enough to be worn, shared, and celebrated.
                 </p>
                 <p>
-                  We started small, crafting personalized pieces for friends and family. Word spread. Orders grew. Today, we've fulfilled over 500 orders across the US, from individual birthday gifts to corporate team shirts for hundreds of people.
+                  We started small, crafting personalized pieces for friends and family. Word spread. Orders grew. Today, we've fulfilled over 500 orders across the US, from individual birthday gifts to corporate team hoodies for hundreds of people.
                 </p>
                 <p>
                   But the mission hasn't changed: <strong className="text-white">make clothing that means something.</strong>
