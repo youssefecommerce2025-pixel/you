@@ -275,7 +275,7 @@ function ProductDetail({ product, addToCart }) {
               <div><p className="font-bold text-sm mb-1">Care Instructions</p><p className="text-gray-500 text-sm">{product.care}</p></div>
               <div><p className="font-bold text-sm mb-1">US Delivery Time</p><p className="text-gray-500 text-sm">Delivered to your door in 3 to 7 business days via USPS/FedEx tracked service. Free shipping applies on all US orders over $75.</p></div>
               <div><p className="font-bold text-sm mb-1">Accepted Payment Methods</p><p className="text-gray-500 text-sm">Stripe (Visa, Mastercard, Amex, Discover), PayPal, Wise, Payoneer, and Apple Pay.</p></div>
-              <div><p className="font-bold text-sm mb-1">Returns & Satisfaction</p><p className="text-gray-500 text-sm">Not completely thrilled? We accept returns within 30 days of delivery. Items must be unworn and unwashed. Contact us at hello@kandoulcustomz.com or via WhatsApp.</p></div>
+              <div><p className="font-bold text-sm mb-1">Returns & Satisfaction</p><p className="text-gray-500 text-sm">Not completely thrilled? We accept returns within 30 days of delivery. Items must be unworn and unwashed. Contact us at hello@julofficial.com or via WhatsApp.</p></div>
             </div>
           )}
         </div>
@@ -292,7 +292,7 @@ export default function Shop({ addToCart }) {
         <div className="text-center mb-12">
           <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">The Collection</span>
           <h1 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Shop Kandoul Customz
+            Shop JUL
           </h1>
           <p className="text-gray-500 max-w-lg mx-auto">
             Every piece is crafted with intention. Premium materials. Bold designs. Your story — worn.

@@ -64,13 +64,13 @@ export default function BrandStory() {
             </h2>
             <div className="space-y-4 text-white/60 leading-relaxed">
               <p>
-                <strong className="text-white">"Je Suis Là"</strong> — French for <em>"I Am Here."</em> Three words that carry a universe of meaning. We built Kandoul Customz on a simple belief: the clothes you wear should say something about who you are.
+                <strong className="text-white">"Je Suis Là"</strong> — French for <em>"I Am Here."</em> Three words that carry a universe of meaning. We built JUL on a simple belief: the clothes you wear should say something about who you are.
               </p>
               <p>
                 We design for the dreamers, the grinders, the people who show up every day and refuse to be invisible. Our pieces are made from premium organic materials — because what touches your skin should be as intentional as the life you're living.
               </p>
               <p>
-                Whether it's a custom tee for your team, a hoodie that marks a milestone, or a gift that makes someone feel truly seen — every piece from Kandoul Customz is crafted with purpose.
+                Whether it's a custom hoodie for your team, a drop that marks a milestone, or a gift that makes someone feel truly seen — every piece from JUL is crafted with purpose.
               </p>
             </div>
 

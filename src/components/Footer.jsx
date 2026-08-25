@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2 lg:col-span-1">
             <Logo size="md" />
             <p className="text-white/40 text-sm mt-4 leading-relaxed max-w-xs">
-              Premium custom apparel & personalized gifts. Made with purpose, delivered with love. Across the USA.
+              Premium hoodies & statement pieces. Made with purpose, delivered with love. Across the USA.
             </p>
             <div className="flex gap-4 mt-6">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
@@ -40,8 +40,8 @@ export default function Footer() {
               {[
                 { to: '/shop', label: 'All Products' },
                 { to: '/shop#jsl-hoodie', label: 'Je Suis Là Hoodie' },
-                { to: '/shop#lgo-tee', label: 'Life Goes On Tee' },
-                { to: '/custom-order', label: 'Custom T-Shirts' },
+                { to: '/shop#custom-hoodie', label: 'Custom Hoodie' },
+                { to: '/custom-order', label: 'Custom Orders' },
                 { to: '/custom-order', label: 'Corporate Orders' },
                 { to: '/custom-order', label: 'Gift Packages' },
               ].map(link => (
@@ -80,7 +80,7 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-5">Contact</h4>
             <ul className="space-y-3 text-white/40 text-sm">
-              <li>📧 <a href="mailto:hello@kandoulcustomz.com" className="hover:text-yellow-400 transition-colors">hello@kandoulcustomz.com</a></li>
+              <li>📧 <a href="mailto:hello@julofficial.com" className="hover:text-yellow-400 transition-colors">hello@julofficial.com</a></li>
               <li>📱 <a href="tel:+1-555-000-0000" className="hover:text-yellow-400 transition-colors">+1 (555) 000-0000</a></li>
               <li>🕐 Mon-Fri: 9am – 6pm EST</li>
               <li className="pt-2">
@@ -118,7 +118,7 @@ export default function Footer() {
             </Link>
           </div>
           <p className="text-white/20 text-xs text-center">
-            © {year} Kandoul Customz. All rights reserved.
+            © {year} JUL. All rights reserved.
           </p>
         </div>
       </div>

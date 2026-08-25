@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const messages = [
-  '🇺🇸 Free shipping on all US orders over $75',
+  'Free shipping on all USA orders over $75',
   '✨ 100% Organic Cotton — Ethically Made',
   '🎁 Custom orders ship in 5-7 business days',
   '⭐ Rated 4.9/5 by 500+ happy customers',

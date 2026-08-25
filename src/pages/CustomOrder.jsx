@@ -1,12 +1,12 @@
 import { useState, useRef } from 'react'
 import { FiUpload, FiArrowRight, FiX, FiFile, FiImage } from 'react-icons/fi'
 
-const productTypes = ['T-Shirt', 'Hoodie', 'Tank Top', 'Long Sleeve', 'Polo', 'Jacket', 'Other']
+const productTypes = ['Hoodie', 'Sweatshirt', 'Jacket', 'Long Sleeve', 'Polo', 'Other']
 const printMethods = ['Screen Print', 'Embroidery', 'DTG (Direct to Garment)', 'Heat Transfer', "I'm not sure — recommend me"]
 
 const features = [
   { icon: '🎨', title: 'Any Design', desc: 'Upload your logo, artwork, or let us design from scratch.' },
-  { icon: '👔', title: 'Any Garment', desc: 'T-shirts, hoodies, polos, jackets, and more.' },
+  { icon: '👔', title: 'Any Garment', desc: 'Hoodies, sweatshirts, jackets, and more.' },
   { icon: '#️⃣', title: 'Any Quantity', desc: 'No minimum. Order 1 or 10,000.' },
   { icon: '⚡', title: 'Fast Turnaround', desc: 'Delivered in 3-7 business days across the USA.' },
   { icon: '💎', title: 'Premium Quality', desc: "We only use materials we'd wear ourselves." },
@@ -320,7 +320,7 @@ export default function CustomOrder() {
                     type="text"
                     value={form.colors}
                     onChange={e => update('colors', e.target.value)}
-                    placeholder="e.g. Black shirt, white logo, gold accents"
+                    placeholder="e.g. Black hoodie, white logo, gold accents"
                     className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400"
                   />
                 </div>
@@ -346,7 +346,7 @@ export default function CustomOrder() {
                     type="text"
                     value={form.occasion}
                     onChange={e => update('occasion', e.target.value)}
-                    placeholder="e.g. Company team shirts, birthday gift, graduation, sports team..."
+                    placeholder="e.g. Company team hoodies, birthday gift, graduation, sports team..."
                     className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400"
                   />
                 </div>
@@ -387,7 +387,7 @@ export default function CustomOrder() {
                         <FiUpload size={12} /> Browse Files
                       </span>
                       <p className="text-xs text-yellow-600 mt-3 font-medium">
-                        No file? Send it later to hello@kandoulcustomz.com
+                        No file? Send it later to hello@julofficial.com
                       </p>
                     </label>
                   )}

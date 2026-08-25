@@ -50,8 +50,8 @@ export default function Hero() {
 
         {/* Sub-headline */}
         <p className="text-white/60 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-          Premium custom apparel & personalized gifts, crafted with soul.
-          From one-of-a-kind hoodies to fully custom tees — made for the bold.
+          Premium hoodies & statement pieces, crafted with soul.
+          From one-of-a-kind Je Suis Là hoodies to fully custom drops — made for the bold.
         </p>
 
         {/* CTAs */}

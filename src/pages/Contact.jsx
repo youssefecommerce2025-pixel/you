@@ -37,8 +37,8 @@ export default function Contact() {
                 icon: <FiMail size={22} />,
                 title: 'Email Us',
                 sub: 'For all inquiries',
-                detail: 'hello@kandoulcustomz.com',
-                href: 'mailto:hello@kandoulcustomz.com',
+                detail: 'hello@julofficial.com',
+                href: 'mailto:hello@julofficial.com',
               },
               {
                 icon: <FiPhone size={22} />,
@@ -82,7 +82,7 @@ export default function Contact() {
               <h4 className="font-bold text-base text-white mb-2">WhatsApp Direct Support</h4>
               <p className="text-xs text-emerald-100/70 mb-4">Chat with our team directly on WhatsApp for real-time order inquiries and custom mockups.</p>
               <a
-                href="https://wa.me/15550192834?text=Hello%20Kandoul%20Customz%20Team!%20I%20have%20a%20question."
+                href="https://wa.me/15550192834?text=Hello%20JUL%20Team!%20I%20have%20a%20question."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-md"
@@ -96,10 +96,10 @@ export default function Contact() {
               <p className="font-bold text-sm mb-4">Follow the Journey</p>
               <div className="space-y-3">
                 {[
-                  { icon: <FiInstagram />, label: '@kandoulcustomz', sub: 'Instagram', href: 'https://instagram.com' },
+                  { icon: <FiInstagram />, label: '@julofficial', sub: 'Instagram', href: 'https://instagram.com' },
                   {
                     icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.78a8.18 8.18 0 004.78 1.54V6.87a4.85 4.85 0 01-1.02-.18z"/></svg>,
-                    label: '@kandoulcustomz', sub: 'TikTok', href: 'https://tiktok.com'
+                    label: '@julofficial', sub: 'TikTok', href: 'https://tiktok.com'
                   },
                 ].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"

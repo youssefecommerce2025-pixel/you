@@ -55,9 +55,9 @@ export default function GiftSection() {
           {/* Gift box visual */}
           <div className="grid grid-cols-2 gap-4">
             {[
-              { emoji: '👕', title: 'Personalized Tee', sub: 'Their name. Their vibe.', color: '#f8f8f8' },
-              { emoji: '🧥', title: 'Custom Hoodie', sub: 'Premium & cozy.', color: '#0A0A0A', dark: true },
-              { emoji: '🎁', title: 'Gift Bundle', sub: 'Tee + wrapping + message', color: '#f5f0e8' },
+              { emoji: '🧥', title: 'Signature Hoodie', sub: 'Their vibe. Their story.', color: '#f8f8f8' },
+              { emoji: '🖤', title: 'Custom Hoodie', sub: 'Premium & cozy.', color: '#0A0A0A', dark: true },
+              { emoji: '🎁', title: 'Gift Bundle', sub: 'Hoodie + wrapping + message', color: '#f5f0e8' },
               { emoji: '👑', title: 'Je Suis Là', sub: 'Statement piece.', color: '#1a1a1a', dark: true },
             ].map((item, i) => (
               <div

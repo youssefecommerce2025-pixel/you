@@ -103,7 +103,7 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
               </div>
               <div>
                 <p className="text-gray-900 font-bold text-base mb-1">Your cart is currently empty</p>
-                <p className="text-gray-400 text-xs max-w-xs">Explore our signature Je Suis Là hoodies and custom t-shirts.</p>
+                <p className="text-gray-400 text-xs max-w-xs">Explore our signature Je Suis Là hoodies and custom drops.</p>
               </div>
               <Link
                 to="/shop"

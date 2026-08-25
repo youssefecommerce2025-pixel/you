@@ -20,7 +20,7 @@ export default function ThankYou() {
       window.fbq('track', 'Purchase', {
         value: amount ? parseFloat(amount) : 55.0,
         currency: 'USD',
-        content_name: 'Kandoul Customz Order'
+        content_name: 'JUL Order'
       })
     }
     if (window.ttq) {
@@ -34,7 +34,7 @@ export default function ThankYou() {
 
   // WhatsApp support phone number (international format)
   const whatsappNumber = "+15550192834" // Replace with real WhatsApp Business number
-  const whatsappMessage = encodeURIComponent(`Hello Kandoul Customz Team! I just placed order #${orderNumber} and wanted to check my order status / ask a question.`)
+  const whatsappMessage = encodeURIComponent(`Hello JUL Team! I just placed order #${orderNumber} and wanted to check my order status / ask a question.`)
   const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${whatsappMessage}`
 
   return (

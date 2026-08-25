@@ -1,4 +1,4 @@
-# Kandoul Customz — Complete US Marketing Strategy
+# JUL — Complete US Marketing Strategy
 ### Budget-Friendly Growth Plan for 2026
 
 ---
@@ -45,7 +45,7 @@ The single most powerful move with a modest budget is **behind-the-scenes conten
 **Most Viral TikTok Hooks to Use:**
 - *"I made this for $X and sold it for $Y 🤯"*
 - *"Someone sent me their idea and this is what I created 😭"*
-- *"Rating custom t-shirt businesses as a custom t-shirt business"*
+- *"Rating custom hoodie brands as a custom hoodie brand"*
 - *"The custom hoodie my customer cried over 👑"*
 - *"How I make $XXX per order from my home studio"*
 - *"Je Suis Là — here's what it means and why people won't stop buying it"*
@@ -59,7 +59,7 @@ The single most powerful move with a modest budget is **behind-the-scenes conten
 - Create a free Google My Business listing
 - Add photos of completed orders
 - Collect reviews from every customer
-- **Free local SEO that drives buyers searching "custom t-shirts near me"**
+- **Free local SEO that drives buyers searching "custom hoodies near me"**
 
 ---
 
@@ -126,7 +126,7 @@ Don't go for celebrities. Target **micro-influencers with 5K-50K followers** in 
 - Tools: Creator.co, Collabstr (free to browse)
 
 **Script for DMs:**
-> *"Hey [Name]! I love your content. We make premium custom apparel at Kandoul Customz — Je Suis Là is our signature piece. I'd love to send you one on us, no strings attached. If you love it and want to share, we'll set up an affiliate link for you. Interested?"*
+> *"Hey [Name]! I love your content. We make premium custom apparel at JUL — Je Suis Là is our signature piece. I'd love to send you one on us, no strings attached. If you love it and want to share, we'll set up an affiliate link for you. Interested?"*
 
 ### Referral Program
 - Offer existing customers $10 store credit for every referral that buys
@@ -138,11 +138,11 @@ Don't go for celebrities. Target **micro-influencers with 5K-50K followers** in 
 ## 🧠 SEO Strategy (Long-Term, $0 Cost)
 
 **Target Keywords:**
-- "custom t-shirts no minimum" (20K+ monthly searches)
+- "custom hoodies no minimum" (20K+ monthly searches)
 - "custom hoodies USA" (18K+ monthly searches)
 - "personalized gifts USA" (45K+ monthly searches)
 - "Je Suis Là hoodie" (build from 0 — you OWN this niche)
-- "custom t-shirts for birthday" (12K+ monthly searches)
+- "custom hoodies for birthday" (12K+ monthly searches)
 - "bulk custom shirts small business" (8K+ monthly searches)
 
 **Content Plan:**
@@ -228,5 +228,5 @@ These are already implemented in the new website:
 
 ---
 
-*Strategy prepared for Kandoul Customz — 2026*
-*Questions? hello@kandoulcustomz.com*
+*Strategy prepared for JUL — 2026*
+*Questions? hello@julofficial.com*

@@ -1,10 +1,10 @@
 const posts = [
   { emoji: '🖤', user: '@marcust_atl', caption: 'Je Suis Là on repeat 🔥 Best hoodie ever', likes: '847' },
   { emoji: '🟤', user: '@jasminestyle_htx', caption: 'This brown hoodie is EVERYTHING right now', likes: '1.2K' },
-  { emoji: '👕', user: '@carlosmedia_mia', caption: 'Team event shirts came in perfect 💯 @kandoulcustomz', likes: '523' },
-  { emoji: '✨', user: '@aaliyah.k.nyc', caption: 'Custom birthday shirt for my sis 😭❤️', likes: '934' },
+  { emoji: '🧥', user: '@carlosmedia_mia', caption: 'Team event hoodies came in perfect 💯 @julofficial', likes: '523' },
+  { emoji: '✨', user: '@aaliyah.k.nyc', caption: 'Custom birthday hoodie for my sis 😭❤️', likes: '934' },
   { emoji: '🫒', user: '@deshawn.chicago', caption: 'The olive green dropped differently bro 🤌', likes: '2.1K' },
-  { emoji: '⬛', user: '@brianna_la', caption: 'Life Goes On tee every Monday morning motivation', likes: '678' },
+  { emoji: '⬛', user: '@brianna_la', caption: 'Je Suis Là hoodie every Monday morning motivation', likes: '678' },
 ]
 
 export default function SocialProof() {
@@ -25,7 +25,7 @@ export default function SocialProof() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/20 text-white/60 hover:text-white hover:border-yellow-400/50 transition-all text-sm font-medium"
           >
-            Follow @kandoulcustomz
+            Follow @julofficial
           </a>
         </div>
 
