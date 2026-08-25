@@ -119,10 +119,17 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
                 {cart.map((item, idx) => (
                   <div key={idx} className="flex gap-4 py-3.5">
                     <div
-                      className="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl border border-gray-100"
-                      style={{ background: 'linear-gradient(135deg, #f8f8f8, #f0f0f0)' }}
+                      className="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 border border-gray-100 overflow-hidden bg-white"
                     >
-                      {item.emoji || '👕'}
+                      {item.image ? (
+                        <img
+                          src={`${import.meta.env.BASE_URL}${item.image}`}
+                          alt={item.name}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <span className="text-2xl">{item.emoji || '🧥'}</span>
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-bold text-xs text-gray-900 truncate">{item.name}</p>
