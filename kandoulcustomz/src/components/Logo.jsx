@@ -1,26 +1,13 @@
 export default function Logo({ size = 'md' }) {
-  const sizes = { sm: 36, md: 44, lg: 64 }
-  const dim = sizes[size] || 44
+  const heights = { sm: 28, md: 36, lg: 48 }
+  const h = heights[size] || 36
 
   return (
-    <div className="flex items-center gap-2.5 select-none">
-      <img
-        src={`${import.meta.env.BASE_URL}jul-logo.png`}
-        alt="JUL"
-        width={dim}
-        height={dim}
-        className="rounded-full object-cover bg-white shadow-sm"
-        style={{ width: dim, height: dim }}
-      />
-      <span
-        className="font-black tracking-[0.22em] uppercase text-white"
-        style={{
-          fontFamily: 'Impact, Arial Black, sans-serif',
-          fontSize: size === 'lg' ? '1.4rem' : size === 'sm' ? '0.85rem' : '1.05rem',
-        }}
-      >
-        JUL
-      </span>
-    </div>
+    <img
+      src={`${import.meta.env.BASE_URL}jesuisla-logo.png`}
+      alt="Je suis là"
+      className="object-contain select-none"
+      style={{ height: h, width: 'auto', maxWidth: size === 'lg' ? 280 : size === 'sm' ? 140 : 190 }}
+    />
   )
 }
