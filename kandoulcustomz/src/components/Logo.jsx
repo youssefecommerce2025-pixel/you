@@ -1,14 +1,14 @@
 export default function Logo({ size = 'md' }) {
-  const heights = { sm: 40, md: 56, lg: 88 }
-  const maxWidths = { sm: 180, md: 280, lg: 420 }
-  const h = heights[size] || 56
+  // md matches the Our Story card logo (~280px wide)
+  const widths = { sm: 180, md: 280, lg: 340 }
+  const w = widths[size] || 280
 
   return (
     <img
       src={`${import.meta.env.BASE_URL}jesuisla-logo.png`}
       alt="Je suis là"
-      className="object-contain select-none"
-      style={{ height: h, width: 'auto', maxWidth: maxWidths[size] || 280 }}
+      className="object-contain select-none block"
+      style={{ width: w, height: 'auto', maxWidth: '100%' }}
     />
   )
 }

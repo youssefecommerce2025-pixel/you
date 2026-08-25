@@ -38,7 +38,7 @@ export default function ThankYou() {
   const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${whatsappMessage}`
 
   return (
-    <div className="pt-32 pb-24 bg-gradient-to-b from-gray-50 to-white min-h-screen">
+    <div className="pt-52 pb-24 bg-gradient-to-b from-gray-50 to-white min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Success Card */}

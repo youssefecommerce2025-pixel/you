@@ -15,7 +15,7 @@ const team = [
 
 export default function About() {
   return (
-    <div className="pt-40 pb-20">
+    <div className="pt-52 pb-20">
       {/* Hero */}
       <section className="pb-20 text-center px-4">
         <div className="max-w-4xl mx-auto">
