@@ -41,10 +41,10 @@ export default function Navbar({ cartCount, onCartClick }) {
       style={{ top: '32px' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex-shrink-0">
-            <Logo size="md" dark={false} />
+            <Logo size="md" />
           </Link>
 
           {/* Desktop Links */}

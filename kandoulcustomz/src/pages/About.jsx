@@ -38,14 +38,15 @@ export default function About() {
             <div className="flex items-center justify-center">
               <div className="relative">
                 <div
-                  className="rounded-3xl p-16 flex flex-col items-center text-center"
+                  className="rounded-3xl p-10 flex flex-col items-center text-center"
                   style={{ background: 'linear-gradient(135deg, #1a1a1a, #2a2a2a)' }}
                 >
-                  <span className="text-8xl mb-6">👑</span>
-                  <p className="text-white font-black text-4xl italic" style={{ fontFamily: "'Playfair Display', serif" }}>
-                    Je Suis Là
-                  </p>
-                  <p className="text-yellow-400 text-lg mt-2 font-medium">"I Am Here."</p>
+                  <img
+                    src={`${import.meta.env.BASE_URL}jesuisla-logo.png`}
+                    alt="Je suis là"
+                    className="w-full max-w-[340px] object-contain mb-4"
+                  />
+                  <p className="text-yellow-400 text-lg font-medium">"I Am Here."</p>
                 </div>
                 <div className="absolute -bottom-4 -right-4 bg-yellow-400 rounded-2xl px-4 py-3 shadow-xl">
                   <p className="text-black font-black text-sm">Made in USA</p>
