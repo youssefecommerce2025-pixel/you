@@ -12,14 +12,15 @@ export default function BrandStory() {
               <div className="rounded-3xl overflow-hidden shadow-2xl"
                 style={{ background: 'linear-gradient(135deg, #1a1a1a, #2a2a2a)', aspectRatio: '3/4' }}
               >
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 p-8">
-                  <span className="text-8xl">👑</span>
-                  <div className="text-center">
-                    <p className="text-white/40 text-xs uppercase tracking-[0.4em] mb-2">The Brand</p>
-                    <p className="text-white font-black text-4xl" style={{ fontFamily: "'Playfair Display', serif" }}>
-                      Je Suis Là
-                    </p>
-                    <p className="text-yellow-400 text-sm mt-2 italic font-medium">
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 p-6">
+                  <div className="text-center w-full">
+                    <p className="text-white/40 text-xs uppercase tracking-[0.4em] mb-4">The Brand</p>
+                    <img
+                      src={`${import.meta.env.BASE_URL}jesuisla-logo.png`}
+                      alt="Je suis là"
+                      className="w-full max-w-[280px] mx-auto object-contain"
+                    />
+                    <p className="text-yellow-400 text-sm mt-4 italic font-medium">
                       "I Am Here."
                     </p>
                   </div>
