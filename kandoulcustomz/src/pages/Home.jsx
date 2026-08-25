@@ -7,7 +7,6 @@ import Testimonials from '../components/Testimonials'
 import BrandStory from '../components/BrandStory'
 import GiftSection from '../components/GiftSection'
 import Newsletter from '../components/Newsletter'
-import SocialProof from '../components/SocialProof'
 
 export default function Home({ addToCart }) {
   return (
@@ -20,7 +19,6 @@ export default function Home({ addToCart }) {
       <BrandStory />
       <Testimonials />
       <GiftSection />
-      <SocialProof />
       <Newsletter />
     </>
   )
