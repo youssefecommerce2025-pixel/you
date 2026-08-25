@@ -15,15 +15,34 @@ function StarRating({ rating }) {
   )
 }
 
+function colorToHex(color) {
+  const map = {
+    'Black': '#0A0A0A',
+    'White': '#F5F5F0',
+    'Navy': '#1B2B5E',
+    'Olive Green': '#6B7C4A',
+    'Forest Green': '#2D5A27',
+    'Brown': '#6E473B',
+    'Tan': '#C8A27A',
+    'Heather Gray': '#A5A8AC',
+    'Red': '#C0392B',
+    'Royal Blue': '#2E4DB4',
+    'Maroon': '#6D1A36',
+  }
+  return map[color] || '#CCCCCC'
+}
+
 function ProductCard({ product, addToCart }) {
   const [selectedSize, setSelectedSize] = useState('')
-  const [selectedColor, setSelectedColor] = useState('')
-  const [selectedLogo, setSelectedLogo] = useState('')
+  const [selectedColor, setSelectedColor] = useState(product.colors[0] || '')
+  const [selectedLogo, setSelectedLogo] = useState(product.logos[0] || '')
   const [error, setError] = useState('')
   const [added, setAdded] = useState(false)
 
-  const avgRating = 4.9
   const reviewCount = product.reviews.length
+
+  // Find dynamic photo matching color
+  const matchedImg = product.images.find(img => img.color === selectedColor)?.url || product.heroImage
 
   const handleAdd = () => {
     if (!selectedSize) { setError('Please select a size'); return }
@@ -32,7 +51,7 @@ function ProductCard({ product, addToCart }) {
     setError('')
 
     if (product.isCustom) {
-      window.location.href = '/custom-order'
+      window.location.href = `${import.meta.env.BASE_URL}custom-order`
       return
     }
 
@@ -43,7 +62,7 @@ function ProductCard({ product, addToCart }) {
       size: selectedSize,
       color: selectedColor,
       logo: selectedLogo || null,
-      emoji: product.emoji,
+      image: matchedImg,
     })
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
@@ -52,9 +71,9 @@ function ProductCard({ product, addToCart }) {
   return (
     <div className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col">
       {/* Product image area */}
-      <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%)', height: '280px' }}>
+      <div className="relative overflow-hidden bg-white aspect-[4/5] flex items-center justify-center p-4">
         {product.badge && (
-          <span className="absolute top-4 left-4 z-10 bg-black text-white text-xs font-black px-3 py-1.5 rounded-full tracking-widest uppercase">
+          <span className="absolute top-4 left-4 z-10 bg-black text-white text-xs font-black px-3.5 py-1.5 rounded-full tracking-widest uppercase shadow-md">
             {product.badge}
           </span>
         )}
@@ -63,18 +82,21 @@ function ProductCard({ product, addToCart }) {
             Save ${(product.comparePrice - product.price).toFixed(0)}
           </span>
         )}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-9xl group-hover:scale-110 transition-transform duration-500">
-            {product.emoji}
-          </span>
-        </div>
+        
+        {/* High-res Studio Image */}
+        <img
+          src={`${import.meta.env.BASE_URL}${matchedImg}`}
+          alt={product.name}
+          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+        />
+
         {/* Color preview dots */}
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-          {product.colors.slice(0, 5).map(c => (
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 bg-white/80 backdrop-blur-sm py-2 px-4 mx-auto w-max rounded-full border border-gray-100 shadow-sm">
+          {product.colors.map(c => (
             <div
               key={c}
               onClick={() => setSelectedColor(c)}
-              className={`w-4 h-4 rounded-full border-2 cursor-pointer transition-transform hover:scale-125 ${selectedColor === c ? 'border-yellow-400 scale-125' : 'border-transparent'}`}
+              className={`w-4 h-4 rounded-full border-2 cursor-pointer transition-all hover:scale-125 ${selectedColor === c ? 'border-yellow-400 scale-125 shadow-md' : 'border-gray-200'}`}
               style={{ backgroundColor: colorToHex(c) }}
               title={c}
             />
@@ -86,7 +108,7 @@ function ProductCard({ product, addToCart }) {
       <div className="p-6 flex flex-col flex-1">
         <div className="flex items-start justify-between mb-2">
           <div>
-            <h3 className="font-black text-lg leading-tight">{product.name}</h3>
+            <h3 className="font-black text-lg leading-tight text-gray-950">{product.name}</h3>
             <p className="text-gray-400 text-sm mt-0.5 italic">{product.tagline}</p>
           </div>
           <div className="text-right flex-shrink-0 ml-4">
@@ -107,7 +129,7 @@ function ProductCard({ product, addToCart }) {
         <div className="mb-3">
           <div className="flex justify-between items-center mb-1.5">
             <p className="text-xs font-bold uppercase tracking-wide text-gray-600">Size</p>
-            <Link to={`/shop#${product.id}-sizes`} className="text-xs underline text-gray-400 hover:text-black">Size Guide</Link>
+            <Link to="/shop" className="text-xs underline text-gray-400 hover:text-black">Size Guide</Link>
           </div>
           <div className="flex flex-wrap gap-1.5">
             {product.sizes.map(size => (
@@ -137,7 +159,7 @@ function ProductCard({ product, addToCart }) {
                 key={color}
                 onClick={() => { setSelectedColor(color); setError('') }}
                 className={`w-7 h-7 rounded-full border-2 transition-transform hover:scale-110 ${
-                  selectedColor === color ? 'border-yellow-400 scale-110' : 'border-transparent'
+                  selectedColor === color ? 'border-yellow-400 scale-110 shadow-sm' : 'border-gray-200'
                 }`}
                 style={{ backgroundColor: colorToHex(color) }}
                 title={color}
@@ -176,17 +198,15 @@ function ProductCard({ product, addToCart }) {
           {product.isCustom ? (
             <Link
               to="/custom-order"
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-bold tracking-widest uppercase text-sm btn-gold"
+              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-bold tracking-widest uppercase text-sm btn-gold shadow-md"
             >
               Start Designing <FiArrowRight size={14} />
             </Link>
           ) : (
             <button
               onClick={handleAdd}
-              className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-bold tracking-widest uppercase text-sm transition-all duration-300 ${
-                added
-                  ? 'bg-green-500 text-white'
-                  : 'btn-gold'
+              className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-bold tracking-widest uppercase text-sm transition-all duration-300 shadow-md ${
+                added ? 'bg-emerald-500 text-white' : 'btn-gold'
               }`}
             >
               {added ? '✓ Added to Cart!' : (
@@ -200,38 +220,18 @@ function ProductCard({ product, addToCart }) {
   )
 }
 
-function colorToHex(color) {
-  const map = {
-    'Black': '#0A0A0A',
-    'White': '#F5F5F0',
-    'Navy': '#1B2B5E',
-    'Olive Green': '#6B7C4A',
-    'Forest Green': '#2D5A27',
-    'Brown': '#8B5E3C',
-    'Tan': '#D4A47C',
-    'Cream': '#F5E6D0',
-    'Red': '#C0392B',
-    'Royal Blue': '#2E4DB4',
-    'Maroon': '#6D1A36',
-    'Gray': '#9E9E9E',
-    'Yellow': '#F5C842',
-    'Orange': '#E67E22',
-  }
-  return map[color] || '#CCCCCC'
-}
-
 export default function FeaturedProducts({ addToCart }) {
   return (
     <section className="section-padding bg-gray-50" id="products">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-14">
           <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">Our Collection</span>
-          <h2 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h2 className="text-4xl sm:text-5xl font-black mb-4 text-gray-950" style={{ fontFamily: "'Playfair Display', serif" }}>
             Wear What You Mean
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto">
-            Each piece tells a story. Whether it's our signature Je Suis Là hoodie or a completely custom creation — quality and meaning are always stitched in.
+            100% Heavyweight Organic Cotton Hoodies. Exceptional craftsmanship, authentic US streetwear cut, zero compromises.
           </p>
         </div>
 
@@ -246,7 +246,7 @@ export default function FeaturedProducts({ addToCart }) {
         <div className="text-center mt-12">
           <Link
             to="/shop"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm btn-black"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm btn-black shadow-lg hover:shadow-xl"
           >
             View Full Collection <FiArrowRight size={16} />
           </Link>
