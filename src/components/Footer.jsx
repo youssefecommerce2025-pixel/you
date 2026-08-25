@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2 lg:col-span-1">
-            <Logo size="md" />
+            <Logo size="sm" />
             <p className="text-white/40 text-sm mt-4 leading-relaxed max-w-xs">
               Premium hoodies & statement pieces. Made with purpose, delivered with love. Across the USA.
             </p>

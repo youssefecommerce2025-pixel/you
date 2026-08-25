@@ -81,7 +81,7 @@ export default function CustomOrder() {
   // ─── SUCCESS STATE ────────────────────────────────────────────────────
   if (submitted) {
     return (
-      <div className="pt-40 pb-20 min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="pt-52 pb-20 min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center max-w-md px-4">
           <div className="text-7xl mb-6">🎉</div>
           <h2 className="text-3xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
@@ -127,7 +127,7 @@ export default function CustomOrder() {
 
   // ─── MAIN FORM ────────────────────────────────────────────────────────
   return (
-    <div className="pt-40 pb-20 bg-gray-50 min-h-screen">
+    <div className="pt-52 pb-20 bg-gray-50 min-h-screen">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}

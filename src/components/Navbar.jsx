@@ -41,14 +41,14 @@ export default function Navbar({ cartCount, onCartClick }) {
       style={{ top: '32px' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
+        <div className="flex items-center justify-between min-h-[108px] py-2 gap-4">
+          {/* Logo — same scale as the Our Story brand card */}
+          <Link to="/" className="flex-shrink-0 w-[200px] sm:w-[240px] lg:w-[280px]">
             <Logo size="md" />
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden xl:flex items-center gap-5">
             {navLinks.map(link => (
               <NavLink
                 key={link.to}
@@ -92,7 +92,7 @@ export default function Navbar({ cartCount, onCartClick }) {
               )}
             </button>
             <button
-              className="lg:hidden text-white/80 hover:text-white transition-colors"
+              className="xl:hidden text-white/80 hover:text-white transition-colors"
               onClick={() => setMobileOpen(o => !o)}
               aria-label="Toggle menu"
             >
@@ -104,7 +104,7 @@ export default function Navbar({ cartCount, onCartClick }) {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="lg:hidden bg-black/98 backdrop-blur-md border-t border-white/10 px-4 pb-6 pt-4">
+        <div className="xl:hidden bg-black/98 backdrop-blur-md border-t border-white/10 px-4 pb-6 pt-4">
           <div className="flex flex-col gap-4">
             {navLinks.map(link => (
               <NavLink
