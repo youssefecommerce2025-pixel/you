@@ -2,7 +2,7 @@ const badges = [
   { icon: '📦', title: 'Tracked US Delivery', sub: '3 to 7 business days' },
   { icon: '✅', title: '100% Satisfaction', sub: 'Love it or we replace it' },
   { icon: '🌿', title: 'Organic Cotton', sub: 'GOTS-certified & ethical' },
-  { icon: '🔒', title: 'Secure Checkout', sub: 'Stripe, PayPal, Wise, Payoneer' },
+  { icon: '🔒', title: 'Secure Checkout', sub: 'Stripe, PayPal, Apple Pay' },
   { icon: '🎁', title: 'Gift Packaging', sub: 'Add custom notes & wrap' },
   { icon: '↩️', title: 'Easy Returns', sub: '30-day hassle-free guarantee' },
 ]

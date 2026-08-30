@@ -111,9 +111,6 @@ export default function Footer() {
               🅿️ PayPal Protected
             </Link>
             <Link to="/payment-methods" className="text-white/40 hover:text-yellow-400 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
-              ⚡ Wise & Payoneer
-            </Link>
-            <Link to="/payment-methods" className="text-white/40 hover:text-yellow-400 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
               🍎 Apple Pay & Google Pay
             </Link>
           </div>

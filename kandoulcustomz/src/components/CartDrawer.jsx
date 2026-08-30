@@ -247,7 +247,7 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
             {/* Payment Trust Badges */}
             <div className="pt-2 text-center">
               <p className="text-[10px] text-gray-400 mb-1.5 flex items-center justify-center gap-1">
-                <FiShield className="text-emerald-500" /> Accepted: Stripe • PayPal • Wise • Payoneer • Apple Pay
+                <FiShield className="text-emerald-500" /> Accepted: Stripe • PayPal • Apple Pay • Google Pay
               </p>
               <Link
                 to="/payment-methods"

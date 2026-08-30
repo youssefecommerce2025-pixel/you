@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { FiShield, FiLock, FiCheckCircle, FiCreditCard, FiGlobe, FiHelpCircle, FiArrowRight } from 'react-icons/fi'
 import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaPaypal, FaApplePay, FaGooglePay } from 'react-icons/fa'
-import { SiStripe, SiWise } from 'react-icons/si'
+import { SiStripe } from 'react-icons/si'
 
 const paymentGateways = [
   {
@@ -22,26 +22,6 @@ const paymentGateways = [
     supportedCards: ['PayPal Balance', 'Pay in 4 (Interest-Free)', 'Linked Bank Accounts'],
     features: ['PayPal 180-Day Buyer Protection', 'No need to re-enter card numbers', 'Supports multi-currency conversion'],
     color: '#003087',
-    textColor: 'text-white'
-  },
-  {
-    name: 'Wise (TransferWise)',
-    badge: 'Low-Fee International & Bank Transfers',
-    tagline: 'Direct Mid-Market Rate Transfers for Bulk & Custom Invoices',
-    description: 'Ideal for custom corporate bulk orders, wholesale accounts, and international customers. Pay directly with local US banking details (ACH wire) at zero markup.',
-    supportedCards: ['USD Wire / ACH', 'EUR / GBP / CAD Direct Transfer', 'Multi-Currency Account'],
-    features: ['Lowest exchange fee guarantee', 'Instant proof of payment', 'Perfect for B2B & wholesale orders >$500'],
-    color: '#9FE870',
-    textColor: 'text-gray-950'
-  },
-  {
-    name: 'Payoneer',
-    badge: 'Global Commercial & Direct Billing',
-    tagline: 'Seamless Cross-Border Business Payments',
-    description: 'We accept direct Payoneer account-to-account balance transfers and custom invoices for business partnerships, influencers, and custom drops.',
-    supportedCards: ['Payoneer Balance Transfer', 'Global Bank Transfer Network', 'Virtual US Bank Receiving Account'],
-    features: ['Zero transfer fees between Payoneer accounts', 'Commercial invoice generation', 'Direct B2B payment confirmation'],
-    color: '#FF4800',
     textColor: 'text-white'
   },
   {
@@ -88,7 +68,6 @@ export default function PaymentMethods() {
             <span title="Apple Pay" className="hover:text-black transition-colors"><FaApplePay /></span>
             <span title="Google Pay" className="hover:text-green-600 transition-colors"><FaGooglePay /></span>
             <span title="Stripe" className="text-2xl font-bold flex items-center gap-1 text-indigo-600"><SiStripe size={32} /></span>
-            <span title="Wise" className="text-2xl font-bold flex items-center gap-1 text-emerald-600"><SiWise size={32} /></span>
           </div>
         </div>
 
@@ -130,17 +109,17 @@ export default function PaymentMethods() {
           ))}
         </div>
 
-        {/* Custom B2B / Wise / Payoneer Instructions for Bulk Custom Orders */}
+        {/* Custom B2B / Invoice Instructions for Bulk Custom Orders */}
         <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-black rounded-3xl p-8 sm:p-12 text-white shadow-xl mb-16 relative overflow-hidden">
           <div className="relative z-10 max-w-3xl">
             <span className="text-xs font-extrabold uppercase tracking-widest text-yellow-400 mb-2 block">
               Direct Invoice & B2B Orders
             </span>
             <h2 className="text-2xl sm:text-3xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Ordering in Bulk or Prefer Direct Bank / Wise / Payoneer Invoicing?
+              Ordering in Bulk or Prefer Invoice Billing?
             </h2>
             <p className="text-white/70 text-sm sm:text-base leading-relaxed mb-6">
-              For custom design runs exceeding $300, team uniforms, corporate gifts, or international wire transfers, we generate an official commercial invoice with direct payment links for Stripe, Wise, or Payoneer upon design approval.
+              For custom design runs exceeding $300, team uniforms, corporate gifts, or wholesale orders, we generate an official commercial invoice with a secure Stripe or PayPal payment link upon design approval.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
@@ -186,7 +165,7 @@ export default function PaymentMethods() {
                 <FiGlobe className="text-yellow-600" /> Can I pay in foreign currencies?
               </h4>
               <p className="text-sm text-gray-600 leading-relaxed">
-                All prices on the storefront are shown in US Dollars ($ USD). However, Stripe, PayPal, Wise, and Payoneer will automatically convert your local currency at real-time bank exchange rates.
+                All prices on the storefront are shown in US Dollars ($ USD). However, Stripe and PayPal will automatically convert your local currency at real-time bank exchange rates.
               </p>
             </div>
             <div>
@@ -194,7 +173,7 @@ export default function PaymentMethods() {
                 <FiHelpCircle className="text-yellow-600" /> What if I need a refund?
               </h4>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Approved refunds are processed back to your original payment method (Stripe, PayPal, Wise) within 3 to 5 business days, in accordance with our 30-day satisfaction guarantee.
+                Approved refunds are processed back to your original payment method (Stripe or PayPal) within 3 to 5 business days, in accordance with our 30-day satisfaction guarantee.
               </p>
             </div>
           </div>

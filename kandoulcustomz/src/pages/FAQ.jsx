@@ -110,7 +110,7 @@ const faqGroups = [
       },
       {
         q: 'What payment methods do you accept?',
-        a: "We accept all major credit/debit cards via Stripe (Visa, Mastercard, Amex, Discover), PayPal, Wise, Payoneer, and Apple Pay."
+        a: "We accept all major credit/debit cards via Stripe (Visa, Mastercard, Amex, Discover), PayPal, Apple Pay, and Google Pay."
       },
     ]
   },
