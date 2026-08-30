@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>JUL</title>
+    <script>
+      // GitHub Pages SPA redirect — keep /you base, encode rest of path in query
+      var segmentCount = 1;
+      var l = window.location;
+      var base = l.pathname.split('/').slice(0, 1 + segmentCount).join('/');
+      var rest = l.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~');
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        base + '/?/' + rest +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
