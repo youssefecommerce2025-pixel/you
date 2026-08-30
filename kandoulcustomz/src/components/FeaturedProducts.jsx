@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FiStar, FiArrowRight, FiShoppingBag } from 'react-icons/fi'
 import { products } from '../data/products'
 
@@ -16,6 +16,7 @@ function StarRating({ rating }) {
 }
 
 function ProductCard({ product, addToCart }) {
+  const navigate = useNavigate()
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
   const [selectedLogo, setSelectedLogo] = useState('')
@@ -32,7 +33,7 @@ function ProductCard({ product, addToCart }) {
     setError('')
 
     if (product.isCustom) {
-      window.location.href = '/custom-order'
+      navigate('/custom-order')
       return
     }
 

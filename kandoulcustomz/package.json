@@ -6,7 +6,7 @@
   "homepage": "https://youssefecommerce2025-pixel.github.io/you",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/copy-spa-routes.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
     "deploy": "gh-pages -d dist"

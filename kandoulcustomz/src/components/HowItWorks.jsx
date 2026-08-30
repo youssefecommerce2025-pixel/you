@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 const steps = [
   {
     num: '01',
@@ -68,12 +69,12 @@ export default function HowItWorks() {
 
         {/* CTA */}
         <div className="text-center mt-14">
-          <a
-            href="/custom-order"
+          <Link
+            to="/custom-order"
             className="inline-flex items-center gap-2 px-10 py-4 rounded-full font-bold tracking-widest uppercase text-sm btn-gold"
           >
             Start Your Custom Order Today
-          </a>
+          </Link>
         </div>
       </div>
     </section>

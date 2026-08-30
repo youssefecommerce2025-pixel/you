@@ -12,9 +12,11 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
   const giftBoxPrice = 4.99
   const rushProcessingPrice = 3.99
   
-  const finalTotal = total + (giftBoxBump ? giftBoxPrice : 0) + (rushProcessing ? rushProcessingPrice : 0)
+  const shipping = total >= 75 ? 0 : 7.99
+  const finalTotal = total + shipping + (giftBoxBump ? giftBoxPrice : 0) + (rushProcessing ? rushProcessingPrice : 0)
 
   const handleCheckout = () => {
+    if (!cart.length) return
     setIsCheckingOut(true)
     
     if (window.fbq) {
@@ -31,7 +33,7 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
       })
     }
 
-    // Direct seamless simulated payment to Thank You page with dynamic ref and total
+    // Simulated checkout → Thank You (basename-aware via React Router)
     setTimeout(() => {
       setIsCheckingOut(false)
       onClose()

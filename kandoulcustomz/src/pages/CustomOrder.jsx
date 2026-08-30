@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { FiUpload, FiArrowRight, FiX, FiFile, FiImage } from 'react-icons/fi'
 
 const productTypes = ['Hoodie', 'Sweatshirt', 'Jacket', 'Long Sleeve', 'Polo', 'Other']
@@ -114,12 +115,12 @@ export default function CustomOrder() {
               )}
             </div>
           </div>
-          <a
-            href="/"
+          <Link
+            to="/"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm btn-gold"
           >
             Back to Home
-          </a>
+          </Link>
         </div>
       </div>
     )

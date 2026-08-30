@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { products } from '../data/products'
 import { FiStar, FiShoppingBag, FiArrowRight } from 'react-icons/fi'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function StarRating({ rating }) {
   return (
@@ -52,6 +52,7 @@ function SizeChart({ chart }) {
 }
 
 function ProductDetail({ product, addToCart }) {
+  const navigate = useNavigate()
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
   const [selectedLogo, setSelectedLogo] = useState('')
@@ -64,7 +65,7 @@ function ProductDetail({ product, addToCart }) {
     if (!selectedColor) { setError('Please select a color'); return }
     if (product.logos.length > 0 && !selectedLogo) { setError('Please select a logo placement'); return }
     setError('')
-    if (product.isCustom) { window.location.href = '/custom-order'; return }
+    if (product.isCustom) { navigate('/custom-order'); return }
     addToCart({ id: product.id, name: product.name, price: product.price, size: selectedSize, color: selectedColor, logo: selectedLogo || null, emoji: product.emoji })
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
