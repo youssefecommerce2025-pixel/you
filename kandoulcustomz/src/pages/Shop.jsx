@@ -97,7 +97,7 @@ function ProductDetail({ product, addToCart }) {
             <span className="text-[120px] hover:scale-105 transition-transform duration-500">{product.emoji}</span>
           )}
           {selectedColor && (
-            <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+            <div className="absolute top-6 right-6 z-10">
               <div className="bg-white rounded-full px-4 py-2 shadow-sm flex items-center gap-2">
                 <div className="w-4 h-4 rounded-full" style={{ backgroundColor: colorToHex(selectedColor) }} />
                 <span className="text-xs font-medium text-gray-600">{selectedColor}</span>

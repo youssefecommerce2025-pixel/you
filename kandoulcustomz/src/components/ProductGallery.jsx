@@ -30,7 +30,7 @@ export default function ProductGallery({ images = [], alt = '', compact = false 
               key={src}
               type="button"
               onClick={() => setIdx(i)}
-              className={`w-16 h-16 rounded-xl overflow-hidden border-2 bg-white ${
+              className={`relative z-10 w-16 h-16 rounded-xl overflow-hidden border-2 bg-white ${
                 idx === i ? 'border-yellow-400' : 'border-gray-200'
               }`}
               aria-label={i === 0 ? 'Front' : 'Back'}
