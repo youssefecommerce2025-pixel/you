@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiShield, FiLock, FiCheck } from 'react-icons/fi'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty, total }) {
-  const navigate = useNavigate()
   const [giftBoxBump, setGiftBoxBump] = useState(false)
   const [rushProcessing, setRushProcessing] = useState(false)
   const [isCheckingOut, setIsCheckingOut] = useState(false)
+  const [checkoutError, setCheckoutError] = useState('')
 
   // Order Bumps calculation
   const giftBoxPrice = 4.99
@@ -15,10 +15,18 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
   const shipping = total >= 75 ? 0 : 7.99
   const finalTotal = total + shipping + (giftBoxBump ? giftBoxPrice : 0) + (rushProcessing ? rushProcessingPrice : 0)
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (!cart.length) return
+    setCheckoutError('')
+
+    const endpoint = import.meta.env.VITE_CHECKOUT_ENDPOINT
+    if (!endpoint) {
+      setCheckoutError('Stripe is not connected yet. Your Stripe secret key must be added on the checkout server first.')
+      return
+    }
+
     setIsCheckingOut(true)
-    
+
     if (window.fbq) {
       window.fbq('track', 'InitiateCheckout', {
         value: finalTotal,
@@ -33,13 +41,36 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
       })
     }
 
-    // Simulated checkout → Thank You (basename-aware via React Router)
-    setTimeout(() => {
+    const base = import.meta.env.BASE_URL || '/'
+    const origin = window.location.origin
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: cart.map((item) => ({
+            id: item.id,
+            qty: item.qty,
+            size: item.size,
+            color: item.color,
+            logo: item.logo,
+          })),
+          giftBox: giftBoxBump,
+          rush: rushProcessing,
+          successUrl: `${origin}${base}thank-you?session_id={CHECKOUT_SESSION_ID}`,
+          cancelUrl: `${origin}${base}shop`,
+        }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || 'Could not start Stripe checkout')
+      }
+      window.location.assign(data.url)
+    } catch (err) {
       setIsCheckingOut(false)
-      onClose()
-      const refId = `KC-${Math.floor(100000 + Math.random() * 900000)}`
-      navigate(`/thank-you?ref=${refId}&total=${finalTotal.toFixed(2)}`)
-    }, 600)
+      setCheckoutError(err.message || 'Could not start Stripe checkout')
+    }
   }
 
   return (
@@ -246,6 +277,9 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
                 </>
               )}
             </button>
+            {checkoutError && (
+              <p className="text-xs text-red-600 text-center leading-relaxed">{checkoutError}</p>
+            )}
 
             {/* Payment Trust Badges */}
             <div className="pt-2 text-center">
