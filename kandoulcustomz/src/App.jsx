@@ -65,9 +65,9 @@ export default function App() {
   const cartCount = cart.reduce((sum, i) => sum + i.qty, 0)
   const cartTotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0)
 
-  const isGHPages = import.meta.env.PROD
+  const basename = (import.meta.env.BASE_URL || '/').replace(/\/$/, '') || '/'
   return (
-    <BrowserRouter basename={isGHPages ? '/you' : '/'}>
+    <BrowserRouter basename={basename}>
       <ScrollToTop />
       <AnnouncementBar />
       <Navbar cartCount={cartCount} onCartClick={() => setCartOpen(true)} />
