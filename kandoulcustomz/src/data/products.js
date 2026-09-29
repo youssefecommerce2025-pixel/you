@@ -7,6 +7,19 @@ export const products = [
     comparePrice: 80,
     emoji: '🖤',
     badge: 'BESTSELLER',
+    heroImage: 'products/jsl_black.jpg',
+    images: [
+      { color: 'Black', url: 'products/jsl_black.jpg' },
+      { color: 'Olive Green', url: 'products/jsl_olive.jpg' },
+      { color: 'Gray', url: 'products/jsl_gray.jpg' },
+    ],
+    gallery: [
+      'products/jsl_black.jpg',
+      'products/jsl_olive.jpg',
+      'products/jsl_gray.jpg',
+      'products/jsl_black_hoodie.jpg',
+      'products/jsl_studio_3.jpg',
+    ],
     description: `Our exclusive 'Je Suis Là' hoodie is more than a piece of clothing — it's a statement of presence, power, and confidence. Crafted from 100% premium organic cotton, this hoodie combines European design with American street culture.`,
     features: [
       '100% GOTS-certified organic cotton',
@@ -17,7 +30,7 @@ export const products = [
       'Ethically made — fair trade certified',
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
-    colors: ['Black', 'Olive Green', 'Brown', 'Tan', 'White', 'Forest Green'],
+    colors: ['Black', 'Olive Green', 'Gray', 'Tan', 'White', 'Forest Green'],
     logos: ['Large Logo (Chest)', 'Small Corner Logo'],
     sizeChart: {
       headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],
@@ -37,7 +50,6 @@ export const products = [
       { name: 'Jasmine R.', city: 'Houston, TX', rating: 5, text: "Ordered the olive green and I'm obsessed. The fit is perfect, true to size. Will definitely be ordering more colors!", date: '1 month ago' },
       { name: 'DeShawn M.', city: 'Chicago, IL', rating: 5, text: "Statement piece. People ask about it everywhere I go. The 'Je Suis Là' meaning hits different once you understand it.", date: '3 weeks ago' },
     ],
-    images: ['🖤', '🟤', '🫒'],
   },
   {
     id: 'custom-hoodie',
@@ -47,6 +59,12 @@ export const products = [
     comparePrice: 95,
     emoji: '🎨',
     badge: 'MOST POPULAR',
+    heroImage: 'products/jsl_studio_3.jpg',
+    images: [
+      { color: 'Black', url: 'products/jsl_studio_3.jpg' },
+      { color: 'White', url: 'products/jsl_studio_3.jpg' },
+    ],
+    gallery: ['products/jsl_studio_3.jpg', 'products/jsl_black_hoodie.jpg'],
     description: `You bring the idea, we bring it to life. Perfect for personal gifts, company merch, events, team uniforms, or anything you can dream up. No minimum order required.`,
     features: [
       'Premium heavyweight organic cotton fleece',
@@ -78,9 +96,26 @@ export const products = [
       { name: 'Destiny J.', city: 'Philadelphia, PA', rating: 5, text: "Made one for my dad's birthday with his favorite quote. He absolutely loved it. The print quality is sharp and the hoodie itself is really soft.", date: '1 month ago' },
       { name: 'Noah R.', city: 'Seattle, WA', rating: 5, text: "Team basketball hoodies came out perfect. Exact colors, crisp numbers, fast shipping. This is our go-to now.", date: '3 weeks ago' },
     ],
-    images: ['🎨', '✏️', '🖨️'],
     isCustom: true,
   },
 ]
 
 export const getProduct = (id) => products.find(p => p.id === id)
+
+/** Resolve a product image path with Vite base URL (works on GitHub Pages /you/) */
+export function productImageUrl(path) {
+  if (!path) return null
+  if (path.startsWith('http') || path.startsWith('data:')) return path
+  const base = import.meta.env.BASE_URL || '/'
+  return `${base}${path.replace(/^\//, '')}`
+}
+
+export function imageForColor(product, color) {
+  if (!product) return null
+  if (color && Array.isArray(product.images)) {
+    const match = product.images.find(img => typeof img === 'object' && img.color === color)
+    if (match?.url) return productImageUrl(match.url)
+  }
+  if (product.heroImage) return productImageUrl(product.heroImage)
+  return null
+}

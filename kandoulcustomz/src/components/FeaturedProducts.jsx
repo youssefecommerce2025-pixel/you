@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FiStar, FiArrowRight, FiShoppingBag } from 'react-icons/fi'
-import { products } from '../data/products'
+import { products, imageForColor, productImageUrl } from '../data/products'
 
 function StarRating({ rating }) {
   return (
@@ -37,6 +37,7 @@ function ProductCard({ product, addToCart }) {
       return
     }
 
+    const thumb = imageForColor(product, selectedColor) || productImageUrl(product.heroImage)
     addToCart({
       id: product.id,
       name: product.name,
@@ -45,15 +46,18 @@ function ProductCard({ product, addToCart }) {
       color: selectedColor,
       logo: selectedLogo || null,
       emoji: product.emoji,
+      image: thumb,
     })
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
 
+  const displayImage = imageForColor(product, selectedColor) || productImageUrl(product.heroImage)
+
   return (
     <div className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col">
       {/* Product image area */}
-      <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%)', height: '280px' }}>
+      <div className="relative overflow-hidden bg-white" style={{ height: '280px' }}>
         {product.badge && (
           <span className="absolute top-4 left-4 z-10 bg-black text-white text-xs font-black px-3 py-1.5 rounded-full tracking-widest uppercase">
             {product.badge}
@@ -64,10 +68,18 @@ function ProductCard({ product, addToCart }) {
             Save ${(product.comparePrice - product.price).toFixed(0)}
           </span>
         )}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-9xl group-hover:scale-110 transition-transform duration-500">
-            {product.emoji}
-          </span>
+        <div className="absolute inset-0 flex items-center justify-center p-4">
+          {displayImage ? (
+            <img
+              src={displayImage}
+              alt={product.name}
+              className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
+            />
+          ) : (
+            <span className="text-9xl group-hover:scale-110 transition-transform duration-500">
+              {product.emoji}
+            </span>
+          )}
         </div>
         {/* Color preview dots */}
         <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">

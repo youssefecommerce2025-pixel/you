@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { products } from '../data/products'
+import { products, imageForColor, productImageUrl } from '../data/products'
 import { FiStar, FiShoppingBag, FiArrowRight } from 'react-icons/fi'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -66,25 +66,36 @@ function ProductDetail({ product, addToCart }) {
     if (product.logos.length > 0 && !selectedLogo) { setError('Please select a logo placement'); return }
     setError('')
     if (product.isCustom) { navigate('/custom-order'); return }
-    addToCart({ id: product.id, name: product.name, price: product.price, size: selectedSize, color: selectedColor, logo: selectedLogo || null, emoji: product.emoji })
+    const thumb = imageForColor(product, selectedColor) || productImageUrl(product.heroImage)
+    addToCart({ id: product.id, name: product.name, price: product.price, size: selectedSize, color: selectedColor, logo: selectedLogo || null, emoji: product.emoji, image: thumb })
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
+
+  const displayImage = imageForColor(product, selectedColor) || productImageUrl(product.heroImage)
 
   return (
     <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100" id={product.id}>
       <div className="grid md:grid-cols-2 gap-0">
         {/* Visual */}
-        <div className="relative flex items-center justify-center p-12" style={{ background: 'linear-gradient(135deg, #f8f8f8, #f0f0f0)', minHeight: '400px' }}>
+        <div className="relative flex items-center justify-center p-6 md:p-10 bg-white" style={{ minHeight: '400px' }}>
           {product.badge && (
-            <span className="absolute top-6 left-6 bg-black text-white text-xs font-black px-4 py-1.5 rounded-full tracking-widest uppercase">
+            <span className="absolute top-6 left-6 z-10 bg-black text-white text-xs font-black px-4 py-1.5 rounded-full tracking-widest uppercase">
               {product.badge}
             </span>
           )}
-          <span className="text-[120px] hover:scale-105 transition-transform duration-500">{product.emoji}</span>
+          {displayImage ? (
+            <img
+              src={displayImage}
+              alt={product.name}
+              className="max-h-[420px] w-full object-contain"
+            />
+          ) : (
+            <span className="text-[120px] hover:scale-105 transition-transform duration-500">{product.emoji}</span>
+          )}
           {selectedColor && (
             <div className="absolute bottom-6 left-0 right-0 flex justify-center">
-              <div className="bg-white rounded-full px-4 py-2 shadow-sm flex items-center gap-2">
+              <div className="bg-white rounded-full px-4 py-2 shadow-sm flex items-center gap-2 border border-gray-100">
                 <div className="w-4 h-4 rounded-full" style={{ backgroundColor: colorToHex(selectedColor) }} />
                 <span className="text-xs font-medium text-gray-600">{selectedColor}</span>
               </div>
