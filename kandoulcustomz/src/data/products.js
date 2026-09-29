@@ -15,7 +15,7 @@ export const products = [
     comparePrice: 80,
     emoji: '🧥',
     badge: 'BESTSELLER',
-    description: `French terry midweight organic 100% by Je suis là. A midweight organic French terry hoodie — breathable, structured, and made to be worn every day. Signature "Je suis là" chest graphic, kangaroo pocket, and a clean camel studio finish.`,
+    description: `French terry midweight organic 100% by Je suis là. A midweight organic French terry hoodie — breathable, structured, and made to be worn every day. Signature "Je suis là" chest graphic, kangaroo pocket, in Mustard or Black.`,
     features: [
       '100% organic midweight French terry',
       'Signature "Je suis là" chest graphic',
@@ -24,11 +24,20 @@ export const products = [
       'Ethically made',
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
-    colors: ['Camel'],
+    colors: ['Mustard', 'Black'],
     photos: [
       'products/jsl-hoodie-camel-front-catalog.png',
       'products/jsl-hoodie-camel-back-catalog.png',
     ],
+    colorPhotos: {
+      Mustard: [
+        'products/jsl-hoodie-camel-front-catalog.png',
+        'products/jsl-hoodie-camel-back-catalog.png',
+      ],
+      Black: [
+        'products/jsl-hoodie-black-front-catalog.png',
+      ],
+    },
     logos: ['Large Logo (Chest)', 'Small Corner Logo'],
     sizeChart: {
       headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],

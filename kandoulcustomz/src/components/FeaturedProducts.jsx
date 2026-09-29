@@ -218,7 +218,7 @@ function colorToHex(color) {
     'Forest Green': '#2D5A27',
     'Brown': '#8B5E3C',
     'Tan': '#D4A47C',
-    'Camel': '#C4A06A',
+    'Mustard': '#C4A06A',
     'Heather': '#D8D8D8',
     'Grey': '#6E6E6E',
     'Olive Military': '#5F6840',
