@@ -1,10 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { productAsset } from '../data/products'
 
 export default function ProductGallery({ images = [], alt = '', compact = false }) {
   const photos = images.map(productAsset).filter(Boolean)
   const [idx, setIdx] = useState(0)
   const [hoverBack, setHoverBack] = useState(false)
+  const photoKey = photos.join('|')
+
+  useEffect(() => {
+    setIdx(0)
+    setHoverBack(false)
+  }, [photoKey])
 
   if (!photos.length) return null
 

@@ -65,11 +65,25 @@ export const products = [
       'Ethically made',
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
-    colors: ['Heather'],
+    colors: ['Heather', 'Grey', 'Olive Military'],
     photos: [
       'products/jsl-hoodie-heather-front-catalog.png',
       'products/jsl-hoodie-heather-back-catalog.png',
     ],
+    colorPhotos: {
+      Heather: [
+        'products/jsl-hoodie-heather-front-catalog.png',
+        'products/jsl-hoodie-heather-back-catalog.png',
+      ],
+      Grey: [
+        'products/jsl-hoodie-grey-front-catalog.png',
+        'products/jsl-hoodie-grey-back-catalog.png',
+      ],
+      'Olive Military': [
+        'products/jsl-hoodie-olive-front-catalog.png',
+        'products/jsl-hoodie-olive-back-catalog.png',
+      ],
+    },
     logos: ['Large Logo (Chest)', 'Small Corner Logo'],
     sizeChart: {
       headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],
@@ -135,3 +149,6 @@ export const products = [
 ]
 
 export const getProduct = (id) => products.find(p => p.id === id)
+
+export const photosForColor = (product, color) =>
+  product?.colorPhotos?.[color] || product?.photos || []

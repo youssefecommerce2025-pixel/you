@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FiStar, FiArrowRight, FiShoppingBag } from 'react-icons/fi'
-import { products } from '../data/products'
+import { photosForColor, products } from '../data/products'
 import ProductGallery from './ProductGallery'
 
 function StarRating({ rating }) {
@@ -19,7 +19,9 @@ function StarRating({ rating }) {
 function ProductCard({ product, addToCart }) {
   const navigate = useNavigate()
   const [selectedSize, setSelectedSize] = useState('')
-  const [selectedColor, setSelectedColor] = useState(product.colors?.length === 1 ? product.colors[0] : '')
+  const [selectedColor, setSelectedColor] = useState(
+    product.colorPhotos ? product.colors[0] : (product.colors?.length === 1 ? product.colors[0] : '')
+  )
   const [selectedLogo, setSelectedLogo] = useState('')
   const [error, setError] = useState('')
   const [added, setAdded] = useState(false)
@@ -46,7 +48,7 @@ function ProductCard({ product, addToCart }) {
       color: selectedColor,
       logo: selectedLogo || null,
       emoji: product.emoji,
-      image: product.photos?.[0],
+      image: photosForColor(product, selectedColor)[0],
     })
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
@@ -67,8 +69,8 @@ function ProductCard({ product, addToCart }) {
           </span>
         )}
         <div className="absolute inset-0 flex items-center justify-center">
-          {product.photos?.length ? (
-            <ProductGallery images={product.photos} alt={product.name} compact />
+          {photosForColor(product, selectedColor).length ? (
+            <ProductGallery images={photosForColor(product, selectedColor)} alt={`${product.name} ${selectedColor || ''}`} compact />
           ) : (
             <span className="text-9xl group-hover:scale-110 transition-transform duration-500">
               {product.emoji}
@@ -218,6 +220,8 @@ function colorToHex(color) {
     'Tan': '#D4A47C',
     'Camel': '#C4A06A',
     'Heather': '#D8D8D8',
+    'Grey': '#6E6E6E',
+    'Olive Military': '#5F6840',
     'Cream': '#F5E6D0',
     'Red': '#C0392B',
     'Royal Blue': '#2E4DB4',

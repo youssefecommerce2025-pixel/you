@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { products } from '../data/products'
+import { photosForColor, products } from '../data/products'
 import ProductGallery from '../components/ProductGallery'
 import { FiStar, FiShoppingBag, FiArrowRight } from 'react-icons/fi'
 import { Link, useNavigate } from 'react-router-dom'
@@ -20,7 +20,8 @@ function colorToHex(color) {
   const map = {
     'Black': '#0A0A0A', 'White': '#F5F5F0', 'Navy': '#1B2B5E',
     'Olive Green': '#6B7C4A', 'Forest Green': '#2D5A27', 'Brown': '#8B5E3C',
-    'Tan': '#D4A47C', 'Camel': '#C4A06A', 'Heather': '#D8D8D8', 'Cream': '#F5E6D0', 'Red': '#C0392B',
+    'Tan': '#D4A47C', 'Camel': '#C4A06A', 'Heather': '#D8D8D8', 'Grey': '#6E6E6E',
+    'Olive Military': '#5F6840', 'Cream': '#F5E6D0', 'Red': '#C0392B',
     'Royal Blue': '#2E4DB4', 'Maroon': '#6D1A36', 'Gray': '#9E9E9E',
     'Yellow': '#F5C842', 'Orange': '#E67E22',
   }
@@ -55,7 +56,9 @@ function SizeChart({ chart }) {
 function ProductDetail({ product, addToCart }) {
   const navigate = useNavigate()
   const [selectedSize, setSelectedSize] = useState('')
-  const [selectedColor, setSelectedColor] = useState(product.colors?.length === 1 ? product.colors[0] : '')
+  const [selectedColor, setSelectedColor] = useState(
+    product.colorPhotos ? product.colors[0] : (product.colors?.length === 1 ? product.colors[0] : '')
+  )
   const [selectedLogo, setSelectedLogo] = useState('')
   const [error, setError] = useState('')
   const [added, setAdded] = useState(false)
@@ -67,6 +70,7 @@ function ProductDetail({ product, addToCart }) {
     if (product.logos.length > 0 && !selectedLogo) { setError('Please select a logo placement'); return }
     setError('')
     if (product.isCustom) { navigate('/custom-order'); return }
+    const gallery = photosForColor(product, selectedColor)
     addToCart({
       id: product.id,
       name: product.name,
@@ -75,7 +79,7 @@ function ProductDetail({ product, addToCart }) {
       color: selectedColor,
       logo: selectedLogo || null,
       emoji: product.emoji,
-      image: product.photos?.[0],
+      image: gallery[0],
     })
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
@@ -91,8 +95,8 @@ function ProductDetail({ product, addToCart }) {
               {product.badge}
             </span>
           )}
-          {product.photos?.length ? (
-            <ProductGallery images={product.photos} alt={product.name} />
+          {(photosForColor(product, selectedColor).length || product.photos?.length) ? (
+            <ProductGallery images={photosForColor(product, selectedColor)} alt={`${product.name} ${selectedColor || ''}`} />
           ) : (
             <span className="text-[120px] hover:scale-105 transition-transform duration-500">{product.emoji}</span>
           )}
