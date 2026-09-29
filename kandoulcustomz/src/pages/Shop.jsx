@@ -20,7 +20,7 @@ function colorToHex(color) {
   const map = {
     'Black': '#0A0A0A', 'White': '#F5F5F0', 'Navy': '#1B2B5E',
     'Olive Green': '#6B7C4A', 'Forest Green': '#2D5A27', 'Brown': '#8B5E3C',
-    'Tan': '#D4A47C', 'Camel': '#C4A06A', 'Cream': '#F5E6D0', 'Red': '#C0392B',
+    'Tan': '#D4A47C', 'Camel': '#C4A06A', 'Heather': '#D8D8D8', 'Cream': '#F5E6D0', 'Red': '#C0392B',
     'Royal Blue': '#2E4DB4', 'Maroon': '#6D1A36', 'Gray': '#9E9E9E',
     'Yellow': '#F5C842', 'Orange': '#E67E22',
   }

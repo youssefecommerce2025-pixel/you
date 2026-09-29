@@ -217,6 +217,7 @@ function colorToHex(color) {
     'Brown': '#8B5E3C',
     'Tan': '#D4A47C',
     'Camel': '#C4A06A',
+    'Heather': '#D8D8D8',
     'Cream': '#F5E6D0',
     'Red': '#C0392B',
     'Royal Blue': '#2E4DB4',

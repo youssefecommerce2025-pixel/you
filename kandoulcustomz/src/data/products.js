@@ -50,6 +50,47 @@ export const products = [
     ],
   },
   {
+    id: 'jsl-heather-hoodie',
+    name: 'Heavyweight organic 100 % brushed hood by Je suis là',
+    tagline: 'Heavyweight brushed organic fleece. Soft, dense, present.',
+    price: 65,
+    emoji: '🧥',
+    badge: 'HEAVYWEIGHT',
+    description: `Heavyweight organic 100 % brushed hood by Je suis là. A dense brushed organic fleece with a soft face, the signature "Je suis là" chest graphic, and a heather studio finish.`,
+    features: [
+      '100% organic heavyweight brushed fleece',
+      'Signature "Je suis là" chest graphic',
+      'Kangaroo front pocket with JSL woven label',
+      'Ribbed cuffs and hem',
+      'Ethically made',
+    ],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    colors: ['Heather'],
+    photos: [
+      'products/jsl-hoodie-heather-front-catalog.png',
+      'products/jsl-hoodie-heather-back-catalog.png',
+    ],
+    logos: ['Large Logo (Chest)', 'Small Corner Logo'],
+    sizeChart: {
+      headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],
+      rows: [
+        ['XS', '34-36', '26', '32'],
+        ['S', '36-38', '27', '33'],
+        ['M', '38-40', '28', '34'],
+        ['L', '42-44', '29', '35'],
+        ['XL', '46-48', '30', '36'],
+        ['2XL', '50-52', '31', '37'],
+      ]
+    },
+    care: 'Machine wash cold, tumble dry low. Do not bleach.',
+    shipping: 'Delivered in 3-7 business days across the USA. Free shipping on orders over $75.',
+    reviews: [
+      { name: 'Marcus T.', city: 'Atlanta, GA', rating: 5, text: "The heather is thick and soft. Brushed inside, holds its shape, and the chest graphic is clean.", date: '1 week ago' },
+      { name: 'Jasmine R.', city: 'Houston, TX', rating: 5, text: "Heavier than my usual hoodie and it still feels breathable. True to size.", date: '2 weeks ago' },
+      { name: 'DeShawn M.', city: 'Chicago, IL', rating: 5, text: "The heather color looks exactly like the photos. People ask about the logo every time.", date: '3 weeks ago' },
+    ],
+  },
+  {
     id: 'custom-hoodie',
     name: "100% Custom Hoodie",
     tagline: "Your Vision. Your Brand.",
