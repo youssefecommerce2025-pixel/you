@@ -56,22 +56,22 @@ export default function About() {
 
             {/* Story text */}
             <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-yellow-400 mb-4 block">The Beginning</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-yellow-400 mb-4 block">Our Philosophy</span>
               <h2 className="text-3xl sm:text-4xl font-black text-white mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-                Born from a Need to Be Seen
+                I am here.
               </h2>
               <div className="space-y-4 text-white/60 leading-relaxed">
                 <p>
-                  JUL was born from a simple but powerful frustration: generic clothing that says nothing about who you actually are. We believed clothing could be more — a statement, a keepsake, a conversation starter.
+                  <strong className="text-white">Je suis là</strong> means "I am here." In a world designed to pull attention everywhere else, it is a reminder to return to yourself: present, intentional, and choosing quality over excess.
                 </p>
                 <p>
-                  The name <strong className="text-white">"Je Suis Là"</strong> — I Am Here — became our signature. It's what you say when you refuse to blend in. When you decide your story matters enough to be worn, shared, and celebrated.
+                  More than a clothing label, it is a daily practice of presence, expressed through timeless essentials crafted for comfort, longevity, and calm.
                 </p>
                 <p>
-                  We started small, crafting personalized pieces for friends and family. Word spread. Orders grew. Today, we've fulfilled over 500 orders across the US, from individual birthday gifts to corporate team hoodies for hundreds of people.
+                  Every piece is made exclusively from 100% organic cotton, from Midweight French Terry to Heavyweight Brushed Fleece and Heavyweight French Terry. No synthetic blends. No unnecessary distractions. Just premium natural fabrics for your everyday ritual.
                 </p>
                 <p>
-                  But the mission hasn't changed: <strong className="text-white">make clothing that means something.</strong>
+                  Slow down. Reconnect. Take care of yourself. <strong className="text-white">The most important place to be is right here.</strong>
                 </p>
               </div>
             </div>
