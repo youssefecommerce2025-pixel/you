@@ -50,7 +50,7 @@ export default function PaymentMethods() {
             Accepted Payment Methods
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto text-base sm:text-lg">
-            At JUL, your security and convenience are our top priorities. We support the most trusted, fraud-protected payment gateways worldwide.
+            At JSL, your security and convenience are our top priorities. We support the most trusted, fraud-protected payment gateways worldwide.
           </p>
         </div>
 

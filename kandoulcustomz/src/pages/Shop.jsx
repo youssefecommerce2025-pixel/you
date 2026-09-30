@@ -311,7 +311,7 @@ export default function Shop({ addToCart }) {
         <div className="text-center mb-12">
           <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">The Collection</span>
           <h1 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Shop JUL
+            Shop JSL
           </h1>
           <p className="text-gray-500 max-w-lg mx-auto">
             Every piece is crafted with intention. Premium materials. Bold designs. Your story — worn.

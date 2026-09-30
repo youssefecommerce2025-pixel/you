@@ -89,7 +89,7 @@ export default function Testimonials() {
             <span className="text-gray-400">(500+ reviews)</span>
           </div>
           <p className="text-gray-500 max-w-lg mx-auto">
-            Real customers, real stories. Here's what the JUL family is saying.
+            Real customers, real stories. Here's what the JSL family is saying.
           </p>
         </div>
 

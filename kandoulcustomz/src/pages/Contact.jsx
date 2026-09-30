@@ -44,8 +44,8 @@ export default function Contact() {
                 icon: <FiPhone size={22} />,
                 title: 'Call or Text',
                 sub: 'Talk to a human',
-                detail: '+1 (555) 000-0000',
-                href: 'tel:+15550000000',
+                detail: '+1 (202) 815-5407',
+                href: 'tel:+12028155407',
               },
               {
                 icon: <FiClock size={22} />,
@@ -82,7 +82,7 @@ export default function Contact() {
               <h4 className="font-bold text-base text-white mb-2">WhatsApp Direct Support</h4>
               <p className="text-xs text-emerald-100/70 mb-4">Chat with our team directly on WhatsApp for real-time order inquiries and custom mockups.</p>
               <a
-                href="https://wa.me/15550192834?text=Hello%20JUL%20Team!%20I%20have%20a%20question."
+                href="https://wa.me/15550192834?text=Hello%20JSL%20Team!%20I%20have%20a%20question."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-md"
@@ -170,7 +170,7 @@ export default function Contact() {
                       type="tel"
                       value={form.phone}
                       onChange={e => update('phone', e.target.value)}
-                      placeholder="+1 (555) 000-0000"
+                      placeholder="+1 (202) 815-5407"
                       className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition-colors"
                     />
                   </div>
