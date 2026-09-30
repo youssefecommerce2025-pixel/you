@@ -39,7 +39,9 @@ export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return json(405, { error: 'Method not allowed' })
   }
-  if (!process.env.STRIPE_SECRET_KEY) {
+  // Bracket access so Netlify's bundler does not freeze an empty key at build time.
+  const stripeKey = process.env['STRIPE_SECRET_KEY']
+  if (!stripeKey) {
     return json(500, { error: 'Stripe is not configured on the server' })
   }
 
@@ -105,7 +107,7 @@ export const handler = async (event) => {
     : 'https://youssefecommerce2025-pixel.github.io/you/shop'
 
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+    const stripe = new Stripe(stripeKey)
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: lineItems,
