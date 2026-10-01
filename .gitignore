@@ -1,7 +1,9 @@
 node_modules/
+dist/
 data/
 *.sqlite
 *.sqlite-*
 .env
+kandoulcustomz/.preview-access.json
 .DS_Store
 npm-debug.log*
