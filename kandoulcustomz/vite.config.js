@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { previewGatePlugin } from './previewGate.mjs'
 
 const base = process.env.NETLIFY
   ? '/'
@@ -11,6 +12,7 @@ const base = process.env.NETLIFY
 export default defineConfig({
   base,
   plugins: [
+    previewGatePlugin(),
     tailwindcss(),
     react(),
   ],
