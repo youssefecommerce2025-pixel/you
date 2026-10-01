@@ -2,7 +2,9 @@ import { timingSafeEqual, randomBytes } from 'node:crypto'
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 
 export const PREVIEW_COOKIE = 'jsl_preview'
+export const OWNER_COOKIE = 'jsl_owner'
 export const PREVIEW_ACCESS_FILE = new URL('./.preview-access.json', import.meta.url)
+const OWNER_COOKIE_MAX_AGE = 60 * 60 * 24 * 30
 
 function safeEqual(a, b) {
   const left = Buffer.from(String(a))
@@ -27,19 +29,24 @@ export function createPreviewAccess({ password, expiresAt, file = PREVIEW_ACCESS
   const access = {
     password,
     token: randomBytes(32).toString('hex'),
+    ownerToken: randomBytes(32).toString('hex'),
     expiresAt,
   }
   writeFileSync(file, JSON.stringify(access, null, 2))
   return access
 }
 
-function cookieValue(req) {
+function cookieValue(req, name) {
   const raw = req.headers.cookie || ''
   for (const part of raw.split(';')) {
-    const [name, ...rest] = part.trim().split('=')
-    if (name === PREVIEW_COOKIE) return decodeURIComponent(rest.join('='))
+    const [key, ...rest] = part.trim().split('=')
+    if (key === name) return decodeURIComponent(rest.join('='))
   }
   return ''
+}
+
+function isOwner(req, gate) {
+  return Boolean(gate.ownerToken) && safeEqual(cookieValue(req, OWNER_COOKIE), gate.ownerToken)
 }
 
 function page({ title, body }) {
@@ -68,6 +75,27 @@ function page({ title, body }) {
 export function previewGateMiddleware(req, res, next, { access, now = Date.now() } = {}) {
   const gate = access === undefined ? readPreviewAccess() : access
   if (!gate) return next()
+
+  const path = (req.url || '').split('?')[0]
+  if (req.method === 'GET' && path === '/__preview/owner') {
+    const key = new URL(req.url, 'http://preview.local').searchParams.get('key') || ''
+    if (!gate.ownerToken || !safeEqual(key, gate.ownerToken)) {
+      res.statusCode = 403
+      res.setHeader('Content-Type', 'text/html; charset=utf-8')
+      res.end(page({
+        title: 'Lien refusé',
+        body: `<h1>Lien refusé.</h1><p class="muted">Ce lien d’accès personnel n’est pas valable.</p>`,
+      }))
+      return
+    }
+    res.statusCode = 303
+    res.setHeader('Set-Cookie', `${OWNER_COOKIE}=${encodeURIComponent(gate.ownerToken)}; HttpOnly; Path=/; SameSite=Lax; Max-Age=${OWNER_COOKIE_MAX_AGE}`)
+    res.setHeader('Location', '/shop')
+    res.end()
+    return
+  }
+
+  if (isOwner(req, gate)) return next()
 
   const expired = now >= gate.expiresAt
   if (expired) {
@@ -102,7 +130,7 @@ export function previewGateMiddleware(req, res, next, { access, now = Date.now()
     return
   }
 
-  if (safeEqual(cookieValue(req), gate.token)) return next()
+  if (safeEqual(cookieValue(req, PREVIEW_COOKIE), gate.token)) return next()
 
   const nextUrl = req.url && req.url.startsWith('/') ? req.url : '/'
   res.statusCode = 200
