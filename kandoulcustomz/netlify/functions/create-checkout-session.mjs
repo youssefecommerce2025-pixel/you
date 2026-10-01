@@ -1,8 +1,9 @@
 import Stripe from 'stripe'
 
 const CATALOG = {
-  'jsl-hoodie': { name: 'Je Suis Là Hoodie', amount: 5500 },
-  'custom-hoodie': { name: '100% Custom Hoodie', amount: 6900 },
+  'jsl-hoodie': { name: 'French terry midweight organic 100% by Je suis là', amount: 5500 },
+  'jsl-heather-hoodie': { name: 'Heavyweight organic 100 % brushed hood by Je suis là', amount: 6500 },
+  'jsl-espresso-hoodie': { name: 'Heavyweight French terry espresso', amount: 6500 },
 }
 
 const GIFT_BOX_CENTS = 499

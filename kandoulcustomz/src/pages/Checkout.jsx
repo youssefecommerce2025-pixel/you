@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { FiLock, FiShield } from 'react-icons/fi'
+import { productAsset } from '../data/products'
 
 const US_STATES = [
   'AL','AK','AZ','AR','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME',
@@ -190,7 +191,7 @@ export default function Checkout({ cart, total }) {
               {cart.map((item, idx) => (
                 <div key={idx} className="flex gap-3 py-3">
                   <div className="w-14 h-14 rounded-xl border border-gray-100 overflow-hidden bg-gray-50 flex items-center justify-center flex-shrink-0">
-                    {item.image ? <img src={item.image} alt="" className="w-full h-full object-cover" /> : <span>{item.emoji || '👕'}</span>}
+                    {item.image ? <img src={productAsset(item.image)} alt="" className="w-full h-full object-cover" /> : <span>{item.emoji || '👕'}</span>}
                   </div>
                   <div className="flex-1 min-w-0 text-sm">
                     <p className="font-bold truncate">{item.name}</p>

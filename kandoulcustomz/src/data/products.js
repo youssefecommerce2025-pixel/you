@@ -3,6 +3,7 @@ export const productAsset = (path) => {
   if (path.startsWith('http') || path.startsWith('data:')) return path
   if (!path.includes('/') && !path.includes('.')) return null
   const base = import.meta.env.BASE_URL || '/'
+  if (base !== '/' && path.startsWith(base)) return path
   return `${base}${path.replace(/^\//, '')}`
 }
 
