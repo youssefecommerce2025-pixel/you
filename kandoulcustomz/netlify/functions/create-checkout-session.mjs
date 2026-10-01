@@ -5,7 +5,6 @@ const CATALOG = {
   'custom-hoodie': { name: '100% Custom Hoodie', amount: 6900 },
 }
 
-const GIFT_BOX_CENTS = 499
 const RUSH_CENTS = 399
 const FREE_SHIPPING_FROM = 7500
 const SHIPPING_CENTS = 799
@@ -77,16 +76,6 @@ export const handler = async (event) => {
     })
   }
 
-  if (body.giftBox) {
-    lineItems.push({
-      quantity: 1,
-      price_data: {
-        currency: 'usd',
-        unit_amount: GIFT_BOX_CENTS,
-        product_data: { name: 'Gift packaging' },
-      },
-    })
-  }
   if (body.rush) {
     lineItems.push({
       quantity: 1,
