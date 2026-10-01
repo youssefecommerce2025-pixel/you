@@ -13,6 +13,7 @@ import FAQ from './pages/FAQ'
 import Contact from './pages/Contact'
 import PaymentMethods from './pages/PaymentMethods'
 import ThankYou from './pages/ThankYou'
+import Checkout from './pages/Checkout'
 import ScrollToTop from './components/ScrollToTop'
 
 export default function App() {
@@ -95,6 +96,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/payment-methods" element={<PaymentMethods />} />
           <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/checkout" element={<Checkout cart={cart} total={cartTotal} />} />
         </Routes>
       </main>
       <Footer />

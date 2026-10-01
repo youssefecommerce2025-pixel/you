@@ -22,6 +22,7 @@ const routes = [
   'contact',
   'payment-methods',
   'thank-you',
+  'checkout',
 ]
 
 for (const route of routes) {

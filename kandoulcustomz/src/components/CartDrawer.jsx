@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiShield, FiLock, FiCheck } from 'react-icons/fi'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty, total }) {
+  const navigate = useNavigate()
   const [giftBoxBump, setGiftBoxBump] = useState(false)
   const [rushProcessing, setRushProcessing] = useState(false)
-  const [isCheckingOut, setIsCheckingOut] = useState(false)
-  const [checkoutError, setCheckoutError] = useState('')
 
   // Order Bumps calculation
   const giftBoxPrice = 4.99
@@ -15,18 +14,8 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
   const shipping = total >= 75 ? 0 : 7.99
   const finalTotal = total + shipping + (giftBoxBump ? giftBoxPrice : 0) + (rushProcessing ? rushProcessingPrice : 0)
 
-  const handleCheckout = async () => {
+  const handleCheckout = () => {
     if (!cart.length) return
-    setCheckoutError('')
-
-    const endpoint = import.meta.env.VITE_CHECKOUT_ENDPOINT
-    if (!endpoint) {
-      setCheckoutError('Stripe is not connected yet. Your Stripe secret key must be added on the checkout server first.')
-      return
-    }
-
-    setIsCheckingOut(true)
-
     if (window.fbq) {
       window.fbq('track', 'InitiateCheckout', {
         value: finalTotal,
@@ -40,37 +29,8 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
         currency: 'USD'
       })
     }
-
-    const base = import.meta.env.BASE_URL || '/'
-    const origin = window.location.origin
-
-    try {
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          items: cart.map((item) => ({
-            id: item.id,
-            qty: item.qty,
-            size: item.size,
-            color: item.color,
-            logo: item.logo,
-          })),
-          giftBox: giftBoxBump,
-          rush: rushProcessing,
-          successUrl: `${origin}${base}thank-you?session_id={CHECKOUT_SESSION_ID}`,
-          cancelUrl: `${origin}${base}shop`,
-        }),
-      })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok || !data.url) {
-        throw new Error(data.error || 'Could not start Stripe checkout')
-      }
-      window.location.assign(data.url)
-    } catch (err) {
-      setIsCheckingOut(false)
-      setCheckoutError(err.message || 'Could not start Stripe checkout')
-    }
+    navigate('/checkout', { state: { giftBox: giftBoxBump, rush: rushProcessing } })
+    onClose()
   }
 
   return (
@@ -265,21 +225,11 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
 
             {/* Main Checkout Button */}
             <button
-              disabled={isCheckingOut}
               className="w-full py-4 rounded-full font-black tracking-widest uppercase text-xs btn-gold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all"
               onClick={handleCheckout}
             >
-              {isCheckingOut ? (
-                <span>Processing Order...</span>
-              ) : (
-                <>
-                  <FiLock size={14} /> Proceed to Secure Checkout — ${finalTotal.toFixed(2)}
-                </>
-              )}
+              <FiLock size={14} /> Continue — ${finalTotal.toFixed(2)}
             </button>
-            {checkoutError && (
-              <p className="text-xs text-red-600 text-center leading-relaxed">{checkoutError}</p>
-            )}
 
             {/* Payment Trust Badges */}
             <div className="pt-2 text-center">

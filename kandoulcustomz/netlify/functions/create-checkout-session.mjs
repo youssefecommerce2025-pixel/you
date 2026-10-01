@@ -21,6 +21,31 @@ function json(statusCode, body) {
   return { statusCode, headers: corsHeaders, body: JSON.stringify(body) }
 }
 
+function clean(value, max) {
+  return String(value || '').replace(/\s+/g, ' ').trim().slice(0, max)
+}
+
+function readCustomer(body) {
+  const c = body.customer && typeof body.customer === 'object' ? body.customer : {}
+  const customer = {
+    firstName: clean(c.firstName, 60),
+    lastName: clean(c.lastName, 60),
+    address: clean(c.address, 200),
+    city: clean(c.city, 80),
+    state: clean(c.state, 2).toUpperCase(),
+    postalCode: clean(c.postalCode, 10),
+    phone: clean(c.phone, 30),
+    email: clean(c.email, 120).toLowerCase(),
+  }
+  if (!customer.firstName || !customer.lastName) return { error: 'Name is required' }
+  if (!customer.address || !customer.city || !/^[A-Z]{2}$/.test(customer.state)) return { error: 'Address is required' }
+  if (!/^\d{5}(-\d{4})?$/.test(customer.postalCode)) return { error: 'Enter a valid US ZIP code' }
+  const digits = customer.phone.replace(/\D/g, '')
+  if (digits.length < 10 || digits.length > 15) return { error: 'Enter a valid phone number' }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) return { error: 'Enter a valid email' }
+  return { customer }
+}
+
 function allowedReturnUrl(url) {
   if (typeof url !== 'string') return false
   try {
@@ -54,6 +79,18 @@ export const handler = async (event) => {
 
   const items = Array.isArray(body.items) ? body.items : []
   if (!items.length) return json(400, { error: 'Cart is empty' })
+
+  const parsedCustomer = readCustomer(body)
+  if (parsedCustomer.error) return json(400, { error: parsedCustomer.error })
+  const customer = parsedCustomer.customer
+  const fullName = `${customer.firstName} ${customer.lastName}`
+  const shippingAddress = {
+    line1: customer.address,
+    city: customer.city,
+    state: customer.state,
+    postal_code: customer.postalCode,
+    country: 'US',
+  }
 
   const lineItems = []
   let merchandise = 0
@@ -113,6 +150,28 @@ export const handler = async (event) => {
       line_items: lineItems,
       success_url: successUrl,
       cancel_url: cancelUrl,
+      customer_email: customer.email,
+      metadata: {
+        customer_name: fullName,
+        phone: customer.phone,
+        address: customer.address,
+        city: customer.city,
+        state: customer.state,
+        postal_code: customer.postalCode,
+      },
+      payment_intent_data: {
+        receipt_email: customer.email,
+        shipping: {
+          name: fullName,
+          phone: customer.phone,
+          address: shippingAddress,
+        },
+        metadata: {
+          customer_name: fullName,
+          phone: customer.phone,
+          email: customer.email,
+        },
+      },
       shipping_options: [
         {
           shipping_rate_data: {
