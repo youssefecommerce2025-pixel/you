@@ -3,15 +3,17 @@ import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiShield, FiLock, FiChec
 import { Link } from 'react-router-dom'
 
 export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty, total }) {
+  const [giftBoxBump, setGiftBoxBump] = useState(false)
   const [rushProcessing, setRushProcessing] = useState(false)
   const [isCheckingOut, setIsCheckingOut] = useState(false)
   const [checkoutError, setCheckoutError] = useState('')
 
   // Order Bumps calculation
+  const giftBoxPrice = 4.99
   const rushProcessingPrice = 3.99
   
   const shipping = total >= 75 ? 0 : 7.99
-  const finalTotal = total + shipping + (rushProcessing ? rushProcessingPrice : 0)
+  const finalTotal = total + shipping + (giftBoxBump ? giftBoxPrice : 0) + (rushProcessing ? rushProcessingPrice : 0)
 
   const handleCheckout = async () => {
     if (!cart.length) return
@@ -54,6 +56,7 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
             color: item.color,
             logo: item.logo,
           })),
+          giftBox: giftBoxBump,
           rush: rushProcessing,
           successUrl: `${origin}${base}thank-you?session_id={CHECKOUT_SESSION_ID}`,
           cancelUrl: `${origin}${base}shop`,
@@ -192,6 +195,23 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
                   ⚡ Recommended Add-ons (One-Click)
                 </span>
                 
+                {/* Bump 1: Gift Box */}
+                <label className="flex items-start gap-3 cursor-pointer bg-white p-2.5 rounded-xl border border-yellow-100 hover:border-yellow-300 transition-all">
+                  <input
+                    type="checkbox"
+                    checked={giftBoxBump}
+                    onChange={e => setGiftBoxBump(e.target.checked)}
+                    className="mt-0.5 accent-yellow-600 rounded"
+                  />
+                  <div className="flex-1 text-xs">
+                    <div className="flex justify-between font-bold text-gray-900">
+                      <span>🎁 Premium Gift Box & Bow</span>
+                      <span className="text-yellow-700">+$4.99</span>
+                    </div>
+                    <p className="text-[11px] text-gray-500">Luxury gold foil packaging + handwritten message</p>
+                  </div>
+                </label>
+
                 {/* Bump 2: Priority Rush Crafting */}
                 <label className="flex items-start gap-3 cursor-pointer bg-white p-2.5 rounded-xl border border-yellow-100 hover:border-yellow-300 transition-all">
                   <input
@@ -221,6 +241,12 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
                 <span>Items Subtotal</span>
                 <span>${total.toFixed(2)}</span>
               </div>
+              {giftBoxBump && (
+                <div className="flex justify-between text-yellow-700 font-medium">
+                  <span>Gift Packaging</span>
+                  <span>+$4.99</span>
+                </div>
+              )}
               {rushProcessing && (
                 <div className="flex justify-between text-yellow-700 font-medium">
                   <span>Priority Queue</span>
