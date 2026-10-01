@@ -82,7 +82,7 @@ export default function Contact() {
               <h4 className="font-bold text-base text-white mb-2">WhatsApp Direct Support</h4>
               <p className="text-xs text-emerald-100/70 mb-4">Chat with our team directly on WhatsApp for real-time order inquiries and custom mockups.</p>
               <a
-                href="https://wa.me/15550192834?text=Hello%20JSL%20Team!%20I%20have%20a%20question."
+                href="https://wa.me/12028155407?text=Hello%20JSL%20Team!%20I%20have%20a%20question."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-md"

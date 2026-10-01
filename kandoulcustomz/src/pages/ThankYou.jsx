@@ -33,7 +33,7 @@ export default function ThankYou() {
   }, [searchParams])
 
   // WhatsApp support phone number (international format)
-  const whatsappNumber = "+15550192834" // Replace with real WhatsApp Business number
+  const whatsappNumber = "+12028155407"
   const whatsappMessage = encodeURIComponent(`Hello JSL Team! I just placed order #${orderNumber} and wanted to check my order status / ask a question.`)
   const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${whatsappMessage}`
 
