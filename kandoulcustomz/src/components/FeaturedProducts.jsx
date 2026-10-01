@@ -222,6 +222,7 @@ function colorToHex(color) {
     'Heather': '#D8D8D8',
     'Grey': '#6E6E6E',
     'Olive Military': '#5F6840',
+    'Espresso': '#6A5344',
     'Cream': '#F5E6D0',
     'Red': '#C0392B',
     'Royal Blue': '#2E4DB4',
