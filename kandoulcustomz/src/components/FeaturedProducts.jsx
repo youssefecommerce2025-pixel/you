@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FiStar, FiArrowRight, FiShoppingBag } from 'react-icons/fi'
-import { products, imageForColor, productImageUrl } from '../data/products'
+import { photosForColor, products } from '../data/products'
+import ProductGallery from './ProductGallery'
 
 function StarRating({ rating }) {
   return (
@@ -18,7 +19,9 @@ function StarRating({ rating }) {
 function ProductCard({ product, addToCart }) {
   const navigate = useNavigate()
   const [selectedSize, setSelectedSize] = useState('')
-  const [selectedColor, setSelectedColor] = useState('')
+  const [selectedColor, setSelectedColor] = useState(
+    product.colorPhotos ? product.colors[0] : (product.colors?.length === 1 ? product.colors[0] : '')
+  )
   const [selectedLogo, setSelectedLogo] = useState('')
   const [error, setError] = useState('')
   const [added, setAdded] = useState(false)
@@ -37,7 +40,6 @@ function ProductCard({ product, addToCart }) {
       return
     }
 
-    const thumb = imageForColor(product, selectedColor) || productImageUrl(product.heroImage)
     addToCart({
       id: product.id,
       name: product.name,
@@ -46,18 +48,16 @@ function ProductCard({ product, addToCart }) {
       color: selectedColor,
       logo: selectedLogo || null,
       emoji: product.emoji,
-      image: thumb,
+      image: photosForColor(product, selectedColor)[0],
     })
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
 
-  const displayImage = imageForColor(product, selectedColor) || productImageUrl(product.heroImage)
-
   return (
     <div className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col">
       {/* Product image area */}
-      <div className="relative overflow-hidden bg-white" style={{ height: '280px' }}>
+      <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%)', height: '280px' }}>
         {product.badge && (
           <span className="absolute top-4 left-4 z-10 bg-black text-white text-xs font-black px-3 py-1.5 rounded-full tracking-widest uppercase">
             {product.badge}
@@ -68,13 +68,9 @@ function ProductCard({ product, addToCart }) {
             Save ${(product.comparePrice - product.price).toFixed(0)}
           </span>
         )}
-        <div className="absolute inset-0 flex items-center justify-center p-4">
-          {displayImage ? (
-            <img
-              src={displayImage}
-              alt={product.name}
-              className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
-            />
+        <div className="absolute inset-0 flex items-center justify-center">
+          {photosForColor(product, selectedColor).length ? (
+            <ProductGallery images={photosForColor(product, selectedColor)} alt={`${product.name} ${selectedColor || ''}`} compact />
           ) : (
             <span className="text-9xl group-hover:scale-110 transition-transform duration-500">
               {product.emoji}
@@ -222,6 +218,11 @@ function colorToHex(color) {
     'Forest Green': '#2D5A27',
     'Brown': '#8B5E3C',
     'Tan': '#D4A47C',
+    'Mustard': '#C4A06A',
+    'Heather': '#D8D8D8',
+    'Grey': '#6E6E6E',
+    'Olive Military': '#5F6840',
+    'Espresso': '#6A5344',
     'Cream': '#F5E6D0',
     'Red': '#C0392B',
     'Royal Blue': '#2E4DB4',

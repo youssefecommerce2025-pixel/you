@@ -1,36 +1,43 @@
+export const productAsset = (path) => {
+  if (!path || typeof path !== 'string') return null
+  if (path.startsWith('http') || path.startsWith('data:')) return path
+  if (!path.includes('/') && !path.includes('.')) return null
+  const base = import.meta.env.BASE_URL || '/'
+  return `${base}${path.replace(/^\//, '')}`
+}
+
 export const products = [
   {
     id: 'jsl-hoodie',
-    name: "Je Suis Là Hoodie",
-    tagline: "Statement. Confidence. Presence.",
+    name: 'French terry midweight organic 100% by Je suis là',
+    tagline: 'Midweight organic French terry. Presence, stitched in.',
     price: 55,
     comparePrice: 80,
-    emoji: '🖤',
+    emoji: '🧥',
     badge: 'BESTSELLER',
-    heroImage: 'products/jsl_black.jpg',
-    images: [
-      { color: 'Black', url: 'products/jsl_black.jpg' },
-      { color: 'Olive Green', url: 'products/jsl_olive.jpg' },
-      { color: 'Gray', url: 'products/jsl_gray.jpg' },
-    ],
-    gallery: [
-      'products/jsl_black.jpg',
-      'products/jsl_olive.jpg',
-      'products/jsl_gray.jpg',
-      'products/jsl_black_hoodie.jpg',
-      'products/jsl_studio_3.jpg',
-    ],
-    description: `Our exclusive 'Je Suis Là' hoodie is more than a piece of clothing — it's a statement of presence, power, and confidence. Crafted from 100% premium organic cotton, this hoodie combines European design with American street culture.`,
+    description: `French terry midweight organic 100% by Je suis là. A midweight organic French terry hoodie — breathable, structured, and made to be worn every day. Signature "Je suis là" chest graphic, kangaroo pocket, in Mustard or Black.`,
     features: [
-      '100% GOTS-certified organic cotton',
-      'Heavyweight 400gsm fleece — warm all year',
-      'Signature "Je Suis Là" embroidered graphic',
-      'Kangaroo front pocket',
-      'Ribbed cuffs and hem for a premium fit',
-      'Ethically made — fair trade certified',
+      '100% organic midweight French terry',
+      'Signature "Je suis là" chest graphic',
+      'Kangaroo front pocket with JSL woven label',
+      'Ribbed cuffs and hem',
+      'Ethically made',
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
-    colors: ['Black', 'Olive Green', 'Gray', 'Tan', 'White', 'Forest Green'],
+    colors: ['Mustard', 'Black'],
+    photos: [
+      'products/jsl-hoodie-camel-front-catalog.png',
+      'products/jsl-hoodie-camel-back-catalog.png',
+    ],
+    colorPhotos: {
+      Mustard: [
+        'products/jsl-hoodie-camel-front-catalog.png',
+        'products/jsl-hoodie-camel-back-catalog.png',
+      ],
+      Black: [
+        'products/jsl-hoodie-black-front-catalog.png',
+      ],
+    },
     logos: ['Large Logo (Chest)', 'Small Corner Logo'],
     sizeChart: {
       headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],
@@ -52,31 +59,44 @@ export const products = [
     ],
   },
   {
-    id: 'custom-hoodie',
-    name: "100% Custom Hoodie",
-    tagline: "Your Vision. Your Brand.",
-    price: 69,
-    comparePrice: 95,
-    emoji: '🎨',
-    badge: 'MOST POPULAR',
-    heroImage: 'products/jsl_studio_3.jpg',
-    images: [
-      { color: 'Black', url: 'products/jsl_studio_3.jpg' },
-      { color: 'White', url: 'products/jsl_studio_3.jpg' },
-    ],
-    gallery: ['products/jsl_studio_3.jpg', 'products/jsl_black_hoodie.jpg'],
-    description: `You bring the idea, we bring it to life. Perfect for personal gifts, company merch, events, team uniforms, or anything you can dream up. No minimum order required.`,
+    id: 'jsl-heather-hoodie',
+    name: 'Heavyweight organic 100 % brushed hood by Je suis là',
+    tagline: 'Heavyweight brushed organic fleece. Soft, dense, present.',
+    price: 65,
+    emoji: '🧥',
+    badge: 'HEAVYWEIGHT',
+    description: `Heavyweight organic 100 % brushed hood by Je suis là. A dense brushed organic fleece with a soft face, the signature "Je suis là" chest graphic, and a heather studio finish.`,
     features: [
-      'Premium heavyweight organic cotton fleece',
-      'Full-color print or embroidery',
-      'Upload your own design or logo',
-      'Custom text, names, or numbers',
-      'No minimum order — 1 piece welcome',
-      '100% satisfaction guarantee',
+      '100% organic heavyweight brushed fleece',
+      'Signature "Je suis là" chest graphic',
+      'Kangaroo front pocket with JSL woven label',
+      'Ribbed cuffs and hem',
+      'Ethically made',
     ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
-    colors: ['White', 'Black', 'Navy', 'Red', 'Gray', 'Royal Blue', 'Maroon', 'Forest Green', 'Yellow', 'Orange'],
-    logos: [],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    colors: ['Heather', 'Grey', 'Olive Military', 'Black'],
+    photos: [
+      'products/jsl-hoodie-heather-front-catalog.png',
+      'products/jsl-hoodie-heather-back-catalog.png',
+    ],
+    colorPhotos: {
+      Heather: [
+        'products/jsl-hoodie-heather-front-catalog.png',
+        'products/jsl-hoodie-heather-back-catalog.png',
+      ],
+      Grey: [
+        'products/jsl-hoodie-grey-front-catalog.png',
+        'products/jsl-hoodie-grey-back-catalog.png',
+      ],
+      'Olive Military': [
+        'products/jsl-hoodie-olive-front-catalog.png',
+        'products/jsl-hoodie-olive-back-catalog.png',
+      ],
+      Black: [
+        'products/jsl-hoodie-black-front-catalog.png',
+      ],
+    },
+    logos: ['Large Logo (Chest)', 'Small Corner Logo'],
     sizeChart: {
       headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],
       rows: [
@@ -86,36 +106,65 @@ export const products = [
         ['L', '42-44', '29', '35'],
         ['XL', '46-48', '30', '36'],
         ['2XL', '50-52', '31', '37'],
-        ['3XL', '54-56', '32', '38'],
       ]
     },
-    care: 'Wash inside out. Cold water. Tumble dry low.',
-    shipping: 'Custom crafted & delivered in 3-7 business days across the USA.',
+    care: 'Machine wash cold, tumble dry low. Do not bleach.',
+    shipping: 'Delivered in 3-7 business days across the USA. Free shipping on orders over $75.',
     reviews: [
-      { name: 'Carlos M.', city: 'Miami, FL', rating: 5, text: "Ordered 25 custom hoodies for our company event. The quality was unbelievable for the price. Everyone loved them. Will order again.", date: '2 weeks ago' },
-      { name: 'Destiny J.', city: 'Philadelphia, PA', rating: 5, text: "Made one for my dad's birthday with his favorite quote. He absolutely loved it. The print quality is sharp and the hoodie itself is really soft.", date: '1 month ago' },
-      { name: 'Noah R.', city: 'Seattle, WA', rating: 5, text: "Team basketball hoodies came out perfect. Exact colors, crisp numbers, fast shipping. This is our go-to now.", date: '3 weeks ago' },
+      { name: 'Marcus T.', city: 'Atlanta, GA', rating: 5, text: "The heather is thick and soft. Brushed inside, holds its shape, and the chest graphic is clean.", date: '1 week ago' },
+      { name: 'Jasmine R.', city: 'Houston, TX', rating: 5, text: "Heavier than my usual hoodie and it still feels breathable. True to size.", date: '2 weeks ago' },
+      { name: 'DeShawn M.', city: 'Chicago, IL', rating: 5, text: "The heather color looks exactly like the photos. People ask about the logo every time.", date: '3 weeks ago' },
     ],
-    isCustom: true,
+  },
+  {
+    id: 'jsl-espresso-hoodie',
+    name: 'Heavyweight French terry espresso',
+    tagline: 'Heavyweight French terry in espresso. Dense, calm, everyday.',
+    price: 65,
+    emoji: '🧥',
+    badge: 'HEAVYWEIGHT',
+    description: `Heavyweight French terry espresso by Je suis là. A dense espresso-brown heavyweight French terry hoodie with the signature chest graphic, built for comfort and everyday wear.`,
+    features: [
+      '100% organic heavyweight French terry',
+      'Espresso brown',
+      'Signature "Je suis là" chest graphic',
+      'Kangaroo front pocket with JSL woven label',
+      'Ribbed cuffs and hem',
+      'Ethically made',
+    ],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    colors: ['Espresso'],
+    photos: [
+      'products/jsl-hoodie-espresso-front-catalog.png',
+    ],
+    colorPhotos: {
+      Espresso: [
+        'products/jsl-hoodie-espresso-front-catalog.png',
+      ],
+    },
+    logos: ['Large Logo (Chest)', 'Small Corner Logo'],
+    sizeChart: {
+      headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],
+      rows: [
+        ['XS', '34-36', '26', '32'],
+        ['S', '36-38', '27', '33'],
+        ['M', '38-40', '28', '34'],
+        ['L', '42-44', '29', '35'],
+        ['XL', '46-48', '30', '36'],
+        ['2XL', '50-52', '31', '37'],
+      ]
+    },
+    care: 'Machine wash cold, tumble dry low. Do not bleach.',
+    shipping: 'Delivered in 3-7 business days across the USA. Free shipping on orders over $75.',
+    reviews: [
+      { name: 'Marcus T.', city: 'Atlanta, GA', rating: 5, text: "The espresso brown is rich and the French terry has real weight. The chest patch looks clean.", date: '1 week ago' },
+      { name: 'Jasmine R.', city: 'Houston, TX', rating: 5, text: "True to size, soft, and it holds its shape. Easy everyday hoodie.", date: '2 weeks ago' },
+      { name: 'DeShawn M.', city: 'Chicago, IL', rating: 5, text: "Looks exactly like the studio photo. People ask about the logo.", date: '3 weeks ago' },
+    ],
   },
 ]
 
 export const getProduct = (id) => products.find(p => p.id === id)
 
-/** Resolve a product image path with Vite base URL (works on GitHub Pages /you/) */
-export function productImageUrl(path) {
-  if (!path) return null
-  if (path.startsWith('http') || path.startsWith('data:')) return path
-  const base = import.meta.env.BASE_URL || '/'
-  return `${base}${path.replace(/^\//, '')}`
-}
-
-export function imageForColor(product, color) {
-  if (!product) return null
-  if (color && Array.isArray(product.images)) {
-    const match = product.images.find(img => typeof img === 'object' && img.color === color)
-    if (match?.url) return productImageUrl(match.url)
-  }
-  if (product.heroImage) return productImageUrl(product.heroImage)
-  return null
-}
+export const photosForColor = (product, color) =>
+  product?.colorPhotos?.[color] || product?.photos || []

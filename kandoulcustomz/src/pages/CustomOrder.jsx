@@ -471,7 +471,7 @@ export default function CustomOrder() {
                   {[
                     ['name', 'Full Name *', 'John Smith', 'text', true],
                     ['email', 'Email Address *', 'john@example.com', 'email', true],
-                    ['phone', 'Phone Number', '+1 (555) 000-0000', 'tel', false],
+                    ['phone', 'Phone Number', '+1 (202) 815-5407', 'tel', false],
                     ['company', 'Company / Organization', 'Optional', 'text', false],
                   ].map(([field, label, placeholder, type, required]) => (
                     <div key={field}>

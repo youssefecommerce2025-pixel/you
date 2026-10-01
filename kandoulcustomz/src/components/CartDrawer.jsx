@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiShield, FiLock, FiCheck } from 'react-icons/fi'
 import { Link, useNavigate } from 'react-router-dom'
+import { productAsset } from '../data/products'
 
 export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty, total }) {
   const navigate = useNavigate()
@@ -112,10 +113,11 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
                 {cart.map((item, idx) => (
                   <div key={idx} className="flex gap-4 py-3.5">
                     <div
-                      className="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl border border-gray-100 overflow-hidden bg-white"
+                      className="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl border border-gray-100 overflow-hidden"
+                      style={{ background: 'linear-gradient(135deg, #f8f8f8, #f0f0f0)' }}
                     >
                       {item.image ? (
-                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                        <img src={productAsset(item.image)} alt="" className="w-full h-full object-contain" />
                       ) : (
                         item.emoji || '👕'
                       )}

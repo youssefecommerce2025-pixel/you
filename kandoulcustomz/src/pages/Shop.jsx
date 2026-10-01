@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { products, imageForColor, productImageUrl } from '../data/products'
+import { photosForColor, products } from '../data/products'
+import ProductGallery from '../components/ProductGallery'
 import { FiStar, FiShoppingBag, FiArrowRight } from 'react-icons/fi'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -19,7 +20,8 @@ function colorToHex(color) {
   const map = {
     'Black': '#0A0A0A', 'White': '#F5F5F0', 'Navy': '#1B2B5E',
     'Olive Green': '#6B7C4A', 'Forest Green': '#2D5A27', 'Brown': '#8B5E3C',
-    'Tan': '#D4A47C', 'Cream': '#F5E6D0', 'Red': '#C0392B',
+    'Tan': '#D4A47C', 'Mustard': '#C4A06A', 'Heather': '#D8D8D8', 'Grey': '#6E6E6E',
+    'Olive Military': '#5F6840', 'Espresso': '#6A5344', 'Cream': '#F5E6D0', 'Red': '#C0392B',
     'Royal Blue': '#2E4DB4', 'Maroon': '#6D1A36', 'Gray': '#9E9E9E',
     'Yellow': '#F5C842', 'Orange': '#E67E22',
   }
@@ -54,7 +56,9 @@ function SizeChart({ chart }) {
 function ProductDetail({ product, addToCart }) {
   const navigate = useNavigate()
   const [selectedSize, setSelectedSize] = useState('')
-  const [selectedColor, setSelectedColor] = useState('')
+  const [selectedColor, setSelectedColor] = useState(
+    product.colorPhotos ? product.colors[0] : (product.colors?.length === 1 ? product.colors[0] : '')
+  )
   const [selectedLogo, setSelectedLogo] = useState('')
   const [error, setError] = useState('')
   const [added, setAdded] = useState(false)
@@ -66,36 +70,39 @@ function ProductDetail({ product, addToCart }) {
     if (product.logos.length > 0 && !selectedLogo) { setError('Please select a logo placement'); return }
     setError('')
     if (product.isCustom) { navigate('/custom-order'); return }
-    const thumb = imageForColor(product, selectedColor) || productImageUrl(product.heroImage)
-    addToCart({ id: product.id, name: product.name, price: product.price, size: selectedSize, color: selectedColor, logo: selectedLogo || null, emoji: product.emoji, image: thumb })
+    const gallery = photosForColor(product, selectedColor)
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      size: selectedSize,
+      color: selectedColor,
+      logo: selectedLogo || null,
+      emoji: product.emoji,
+      image: gallery[0],
+    })
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
-
-  const displayImage = imageForColor(product, selectedColor) || productImageUrl(product.heroImage)
 
   return (
     <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100" id={product.id}>
       <div className="grid md:grid-cols-2 gap-0">
         {/* Visual */}
-        <div className="relative flex items-center justify-center p-6 md:p-10 bg-white" style={{ minHeight: '400px' }}>
+        <div className="relative flex flex-col items-center justify-center" style={{ background: 'linear-gradient(135deg, #f8f8f8, #f0f0f0)', minHeight: '420px' }}>
           {product.badge && (
             <span className="absolute top-6 left-6 z-10 bg-black text-white text-xs font-black px-4 py-1.5 rounded-full tracking-widest uppercase">
               {product.badge}
             </span>
           )}
-          {displayImage ? (
-            <img
-              src={displayImage}
-              alt={product.name}
-              className="max-h-[420px] w-full object-contain"
-            />
+          {(photosForColor(product, selectedColor).length || product.photos?.length) ? (
+            <ProductGallery images={photosForColor(product, selectedColor)} alt={`${product.name} ${selectedColor || ''}`} />
           ) : (
             <span className="text-[120px] hover:scale-105 transition-transform duration-500">{product.emoji}</span>
           )}
           {selectedColor && (
-            <div className="absolute bottom-6 left-0 right-0 flex justify-center">
-              <div className="bg-white rounded-full px-4 py-2 shadow-sm flex items-center gap-2 border border-gray-100">
+            <div className="absolute top-6 right-6 z-10">
+              <div className="bg-white rounded-full px-4 py-2 shadow-sm flex items-center gap-2">
                 <div className="w-4 h-4 rounded-full" style={{ backgroundColor: colorToHex(selectedColor) }} />
                 <span className="text-xs font-medium text-gray-600">{selectedColor}</span>
               </div>
@@ -304,7 +311,7 @@ export default function Shop({ addToCart }) {
         <div className="text-center mb-12">
           <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">The Collection</span>
           <h1 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Shop JUL
+            Shop JSL
           </h1>
           <p className="text-gray-500 max-w-lg mx-auto">
             Every piece is crafted with intention. Premium materials. Bold designs. Your story — worn.

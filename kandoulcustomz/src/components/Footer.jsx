@@ -39,8 +39,9 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { to: '/shop', label: 'All Products' },
-                { to: '/shop#jsl-hoodie', label: 'Je Suis Là Hoodie' },
-                { to: '/shop#custom-hoodie', label: 'Custom Hoodie' },
+                { to: '/shop#jsl-hoodie', label: 'French terry hoodie' },
+                { to: '/shop#jsl-heather-hoodie', label: 'Brushed heavyweight hood' },
+                { to: '/shop#jsl-espresso-hoodie', label: 'Heavyweight French terry espresso' },
                 { to: '/custom-order', label: 'Custom Orders' },
                 { to: '/custom-order', label: 'Corporate Orders' },
                 { to: '/custom-order', label: 'Gift Packages' },
@@ -81,7 +82,7 @@ export default function Footer() {
             <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-5">Contact</h4>
             <ul className="space-y-3 text-white/40 text-sm">
               <li>📧 <a href="mailto:hello@julofficial.com" className="hover:text-yellow-400 transition-colors">hello@julofficial.com</a></li>
-              <li>📱 <a href="tel:+1-555-000-0000" className="hover:text-yellow-400 transition-colors">+1 (555) 000-0000</a></li>
+              <li>📱 <a href="tel:+12028155407" className="hover:text-yellow-400 transition-colors">+1 (202) 815-5407</a></li>
               <li>🕐 Mon-Fri: 9am – 6pm EST</li>
               <li className="pt-2">
                 <Link
@@ -115,7 +116,7 @@ export default function Footer() {
             </Link>
           </div>
           <p className="text-white/20 text-xs text-center">
-            © {year} JUL. All rights reserved.
+            © {year} JSL. All rights reserved.
           </p>
         </div>
       </div>

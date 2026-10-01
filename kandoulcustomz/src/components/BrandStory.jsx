@@ -56,22 +56,25 @@ export default function BrandStory() {
 
           {/* Text side */}
           <div className="order-1 lg:order-2">
-            <span className="text-xs font-bold uppercase tracking-widest text-yellow-400 mb-4 block">Our Story</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-yellow-400 mb-4 block">Our Philosophy</span>
             <h2 className="text-4xl sm:text-5xl font-black text-white mb-6 leading-tight"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              More Than a Brand.
-              <span className="block italic" style={{ color: '#C9A84C' }}>A Statement.</span>
+              Je suis là means
+              <span className="block italic" style={{ color: '#C9A84C' }}>"I am here."</span>
             </h2>
             <div className="space-y-4 text-white/60 leading-relaxed">
               <p>
-                <strong className="text-white">"Je Suis Là"</strong> — French for <em>"I Am Here."</em> Three words that carry a universe of meaning. We built JUL on a simple belief: the clothes you wear should say something about who you are.
+                In a world built to pull your attention everywhere else, those words bring you back to yourself. Be present. Move with intention. Choose quality over excess.
               </p>
               <p>
-                We design for the dreamers, the grinders, the people who show up every day and refuse to be invisible. Our pieces are made from premium organic materials — because what touches your skin should be as intentional as the life you're living.
+                <strong className="text-white">Je suis là</strong> is more than a clothing label. It is a daily practice of presence, in timeless essentials made for comfort, longevity, and calm.
               </p>
               <p>
-                Whether it's a custom hoodie for your team, a drop that marks a milestone, or a gift that makes someone feel truly seen — every piece from JUL is crafted with purpose.
+                Every piece is 100% organic cotton, from Midweight French Terry to Heavyweight Brushed Fleece and Heavyweight French Terry. No synthetic blends. Just natural fabrics for your everyday ritual.
+              </p>
+              <p>
+                A reminder to slow down, reconnect, and take care of yourself. The most important place to be is right here.
               </p>
             </div>
 

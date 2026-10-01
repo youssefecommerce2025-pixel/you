@@ -20,7 +20,7 @@ export default function ThankYou() {
       window.fbq('track', 'Purchase', {
         value: amount ? parseFloat(amount) : 55.0,
         currency: 'USD',
-        content_name: 'JUL Order'
+        content_name: 'JSL Order'
       })
     }
     if (window.ttq) {
@@ -33,8 +33,8 @@ export default function ThankYou() {
   }, [searchParams])
 
   // WhatsApp support phone number (international format)
-  const whatsappNumber = "+15550192834" // Replace with real WhatsApp Business number
-  const whatsappMessage = encodeURIComponent(`Hello JUL Team! I just placed order #${orderNumber} and wanted to check my order status / ask a question.`)
+  const whatsappNumber = "+12028155407"
+  const whatsappMessage = encodeURIComponent(`Hello JSL Team! I just placed order #${orderNumber} and wanted to check my order status / ask a question.`)
   const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${whatsappMessage}`
 
   return (
