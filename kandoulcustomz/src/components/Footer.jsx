@@ -42,7 +42,6 @@ export default function Footer() {
                 { to: '/shop#jsl-hoodie', label: 'French terry hoodie' },
                 { to: '/shop#jsl-heather-hoodie', label: 'Brushed heavyweight hood' },
                 { to: '/shop#jsl-espresso-hoodie', label: 'Heavyweight French terry espresso' },
-                { to: '/shop#custom-hoodie', label: 'Custom Hoodie' },
                 { to: '/custom-order', label: 'Custom Orders' },
                 { to: '/custom-order', label: 'Corporate Orders' },
                 { to: '/custom-order', label: 'Gift Packages' },
