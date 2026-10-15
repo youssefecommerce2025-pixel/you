@@ -52,7 +52,11 @@ function allowedReturnUrl(url) {
   try {
     const parsed = new URL(url.replace('{CHECKOUT_SESSION_ID}', 'cs_test_placeholder'))
     const host = parsed.hostname
-    return host === 'youssefecommerce2025-pixel.github.io' || host === 'localhost' || host === '127.0.0.1'
+    return host === 'jesuisla.us'
+      || host === 'www.jesuisla.us'
+      || host === 'youssefecommerce2025-pixel.github.io'
+      || host === 'localhost'
+      || host === '127.0.0.1'
   } catch {
     return false
   }
