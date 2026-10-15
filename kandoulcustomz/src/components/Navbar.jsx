@@ -33,12 +33,12 @@ export default function Navbar({ cartCount, onCartClick }) {
 
   return (
     <nav
-      className={`fixed top-8 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-10 left-0 right-0 z-50 transition-all duration-300 ${
         transparent
           ? 'bg-transparent'
           : 'bg-black/95 backdrop-blur-md shadow-lg shadow-black/20'
       }`}
-      style={{ top: '32px' }}
+      style={{ top: '40px' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between min-h-[108px] py-2 gap-4">
