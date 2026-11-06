@@ -25,7 +25,7 @@ export const products = [
       'Ethically made',
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    colors: ['Mustard', 'Black'],
+    colors: ['Black', 'Mustard'],
     photos: [
       'products/jsl-hoodie-camel-front-catalog.png',
       'products/jsl-hoodie-camel-back-catalog.png',
@@ -69,17 +69,17 @@ export const products = [
       'Ethically made',
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    colors: ['Heather', 'Grey', 'Olive Military', 'Black'],
+    colors: ['Slate', 'Ash Grey', 'Black', 'Olive Military'],
     photos: [
       'products/jsl-hoodie-heather-front-catalog.png',
       'products/jsl-hoodie-heather-back-catalog.png',
     ],
     colorPhotos: {
-      Heather: [
+      'Ash Grey': [
         'products/jsl-hoodie-heather-front-catalog.png',
         'products/jsl-hoodie-heather-back-catalog.png',
       ],
-      Grey: [
+      Slate: [
         'products/jsl-hoodie-grey-front-catalog.png',
         'products/jsl-hoodie-grey-back-catalog.png',
       ],

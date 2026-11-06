@@ -1,14 +1,25 @@
 import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiShield, FiLock, FiCheck } from 'react-icons/fi'
 import { Link, useNavigate } from 'react-router-dom'
 import { productAsset } from '../data/products'
+import { TRACKED_IDS, unitsLeft, useAvailability, variantKey } from '../data/availability'
 
 export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty, total }) {
   const navigate = useNavigate()
+  const stock = useAvailability()
   const shipping = total >= 75 ? 0 : 7.99
   const finalTotal = total + shipping
+  const blocked = stock.ready && cart.some((item) => {
+    if (!TRACKED_IDS.has(item.id)) return false
+    const key = variantKey(item.id, item.color, item.size)
+    const left = unitsLeft(stock, item.id, item.color, item.size) ?? 0
+    const used = cart
+      .filter((entry) => variantKey(entry.id, entry.color, entry.size) === key)
+      .reduce((sum, entry) => sum + entry.qty, 0)
+    return used > left
+  })
 
   const handleCheckout = () => {
-    if (!cart.length) return
+    if (!cart.length || blocked) return
     if (window.fbq) {
       window.fbq('track', 'InitiateCheckout', {
         value: finalTotal,
@@ -121,6 +132,9 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
                         {item.color && <span>• {item.color}</span>}
                       </div>
                       <div className="flex items-center justify-between mt-2">
+                        {stock.ready && TRACKED_IDS.has(item.id) && (unitsLeft(stock, item.id, item.color, item.size) ?? 0) <= 0 && (
+                          <p className="text-[11px] font-bold text-red-600 mr-2">Sold out</p>
+                        )}
                         <div className="flex items-center border border-gray-200 rounded-full bg-gray-50">
                           <button onClick={() => onUpdateQty(idx, item.qty - 1)} className="px-2 py-1 text-gray-500 hover:text-black">
                             <FiMinus size={10} />
@@ -165,9 +179,11 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
             </div>
 
             {/* Main Checkout Button */}
+            {blocked && <p className="text-xs text-red-600">One color and size in your cart is sold out. Remove it to continue.</p>}
             <button
-              className="w-full py-4 rounded-full font-black tracking-widest uppercase text-xs btn-gold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all"
+              className="w-full py-4 rounded-full font-black tracking-widest uppercase text-xs btn-gold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
               onClick={handleCheckout}
+              disabled={blocked}
             >
               <FiLock size={14} /> Continue — ${finalTotal.toFixed(2)}
             </button>

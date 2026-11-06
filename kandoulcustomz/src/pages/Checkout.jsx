@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FiLock, FiShield } from 'react-icons/fi'
 import { productAsset } from '../data/products'
+import { TRACKED_IDS, unitsLeft, useAvailability, variantKey } from '../data/availability'
 
 const US_STATES = [
   'AL','AK','AZ','AR','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME',
@@ -33,6 +34,16 @@ export default function Checkout({ cart, total }) {
   })
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const stock = useAvailability()
+  const blocked = stock.ready && cart.some((item) => {
+    if (!TRACKED_IDS.has(item.id)) return false
+    const key = variantKey(item.id, item.color, item.size)
+    const left = unitsLeft(stock, item.id, item.color, item.size) ?? 0
+    const used = cart
+      .filter((entry) => variantKey(entry.id, entry.color, entry.size) === key)
+      .reduce((sum, entry) => sum + entry.qty, 0)
+    return used > left
+  })
 
   const shipping = total >= 75 ? 0 : 7.99
   const finalTotal = total + shipping
@@ -166,10 +177,11 @@ export default function Checkout({ cart, total }) {
                 <input className={inputClass} type="email" value={form.email} onChange={set('email')} autoComplete="email" placeholder="alex@email.com" required />
               </Field>
             </div>
+            {blocked && <p className="text-sm text-red-600">One color and size in your cart is sold out. Remove it before payment.</p>}
             {error && <p className="text-sm text-red-600">{error}</p>}
             <button
               type="submit"
-              disabled={submitting}
+              disabled={submitting || blocked}
               className="w-full py-4 rounded-full font-black tracking-widest uppercase text-xs btn-gold flex items-center justify-center gap-2 shadow-lg disabled:opacity-60"
             >
               <FiLock size={14} />

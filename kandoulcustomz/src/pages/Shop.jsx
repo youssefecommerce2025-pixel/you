@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { photosForColor, products } from '../data/products'
+import { unitsLeft, useAvailability } from '../data/availability'
 import ProductGallery from '../components/ProductGallery'
 import { FiShoppingBag, FiArrowRight } from 'react-icons/fi'
 import { Link, useNavigate } from 'react-router-dom'
@@ -8,7 +9,7 @@ function colorToHex(color) {
   const map = {
     'Black': '#0A0A0A', 'White': '#F5F5F0', 'Navy': '#1B2B5E',
     'Olive Green': '#6B7C4A', 'Forest Green': '#2D5A27', 'Brown': '#8B5E3C',
-    'Tan': '#D4A47C', 'Mustard': '#C4A06A', 'Heather': '#D8D8D8', 'Grey': '#6E6E6E',
+    'Tan': '#D4A47C', 'Mustard': '#C4A06A', 'Heather': '#D8D8D8', 'Ash Grey': '#D8D8D8', 'Grey': '#6E6E6E', 'Slate': '#6E6E6E',
     'Olive Military': '#5F6840', 'Espresso': '#6A5344', 'Cream': '#F5E6D0', 'Red': '#C0392B',
     'Royal Blue': '#2E4DB4', 'Maroon': '#6D1A36', 'Gray': '#9E9E9E',
     'Yellow': '#F5C842', 'Orange': '#E67E22',
@@ -43,6 +44,7 @@ function SizeChart({ chart }) {
 
 function ProductDetail({ product, addToCart }) {
   const navigate = useNavigate()
+  const stock = useAvailability()
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState(
     product.colorPhotos ? product.colors[0] : (product.colors?.length === 1 ? product.colors[0] : '')
@@ -51,15 +53,25 @@ function ProductDetail({ product, addToCart }) {
   const [error, setError] = useState('')
   const [added, setAdded] = useState(false)
   const [activeTab, setActiveTab] = useState('details')
+  const inStock = (color, size) => (unitsLeft(stock, product.id, color, size) || 0) > 0
+  const colorHasStock = product.sizes.some((size) => inStock(selectedColor, size))
+  const selectedInStock = Boolean(selectedSize) && inStock(selectedColor, selectedSize)
+
+  useEffect(() => {
+    if (!stock.ready || !selectedSize) return
+    if ((unitsLeft(stock, product.id, selectedColor, selectedSize) || 0) <= 0) setSelectedSize('')
+  }, [stock, selectedColor, selectedSize, product.id])
 
   const handleAdd = () => {
+    if (!stock.ready) { setError('Checking availability. Please try again.'); return }
     if (!selectedSize) { setError('Please select a size'); return }
     if (!selectedColor) { setError('Please select a color'); return }
+    if (!selectedInStock) { setError('This color and size is sold out.'); return }
     if (product.logos.length > 0 && !selectedLogo) { setError('Please select a logo placement'); return }
     setError('')
     if (product.isCustom) { navigate('/custom-order'); return }
     const gallery = photosForColor(product, selectedColor)
-    addToCart({
+    const result = addToCart({
       id: product.id,
       name: product.name,
       price: product.price,
@@ -69,6 +81,7 @@ function ProductDetail({ product, addToCart }) {
       emoji: product.emoji,
       image: gallery[0],
     })
+    if (result?.error) { setError(result.error); return }
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
@@ -127,18 +140,26 @@ function ProductDetail({ product, addToCart }) {
               <button className="text-xs underline text-gray-400" onClick={() => setActiveTab('sizes')}>Size Guide</button>
             </div>
             <div className="flex flex-wrap gap-2">
-              {product.sizes.map(s => (
-                <button
-                  key={s}
-                  onClick={() => { setSelectedSize(s); setError('') }}
-                  className={`px-4 py-2 text-xs font-bold rounded-lg border-2 transition-all ${
-                    selectedSize === s ? 'bg-black text-white border-black' : 'border-gray-200 hover:border-black'
-                  }`}
-                >
-                  {s}
-                </button>
-              ))}
+              {product.sizes.map(s => {
+                const ok = inStock(selectedColor, s)
+                return (
+                  <button
+                    key={s}
+                    type="button"
+                    disabled={!stock.ready || !ok}
+                    onClick={() => { setSelectedSize(s); setError('') }}
+                    className={`px-4 py-2 text-xs font-bold rounded-lg border-2 transition-all ${
+                      !ok
+                        ? 'border-gray-100 text-gray-300 line-through cursor-not-allowed'
+                        : selectedSize === s ? 'bg-black text-white border-black' : 'border-gray-200 hover:border-black'
+                    }`}
+                  >
+                    {s}
+                  </button>
+                )
+              })}
             </div>
+            {stock.ready && !colorHasStock && <p className="text-red-600 text-xs mt-2">Sold out</p>}
           </div>
 
           {/* Colors */}
@@ -147,17 +168,21 @@ function ProductDetail({ product, addToCart }) {
               Color {selectedColor && <span className="text-red-600 font-medium normal-case">— {selectedColor}</span>}
             </p>
             <div className="flex flex-wrap gap-2">
-              {product.colors.map(c => (
-                <button
-                  key={c}
-                  onClick={() => { setSelectedColor(c); setError('') }}
-                  title={c}
-                  className={`w-8 h-8 rounded-full border-2 transition-transform hover:scale-110 ${
-                    selectedColor === c ? 'border-red-500 scale-110' : 'border-gray-200'
-                  }`}
-                  style={{ backgroundColor: colorToHex(c) }}
-                />
-              ))}
+              {product.colors.map(c => {
+                const ok = product.sizes.some((size) => inStock(c, size))
+                return (
+                  <button
+                    key={c}
+                    type="button"
+                    onClick={() => { setSelectedColor(c); setError('') }}
+                    title={ok ? c : `${c} — sold out`}
+                    className={`w-8 h-8 rounded-full border-2 transition-transform hover:scale-110 ${
+                      selectedColor === c ? 'border-red-500 scale-110' : 'border-gray-200'
+                    } ${ok ? '' : 'opacity-40'}`}
+                    style={{ backgroundColor: colorToHex(c) }}
+                  />
+                )
+              })}
             </div>
           </div>
 
@@ -192,11 +217,12 @@ function ProductDetail({ product, addToCart }) {
             ) : (
               <button
                 onClick={handleAdd}
-                className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-bold tracking-widest uppercase text-sm transition-all ${
+                disabled={!stock.ready || (stock.ready && (!colorHasStock || (selectedSize && !selectedInStock)))}
+                className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-bold tracking-widest uppercase text-sm transition-all disabled:opacity-50 ${
                   added ? 'bg-green-500 text-white' : 'btn-gold'
                 }`}
               >
-                {added ? '✓ Added to Cart!' : <><FiShoppingBag size={16} />Add to Cart</>}
+                {!stock.ready ? 'Checking availability...' : (!colorHasStock || (selectedSize && !selectedInStock)) ? 'Sold out' : added ? '✓ Added to Cart!' : <><FiShoppingBag size={16} />Add to Cart</>}
               </button>
             )}
           </div>

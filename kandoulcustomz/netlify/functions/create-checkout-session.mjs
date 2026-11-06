@@ -1,10 +1,5 @@
 import Stripe from 'stripe'
-
-const CATALOG = {
-  'jsl-hoodie': { name: 'French terry midweight organic 100% by Je suis là', amount: 5500 },
-  'jsl-heather-hoodie': { name: 'Heavyweight organic 100 % brushed hood by Je suis là', amount: 6500 },
-  'jsl-espresso-hoodie': { name: 'Heavyweight French terry espresso', amount: 6500 },
-}
+import { CATALOG, canonicalColor, checkRequested, clearUsageCache, loadUsage } from './lib/inventory.mjs'
 
 const FREE_SHIPPING_FROM = 7500
 const SHIPPING_CENTS = 799
@@ -97,20 +92,24 @@ export const handler = async (event) => {
 
   const lineItems = []
   let merchandise = 0
+  const normalized = []
 
   for (const item of items) {
     const product = CATALOG[item.id]
     if (!product) return json(400, { error: 'Unknown product' })
     const qty = Math.max(1, Math.min(20, Number(item.qty) || 1))
+    const color = canonicalColor(item.color)
+    const size = clean(item.size, 8)
+    normalized.push({ id: item.id, qty, color, size, logo: clean(item.logo, 80) })
     merchandise += product.amount * qty
-    const details = [item.size, item.color, item.logo].filter(Boolean).join(' · ')
+    const details = [size, color, clean(item.logo, 80)].filter(Boolean).join(' · ')
     lineItems.push({
       quantity: qty,
       price_data: {
         currency: 'usd',
         unit_amount: product.amount,
         product_data: {
-          name: product.name,
+          name: `${product.name} (${size} / ${color})`,
           ...(details ? { description: details } : {}),
         },
       },
@@ -127,12 +126,17 @@ export const handler = async (event) => {
 
   try {
     const stripe = new Stripe(stripeKey)
+    const usage = await loadUsage(stripe, { force: true })
+    const stock = checkRequested(normalized, usage)
+    if (stock.error) return json(409, { error: stock.error })
+    const cartMeta = JSON.stringify(normalized.map(({ id, qty, color, size }) => ({ id, qty, color, size })))
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: lineItems,
       success_url: successUrl,
       cancel_url: cancelUrl,
       customer_email: customer.email,
+      expires_at: Math.floor(Date.now() / 1000) + 31 * 60,
       metadata: {
         customer_name: fullName,
         phone: customer.phone,
@@ -140,6 +144,7 @@ export const handler = async (event) => {
         city: customer.city,
         state: customer.state,
         postal_code: customer.postalCode,
+        ...(cartMeta.length <= 500 ? { cart: cartMeta } : {}),
       },
       payment_intent_data: {
         receipt_email: customer.email,
@@ -168,6 +173,7 @@ export const handler = async (event) => {
         },
       ],
     })
+    clearUsageCache()
     return json(200, { url: session.url })
   } catch (err) {
     return json(500, { error: err.message || 'Could not start checkout' })

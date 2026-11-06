@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { TRACKED_IDS, unitsLeft, useAvailability, variantKey } from './data/availability'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import AnnouncementBar from './components/AnnouncementBar'
@@ -17,6 +18,9 @@ import ScrollToTop from './components/ScrollToTop'
 export default function App() {
   const [cart, setCart] = useState([])
   const [cartOpen, setCartOpen] = useState(false)
+  const stock = useAvailability()
+  const cartRef = useRef(cart)
+  cartRef.current = cart
 
   useEffect(() => {
     const saved = localStorage.getItem('kc_cart')
@@ -28,22 +32,34 @@ export default function App() {
   }, [cart])
 
   const addToCart = (product) => {
-    setCart(prev => {
-      const existing = prev.find(
-        i => i.id === product.id && i.size === product.size && i.color === product.color && i.logo === product.logo
-      )
-      if (existing) {
-        return prev.map(i =>
-          i.id === product.id && i.size === product.size && i.color === product.color && i.logo === product.logo
-            ? { ...i, qty: i.qty + 1 }
-            : i
-        )
+    const prev = cartRef.current
+    if (TRACKED_IDS.has(product.id)) {
+      const left = unitsLeft(stock, product.id, product.color, product.size)
+      if (left === null) return { error: 'Checking availability. Please try again.' }
+      const key = variantKey(product.id, product.color, product.size)
+      const used = prev
+        .filter((item) => variantKey(item.id, item.color, item.size) === key)
+        .reduce((sum, item) => sum + item.qty, 0)
+      if (used + 1 > left) {
+        return { error: left <= 0 ? 'This color and size is sold out.' : 'That quantity is no longer available.' }
       }
-      return [...prev, { ...product, qty: 1 }]
-    })
+    }
+    const existing = prev.find(
+      (item) => item.id === product.id && item.size === product.size && item.color === product.color && item.logo === product.logo
+    )
+    const next = existing
+      ? prev.map((item) => (
+        item.id === product.id && item.size === product.size && item.color === product.color && item.logo === product.logo
+          ? { ...item, qty: item.qty + 1 }
+          : item
+      ))
+      : [...prev, { ...product, qty: 1 }]
+    cartRef.current = next
+    setCart(next)
     setCartOpen(true)
     if (window.fbq) fbq('track', 'AddToCart', { content_name: product.name, value: product.price, currency: 'USD' })
     if (window.ttq) ttq.track('AddToCart', { content_name: product.name, value: product.price, currency: 'USD' })
+    return { ok: true }
   }
 
   const removeFromCart = (index) => {
@@ -51,8 +67,24 @@ export default function App() {
   }
 
   const updateQty = (index, qty) => {
-    if (qty < 1) { removeFromCart(index); return }
-    setCart(prev => prev.map((item, i) => i === index ? { ...item, qty } : item))
+    const prev = cartRef.current
+    if (qty < 1) {
+      cartRef.current = prev.filter((_, i) => i !== index)
+      setCart(cartRef.current)
+      return
+    }
+    const item = prev[index]
+    if (!item) return
+    if (TRACKED_IDS.has(item.id) && stock.ready) {
+      const key = variantKey(item.id, item.color, item.size)
+      const left = unitsLeft(stock, item.id, item.color, item.size) ?? 0
+      const others = prev.reduce((sum, entry, i) => (
+        i !== index && variantKey(entry.id, entry.color, entry.size) === key ? sum + entry.qty : sum
+      ), 0)
+      if (others + qty > left) return
+    }
+    cartRef.current = prev.map((entry, i) => i === index ? { ...entry, qty } : entry)
+    setCart(cartRef.current)
   }
 
   const cartCount = cart.reduce((sum, i) => sum + i.qty, 0)

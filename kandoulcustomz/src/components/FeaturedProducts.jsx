@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FiArrowRight, FiShoppingBag } from 'react-icons/fi'
 import { photosForColor, products } from '../data/products'
+import { unitsLeft, useAvailability } from '../data/availability'
 import ProductGallery from './ProductGallery'
 
 function ProductCard({ product, addToCart }) {
   const navigate = useNavigate()
+  const stock = useAvailability()
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState(
     product.colorPhotos ? product.colors[0] : (product.colors?.length === 1 ? product.colors[0] : '')
@@ -13,10 +15,20 @@ function ProductCard({ product, addToCart }) {
   const [selectedLogo, setSelectedLogo] = useState('')
   const [error, setError] = useState('')
   const [added, setAdded] = useState(false)
+  const inStock = (color, size) => (unitsLeft(stock, product.id, color, size) || 0) > 0
+  const colorHasStock = product.sizes.some((size) => inStock(selectedColor, size))
+  const selectedInStock = Boolean(selectedSize) && inStock(selectedColor, selectedSize)
+
+  useEffect(() => {
+    if (!stock.ready || !selectedSize) return
+    if ((unitsLeft(stock, product.id, selectedColor, selectedSize) || 0) <= 0) setSelectedSize('')
+  }, [stock, selectedColor, selectedSize, product.id])
 
   const handleAdd = () => {
+    if (!stock.ready) { setError('Checking availability. Please try again.'); return }
     if (!selectedSize) { setError('Please select a size'); return }
     if (!selectedColor) { setError('Please select a color'); return }
+    if (!selectedInStock) { setError('This color and size is sold out.'); return }
     if (product.logos.length > 0 && !selectedLogo) { setError('Please select a logo placement'); return }
     setError('')
 
@@ -25,7 +37,7 @@ function ProductCard({ product, addToCart }) {
       return
     }
 
-    addToCart({
+    const result = addToCart({
       id: product.id,
       name: product.name,
       price: product.price,
@@ -35,6 +47,7 @@ function ProductCard({ product, addToCart }) {
       emoji: product.emoji,
       image: photosForColor(product, selectedColor)[0],
     })
+    if (result?.error) { setError(result.error); return }
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
@@ -98,20 +111,28 @@ function ProductCard({ product, addToCart }) {
             <Link to={`/shop#${product.id}-sizes`} className="text-xs underline text-gray-400 hover:text-black">Size Guide</Link>
           </div>
           <div className="flex flex-wrap gap-1.5">
-            {product.sizes.map(size => (
-              <button
-                key={size}
-                onClick={() => { setSelectedSize(size); setError('') }}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all ${
-                  selectedSize === size
-                    ? 'bg-black text-white border-black'
-                    : 'border-gray-200 text-gray-600 hover:border-black'
-                }`}
-              >
-                {size}
-              </button>
-            ))}
+            {product.sizes.map(size => {
+              const ok = inStock(selectedColor, size)
+              return (
+                <button
+                  key={size}
+                  type="button"
+                  disabled={!stock.ready || !ok}
+                  onClick={() => { setSelectedSize(size); setError('') }}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all ${
+                    !ok
+                      ? 'border-gray-100 text-gray-300 line-through cursor-not-allowed'
+                      : selectedSize === size
+                        ? 'bg-black text-white border-black'
+                        : 'border-gray-200 text-gray-600 hover:border-black'
+                  }`}
+                >
+                  {size}
+                </button>
+              )
+            })}
           </div>
+          {stock.ready && !colorHasStock && <p className="text-red-600 text-xs mt-1.5">Sold out</p>}
         </div>
 
         {/* Color selector */}
@@ -120,17 +141,21 @@ function ProductCard({ product, addToCart }) {
             Color {selectedColor && <span className="text-red-600 font-medium normal-case">— {selectedColor}</span>}
           </p>
           <div className="flex flex-wrap gap-2">
-            {product.colors.map(color => (
-              <button
-                key={color}
-                onClick={() => { setSelectedColor(color); setError('') }}
-                className={`w-7 h-7 rounded-full border-2 transition-transform hover:scale-110 ${
-                  selectedColor === color ? 'border-red-500 scale-110' : 'border-transparent'
-                }`}
-                style={{ backgroundColor: colorToHex(color) }}
-                title={color}
-              />
-            ))}
+            {product.colors.map(color => {
+              const ok = product.sizes.some((size) => inStock(color, size))
+              return (
+                <button
+                  key={color}
+                  type="button"
+                  onClick={() => { setSelectedColor(color); setError('') }}
+                  className={`w-7 h-7 rounded-full border-2 transition-transform hover:scale-110 ${
+                    selectedColor === color ? 'border-red-500 scale-110' : 'border-transparent'
+                  } ${ok ? '' : 'opacity-40'}`}
+                  style={{ backgroundColor: colorToHex(color) }}
+                  title={ok ? color : `${color} — sold out`}
+                />
+              )
+            })}
           </div>
         </div>
 
@@ -171,13 +196,14 @@ function ProductCard({ product, addToCart }) {
           ) : (
             <button
               onClick={handleAdd}
-              className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-bold tracking-widest uppercase text-sm transition-all duration-300 ${
+              disabled={!stock.ready || (stock.ready && (!colorHasStock || (selectedSize && !selectedInStock)))}
+              className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-bold tracking-widest uppercase text-sm transition-all duration-300 disabled:opacity-50 ${
                 added
                   ? 'bg-green-500 text-white'
                   : 'btn-gold'
               }`}
             >
-              {added ? '✓ Added to Cart!' : (
+              {!stock.ready ? 'Checking availability...' : (!colorHasStock || (selectedSize && !selectedInStock)) ? 'Sold out' : added ? '✓ Added to Cart!' : (
                 <><FiShoppingBag size={14} /> Add to Cart</>
               )}
             </button>
@@ -199,7 +225,9 @@ function colorToHex(color) {
     'Tan': '#D4A47C',
     'Mustard': '#C4A06A',
     'Heather': '#D8D8D8',
+    'Ash Grey': '#D8D8D8',
     'Grey': '#6E6E6E',
+    'Slate': '#6E6E6E',
     'Olive Military': '#5F6840',
     'Espresso': '#6A5344',
     'Cream': '#F5E6D0',
