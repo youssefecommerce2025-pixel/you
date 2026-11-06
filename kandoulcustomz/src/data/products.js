@@ -27,15 +27,18 @@ export const products = [
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Black', 'Camel'],
     photos: [
-      'products/jsl-hoodie-camel-front-catalog.png',
-      'products/jsl-hoodie-camel-back-catalog.png',
+      'products/hoodie-black-wear.jpg',
+      'products/jsl-hoodie-black-front-catalog.png',
     ],
     colorPhotos: {
       Camel: [
+        'products/hoodie-camel-small.jpg',
+        'products/hoodie-camel-large.jpg',
         'products/jsl-hoodie-camel-front-catalog.png',
         'products/jsl-hoodie-camel-back-catalog.png',
       ],
       Black: [
+        'products/hoodie-black-wear.jpg',
         'products/jsl-hoodie-black-front-catalog.png',
       ],
     },
@@ -71,23 +74,27 @@ export const products = [
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Slate', 'Ash Grey', 'Black', 'Olive Military'],
     photos: [
-      'products/jsl-hoodie-heather-front-catalog.png',
-      'products/jsl-hoodie-heather-back-catalog.png',
+      'products/hoodie-slate-wear.jpg',
+      'products/jsl-hoodie-grey-front-catalog.png',
     ],
     colorPhotos: {
       'Ash Grey': [
+        'products/hoodie-ash-wear.jpg',
         'products/jsl-hoodie-heather-front-catalog.png',
         'products/jsl-hoodie-heather-back-catalog.png',
       ],
       Slate: [
+        'products/hoodie-slate-wear.jpg',
         'products/jsl-hoodie-grey-front-catalog.png',
         'products/jsl-hoodie-grey-back-catalog.png',
       ],
       'Olive Military': [
+        'products/hoodie-olive-wear.jpg',
         'products/jsl-hoodie-olive-front-catalog.png',
         'products/jsl-hoodie-olive-back-catalog.png',
       ],
       Black: [
+        'products/hoodie-black-wear.jpg',
         'products/jsl-hoodie-black-front-catalog.png',
       ],
     },
@@ -124,10 +131,12 @@ export const products = [
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Espresso'],
     photos: [
+      'products/hoodie-espresso-wear.jpg',
       'products/jsl-hoodie-espresso-front-catalog.png',
     ],
     colorPhotos: {
       Espresso: [
+        'products/hoodie-espresso-wear.jpg',
         'products/jsl-hoodie-espresso-front-catalog.png',
       ],
     },
@@ -162,12 +171,13 @@ export const products = [
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Grey', 'Black', 'Olive'],
     photos: [
-      'products/jsl_gray.jpg',
+      'products/crew-grey-stand.jpg',
+      'products/crew-grey-sit.jpg',
     ],
     colorPhotos: {
-      Grey: ['products/jsl_gray.jpg'],
-      Black: ['products/jsl_black.jpg', 'products/jsl_studio_3.jpg'],
-      Olive: ['products/jsl_olive.jpg'],
+      Grey: ['products/crew-grey-stand.jpg', 'products/crew-grey-sit.jpg', 'products/jsl_gray.jpg'],
+      Black: ['products/crew-black-sit.jpg', 'products/jsl_black.jpg', 'products/jsl_studio_3.jpg'],
+      Olive: ['products/crew-olive-stand.jpg', 'products/crew-olive-sit.jpg', 'products/jsl_olive.jpg'],
     },
     logos: ['Large Logo (Chest)', 'Small Corner Logo'],
     sizeChart: {
