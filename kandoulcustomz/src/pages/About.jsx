@@ -8,9 +8,9 @@ const values = [
 ]
 
 const team = [
-  { emoji: '👑', name: 'Founder & Creative Director', desc: 'Behind every piece is a vision: clothing that makes people feel seen, celebrated, and present.' },
-  { emoji: '🎨', name: 'Lead Designer', desc: 'Turning ideas into art. Every custom order is treated like a personal mission.' },
-  { emoji: '⚙️', name: 'Production Manager', desc: 'Making sure every piece is perfect before it leaves our hands.' },
+  { emoji: '🏡', name: 'A Family Business', desc: 'Je suis là is run by one family, not a corporation. We started it together, and we still make every decision together around the same table.' },
+  { emoji: '🧵', name: 'Made by Family Hands', desc: 'From choosing the organic cotton to checking every seam, the people who make your hoodie are the same people who answer your emails.' },
+  { emoji: '📦', name: 'Packed With Care', desc: 'Every order is folded and packed by our family before it ships, the way we would want to receive it ourselves.' },
 ]
 
 export default function About() {
@@ -102,8 +102,11 @@ export default function About() {
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">The People Behind the Brand</span>
-            <h2 className="text-4xl font-black" style={{ fontFamily: "'Playfair Display', serif" }}>Meet the Team</h2>
+            <span className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: '#D32F2F' }}>The Family Behind the Brand</span>
+            <h2 className="text-4xl font-black" style={{ fontFamily: "'Playfair Display', serif" }}>Meet the Family</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto mt-4 leading-relaxed">
+              Je suis là is a small family business. Every hoodie is designed, checked, and shipped by the same family who started the brand.
+            </p>
           </div>
           <div className="grid sm:grid-cols-3 gap-8">
             {team.map((member, i) => (
