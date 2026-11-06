@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { FiMail, FiPhone, FiClock, FiInstagram, FiSend } from 'react-icons/fi'
 
-const reasons = ['General Question', 'Order Issue / Support', 'Returns & Exchanges', 'Media & Press', 'Other']
+const reasons = ['General Question', 'Order Issue / Support', 'Returns', 'Media & Press', 'Other']
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', reason: '', message: '' })

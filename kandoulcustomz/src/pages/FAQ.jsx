@@ -27,17 +27,17 @@ const faqGroups = [
     ]
   },
   {
-    category: 'Returns & Exchanges',
+    category: 'Returns',
     icon: '↩️',
     id: 'returns',
     faqs: [
       {
         q: 'What is your return policy?',
-        a: "We offer 30-day hassle-free returns on standard (non-custom) items. Items must be unworn, unwashed, and in original condition. Contact contact@jesuisla.us to initiate a return."
+        a: "We accept returns within 30 days if the item is unworn, unwashed, and in original condition. Size exchanges are not available — please check the size chart before you order. To start a return, email contact@jesuisla.us."
       },
       {
         q: 'Can I exchange for a different size?',
-        a: "Yes! Size exchanges are free within 30 days of delivery. Just email us with your order number and the size you need. We'll send the new size as soon as we receive the original back."
+        a: "No. Size exchanges are not possible. Please use the size chart on each product page before you buy. If you have a question about fit, email contact@jesuisla.us before placing your order."
       },
       {
         q: 'My order arrived damaged. What do I do?',
