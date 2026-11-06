@@ -68,13 +68,6 @@ export default function Hero() {
             Shop the Collection
             <FiArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </Link>
-          <Link
-            to="/custom-order"
-            className="group flex items-center gap-3 px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm border-2 border-white/20 text-white hover:border-yellow-400/50 hover:text-yellow-400 transition-all duration-300"
-          >
-            Design Your Own
-            <FiArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
         </div>
 
         {/* Social proof strip */}

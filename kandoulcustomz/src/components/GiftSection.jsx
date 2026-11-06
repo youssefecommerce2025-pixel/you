@@ -38,7 +38,7 @@ export default function GiftSection() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                to="/custom-order"
+                to="/shop"
                 className="inline-flex items-center justify-center px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm btn-gold"
               >
                 🎁 Create a Gift

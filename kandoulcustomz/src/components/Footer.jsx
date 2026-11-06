@@ -42,9 +42,6 @@ export default function Footer() {
                 { to: '/shop#jsl-hoodie', label: 'French terry hoodie' },
                 { to: '/shop#jsl-heather-hoodie', label: 'Brushed heavyweight hood' },
                 { to: '/shop#jsl-espresso-hoodie', label: 'Heavyweight French terry espresso' },
-                { to: '/custom-order', label: 'Custom Orders' },
-                { to: '/custom-order', label: 'Corporate Orders' },
-                { to: '/custom-order', label: 'Gift Packages' },
               ].map(link => (
                 <li key={link.to + link.label}>
                   <Link to={link.to} className="text-white/40 hover:text-yellow-400 text-sm transition-colors">
@@ -84,15 +81,6 @@ export default function Footer() {
               <li>📧 <a href="mailto:hello@julofficial.com" className="hover:text-yellow-400 transition-colors">hello@julofficial.com</a></li>
               <li>📱 <a href="tel:+12028155407" className="hover:text-yellow-400 transition-colors">+1 (202) 815-5407</a></li>
               <li>🕐 Mon-Fri: 9am – 6pm EST</li>
-              <li className="pt-2">
-                <Link
-                  to="/custom-order"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase transition-all"
-                  style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C97A)', color: '#0A0A0A' }}
-                >
-                  Start Custom Order
-                </Link>
-              </li>
             </ul>
           </div>
         </div>

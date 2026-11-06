@@ -131,8 +131,8 @@ export default function About() {
             Whether it's a single piece or a bulk order — we're here for every story.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/custom-order" className="px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm btn-gold">
-              Start Your Order
+            <Link to="/shop" className="px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm btn-gold">
+              Shop the Collection
             </Link>
             <Link to="/contact" className="px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm border-2 border-white/20 text-white hover:border-yellow-400/50 hover:text-yellow-400 transition-all">
               Get in Touch

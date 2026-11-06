@@ -6,7 +6,6 @@ import Logo from './Logo'
 const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/shop', label: 'Shop' },
-  { to: '/custom-order', label: 'Custom Order' },
   { to: '/payment-methods', label: 'Payments' },
   { to: '/about', label: 'Our Story' },
   { to: '/faq', label: 'FAQ' },
@@ -68,16 +67,6 @@ export default function Navbar({ cartCount, onCartClick }) {
 
           {/* Actions */}
           <div className="flex items-center gap-4">
-            <Link
-              to="/custom-order"
-              className="hidden sm:inline-flex items-center px-4 py-2 text-xs font-bold tracking-widest uppercase rounded-full transition-all duration-300"
-              style={{
-                background: 'linear-gradient(135deg, #C9A84C, #E8C97A)',
-                color: '#0A0A0A',
-              }}
-            >
-              Start Custom
-            </Link>
             <button
               onClick={onCartClick}
               className="relative p-2 text-white/80 hover:text-white transition-colors"
@@ -119,13 +108,6 @@ export default function Navbar({ cartCount, onCartClick }) {
                 {link.label}
               </NavLink>
             ))}
-            <Link
-              to="/custom-order"
-              className="mt-2 text-center py-3 font-bold tracking-widest uppercase rounded-full text-sm"
-              style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C97A)', color: '#0A0A0A' }}
-            >
-              Start Your Custom Order
-            </Link>
           </div>
         </div>
       )}

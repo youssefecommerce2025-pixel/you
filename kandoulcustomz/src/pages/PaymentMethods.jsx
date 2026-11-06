@@ -123,10 +123,10 @@ export default function PaymentMethods() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                to="/custom-order"
+                to="/contact"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold tracking-widest uppercase text-xs btn-gold"
               >
-                Request Custom Order Invoice <FiArrowRight size={14} />
+                Request an Invoice <FiArrowRight size={14} />
               </Link>
               <Link
                 to="/contact"

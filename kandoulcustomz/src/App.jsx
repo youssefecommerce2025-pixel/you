@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -7,7 +7,6 @@ import CartDrawer from './components/CartDrawer'
 import EmailPopup from './components/EmailPopup'
 import Home from './pages/Home'
 import Shop from './pages/Shop'
-import CustomOrder from './pages/CustomOrder'
 import About from './pages/About'
 import FAQ from './pages/FAQ'
 import Contact from './pages/Contact'
@@ -90,7 +89,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home addToCart={addToCart} />} />
           <Route path="/shop" element={<Shop addToCart={addToCart} />} />
-          <Route path="/custom-order" element={<CustomOrder />} />
+          <Route path="/custom-order" element={<Navigate to="/shop" replace />} />
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />

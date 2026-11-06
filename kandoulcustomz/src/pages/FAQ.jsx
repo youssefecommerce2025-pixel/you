@@ -4,33 +4,6 @@ import { Link } from 'react-router-dom'
 
 const faqGroups = [
   {
-    category: 'Ordering & Customization',
-    icon: '🎨',
-    id: 'ordering',
-    faqs: [
-      {
-        q: 'Is there a minimum order quantity for custom pieces?',
-        a: "No minimum! You can order just 1 custom piece. We love personal projects as much as bulk orders. Whether it's a single birthday gift or 500 corporate hoodies — we've got you covered."
-      },
-      {
-        q: 'How does the custom order process work?',
-        a: "Simple! Fill out our custom order form with your design idea, quantity, and budget. Within 24 hours, our team will send you a free digital mockup and a detailed quote. Once you approve the design and confirm your order, we move to production."
-      },
-      {
-        q: 'Can I upload my own design or logo?',
-        a: "Absolutely. You can upload PNG, JPG, PDF, AI, or SVG files directly through our form or email them to hello@julofficial.com. The higher the resolution, the better the final product."
-      },
-      {
-        q: 'What if I don\'t have a design ready?',
-        a: "No problem at all. Our creative team can design from scratch based on your description, mood, or inspiration. Just tell us what you want to communicate and we'll create something amazing."
-      },
-      {
-        q: 'Can I customize the Je Suis Là hoodie with my own text?',
-        a: "The Je Suis Là hoodie is a signature piece, but we offer custom variations — including adding names, dates, or personalized messages. Reach out via our custom order form for details."
-      },
-    ]
-  },
-  {
     category: 'Shipping & Delivery',
     icon: '📦',
     id: 'shipping',
@@ -67,10 +40,6 @@ const faqGroups = [
         a: "Yes! Size exchanges are free within 30 days of delivery. Just email us with your order number and the size you need. We'll send the new size as soon as we receive the original back."
       },
       {
-        q: 'What about custom orders — can those be returned?',
-        a: "Custom orders are made specifically for you, so they're non-refundable by default. However, if there's a printing error, quality issue, or if the piece doesn't match your approved mockup, we will redo it or refund you — no questions asked."
-      },
-      {
         q: 'My order arrived damaged. What do I do?',
         a: "We're so sorry! Take a photo and email it to hello@julofficial.com within 48 hours of delivery. We'll send a replacement immediately at no cost to you."
       },
@@ -91,26 +60,7 @@ const faqGroups = [
       },
       {
         q: 'Do you offer plus sizes?',
-        a: "Yes! Our apparel is available in XS through 2XL as standard, and up to 3XL for custom orders. We're working on expanding our standard size range."
-      },
-    ]
-  },
-  {
-    category: 'Products & Quality',
-    icon: '💎',
-    id: 'quality',
-    faqs: [
-      {
-        q: 'What materials do you use?',
-        a: "Our Je Suis Là hoodie is made from 100% GOTS-certified organic cotton — 400gsm heavyweight fleece. Custom hoodies use the same premium organic cotton blend. All materials are ethically sourced."
-      },
-      {
-        q: 'Will the print fade after washing?',
-        a: "Our prints are designed to last. We use industry-leading screen printing and DTG techniques with fade-resistant inks. Wash inside out on cold and tumble dry low to maximize longevity. Embroidered pieces are especially durable."
-      },
-      {
-        q: 'What payment methods do you accept?',
-        a: "We accept all major credit/debit cards via Stripe (Visa, Mastercard, Amex, Discover), PayPal, Apple Pay, and Google Pay."
+        a: "Yes! Our apparel is available in XS through 2XL."
       },
     ]
   },
