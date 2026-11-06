@@ -1,20 +1,8 @@
 import { useState } from 'react'
 import { photosForColor, products } from '../data/products'
 import ProductGallery from '../components/ProductGallery'
-import { FiStar, FiShoppingBag, FiArrowRight } from 'react-icons/fi'
+import { FiShoppingBag, FiArrowRight } from 'react-icons/fi'
 import { Link, useNavigate } from 'react-router-dom'
-
-function StarRating({ rating }) {
-  return (
-    <div className="flex gap-0.5">
-      {[1,2,3,4,5].map(s => (
-        <FiStar key={s} size={12}
-          className={s <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-200 fill-gray-200'}
-        />
-      ))}
-    </div>
-  )
-}
 
 function colorToHex(color) {
   const map = {
@@ -117,10 +105,6 @@ function ProductDetail({ product, addToCart }) {
             <p className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-1">{product.badge}</p>
             <h2 className="text-2xl font-black mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>{product.name}</h2>
             <p className="text-gray-400 italic text-sm mb-3">{product.tagline}</p>
-            <div className="flex items-center gap-3">
-              <StarRating rating={5} />
-              <span className="text-sm text-gray-400">({product.reviews.length} reviews)</span>
-            </div>
           </div>
 
           {/* Price */}
@@ -233,7 +217,7 @@ function ProductDetail({ product, addToCart }) {
       {/* Tabs */}
       <div className="border-t border-gray-100">
         <div className="flex border-b border-gray-100">
-          {[['details', 'Product Details'], ['sizes', 'Size Chart'], ['reviews', `Reviews (${product.reviews.length})`], ['care', 'Care & Shipping']].map(([tab, label]) => (
+          {[['details', 'Product Details'], ['sizes', 'Size Chart'], ['care', 'Care & Shipping']].map(([tab, label]) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -265,28 +249,6 @@ function ProductDetail({ product, addToCart }) {
             <div>
               <p className="text-gray-500 text-sm mb-4">Measure yourself and compare to the chart below. When in doubt, size up.</p>
               <SizeChart chart={product.sizeChart} />
-            </div>
-          )}
-          {activeTab === 'reviews' && (
-            <div className="space-y-6">
-              {product.reviews.map((r, i) => (
-                <div key={i} className="pb-6 border-b border-gray-50 last:border-0">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white font-bold text-xs">
-                        {r.name.split(' ').map(n => n[0]).join('')}
-                      </div>
-                      <div>
-                        <p className="font-bold text-sm">{r.name}</p>
-                        <p className="text-gray-400 text-xs">{r.city}</p>
-                      </div>
-                    </div>
-                    <span className="text-gray-400 text-xs">{r.date}</span>
-                  </div>
-                  <StarRating rating={r.rating} />
-                  <p className="text-gray-600 text-sm mt-2 leading-relaxed">"{r.text}"</p>
-                </div>
-              ))}
             </div>
           )}
           {activeTab === 'care' && (

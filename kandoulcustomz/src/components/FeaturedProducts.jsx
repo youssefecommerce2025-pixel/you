@@ -1,20 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { FiStar, FiArrowRight, FiShoppingBag } from 'react-icons/fi'
+import { FiArrowRight, FiShoppingBag } from 'react-icons/fi'
 import { photosForColor, products } from '../data/products'
 import ProductGallery from './ProductGallery'
-
-function StarRating({ rating }) {
-  return (
-    <div className="flex gap-0.5">
-      {[1,2,3,4,5].map(s => (
-        <FiStar key={s} size={12}
-          className={s <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-200 fill-gray-200'}
-        />
-      ))}
-    </div>
-  )
-}
 
 function ProductCard({ product, addToCart }) {
   const navigate = useNavigate()
@@ -25,9 +13,6 @@ function ProductCard({ product, addToCart }) {
   const [selectedLogo, setSelectedLogo] = useState('')
   const [error, setError] = useState('')
   const [added, setAdded] = useState(false)
-
-  const avgRating = 4.9
-  const reviewCount = product.reviews.length
 
   const handleAdd = () => {
     if (!selectedSize) { setError('Please select a size'); return }
@@ -104,12 +89,6 @@ function ProductCard({ product, addToCart }) {
               <p className="text-gray-400 text-sm line-through">${product.comparePrice}</p>
             )}
           </div>
-        </div>
-
-        {/* Rating */}
-        <div className="flex items-center gap-2 mb-4">
-          <StarRating rating={5} />
-          <span className="text-xs text-gray-400">({reviewCount} reviews)</span>
         </div>
 
         {/* Size selector */}

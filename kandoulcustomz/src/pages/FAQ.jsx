@@ -59,8 +59,8 @@ const faqGroups = [
         a: "Each product page has a detailed size chart with measurements in inches. Click 'Size Guide' next to the size selector on any product page."
       },
       {
-        q: 'Do you offer plus sizes?',
-        a: "Yes! Our apparel is available in XS through 2XL."
+        q: 'What sizes do you offer?',
+        a: "Our hoodies are available in XS, S, M, L, and XL. XL is the largest size."
       },
     ]
   },

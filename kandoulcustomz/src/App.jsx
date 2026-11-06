@@ -4,7 +4,6 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import AnnouncementBar from './components/AnnouncementBar'
 import CartDrawer from './components/CartDrawer'
-import EmailPopup from './components/EmailPopup'
 import Home from './pages/Home'
 import Shop from './pages/Shop'
 import About from './pages/About'
@@ -18,16 +17,10 @@ import ScrollToTop from './components/ScrollToTop'
 export default function App() {
   const [cart, setCart] = useState([])
   const [cartOpen, setCartOpen] = useState(false)
-  const [showPopup, setShowPopup] = useState(false)
 
   useEffect(() => {
     const saved = localStorage.getItem('kc_cart')
     if (saved) setCart(JSON.parse(saved))
-    const timer = setTimeout(() => {
-      const dismissed = localStorage.getItem('kc_popup_dismissed')
-      if (!dismissed) setShowPopup(true)
-    }, 8000)
-    return () => clearTimeout(timer)
   }, [])
 
   useEffect(() => {
@@ -79,12 +72,6 @@ export default function App() {
         onUpdateQty={updateQty}
         total={cartTotal}
       />
-      {showPopup && (
-        <EmailPopup onClose={() => {
-          setShowPopup(false)
-          localStorage.setItem('kc_popup_dismissed', '1')
-        }} />
-      )}
       <main>
         <Routes>
           <Route path="/" element={<Home addToCart={addToCart} />} />

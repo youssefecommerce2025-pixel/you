@@ -24,7 +24,7 @@ export const products = [
       'Ribbed cuffs and hem',
       'Ethically made',
     ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Mustard', 'Black'],
     photos: [
       'products/jsl-hoodie-camel-front-catalog.png',
@@ -48,16 +48,10 @@ export const products = [
         ['M', '38-40', '28', '34'],
         ['L', '42-44', '29', '35'],
         ['XL', '46-48', '30', '36'],
-        ['2XL', '50-52', '31', '37'],
       ]
     },
     care: 'Machine wash cold, tumble dry low. Do not bleach.',
     shipping: 'Delivered in 3-7 business days across the USA. Free shipping on orders over $75.',
-    reviews: [
-      { name: 'Marcus T.', city: 'Atlanta, GA', rating: 5, text: "Best hoodie I've ever owned. The quality is insane — thick, soft, and the embroidery is clean. Got so many compliments the first day I wore it.", date: '2 weeks ago' },
-      { name: 'Jasmine R.', city: 'Houston, TX', rating: 5, text: "Ordered the olive green and I'm obsessed. The fit is perfect, true to size. Will definitely be ordering more colors!", date: '1 month ago' },
-      { name: 'DeShawn M.', city: 'Chicago, IL', rating: 5, text: "Statement piece. People ask about it everywhere I go. The 'Je Suis Là' meaning hits different once you understand it.", date: '3 weeks ago' },
-    ],
   },
   {
     id: 'jsl-heather-hoodie',
@@ -74,7 +68,7 @@ export const products = [
       'Ribbed cuffs and hem',
       'Ethically made',
     ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Heather', 'Grey', 'Olive Military', 'Black'],
     photos: [
       'products/jsl-hoodie-heather-front-catalog.png',
@@ -106,16 +100,10 @@ export const products = [
         ['M', '38-40', '28', '34'],
         ['L', '42-44', '29', '35'],
         ['XL', '46-48', '30', '36'],
-        ['2XL', '50-52', '31', '37'],
       ]
     },
     care: 'Machine wash cold, tumble dry low. Do not bleach.',
     shipping: 'Delivered in 3-7 business days across the USA. Free shipping on orders over $75.',
-    reviews: [
-      { name: 'Marcus T.', city: 'Atlanta, GA', rating: 5, text: "The heather is thick and soft. Brushed inside, holds its shape, and the chest graphic is clean.", date: '1 week ago' },
-      { name: 'Jasmine R.', city: 'Houston, TX', rating: 5, text: "Heavier than my usual hoodie and it still feels breathable. True to size.", date: '2 weeks ago' },
-      { name: 'DeShawn M.', city: 'Chicago, IL', rating: 5, text: "The heather color looks exactly like the photos. People ask about the logo every time.", date: '3 weeks ago' },
-    ],
   },
   {
     id: 'jsl-espresso-hoodie',
@@ -133,7 +121,7 @@ export const products = [
       'Ribbed cuffs and hem',
       'Ethically made',
     ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Espresso'],
     photos: [
       'products/jsl-hoodie-espresso-front-catalog.png',
@@ -152,16 +140,10 @@ export const products = [
         ['M', '38-40', '28', '34'],
         ['L', '42-44', '29', '35'],
         ['XL', '46-48', '30', '36'],
-        ['2XL', '50-52', '31', '37'],
       ]
     },
     care: 'Machine wash cold, tumble dry low. Do not bleach.',
     shipping: 'Delivered in 3-7 business days across the USA. Free shipping on orders over $75.',
-    reviews: [
-      { name: 'Marcus T.', city: 'Atlanta, GA', rating: 5, text: "The espresso brown is rich and the French terry has real weight. The chest patch looks clean.", date: '1 week ago' },
-      { name: 'Jasmine R.', city: 'Houston, TX', rating: 5, text: "True to size, soft, and it holds its shape. Easy everyday hoodie.", date: '2 weeks ago' },
-      { name: 'DeShawn M.', city: 'Chicago, IL', rating: 5, text: "Looks exactly like the studio photo. People ask about the logo.", date: '3 weeks ago' },
-    ],
   },
 ]
 

@@ -78,8 +78,8 @@ export default function Hero() {
           </div>
           <div className="hidden sm:block w-px h-10 bg-white/10" />
           <div className="text-center">
-            <p className="text-3xl font-black" style={{ color: '#C9A84C' }}>4.9★</p>
-            <p className="text-xs text-white/40 uppercase tracking-widest mt-1">Average Rating</p>
+            <p className="text-3xl font-black" style={{ color: '#C9A84C' }}>🇺🇸</p>
+            <p className="text-xs text-white/40 uppercase tracking-widest mt-1">USA Made</p>
           </div>
           <div className="hidden sm:block w-px h-10 bg-white/10" />
           <div className="text-center">

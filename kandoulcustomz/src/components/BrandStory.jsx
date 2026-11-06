@@ -31,8 +31,8 @@ export default function BrandStory() {
                     </div>
                     <div className="w-px bg-white/10" />
                     <div className="text-center">
-                      <p className="text-yellow-400 font-black text-2xl">4.9★</p>
-                      <p className="text-white/40 text-xs uppercase tracking-wider">Rated</p>
+                      <p className="text-yellow-400 font-black text-2xl">USA</p>
+                      <p className="text-white/40 text-xs uppercase tracking-wider">Made</p>
                     </div>
                   </div>
                 </div>
