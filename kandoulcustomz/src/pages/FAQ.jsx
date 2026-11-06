@@ -18,7 +18,7 @@ const faqGroups = [
       },
       {
         q: 'Do you ship internationally?',
-        a: "Currently, our primary focus is fast, premium fulfillment across the United States. For special international custom orders, contact us directly on WhatsApp."
+        a: "Currently, our primary focus is fast, premium fulfillment across the United States. For special international requests, email hello@julofficial.com."
       },
       {
         q: 'How do I track my order?',

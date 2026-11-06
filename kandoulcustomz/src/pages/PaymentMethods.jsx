@@ -132,7 +132,7 @@ export default function PaymentMethods() {
                 to="/contact"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold tracking-widest uppercase text-xs border border-white/20 hover:border-yellow-400 text-white transition-all"
               >
-                Inquire via Email / WhatsApp
+                Inquire via Email
               </Link>
             </div>
           </div>

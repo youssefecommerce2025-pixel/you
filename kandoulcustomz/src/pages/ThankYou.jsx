@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { FiCheckCircle, FiPackage, FiTruck, FiClock, FiMessageCircle, FiArrowRight, FiShield, FiShoppingBag } from 'react-icons/fi'
-import { FaWhatsapp } from 'react-icons/fa'
 
 export default function ThankYou() {
   const [searchParams] = useSearchParams()
@@ -31,11 +30,6 @@ export default function ThankYou() {
       })
     }
   }, [searchParams])
-
-  // WhatsApp support phone number (international format)
-  const whatsappNumber = "+12028155407"
-  const whatsappMessage = encodeURIComponent(`Hello JSL Team! I just placed order #${orderNumber} and wanted to check my order status / ask a question.`)
-  const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${whatsappMessage}`
 
   return (
     <div className="pt-52 pb-24 bg-gradient-to-b from-gray-50 to-white min-h-screen">
@@ -76,29 +70,6 @@ export default function ThankYou() {
                   Depending on your exact US delivery address and state location, your package will arrive safely at your doorstep within <strong>3 to 7 business days</strong>. A live USPS/FedEx tracking link will be emailed as soon as your package ships.
                 </p>
               </div>
-            </div>
-          </div>
-
-          {/* WHATSAPP CUSTOMER CARE DIRECT CTA */}
-          <div className="bg-emerald-900 text-white rounded-2xl p-6 max-w-2xl mx-auto shadow-lg mb-8 relative overflow-hidden">
-            <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="text-left">
-                <div className="flex items-center gap-2 mb-1">
-                  <FaWhatsapp size={22} className="text-emerald-400" />
-                  <span className="text-xs font-bold uppercase tracking-widest text-emerald-300">Instant VIP Support</span>
-                </div>
-                <h4 className="text-lg font-black text-white">Have a Question About Your Order?</h4>
-                <p className="text-emerald-100/80 text-xs sm:text-sm">Connect with our dedicated US customer support team directly on WhatsApp for real-time order updates.</p>
-              </div>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-gray-950 font-black text-xs uppercase tracking-wider rounded-full transition-all shadow-md hover:scale-105 flex-shrink-0"
-              >
-                <FaWhatsapp size={18} />
-                Chat on WhatsApp
-              </a>
             </div>
           </div>
 
