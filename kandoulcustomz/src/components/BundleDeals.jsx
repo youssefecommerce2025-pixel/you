@@ -56,12 +56,12 @@ export default function BundleDeals({ addToCart }) {
 
   return (
     <section className="section-padding bg-gradient-to-b from-gray-900 to-black text-white relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-red-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 text-xs font-black uppercase tracking-widest mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/10 border border-red-500/30 text-red-500 text-xs font-black uppercase tracking-widest mb-4">
             <FiPercent /> Best Value Bundles • Limited US Stock
           </div>
           <h2 className="text-3xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
@@ -79,12 +79,12 @@ export default function BundleDeals({ addToCart }) {
               onClick={() => setSelectedBundle(b.id)}
               className={`rounded-3xl p-6 sm:p-8 border-2 transition-all cursor-pointer relative flex flex-col justify-between ${
                 selectedBundle === b.id
-                  ? 'border-yellow-400 bg-white/10 shadow-2xl scale-[1.02]'
+                  ? 'border-red-500 bg-white/10 shadow-2xl scale-[1.02]'
                   : 'border-white/10 bg-white/5 hover:border-white/30'
               }`}
             >
               {b.popular && (
-                <span className="absolute -top-3 right-6 bg-gradient-to-r from-yellow-500 to-yellow-300 text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-md">
+                <span className="absolute -top-3 right-6 bg-gradient-to-r from-red-500 to-red-300 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-md">
                   Most Popular Pack
                 </span>
               )}
@@ -94,7 +94,7 @@ export default function BundleDeals({ addToCart }) {
                   <span className="text-3xl">{b.emoji}</span>
                   <div className="text-right">
                     <span className="text-xs text-white/40 line-through mr-2">${b.originalPrice}</span>
-                    <span className="text-2xl font-black text-yellow-400">${b.bundlePrice}</span>
+                    <span className="text-2xl font-black text-red-500">${b.bundlePrice}</span>
                   </div>
                 </div>
 
@@ -106,7 +106,7 @@ export default function BundleDeals({ addToCart }) {
                 <ul className="space-y-2 mb-6">
                   {b.items.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-xs text-white/80">
-                      <FiCheck className="text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <FiCheck className="text-red-500 mt-0.5 flex-shrink-0" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -115,7 +115,7 @@ export default function BundleDeals({ addToCart }) {
 
               <div className="pt-4 border-t border-white/10 flex items-center justify-between">
                 <span className="text-xs text-white/50">3 to 7 Days Delivery</span>
-                <span className="text-xs font-bold text-yellow-400">
+                <span className="text-xs font-bold text-red-500">
                   {selectedBundle === b.id ? '✓ Selected' : 'Click to Select'}
                 </span>
               </div>
@@ -133,7 +133,7 @@ export default function BundleDeals({ addToCart }) {
             {added ? '✓ Bundle Added to Cart!' : `Add Selected Bundle — $${currentBundle.bundlePrice}`}
           </button>
           <p className="text-[11px] text-white/40 mt-3 flex items-center justify-center gap-2">
-            <FiShield className="text-yellow-400" /> 100% Cotton • Free Tracked US Delivery • 30-Day Money-Back
+            <FiShield className="text-red-500" /> 100% Cotton • Free Tracked US Delivery • 30-Day Money-Back
           </p>
         </div>
       </div>

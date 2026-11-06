@@ -55,7 +55,7 @@ export default function Navbar({ cartCount, onCartClick }) {
                 className={({ isActive }) =>
                   `text-sm font-medium tracking-wide transition-colors duration-200 ${
                     isActive
-                      ? 'text-yellow-400'
+                      ? 'text-red-500'
                       : 'text-white/80 hover:text-white'
                   }`
                 }
@@ -74,7 +74,7 @@ export default function Navbar({ cartCount, onCartClick }) {
             >
               <FiShoppingBag size={22} />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-yellow-400 text-black text-xs font-black w-5 h-5 rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-black w-5 h-5 rounded-full flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
@@ -101,7 +101,7 @@ export default function Navbar({ cartCount, onCartClick }) {
                 end={link.to === '/'}
                 className={({ isActive }) =>
                   `text-base font-medium tracking-wide py-2 border-b border-white/10 ${
-                    isActive ? 'text-yellow-400' : 'text-white/80'
+                    isActive ? 'text-red-500' : 'text-white/80'
                   }`
                 }
               >

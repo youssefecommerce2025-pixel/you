@@ -59,16 +59,16 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
         </div>
 
         {/* Free shipping progress */}
-        <div className="px-6 py-3 bg-amber-50/50 border-b border-amber-100 text-xs">
+        <div className="px-6 py-3 bg-red-50/50 border-b border-red-100 text-xs">
           {total < 75 ? (
             <div>
-              <div className="flex justify-between font-semibold text-amber-900 mb-1.5">
+              <div className="flex justify-between font-semibold text-red-900 mb-1.5">
                 <span>Add ${(75 - total).toFixed(2)} more for FREE US Shipping!</span>
                 <span>{Math.min(100, Math.round((total / 75) * 100))}%</span>
               </div>
-              <div className="w-full bg-amber-200/60 h-2 rounded-full overflow-hidden">
+              <div className="w-full bg-red-200/60 h-2 rounded-full overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-yellow-500 to-yellow-400 h-full rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-red-500 to-red-500 h-full rounded-full transition-all duration-300"
                   style={{ width: `${Math.min(100, (total / 75) * 100)}%` }}
                 />
               </div>
@@ -160,7 +160,7 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
               </div>
               <div className="flex justify-between items-center text-base font-black text-gray-950 pt-2 border-t border-gray-100">
                 <span>Total</span>
-                <span className="text-xl" style={{ color: '#C9A84C' }}>${finalTotal.toFixed(2)}</span>
+                <span className="text-xl" style={{ color: '#CC3731' }}>${finalTotal.toFixed(2)}</span>
               </div>
             </div>
 
@@ -180,7 +180,7 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
               <Link
                 to="/payment-methods"
                 onClick={onClose}
-                className="text-[11px] text-yellow-600 hover:text-yellow-700 font-semibold underline"
+                className="text-[11px] text-red-600 hover:text-red-700 font-semibold underline"
               >
                 View Payment Security Details
               </Link>

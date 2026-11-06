@@ -2,9 +2,9 @@
 
 @layer base {
   :root {
-    --gold: #C9A84C;
-    --gold-light: #E8C97A;
-    --gold-dark: #9E7B2E;
+    --gold: #CC3731;
+    --gold-light: #E2574C;
+    --gold-dark: #9E2420;
     --black: #0A0A0A;
     --off-white: #F9F6F0;
     --gray-light: #F5F5F5;
@@ -28,28 +28,28 @@
 
 @layer utilities {
   .gold-gradient {
-    background: linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #9E7B2E 100%);
+    background: linear-gradient(135deg, #CC3731 0%, #E2574C 50%, #9E2420 100%);
   }
   .text-gold {
-    color: #C9A84C;
+    color: #CC3731;
   }
   .bg-gold {
-    background-color: #C9A84C;
+    background-color: #CC3731;
   }
   .border-gold {
-    border-color: #C9A84C;
+    border-color: #CC3731;
   }
   .btn-gold {
-    background: linear-gradient(135deg, #C9A84C, #E8C97A);
-    color: #0A0A0A;
+    background: linear-gradient(135deg, #CC3731, #E2574C);
+    color: #FFFFFF;
     font-weight: 700;
     letter-spacing: 0.05em;
     transition: all 0.3s ease;
   }
   .btn-gold:hover {
-    background: linear-gradient(135deg, #9E7B2E, #C9A84C);
+    background: linear-gradient(135deg, #9E2420, #CC3731);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(201, 168, 76, 0.4);
+    box-shadow: 0 8px 25px rgba(204, 55, 49, 0.4);
   }
   .btn-black {
     background-color: #0A0A0A;
@@ -90,7 +90,7 @@
   background: #f1f1f1;
 }
 ::-webkit-scrollbar-thumb {
-  background: #C9A84C;
+  background: #CC3731;
   border-radius: 3px;
 }
 

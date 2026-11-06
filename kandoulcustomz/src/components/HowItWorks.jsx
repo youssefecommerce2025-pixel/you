@@ -31,7 +31,7 @@ export default function HowItWorks() {
     <section className="section-padding bg-white" id="how-it-works">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-14">
-          <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">The Process</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-red-600 mb-3 block">The Process</span>
           <h2 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
             Simple. Personal. Perfect.
           </h2>
@@ -42,7 +42,7 @@ export default function HowItWorks() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
           {/* Connector line (desktop) */}
-          <div className="hidden lg:block absolute top-14 left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-transparent via-yellow-300 to-transparent" />
+          <div className="hidden lg:block absolute top-14 left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-transparent via-red-300 to-transparent" />
 
           {steps.map((step, i) => (
             <div key={i} className="relative flex flex-col items-center text-center group">
@@ -56,7 +56,7 @@ export default function HowItWorks() {
                 </div>
                 <span
                   className="absolute -top-2 -right-2 text-xs font-black w-6 h-6 rounded-full flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C97A)', color: '#0A0A0A' }}
+                  style={{ background: 'linear-gradient(135deg, #CC3731, #E2574C)', color: '#FFFFFF' }}
                 >
                   {i + 1}
                 </span>

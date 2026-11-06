@@ -14,7 +14,7 @@ export default function Newsletter() {
   }
 
   return (
-    <section className="py-20 px-4" style={{ background: 'linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #9E7B2E 100%)' }}>
+    <section className="py-20 px-4" style={{ background: 'linear-gradient(135deg, #CC3731 0%, #E2574C 50%, #9E2420 100%)' }}>
       <div className="max-w-2xl mx-auto text-center">
         <span className="text-xs font-bold uppercase tracking-widest text-black/50 mb-4 block">VIP Access</span>
         <h2 className="text-3xl sm:text-4xl font-black text-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>

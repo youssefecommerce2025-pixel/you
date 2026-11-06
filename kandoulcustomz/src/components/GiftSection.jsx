@@ -17,10 +17,10 @@ export default function GiftSection() {
       <div className="max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-4 block">Perfect For Every Occasion</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-red-600 mb-4 block">Perfect For Every Occasion</span>
             <h2 className="text-4xl sm:text-5xl font-black mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
               The Gift That
-              <span className="block italic" style={{ color: '#C9A84C' }}>Actually Wows Them.</span>
+              <span className="block italic" style={{ color: '#CC3731' }}>Actually Wows Them.</span>
             </h2>
             <p className="text-gray-600 text-lg leading-relaxed mb-8">
               Stop giving generic gifts. Give something that shows you actually thought about it — a personalized piece they'll wear, remember, and cherish for years.
@@ -29,7 +29,7 @@ export default function GiftSection() {
             {/* Occasions grid */}
             <div className="grid grid-cols-4 gap-3 mb-10">
               {occasions.map((occ, i) => (
-                <div key={i} className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-gray-50 hover:bg-yellow-50 transition-colors cursor-default">
+                <div key={i} className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-gray-50 hover:bg-red-50 transition-colors cursor-default">
                   <span className="text-2xl">{occ.icon}</span>
                   <span className="text-xs font-medium text-gray-600 text-center leading-tight">{occ.label}</span>
                 </div>

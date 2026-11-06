@@ -17,17 +17,17 @@ export default function Footer() {
             </p>
             <div className="flex gap-4 mt-6">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-yellow-400 hover:border-yellow-400/50 transition-colors">
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-red-500 hover:border-red-500/50 transition-colors">
                 <FiInstagram size={18} />
               </a>
               <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-yellow-400 hover:border-yellow-400/50 transition-colors">
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-red-500 hover:border-red-500/50 transition-colors">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.78a8.18 8.18 0 004.78 1.54V6.87a4.85 4.85 0 01-1.02-.18z"/>
                 </svg>
               </a>
               <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-yellow-400 hover:border-yellow-400/50 transition-colors">
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-red-500 hover:border-red-500/50 transition-colors">
                 <FiYoutube size={18} />
               </a>
             </div>
@@ -44,7 +44,7 @@ export default function Footer() {
                 { to: '/shop#jsl-espresso-hoodie', label: 'Heavyweight French terry espresso' },
               ].map(link => (
                 <li key={link.to + link.label}>
-                  <Link to={link.to} className="text-white/40 hover:text-yellow-400 text-sm transition-colors">
+                  <Link to={link.to} className="text-white/40 hover:text-red-500 text-sm transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -66,7 +66,7 @@ export default function Footer() {
                 { to: '/faq#sizing', label: 'Size Guide' },
               ].map(link => (
                 <li key={link.to + link.label}>
-                  <Link to={link.to} className="text-white/40 hover:text-yellow-400 text-sm transition-colors">
+                  <Link to={link.to} className="text-white/40 hover:text-red-500 text-sm transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -78,8 +78,8 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-5">Contact</h4>
             <ul className="space-y-3 text-white/40 text-sm">
-              <li>📧 <a href="mailto:contact@jesuisla.us" className="hover:text-yellow-400 transition-colors">contact@jesuisla.us</a></li>
-              <li>📱 <a href="tel:+15713063193" className="hover:text-yellow-400 transition-colors">(571) 306-3193</a></li>
+              <li>📧 <a href="mailto:contact@jesuisla.us" className="hover:text-red-500 transition-colors">contact@jesuisla.us</a></li>
+              <li>📱 <a href="tel:+15713063193" className="hover:text-red-500 transition-colors">(571) 306-3193</a></li>
               <li>🕐 Mon-Fri: 9am – 6pm EST</li>
             </ul>
           </div>
@@ -90,16 +90,16 @@ export default function Footer() {
       <div className="border-t border-white/5 py-6">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
-            <Link to="/payment-methods" className="text-white/40 hover:text-yellow-400 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
+            <Link to="/payment-methods" className="text-white/40 hover:text-red-500 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
               🔒 Stripe Verified
             </Link>
-            <Link to="/payment-methods" className="text-white/40 hover:text-yellow-400 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
+            <Link to="/payment-methods" className="text-white/40 hover:text-red-500 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
               💳 Visa / Mastercard / Amex
             </Link>
-            <Link to="/payment-methods" className="text-white/40 hover:text-yellow-400 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
+            <Link to="/payment-methods" className="text-white/40 hover:text-red-500 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
               🅿️ PayPal Protected
             </Link>
-            <Link to="/payment-methods" className="text-white/40 hover:text-yellow-400 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
+            <Link to="/payment-methods" className="text-white/40 hover:text-red-500 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
               🍎 Apple Pay & Google Pay
             </Link>
           </div>

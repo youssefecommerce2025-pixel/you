@@ -20,7 +20,7 @@ export default function BrandStory() {
                       alt="Je suis là"
                       className="w-full max-w-[280px] mx-auto object-contain"
                     />
-                    <p className="text-yellow-400 text-sm mt-4 italic font-medium">
+                    <p className="text-red-500 text-sm mt-4 italic font-medium">
                       "I Am Here."
                     </p>
                   </div>
@@ -31,7 +31,7 @@ export default function BrandStory() {
                     </div>
                     <div className="w-px bg-white/10" />
                     <div className="text-center">
-                      <p className="text-yellow-400 font-black text-2xl">USA</p>
+                      <p className="text-red-500 font-black text-2xl">USA</p>
                       <p className="text-white/40 text-xs uppercase tracking-wider">Made</p>
                     </div>
                   </div>
@@ -46,22 +46,22 @@ export default function BrandStory() {
 
               {/* Floating badge 2 */}
               <div className="absolute -bottom-4 -left-4 rounded-2xl px-4 py-3 shadow-xl"
-                style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C97A)' }}
+                style={{ background: 'linear-gradient(135deg, #CC3731, #E2574C)' }}
               >
-                <p className="text-xs text-black/60 font-medium">Made in the</p>
-                <p className="text-black font-black">USA</p>
+                <p className="text-xs text-white/80 font-medium">Made in the</p>
+                <p className="text-white font-black">USA</p>
               </div>
             </div>
           </div>
 
           {/* Text side */}
           <div className="order-1 lg:order-2">
-            <span className="text-xs font-bold uppercase tracking-widest text-yellow-400 mb-4 block">Our Philosophy</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-red-500 mb-4 block">Our Philosophy</span>
             <h2 className="text-4xl sm:text-5xl font-black text-white mb-6 leading-tight"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
               Je suis là means
-              <span className="block italic" style={{ color: '#C9A84C' }}>"I am here."</span>
+              <span className="block italic" style={{ color: '#CC3731' }}>"I am here."</span>
             </h2>
             <div className="space-y-4 text-white/60 leading-relaxed">
               <p>
@@ -87,7 +87,7 @@ export default function BrandStory() {
               </Link>
               <Link
                 to="/shop"
-                className="inline-flex items-center justify-center px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm border-2 border-white/20 text-white hover:border-yellow-400/50 hover:text-yellow-400 transition-all"
+                className="inline-flex items-center justify-center px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm border-2 border-white/20 text-white hover:border-red-500/50 hover:text-red-500 transition-all"
               >
                 Shop Now
               </Link>

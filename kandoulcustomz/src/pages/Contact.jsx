@@ -20,7 +20,7 @@ export default function Contact() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-14">
-          <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">Get In Touch</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-red-600 mb-3 block">Get In Touch</span>
           <h1 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
             We're Here For You
           </h1>
@@ -57,7 +57,7 @@ export default function Contact() {
             ].map((item, i) => (
               <div key={i} className="bg-white rounded-2xl p-6 border border-gray-100 flex gap-4">
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 text-yellow-400"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 text-red-500"
                   style={{ background: '#0A0A0A' }}
                 >
                   {item.icon}
@@ -66,7 +66,7 @@ export default function Contact() {
                   <p className="font-bold text-sm">{item.title}</p>
                   <p className="text-gray-400 text-xs mb-1">{item.sub}</p>
                   {item.href ? (
-                    <a href={item.href} className="text-sm font-medium hover:text-yellow-600 transition-colors">
+                    <a href={item.href} className="text-sm font-medium hover:text-red-600 transition-colors">
                       {item.detail}
                     </a>
                   ) : (
@@ -88,9 +88,9 @@ export default function Contact() {
                   },
                 ].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-white/60 hover:text-yellow-400 transition-colors"
+                    className="flex items-center gap-3 text-white/60 hover:text-red-500 transition-colors"
                   >
-                    <span className="text-yellow-400">{s.icon}</span>
+                    <span className="text-red-500">{s.icon}</span>
                     <div>
                       <p className="text-sm font-medium">{s.label}</p>
                       <p className="text-xs text-white/30">{s.sub}</p>
@@ -133,7 +133,7 @@ export default function Contact() {
                         onChange={e => update('name', e.target.value)}
                         placeholder="John Smith"
                         required
-                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition-colors"
+                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition-colors"
                       />
                     </div>
                     <div>
@@ -144,7 +144,7 @@ export default function Contact() {
                         onChange={e => update('email', e.target.value)}
                         placeholder="john@example.com"
                         required
-                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition-colors"
+                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition-colors"
                       />
                     </div>
                   </div>
@@ -156,7 +156,7 @@ export default function Contact() {
                       value={form.phone}
                       onChange={e => update('phone', e.target.value)}
                       placeholder="(571) 306-3193"
-                      className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition-colors"
+                      className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition-colors"
                     />
                   </div>
 
@@ -186,7 +186,7 @@ export default function Contact() {
                       placeholder="Tell us everything! The more details you share, the better we can help you."
                       rows={5}
                       required
-                      className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition-colors resize-none"
+                      className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition-colors resize-none"
                     />
                   </div>
 

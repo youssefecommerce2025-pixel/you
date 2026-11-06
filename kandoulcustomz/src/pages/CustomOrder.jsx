@@ -110,7 +110,7 @@ export default function CustomOrder() {
               {uploadedFile && (
                 <div className="flex justify-between">
                   <span className="text-gray-500">File attached:</span>
-                  <span className="font-medium text-yellow-700 truncate max-w-[160px]">{uploadedFile.name}</span>
+                  <span className="font-medium text-red-700 truncate max-w-[160px]">{uploadedFile.name}</span>
                 </div>
               )}
             </div>
@@ -133,7 +133,7 @@ export default function CustomOrder() {
 
         {/* Header */}
         <div className="text-center mb-14">
-          <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">Get a Free Quote</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-red-600 mb-3 block">Get a Free Quote</span>
           <h1 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
             Design Your Custom Order
           </h1>
@@ -162,7 +162,7 @@ export default function CustomOrder() {
               <div
                 key={s}
                 className={`flex-1 py-4 text-center text-xs font-bold uppercase tracking-wider transition-colors ${
-                  step === s ? 'bg-black text-white' : step > s ? 'bg-yellow-400 text-black' : 'text-gray-400'
+                  step === s ? 'bg-black text-white' : step > s ? 'bg-red-500 text-white' : 'text-gray-400'
                 }`}
               >
                 {step > s ? '✓' : `Step ${s}`}
@@ -216,7 +216,7 @@ export default function CustomOrder() {
                           }
                         }}
                         placeholder="e.g. 25"
-                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold focus:outline-none focus:border-yellow-400 transition-colors pr-16"
+                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold focus:outline-none focus:border-red-500 transition-colors pr-16"
                       />
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-400 font-medium pointer-events-none">
                         pcs
@@ -251,12 +251,12 @@ export default function CustomOrder() {
                     type="date"
                     value={form.deadline}
                     onChange={e => update('deadline', e.target.value)}
-                    className="w-full sm:w-64 border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400"
+                    className="w-full sm:w-64 border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500"
                   />
                 </div>
 
                 {/* Gift options */}
-                <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6">
+                <div className="bg-red-50 border border-red-200 rounded-2xl p-6">
                   <p className="font-bold text-sm mb-4">🎁 Gift Options</p>
                   <div className="space-y-3">
                     {[
@@ -268,7 +268,7 @@ export default function CustomOrder() {
                           type="checkbox"
                           checked={form[field]}
                           onChange={e => update(field, e.target.checked)}
-                          className="w-4 h-4 accent-yellow-400"
+                          className="w-4 h-4 accent-red-500"
                         />
                         <span className="text-sm text-gray-700">{label}</span>
                       </label>
@@ -322,7 +322,7 @@ export default function CustomOrder() {
                     value={form.colors}
                     onChange={e => update('colors', e.target.value)}
                     placeholder="e.g. Black hoodie, white logo, gold accents"
-                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400"
+                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500"
                   />
                 </div>
 
@@ -336,7 +336,7 @@ export default function CustomOrder() {
                     onChange={e => update('description', e.target.value)}
                     placeholder="Tell us everything! What's the occasion? What message do you want to communicate? Any specific text, images, or ideas?"
                     rows={5}
-                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 resize-none"
+                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 resize-none"
                   />
                 </div>
 
@@ -348,7 +348,7 @@ export default function CustomOrder() {
                     value={form.occasion}
                     onChange={e => update('occasion', e.target.value)}
                     placeholder="e.g. Company team hoodies, birthday gift, graduation, sports team..."
-                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400"
+                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500"
                   />
                 </div>
 
@@ -372,11 +372,11 @@ export default function CustomOrder() {
                   {!uploadedFile && (
                     <label
                       htmlFor="logo-upload"
-                      className="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-2xl p-10 text-center cursor-pointer hover:border-yellow-400 hover:bg-yellow-50/30 transition-all group"
+                      className="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-2xl p-10 text-center cursor-pointer hover:border-red-500 hover:bg-red-50/30 transition-all group"
                     >
                       <FiUpload
                         size={36}
-                        className="text-gray-300 group-hover:text-yellow-500 mb-3 transition-colors"
+                        className="text-gray-300 group-hover:text-red-500 mb-3 transition-colors"
                       />
                       <p className="font-bold text-sm text-gray-700 mb-1">
                         Click here to upload your file
@@ -384,10 +384,10 @@ export default function CustomOrder() {
                       <p className="text-xs text-gray-400">
                         PNG, JPG, PDF, SVG, AI, EPS, PSD — Max 10MB
                       </p>
-                      <span className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black text-white text-xs font-bold tracking-wider uppercase group-hover:bg-yellow-500 group-hover:text-black transition-all">
+                      <span className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black text-white text-xs font-bold tracking-wider uppercase group-hover:bg-red-500 group-hover:text-white transition-all">
                         <FiUpload size={12} /> Browse Files
                       </span>
-                      <p className="text-xs text-yellow-600 mt-3 font-medium">
+                      <p className="text-xs text-red-600 mt-3 font-medium">
                         No file? Send it later to contact@jesuisla.us
                       </p>
                     </label>
@@ -395,7 +395,7 @@ export default function CustomOrder() {
 
                   {/* File selected — show preview */}
                   {uploadedFile && (
-                    <div className="border-2 border-yellow-300 bg-yellow-50/40 rounded-2xl p-5 flex items-start gap-4">
+                    <div className="border-2 border-red-300 bg-red-50/40 rounded-2xl p-5 flex items-start gap-4">
                       {/* Thumbnail or icon */}
                       <div className="w-16 h-16 rounded-xl bg-white border border-gray-200 flex items-center justify-center flex-shrink-0 overflow-hidden shadow-sm">
                         {uploadPreview ? (
@@ -419,7 +419,7 @@ export default function CustomOrder() {
                           {/* Replace file */}
                           <label
                             htmlFor="logo-upload"
-                            className="text-xs font-bold text-yellow-700 hover:text-yellow-900 cursor-pointer underline"
+                            className="text-xs font-bold text-red-700 hover:text-red-900 cursor-pointer underline"
                           >
                             Replace file
                           </label>
@@ -482,7 +482,7 @@ export default function CustomOrder() {
                         onChange={e => update(field, e.target.value)}
                         placeholder={placeholder}
                         required={required}
-                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400"
+                        className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500"
                       />
                     </div>
                   ))}
@@ -506,7 +506,7 @@ export default function CustomOrder() {
                   </div>
                 </div>
 
-                <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-4 text-sm text-yellow-800">
+                <div className="bg-red-50 border border-red-200 rounded-2xl p-4 text-sm text-red-800">
                   <p className="font-bold mb-1">What happens next?</p>
                   <ul className="space-y-1 text-xs">
                     <li>✓ We review your request within 24 hours</li>

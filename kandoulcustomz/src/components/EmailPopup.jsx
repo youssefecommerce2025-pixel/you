@@ -50,7 +50,7 @@ export default function EmailPopup({ onClose }) {
                     onChange={e => setEmail(e.target.value)}
                     placeholder="Enter your email address"
                     required
-                    className="w-full pl-11 pr-4 py-3.5 border-2 border-gray-200 rounded-full text-sm focus:outline-none focus:border-yellow-400 transition-colors"
+                    className="w-full pl-11 pr-4 py-3.5 border-2 border-gray-200 rounded-full text-sm focus:outline-none focus:border-red-500 transition-colors"
                   />
                 </div>
                 <button

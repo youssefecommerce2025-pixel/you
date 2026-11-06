@@ -102,14 +102,14 @@ function ProductDetail({ product, addToCart }) {
         <div className="p-8 flex flex-col">
           {/* Header */}
           <div className="mb-4">
-            <p className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-1">{product.badge}</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-red-600 mb-1">{product.badge}</p>
             <h2 className="text-2xl font-black mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>{product.name}</h2>
             <p className="text-gray-400 italic text-sm mb-3">{product.tagline}</p>
           </div>
 
           {/* Price */}
           <div className="flex items-center gap-3 mb-6 py-4 border-y border-gray-100">
-            <span className="text-3xl font-black" style={{ color: '#C9A84C' }}>${product.price}</span>
+            <span className="text-3xl font-black" style={{ color: '#CC3731' }}>${product.price}</span>
             {product.comparePrice && (
               <span className="text-xl text-gray-400 line-through">${product.comparePrice}</span>
             )}
@@ -144,7 +144,7 @@ function ProductDetail({ product, addToCart }) {
           {/* Colors */}
           <div className="mb-4">
             <p className="text-xs font-bold uppercase tracking-wide text-gray-700 mb-2">
-              Color {selectedColor && <span className="text-yellow-600 font-medium normal-case">— {selectedColor}</span>}
+              Color {selectedColor && <span className="text-red-600 font-medium normal-case">— {selectedColor}</span>}
             </p>
             <div className="flex flex-wrap gap-2">
               {product.colors.map(c => (
@@ -153,7 +153,7 @@ function ProductDetail({ product, addToCart }) {
                   onClick={() => { setSelectedColor(c); setError('') }}
                   title={c}
                   className={`w-8 h-8 rounded-full border-2 transition-transform hover:scale-110 ${
-                    selectedColor === c ? 'border-yellow-400 scale-110' : 'border-gray-200'
+                    selectedColor === c ? 'border-red-500 scale-110' : 'border-gray-200'
                   }`}
                   style={{ backgroundColor: colorToHex(c) }}
                 />
@@ -223,7 +223,7 @@ function ProductDetail({ product, addToCart }) {
               onClick={() => setActiveTab(tab)}
               className={`flex-1 py-4 text-xs font-bold uppercase tracking-wider transition-colors ${
                 activeTab === tab
-                  ? 'border-b-2 border-yellow-400 text-black'
+                  ? 'border-b-2 border-red-500 text-black'
                   : 'text-gray-400 hover:text-black'
               }`}
             >
@@ -238,7 +238,7 @@ function ProductDetail({ product, addToCart }) {
               <ul className="space-y-2">
                 {product.features.map((f, i) => (
                   <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
-                    <span className="text-yellow-500 mt-0.5 flex-shrink-0">✓</span>
+                    <span className="text-red-500 mt-0.5 flex-shrink-0">✓</span>
                     {f}
                   </li>
                 ))}
@@ -271,7 +271,7 @@ export default function Shop({ addToCart }) {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">The Collection</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-red-600 mb-3 block">The Collection</span>
           <h1 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
             Shop JSL
           </h1>

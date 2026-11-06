@@ -19,10 +19,10 @@ export default function About() {
       {/* Hero */}
       <section className="pb-20 text-center px-4">
         <div className="max-w-4xl mx-auto">
-          <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-4 block">Our Story</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-red-600 mb-4 block">Our Story</span>
           <h1 className="text-5xl sm:text-6xl font-black mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
             We Started With
-            <span className="block italic" style={{ color: '#C9A84C' }}>Three Words.</span>
+            <span className="block italic" style={{ color: '#CC3731' }}>Three Words.</span>
           </h1>
           <p className="text-gray-500 text-xl max-w-2xl mx-auto leading-relaxed">
             <em>"Je Suis Là."</em> — I Am Here. That's the heartbeat of everything we do.
@@ -46,17 +46,17 @@ export default function About() {
                     alt="Je suis là"
                     className="w-full max-w-[340px] object-contain mb-4"
                   />
-                  <p className="text-yellow-400 text-lg font-medium">"I Am Here."</p>
+                  <p className="text-red-500 text-lg font-medium">"I Am Here."</p>
                 </div>
-                <div className="absolute -bottom-4 -right-4 bg-yellow-400 rounded-2xl px-4 py-3 shadow-xl">
-                  <p className="text-black font-black text-sm">Made in USA</p>
+                <div className="absolute -bottom-4 -right-4 bg-red-500 rounded-2xl px-4 py-3 shadow-xl">
+                  <p className="text-white font-black text-sm">Made in USA</p>
                 </div>
               </div>
             </div>
 
             {/* Story text */}
             <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-yellow-400 mb-4 block">Our Philosophy</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-red-500 mb-4 block">Our Philosophy</span>
               <h2 className="text-3xl sm:text-4xl font-black text-white mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
                 I am here.
               </h2>
@@ -83,7 +83,7 @@ export default function About() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">What We Stand For</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-red-600 mb-3 block">What We Stand For</span>
             <h2 className="text-4xl font-black" style={{ fontFamily: "'Playfair Display', serif" }}>Our Values</h2>
           </div>
           <div className="grid sm:grid-cols-2 gap-6">
@@ -137,7 +137,7 @@ export default function About() {
             <Link to="/shop" className="px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm btn-gold">
               Shop the Collection
             </Link>
-            <Link to="/contact" className="px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm border-2 border-white/20 text-white hover:border-yellow-400/50 hover:text-yellow-400 transition-all">
+            <Link to="/contact" className="px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm border-2 border-white/20 text-white hover:border-red-500/50 hover:text-red-500 transition-all">
               Get in Touch
             </Link>
           </div>

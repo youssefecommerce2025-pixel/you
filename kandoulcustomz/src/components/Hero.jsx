@@ -6,14 +6,14 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ background: '#0A0A0A' }}>
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5" style={{
-        backgroundImage: `radial-gradient(circle at 25% 25%, #C9A84C 0%, transparent 50%),
-                          radial-gradient(circle at 75% 75%, #C9A84C 0%, transparent 50%)`
+        backgroundImage: `radial-gradient(circle at 25% 25%, #CC3731 0%, transparent 50%),
+                          radial-gradient(circle at 75% 75%, #CC3731 0%, transparent 50%)`
       }} />
 
       {/* Grid pattern overlay */}
       <div className="absolute inset-0" style={{
-        backgroundImage: `linear-gradient(rgba(201, 168, 76, 0.03) 1px, transparent 1px),
-                          linear-gradient(90deg, rgba(201, 168, 76, 0.03) 1px, transparent 1px)`,
+        backgroundImage: `linear-gradient(rgba(204, 55, 49, 0.03) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(204, 55, 49, 0.03) 1px, transparent 1px)`,
         backgroundSize: '60px 60px'
       }} />
 
@@ -24,7 +24,7 @@ export default function Hero() {
         <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-8">
           <div className="flex">
             {[1,2,3,4,5].map(s => (
-              <FiStar key={s} size={12} className="fill-yellow-400 text-yellow-400" />
+              <FiStar key={s} size={12} className="fill-red-500 text-red-500" />
             ))}
           </div>
           <span className="text-white/60 text-xs font-medium">500+ Happy Customers Across the USA</span>
@@ -38,7 +38,7 @@ export default function Hero() {
           <span
             className="block italic"
             style={{
-              background: 'linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #9E7B2E 100%)',
+              background: 'linear-gradient(135deg, #CC3731 0%, #E2574C 50%, #9E2420 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
@@ -60,8 +60,8 @@ export default function Hero() {
             to="/shop"
             className="group flex items-center gap-3 px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm transition-all duration-300"
             style={{
-              background: 'linear-gradient(135deg, #C9A84C, #E8C97A)',
-              color: '#0A0A0A',
+              background: 'linear-gradient(135deg, #CC3731, #E2574C)',
+              color: '#FFFFFF',
             }}
             onClick={() => { if (window.fbq) fbq('track', 'ViewContent') }}
           >
@@ -78,7 +78,7 @@ export default function Hero() {
           </div>
           <div className="hidden sm:block w-px h-10 bg-white/10" />
           <div className="text-center">
-            <p className="text-3xl font-black" style={{ color: '#C9A84C' }}>🇺🇸</p>
+            <p className="text-3xl font-black" style={{ color: '#CC3731' }}>🇺🇸</p>
             <p className="text-xs text-white/40 uppercase tracking-widest mt-1">USA Made</p>
           </div>
           <div className="hidden sm:block w-px h-10 bg-white/10" />

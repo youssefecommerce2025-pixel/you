@@ -75,7 +75,7 @@ function FAQItem({ q, a }) {
         className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors"
       >
         <span className="font-semibold text-sm pr-4">{q}</span>
-        <span className="flex-shrink-0 text-yellow-500">
+        <span className="flex-shrink-0 text-red-500">
           {open ? <FiMinus size={18} /> : <FiPlus size={18} />}
         </span>
       </button>
@@ -96,13 +96,13 @@ export default function FAQ() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">Help Center</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-red-600 mb-3 block">Help Center</span>
           <h1 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
             Frequently Asked Questions
           </h1>
           <p className="text-gray-500 max-w-lg mx-auto">
             Everything you need to know. Can't find your answer?{' '}
-            <Link to="/contact" className="underline text-yellow-600 hover:text-yellow-700">Contact us</Link> — we reply within 24 hours.
+            <Link to="/contact" className="underline text-red-600 hover:text-red-700">Contact us</Link> — we reply within 24 hours.
           </p>
         </div>
 
@@ -160,7 +160,7 @@ export default function FAQ() {
               Contact Us
             </Link>
             <a href="mailto:contact@jesuisla.us"
-              className="px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm border-2 border-white/20 hover:border-yellow-400/50 hover:text-yellow-400 transition-all text-sm"
+              className="px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm border-2 border-white/20 hover:border-red-500/50 hover:text-red-500 transition-all text-sm"
             >
               contact@jesuisla.us
             </a>

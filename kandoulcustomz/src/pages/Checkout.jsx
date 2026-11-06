@@ -9,7 +9,7 @@ const US_STATES = [
   'SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY',
 ]
 
-const inputClass = 'w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition-colors bg-white'
+const inputClass = 'w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition-colors bg-white'
 
 function Field({ label, children }) {
   return (
@@ -122,7 +122,7 @@ export default function Checkout({ cart, total }) {
     <div className="pt-52 pb-20 bg-gray-50 min-h-screen">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-10">
-          <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">Delivery details</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-red-600 mb-3 block">Delivery details</span>
           <h1 className="text-4xl sm:text-5xl font-black mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
             Where should we send it?
           </h1>
@@ -204,7 +204,7 @@ export default function Checkout({ cart, total }) {
               </div>
               <div className="flex justify-between font-black text-base pt-2">
                 <span>Total</span>
-                <span style={{ color: '#C9A84C' }}>${finalTotal.toFixed(2)}</span>
+                <span style={{ color: '#CC3731' }}>${finalTotal.toFixed(2)}</span>
               </div>
             </div>
             <Link to="/shop" className="block text-center text-xs text-gray-400 hover:text-black">Back to shop</Link>

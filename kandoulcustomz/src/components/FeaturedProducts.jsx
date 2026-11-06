@@ -49,7 +49,7 @@ function ProductCard({ product, addToCart }) {
           </span>
         )}
         {product.comparePrice && (
-          <span className="absolute top-4 right-4 z-10 rounded-full text-xs font-bold px-3 py-1.5 tracking-wide" style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C97A)', color: '#0A0A0A' }}>
+          <span className="absolute top-4 right-4 z-10 rounded-full text-xs font-bold px-3 py-1.5 tracking-wide" style={{ background: 'linear-gradient(135deg, #CC3731, #E2574C)', color: '#FFFFFF' }}>
             Save ${(product.comparePrice - product.price).toFixed(0)}
           </span>
         )}
@@ -68,7 +68,7 @@ function ProductCard({ product, addToCart }) {
             <div
               key={c}
               onClick={() => setSelectedColor(c)}
-              className={`w-4 h-4 rounded-full border-2 cursor-pointer transition-transform hover:scale-125 ${selectedColor === c ? 'border-yellow-400 scale-125' : 'border-transparent'}`}
+              className={`w-4 h-4 rounded-full border-2 cursor-pointer transition-transform hover:scale-125 ${selectedColor === c ? 'border-red-500 scale-125' : 'border-transparent'}`}
               style={{ backgroundColor: colorToHex(c) }}
               title={c}
             />
@@ -84,7 +84,7 @@ function ProductCard({ product, addToCart }) {
             <p className="text-gray-400 text-sm mt-0.5 italic">{product.tagline}</p>
           </div>
           <div className="text-right flex-shrink-0 ml-4">
-            <p className="font-black text-xl" style={{ color: '#C9A84C' }}>${product.price}</p>
+            <p className="font-black text-xl" style={{ color: '#CC3731' }}>${product.price}</p>
             {product.comparePrice && (
               <p className="text-gray-400 text-sm line-through">${product.comparePrice}</p>
             )}
@@ -117,7 +117,7 @@ function ProductCard({ product, addToCart }) {
         {/* Color selector */}
         <div className="mb-3">
           <p className="text-xs font-bold uppercase tracking-wide text-gray-600 mb-1.5">
-            Color {selectedColor && <span className="text-yellow-600 font-medium normal-case">— {selectedColor}</span>}
+            Color {selectedColor && <span className="text-red-600 font-medium normal-case">— {selectedColor}</span>}
           </p>
           <div className="flex flex-wrap gap-2">
             {product.colors.map(color => (
@@ -125,7 +125,7 @@ function ProductCard({ product, addToCart }) {
                 key={color}
                 onClick={() => { setSelectedColor(color); setError('') }}
                 className={`w-7 h-7 rounded-full border-2 transition-transform hover:scale-110 ${
-                  selectedColor === color ? 'border-yellow-400 scale-110' : 'border-transparent'
+                  selectedColor === color ? 'border-red-500 scale-110' : 'border-transparent'
                 }`}
                 style={{ backgroundColor: colorToHex(color) }}
                 title={color}
@@ -219,7 +219,7 @@ export default function FeaturedProducts({ addToCart }) {
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-14">
-          <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">Our Collection</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-red-600 mb-3 block">Our Collection</span>
           <h2 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
             Wear What You Mean
           </h2>

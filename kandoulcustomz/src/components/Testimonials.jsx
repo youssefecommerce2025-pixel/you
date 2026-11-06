@@ -62,7 +62,7 @@ function StarRating({ rating }) {
     <div className="flex gap-0.5">
       {[1,2,3,4,5].map(s => (
         <FiStar key={s} size={14}
-          className={s <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-200 fill-gray-200'}
+          className={s <= rating ? 'fill-red-500 text-red-500' : 'text-gray-200 fill-gray-200'}
         />
       ))}
     </div>
@@ -75,14 +75,14 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-14">
-          <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 mb-3 block">Real Reviews</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-red-600 mb-3 block">Real Reviews</span>
           <h2 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
             The Community Speaks
           </h2>
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="flex">
               {[1,2,3,4,5].map(s => (
-                <FiStar key={s} size={20} className="fill-yellow-400 text-yellow-400" />
+                <FiStar key={s} size={20} className="fill-red-500 text-red-500" />
               ))}
             </div>
             <span className="font-black text-2xl">4.9</span>

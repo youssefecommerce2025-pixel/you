@@ -43,8 +43,8 @@ export default function PaymentMethods() {
         
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-800 text-xs font-bold uppercase tracking-widest mb-4">
-            <FiLock className="text-yellow-600" /> 100% Encrypted & PCI-DSS Level 1 Certified
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-50 border border-red-200 text-red-800 text-xs font-bold uppercase tracking-widest mb-4">
+            <FiLock className="text-red-600" /> 100% Encrypted & PCI-DSS Level 1 Certified
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-gray-950 mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
             Accepted Payment Methods
@@ -112,7 +112,7 @@ export default function PaymentMethods() {
         {/* Custom B2B / Invoice Instructions for Bulk Custom Orders */}
         <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-black rounded-3xl p-8 sm:p-12 text-white shadow-xl mb-16 relative overflow-hidden">
           <div className="relative z-10 max-w-3xl">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-yellow-400 mb-2 block">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-red-500 mb-2 block">
               Direct Invoice & B2B Orders
             </span>
             <h2 className="text-2xl sm:text-3xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
@@ -130,7 +130,7 @@ export default function PaymentMethods() {
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold tracking-widest uppercase text-xs border border-white/20 hover:border-yellow-400 text-white transition-all"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold tracking-widest uppercase text-xs border border-white/20 hover:border-red-500 text-white transition-all"
               >
                 Inquire via Email
               </Link>
@@ -146,7 +146,7 @@ export default function PaymentMethods() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
               <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
-                <FiLock className="text-yellow-600" /> Is it safe to enter my card details?
+                <FiLock className="text-red-600" /> Is it safe to enter my card details?
               </h4>
               <p className="text-sm text-gray-600 leading-relaxed">
                 Yes, 100%. All card transactions are tokenized and processed via Stripe’s PCI-DSS Level 1 compliant infrastructure. We never store or see your raw credit card numbers.
@@ -154,7 +154,7 @@ export default function PaymentMethods() {
             </div>
             <div>
               <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
-                <FiCreditCard className="text-yellow-600" /> When is my card charged?
+                <FiCreditCard className="text-red-600" /> When is my card charged?
               </h4>
               <p className="text-sm text-gray-600 leading-relaxed">
                 Your payment is authorized and charged immediately upon placing your order so our production artisans can start hand-crafting your items without delay.
@@ -162,7 +162,7 @@ export default function PaymentMethods() {
             </div>
             <div>
               <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
-                <FiGlobe className="text-yellow-600" /> Can I pay in foreign currencies?
+                <FiGlobe className="text-red-600" /> Can I pay in foreign currencies?
               </h4>
               <p className="text-sm text-gray-600 leading-relaxed">
                 All prices on the storefront are shown in US Dollars ($ USD). However, Stripe and PayPal will automatically convert your local currency at real-time bank exchange rates.
@@ -170,7 +170,7 @@ export default function PaymentMethods() {
             </div>
             <div>
               <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
-                <FiHelpCircle className="text-yellow-600" /> What if I need a refund?
+                <FiHelpCircle className="text-red-600" /> What if I need a refund?
               </h4>
               <p className="text-sm text-gray-600 leading-relaxed">
                 Approved refunds are processed back to your original payment method (Stripe or PayPal) within 3 to 5 business days, in accordance with our 30-day satisfaction guarantee.
