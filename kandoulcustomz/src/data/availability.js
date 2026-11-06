@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 
-export const TRACKED_IDS = new Set(['jsl-hoodie', 'jsl-heather-hoodie', 'jsl-espresso-hoodie'])
+export const TRACKED_IDS = new Set(['jsl-hoodie', 'jsl-heather-hoodie', 'jsl-espresso-hoodie', 'jsl-crewneck'])
 
 export function canonicalColor(color) {
   const value = String(color || '').trim()
   if (value === 'Heather') return 'Ash Grey'
   if (value === 'Grey' || value === 'Gray') return 'Slate'
+  if (value === 'Mustard') return 'Camel'
   return value
 }
 

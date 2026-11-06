@@ -54,11 +54,23 @@ test('older Stripe line items count by size and color', () => {
   assert.equal(row.left, 3)
 })
 
+test('camel, espresso, and the crewneck follow the same hidden caps', () => {
+  const usage = new Map()
+  assert.equal(checkRequested([{ id: 'jsl-hoodie', color: 'Camel', size: 'L', qty: 1 }], usage).ok, true)
+  assert.equal(checkRequested([{ id: 'jsl-hoodie', color: 'Mustard', size: 'L', qty: 1 }], usage).ok, true)
+  assert.equal(checkRequested([{ id: 'jsl-espresso-hoodie', color: 'Espresso', size: 'XL', qty: 2 }], usage).ok, true)
+  assert.equal(checkRequested([{ id: 'jsl-espresso-hoodie', color: 'Espresso', size: 'M', qty: 2 }], usage).error, 'That quantity is no longer available.')
+  assert.equal(checkRequested([{ id: 'jsl-crewneck', color: 'Grey', size: 'L', qty: 1 }], usage).ok, true)
+  assert.equal(checkRequested([{ id: 'jsl-crewneck', color: 'Olive', size: 'M', qty: 1 }], usage).error, 'This color and size is sold out.')
+  const crew = publicAvailability(usage).find((row) => row.id === 'jsl-crewneck' && row.color === 'Black')
+  assert.equal(crew.available, true)
+})
+
 test('checkout rejects a sold-out color and a quantity over what remains, without stating the cap', () => {
   const usage = tallySessions([
     { status: 'complete', payment_status: 'paid', metadata: { cart: JSON.stringify([{ id: 'jsl-hoodie', color: 'Black', size: 'L', qty: 4 }]) } },
   ], now)
-  const soldOut = checkRequested([{ id: 'jsl-espresso-hoodie', color: 'Espresso', size: 'M', qty: 1 }], usage)
+  const soldOut = checkRequested([{ id: 'jsl-espresso-hoodie', color: 'Espresso', size: 'S', qty: 1 }], usage)
   const tooMany = checkRequested([{ id: 'jsl-hoodie', color: 'Black', size: 'L', qty: 2 }], usage)
   const ok = checkRequested([{ id: 'jsl-hoodie', color: 'Black', size: 'L', qty: 1 }], usage)
   assert.equal(soldOut.error, 'This color and size is sold out.')

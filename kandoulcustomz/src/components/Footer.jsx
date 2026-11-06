@@ -42,6 +42,7 @@ export default function Footer() {
                 { to: '/shop#jsl-hoodie', label: 'French terry hoodie' },
                 { to: '/shop#jsl-heather-hoodie', label: 'Brushed heavyweight hood' },
                 { to: '/shop#jsl-espresso-hoodie', label: 'Heavyweight French terry espresso' },
+                { to: '/shop#jsl-crewneck', label: 'Heavyweight crewneck' },
               ].map(link => (
                 <li key={link.to + link.label}>
                   <Link to={link.to} className="text-white/40 hover:text-red-500 text-sm transition-colors">

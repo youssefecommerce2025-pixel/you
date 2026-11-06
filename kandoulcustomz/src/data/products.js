@@ -16,7 +16,7 @@ export const products = [
     comparePrice: 80,
     emoji: '🧥',
     badge: 'BESTSELLER',
-    description: `French terry midweight organic 100% by Je suis là. A midweight organic French terry hoodie — breathable, structured, and made to be worn every day. Signature "Je suis là" chest graphic, kangaroo pocket, in Mustard or Black.`,
+    description: `French terry midweight organic 100% by Je suis là. A midweight organic French terry hoodie — breathable, structured, and made to be worn every day. Signature "Je suis là" chest graphic, kangaroo pocket, in Camel or Black.`,
     features: [
       '100% organic midweight French terry',
       'Signature "Je suis là" chest graphic',
@@ -25,13 +25,13 @@ export const products = [
       'Ethically made',
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    colors: ['Black', 'Mustard'],
+    colors: ['Black', 'Camel'],
     photos: [
       'products/jsl-hoodie-camel-front-catalog.png',
       'products/jsl-hoodie-camel-back-catalog.png',
     ],
     colorPhotos: {
-      Mustard: [
+      Camel: [
         'products/jsl-hoodie-camel-front-catalog.png',
         'products/jsl-hoodie-camel-back-catalog.png',
       ],
@@ -130,6 +130,44 @@ export const products = [
       Espresso: [
         'products/jsl-hoodie-espresso-front-catalog.png',
       ],
+    },
+    logos: ['Large Logo (Chest)', 'Small Corner Logo'],
+    sizeChart: {
+      headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],
+      rows: [
+        ['XS', '34-36', '26', '32'],
+        ['S', '36-38', '27', '33'],
+        ['M', '38-40', '28', '34'],
+        ['L', '42-44', '29', '35'],
+        ['XL', '46-48', '30', '36'],
+      ]
+    },
+    care: 'Machine wash cold, tumble dry low. Do not bleach.',
+    shipping: 'Delivered in 3-7 business days across the USA. Free shipping on orders over $75.',
+  },
+  {
+    id: 'jsl-crewneck',
+    name: 'Heavyweight crewneck by Je suis là',
+    tagline: 'Heavyweight crewneck. Soft, dense, present.',
+    price: 65,
+    emoji: '👕',
+    badge: 'HEAVYWEIGHT',
+    description: `Heavyweight crewneck by Je suis là. A dense heavyweight crewneck in Grey, Black, or Olive, with the signature chest graphic.`,
+    features: [
+      '100% organic heavyweight cotton',
+      'Signature "Je suis là" chest graphic',
+      'Ribbed collar, cuffs, and hem',
+      'Ethically made',
+    ],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Grey', 'Black', 'Olive'],
+    photos: [
+      'products/jsl_gray.jpg',
+    ],
+    colorPhotos: {
+      Grey: ['products/jsl_gray.jpg'],
+      Black: ['products/jsl_black.jpg', 'products/jsl_studio_3.jpg'],
+      Olive: ['products/jsl_olive.jpg'],
     },
     logos: ['Large Logo (Chest)', 'Small Corner Logo'],
     sizeChart: {
