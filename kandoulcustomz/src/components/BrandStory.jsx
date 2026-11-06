@@ -24,16 +24,9 @@ export default function BrandStory() {
                       "I Am Here."
                     </p>
                   </div>
-                  <div className="flex gap-4 mt-4">
-                    <div className="text-center">
-                      <p className="text-white font-black text-2xl">500+</p>
-                      <p className="text-white/40 text-xs uppercase tracking-wider">Pieces Made</p>
-                    </div>
-                    <div className="w-px bg-white/10" />
-                    <div className="text-center">
-                      <p className="text-red-500 font-black text-2xl">USA</p>
-                      <p className="text-white/40 text-xs uppercase tracking-wider">Made</p>
-                    </div>
+                  <div className="text-center mt-4">
+                    <p className="text-red-500 font-black text-2xl">USA</p>
+                    <p className="text-white/40 text-xs uppercase tracking-wider">Made</p>
                   </div>
                 </div>
               </div>

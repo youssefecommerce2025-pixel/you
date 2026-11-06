@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { FiArrowRight, FiStar } from 'react-icons/fi'
+import { FiArrowRight } from 'react-icons/fi'
 
 export default function Hero() {
   return (
@@ -19,16 +19,6 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 pb-32 text-center">
-
-        {/* Pre-headline badge */}
-        <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-8">
-          <div className="flex">
-            {[1,2,3,4,5].map(s => (
-              <FiStar key={s} size={12} className="fill-red-500 text-red-500" />
-            ))}
-          </div>
-          <span className="text-white/60 text-xs font-medium">500+ Happy Customers Across the USA</span>
-        </div>
 
         {/* Main headline */}
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-none mb-6"
@@ -72,11 +62,6 @@ export default function Hero() {
 
         {/* Social proof strip */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12 border-t border-white/10 pt-10">
-          <div className="text-center">
-            <p className="text-3xl font-black text-white">500+</p>
-            <p className="text-xs text-white/40 uppercase tracking-widest mt-1">Orders Fulfilled</p>
-          </div>
-          <div className="hidden sm:block w-px h-10 bg-white/10" />
           <div className="text-center">
             <p className="text-3xl font-black" style={{ color: '#CC3731' }}>🇺🇸</p>
             <p className="text-xs text-white/40 uppercase tracking-widest mt-1">USA Made</p>
