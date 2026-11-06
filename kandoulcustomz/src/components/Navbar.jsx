@@ -41,9 +41,8 @@ export default function Navbar({ cartCount, onCartClick }) {
       style={{ top: '40px' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between min-h-[108px] py-2 gap-4">
-          {/* Logo — same scale as the Our Story brand card */}
-          <Link to="/" className="flex-shrink-0 w-[200px] sm:w-[240px] lg:w-[280px]">
+        <div className="flex items-center justify-between min-h-[56px] sm:min-h-[72px] py-2 gap-3">
+          <Link to="/" className="flex-shrink-0">
             <Logo size="md" />
           </Link>
 

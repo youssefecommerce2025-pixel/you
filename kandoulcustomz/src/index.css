@@ -98,3 +98,11 @@
 .announcement-bar {
   background: linear-gradient(90deg, #0A0A0A 0%, #1a1a1a 100%);
 }
+
+/* Hide Netlify collaboration badge */
+a[href*="netlify.com"][style*="position"],
+iframe[title*="Netlify"],
+#netlify-survey,
+[id^="netlify-"] {
+  display: none !important;
+}
