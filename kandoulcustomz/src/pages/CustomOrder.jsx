@@ -388,7 +388,7 @@ export default function CustomOrder() {
                         <FiUpload size={12} /> Browse Files
                       </span>
                       <p className="text-xs text-yellow-600 mt-3 font-medium">
-                        No file? Send it later to hello@julofficial.com
+                        No file? Send it later to contact@jesuisla.us
                       </p>
                     </label>
                   )}
@@ -471,7 +471,7 @@ export default function CustomOrder() {
                   {[
                     ['name', 'Full Name *', 'John Smith', 'text', true],
                     ['email', 'Email Address *', 'john@example.com', 'email', true],
-                    ['phone', 'Phone Number', '+1 (202) 815-5407', 'tel', false],
+                    ['phone', 'Phone Number', '(571) 306-3193', 'tel', false],
                     ['company', 'Company / Organization', 'Optional', 'text', false],
                   ].map(([field, label, placeholder, type, required]) => (
                     <div key={field}>

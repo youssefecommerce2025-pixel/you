@@ -78,8 +78,8 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-5">Contact</h4>
             <ul className="space-y-3 text-white/40 text-sm">
-              <li>📧 <a href="mailto:hello@julofficial.com" className="hover:text-yellow-400 transition-colors">hello@julofficial.com</a></li>
-              <li>📱 <a href="tel:+12028155407" className="hover:text-yellow-400 transition-colors">+1 (202) 815-5407</a></li>
+              <li>📧 <a href="mailto:contact@jesuisla.us" className="hover:text-yellow-400 transition-colors">contact@jesuisla.us</a></li>
+              <li>📱 <a href="tel:+15713063193" className="hover:text-yellow-400 transition-colors">(571) 306-3193</a></li>
               <li>🕐 Mon-Fri: 9am – 6pm EST</li>
             </ul>
           </div>

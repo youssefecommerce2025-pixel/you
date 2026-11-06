@@ -37,15 +37,15 @@ export default function Contact() {
                 icon: <FiMail size={22} />,
                 title: 'Email Us',
                 sub: 'For all inquiries',
-                detail: 'hello@julofficial.com',
-                href: 'mailto:hello@julofficial.com',
+                detail: 'contact@jesuisla.us',
+                href: 'mailto:contact@jesuisla.us',
               },
               {
                 icon: <FiPhone size={22} />,
                 title: 'Call or Text',
                 sub: 'Talk to a human',
-                detail: '+1 (202) 815-5407',
-                href: 'tel:+12028155407',
+                detail: '(571) 306-3193',
+                href: 'tel:+15713063193',
               },
               {
                 icon: <FiClock size={22} />,
@@ -155,7 +155,7 @@ export default function Contact() {
                       type="tel"
                       value={form.phone}
                       onChange={e => update('phone', e.target.value)}
-                      placeholder="+1 (202) 815-5407"
+                      placeholder="(571) 306-3193"
                       className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition-colors"
                     />
                   </div>

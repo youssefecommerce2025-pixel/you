@@ -1,19 +1,11 @@
-import { useState } from 'react'
 import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiShield, FiLock, FiCheck } from 'react-icons/fi'
 import { Link, useNavigate } from 'react-router-dom'
 import { productAsset } from '../data/products'
 
 export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty, total }) {
   const navigate = useNavigate()
-  const [giftBoxBump, setGiftBoxBump] = useState(false)
-  const [rushProcessing, setRushProcessing] = useState(false)
-
-  // Order Bumps calculation
-  const giftBoxPrice = 4.99
-  const rushProcessingPrice = 3.99
-  
   const shipping = total >= 75 ? 0 : 7.99
-  const finalTotal = total + shipping + (giftBoxBump ? giftBoxPrice : 0) + (rushProcessing ? rushProcessingPrice : 0)
+  const finalTotal = total + shipping
 
   const handleCheckout = () => {
     if (!cart.length) return
@@ -30,7 +22,7 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
         currency: 'USD'
       })
     }
-    navigate('/checkout', { state: { giftBox: giftBoxBump, rush: rushProcessing } })
+    navigate('/checkout')
     onClose()
   }
 
@@ -150,47 +142,6 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
                   </div>
                 ))}
               </div>
-
-              {/* HIGH AOV ORDER BUMPS */}
-              <div className="bg-yellow-50/70 border border-yellow-200/80 rounded-2xl p-3.5 space-y-2.5">
-                <span className="text-[10px] font-black uppercase tracking-widest text-yellow-800 block">
-                  ⚡ Recommended Add-ons (One-Click)
-                </span>
-                
-                {/* Bump 1: Gift Box */}
-                <label className="flex items-start gap-3 cursor-pointer bg-white p-2.5 rounded-xl border border-yellow-100 hover:border-yellow-300 transition-all">
-                  <input
-                    type="checkbox"
-                    checked={giftBoxBump}
-                    onChange={e => setGiftBoxBump(e.target.checked)}
-                    className="mt-0.5 accent-yellow-600 rounded"
-                  />
-                  <div className="flex-1 text-xs">
-                    <div className="flex justify-between font-bold text-gray-900">
-                      <span>🎁 Premium Gift Box & Bow</span>
-                      <span className="text-yellow-700">+$4.99</span>
-                    </div>
-                    <p className="text-[11px] text-gray-500">Luxury gold foil packaging + handwritten message</p>
-                  </div>
-                </label>
-
-                {/* Bump 2: Priority Rush Crafting */}
-                <label className="flex items-start gap-3 cursor-pointer bg-white p-2.5 rounded-xl border border-yellow-100 hover:border-yellow-300 transition-all">
-                  <input
-                    type="checkbox"
-                    checked={rushProcessing}
-                    onChange={e => setRushProcessing(e.target.checked)}
-                    className="mt-0.5 accent-yellow-600 rounded"
-                  />
-                  <div className="flex-1 text-xs">
-                    <div className="flex justify-between font-bold text-gray-900">
-                      <span>⚡ Priority Rush Production</span>
-                      <span className="text-yellow-700">+$3.99</span>
-                    </div>
-                    <p className="text-[11px] text-gray-500">Fast-tracks custom embroidery to front of queue</p>
-                  </div>
-                </label>
-              </div>
             </>
           )}
         </div>
@@ -203,18 +154,6 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
                 <span>Items Subtotal</span>
                 <span>${total.toFixed(2)}</span>
               </div>
-              {giftBoxBump && (
-                <div className="flex justify-between text-yellow-700 font-medium">
-                  <span>Gift Packaging</span>
-                  <span>+$4.99</span>
-                </div>
-              )}
-              {rushProcessing && (
-                <div className="flex justify-between text-yellow-700 font-medium">
-                  <span>Priority Queue</span>
-                  <span>+$3.99</span>
-                </div>
-              )}
               <div className="flex justify-between text-gray-500">
                 <span>US Shipping</span>
                 <span className="text-emerald-600 font-semibold">{total >= 75 ? 'FREE (3-7 days)' : '$7.99 (Standard)'}</span>

@@ -6,8 +6,6 @@ const CATALOG = {
   'jsl-espresso-hoodie': { name: 'Heavyweight French terry espresso', amount: 6500 },
 }
 
-const GIFT_BOX_CENTS = 499
-const RUSH_CENTS = 399
 const FREE_SHIPPING_FROM = 7500
 const SHIPPING_CENTS = 799
 
@@ -115,27 +113,6 @@ export const handler = async (event) => {
           name: product.name,
           ...(details ? { description: details } : {}),
         },
-      },
-    })
-  }
-
-  if (body.giftBox) {
-    lineItems.push({
-      quantity: 1,
-      price_data: {
-        currency: 'usd',
-        unit_amount: GIFT_BOX_CENTS,
-        product_data: { name: 'Gift packaging' },
-      },
-    })
-  }
-  if (body.rush) {
-    lineItems.push({
-      quantity: 1,
-      price_data: {
-        currency: 'usd',
-        unit_amount: RUSH_CENTS,
-        product_data: { name: 'Priority queue' },
       },
     })
   }

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { FiLock, FiShield } from 'react-icons/fi'
 import { productAsset } from '../data/products'
 
@@ -21,9 +21,6 @@ function Field({ label, children }) {
 }
 
 export default function Checkout({ cart, total }) {
-  const location = useLocation()
-  const [giftBox, setGiftBox] = useState(Boolean(location.state?.giftBox))
-  const [rush, setRush] = useState(Boolean(location.state?.rush))
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -38,7 +35,7 @@ export default function Checkout({ cart, total }) {
   const [submitting, setSubmitting] = useState(false)
 
   const shipping = total >= 75 ? 0 : 7.99
-  const finalTotal = total + shipping + (giftBox ? 4.99 : 0) + (rush ? 3.99 : 0)
+  const finalTotal = total + shipping
   const set = (key) => (e) => setForm((prev) => ({ ...prev, [key]: e.target.value }))
 
   const validate = () => {
@@ -84,8 +81,6 @@ export default function Checkout({ cart, total }) {
             color: item.color,
             logo: item.logo,
           })),
-          giftBox,
-          rush,
           customer: {
             firstName: form.firstName.trim(),
             lastName: form.lastName.trim(),
@@ -201,14 +196,6 @@ export default function Checkout({ cart, total }) {
                 </div>
               ))}
             </div>
-            <label className="flex items-start gap-3 text-sm">
-              <input type="checkbox" checked={giftBox} onChange={(e) => setGiftBox(e.target.checked)} className="mt-1 accent-yellow-600" />
-              <span><span className="font-bold">Premium Gift Box & Bow</span> <span className="text-yellow-700">+$4.99</span></span>
-            </label>
-            <label className="flex items-start gap-3 text-sm">
-              <input type="checkbox" checked={rush} onChange={(e) => setRush(e.target.checked)} className="mt-1 accent-yellow-600" />
-              <span><span className="font-bold">Priority Rush Production</span> <span className="text-yellow-700">+$3.99</span></span>
-            </label>
             <div className="space-y-1 text-sm border-t border-gray-100 pt-3">
               <div className="flex justify-between text-gray-500"><span>Items</span><span>${total.toFixed(2)}</span></div>
               <div className="flex justify-between text-gray-500">

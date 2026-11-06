@@ -18,7 +18,7 @@ const faqGroups = [
       },
       {
         q: 'Do you ship internationally?',
-        a: "Currently, our primary focus is fast, premium fulfillment across the United States. For special international requests, email hello@julofficial.com."
+        a: "Currently, our primary focus is fast, premium fulfillment across the United States. For special international requests, email contact@jesuisla.us."
       },
       {
         q: 'How do I track my order?',
@@ -33,7 +33,7 @@ const faqGroups = [
     faqs: [
       {
         q: 'What is your return policy?',
-        a: "We offer 30-day hassle-free returns on standard (non-custom) items. Items must be unworn, unwashed, and in original condition. Contact hello@julofficial.com to initiate a return."
+        a: "We offer 30-day hassle-free returns on standard (non-custom) items. Items must be unworn, unwashed, and in original condition. Contact contact@jesuisla.us to initiate a return."
       },
       {
         q: 'Can I exchange for a different size?',
@@ -41,7 +41,7 @@ const faqGroups = [
       },
       {
         q: 'My order arrived damaged. What do I do?',
-        a: "We're so sorry! Take a photo and email it to hello@julofficial.com within 48 hours of delivery. We'll send a replacement immediately at no cost to you."
+        a: "We're so sorry! Take a photo and email it to contact@jesuisla.us within 48 hours of delivery. We'll send a replacement immediately at no cost to you."
       },
     ]
   },
@@ -159,10 +159,10 @@ export default function FAQ() {
             <Link to="/contact" className="px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm btn-gold">
               Contact Us
             </Link>
-            <a href="mailto:hello@julofficial.com"
+            <a href="mailto:contact@jesuisla.us"
               className="px-8 py-4 rounded-full font-bold tracking-widest uppercase text-sm border-2 border-white/20 hover:border-yellow-400/50 hover:text-yellow-400 transition-all text-sm"
             >
-              hello@julofficial.com
+              contact@jesuisla.us
             </a>
           </div>
         </div>

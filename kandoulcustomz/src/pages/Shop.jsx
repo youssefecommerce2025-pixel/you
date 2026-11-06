@@ -256,7 +256,7 @@ function ProductDetail({ product, addToCart }) {
               <div><p className="font-bold text-sm mb-1">Care Instructions</p><p className="text-gray-500 text-sm">{product.care}</p></div>
               <div><p className="font-bold text-sm mb-1">US Delivery Time</p><p className="text-gray-500 text-sm">Delivered to your door in 3 to 7 business days via USPS/FedEx tracked service. Free shipping applies on all US orders over $75.</p></div>
               <div><p className="font-bold text-sm mb-1">Accepted Payment Methods</p><p className="text-gray-500 text-sm">Stripe (Visa, Mastercard, Amex, Discover), PayPal, Apple Pay, and Google Pay.</p></div>
-              <div><p className="font-bold text-sm mb-1">Returns & Satisfaction</p><p className="text-gray-500 text-sm">Not completely thrilled? We accept returns within 30 days of delivery. Items must be unworn and unwashed. Contact us at hello@julofficial.com.</p></div>
+              <div><p className="font-bold text-sm mb-1">Returns & Satisfaction</p><p className="text-gray-500 text-sm">Not completely thrilled? We accept returns within 30 days of delivery. Items must be unworn and unwashed. Contact us at contact@jesuisla.us.</p></div>
             </div>
           )}
         </div>
