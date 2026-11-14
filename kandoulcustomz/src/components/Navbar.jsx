@@ -40,9 +40,9 @@ export default function Navbar({ cartCount, onCartClick }) {
       style={{ top: '40px' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between min-h-[108px] py-2 gap-4">
-          <Link to="/" className="flex-shrink-0 w-[200px] sm:w-[240px] lg:w-[280px]">
-            <Logo size="md" />
+        <div className={`flex items-center justify-between py-2 gap-4 transition-all duration-300 ${scrolled ? 'min-h-[64px]' : 'min-h-[108px]'}`}>
+          <Link to="/" className={`flex-shrink-0 transition-all duration-300 ${scrolled ? 'w-[140px] sm:w-[160px]' : 'w-[200px] sm:w-[240px] lg:w-[280px]'}`}>
+            <Logo size={scrolled ? 'sm' : 'md'} />
           </Link>
 
           {/* Desktop Links */}

@@ -16,6 +16,7 @@ const indexHtml = fs.readFileSync(indexPath)
 // Real HTML files for each SPA route so GitHub Pages never serves a blank 404 body
 const routes = [
   'shop',
+  'checkout',
   'about',
   'faq',
   'contact',
