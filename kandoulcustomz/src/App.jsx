@@ -87,6 +87,12 @@ export default function App() {
     setCart(cartRef.current)
   }
 
+  const clearCart = () => {
+    cartRef.current = []
+    setCart([])
+    localStorage.removeItem('kc_cart')
+  }
+
   const cartCount = cart.reduce((sum, i) => sum + i.qty, 0)
   const cartTotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0)
 
