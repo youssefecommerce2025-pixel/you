@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiShield, FiLock, FiCheck } from 'react-icons/fi'
 import { Link, useNavigate } from 'react-router-dom'
 import { productAsset } from '../data/products'
@@ -18,8 +19,10 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
     return used > left
   })
 
-  const handleCheckout = () => {
-    if (!cart.length || blocked) return
+  const [checkingOut, setCheckingOut] = useState(false)
+
+  const handleCheckout = async () => {
+    if (!cart.length || blocked || checkingOut) return
     if (window.fbq) {
       window.fbq('track', 'InitiateCheckout', {
         value: finalTotal,
@@ -33,8 +36,37 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
         currency: 'USD'
       })
     }
-    navigate('/checkout')
-    onClose()
+    
+    setCheckingOut(true)
+    const base = import.meta.env.BASE_URL || '/'
+    const origin = window.location.origin
+    const endpoint = import.meta.env.VITE_CHECKOUT_ENDPOINT || '/.netlify/functions/create-checkout-session'
+    
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: cart.map((item) => ({
+            id: item.id,
+            qty: item.qty,
+            size: item.size,
+            color: item.color,
+            logo: item.logo,
+          })),
+          successUrl: `${origin}${base}thank-you?session_id={CHECKOUT_SESSION_ID}&total=${finalTotal}`,
+          cancelUrl: `${origin}${base}shop`,
+        }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || 'Could not start Stripe checkout')
+      }
+      window.location.assign(data.url)
+    } catch (err) {
+      alert(err.message || 'Could not start Stripe checkout')
+      setCheckingOut(false)
+    }
   }
 
   return (
@@ -183,15 +215,15 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
             <button
               className="w-full py-4 rounded-full font-black tracking-widest uppercase text-xs btn-gold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
               onClick={handleCheckout}
-              disabled={blocked}
+              disabled={blocked || checkingOut}
             >
-              <FiLock size={14} /> Continue — ${finalTotal.toFixed(2)}
+              <FiLock size={14} /> {checkingOut ? 'Opening secure payment...' : `Continue — $${finalTotal.toFixed(2)}`}
             </button>
 
             {/* Payment Trust Badges */}
             <div className="pt-2 text-center">
               <p className="text-[10px] text-gray-400 mb-1.5 flex items-center justify-center gap-1">
-                <FiShield className="text-emerald-500" /> Accepted: Stripe • PayPal • Apple Pay • Google Pay
+                <FiShield className="text-emerald-500" /> Accepted: Stripe • Apple Pay • Google Pay
               </p>
               <Link
                 to="/payment-methods"

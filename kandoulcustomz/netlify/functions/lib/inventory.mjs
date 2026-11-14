@@ -3,6 +3,8 @@ export const CATALOG = {
   'jsl-heather-hoodie': { name: 'Heavyweight organic 100 % brushed hood by Je suis là', amount: 6500 },
   'jsl-espresso-hoodie': { name: 'Heavyweight French terry espresso', amount: 6500 },
   'jsl-crewneck': { name: 'Heavyweight crewneck by Je suis là', amount: 6500 },
+  'bundle-duo': { name: 'The Statement Duo (2 Hoodies)', amount: 9600 },
+  'bundle-trio': { name: 'The Crew Capsule (3 Hoodies)', amount: 14100 },
 }
 
 // On-hand units. This list stays on the server. The site never renders these numbers.
@@ -19,6 +21,8 @@ const STOCK = [
   { id: 'jsl-crewneck', color: 'Grey', size: 'L', qty: 2 },
   { id: 'jsl-crewneck', color: 'Black', size: 'L', qty: 2 },
   { id: 'jsl-crewneck', color: 'Olive', size: 'L', qty: 2 },
+  { id: 'bundle-duo', color: 'Black', size: 'L (Standard)', qty: 100 },
+  { id: 'bundle-trio', color: 'Black', size: 'L (Standard)', qty: 100 },
 ]
 
 export function canonicalColor(color) {

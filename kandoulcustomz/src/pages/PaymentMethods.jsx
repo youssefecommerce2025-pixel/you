@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { FiShield, FiLock, FiCheckCircle, FiCreditCard, FiGlobe, FiHelpCircle, FiArrowRight } from 'react-icons/fi'
-import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaPaypal, FaApplePay, FaGooglePay } from 'react-icons/fa'
+import { FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover, FaApplePay, FaGooglePay } from 'react-icons/fa'
 import { SiStripe } from 'react-icons/si'
 
 const paymentGateways = [
@@ -12,16 +12,6 @@ const paymentGateways = [
     supportedCards: ['Visa', 'Mastercard', 'American Express', 'Discover', 'JCB', 'Diners Club'],
     features: ['Instant 1-click checkout', '3D Secure 2.0 fraud protection', 'Zero hidden transaction fees'],
     color: '#635BFF',
-    textColor: 'text-white'
-  },
-  {
-    name: 'PayPal',
-    badge: 'Buyer Protection Enabled',
-    tagline: 'Fast, Safe & Worldwide Trusted Wallet',
-    description: 'Pay instantly with your PayPal balance, linked bank account, or PayPal Credit. Enjoy full PayPal Buyer Protection on every single purchase.',
-    supportedCards: ['PayPal Balance', 'Pay in 4 (Interest-Free)', 'Linked Bank Accounts'],
-    features: ['PayPal 180-Day Buyer Protection', 'No need to re-enter card numbers', 'Supports multi-currency conversion'],
-    color: '#003087',
     textColor: 'text-white'
   },
   {
@@ -64,7 +54,6 @@ export default function PaymentMethods() {
             <span title="Mastercard" className="hover:text-red-500 transition-colors"><FaCcMastercard /></span>
             <span title="American Express" className="hover:text-blue-500 transition-colors"><FaCcAmex /></span>
             <span title="Discover" className="hover:text-orange-500 transition-colors"><FaCcDiscover /></span>
-            <span title="PayPal" className="hover:text-blue-700 transition-colors"><FaPaypal /></span>
             <span title="Apple Pay" className="hover:text-black transition-colors"><FaApplePay /></span>
             <span title="Google Pay" className="hover:text-green-600 transition-colors"><FaGooglePay /></span>
             <span title="Stripe" className="text-2xl font-bold flex items-center gap-1 text-indigo-600"><SiStripe size={32} /></span>
@@ -119,7 +108,7 @@ export default function PaymentMethods() {
               Ordering in Bulk or Prefer Invoice Billing?
             </h2>
             <p className="text-white/70 text-sm sm:text-base leading-relaxed mb-6">
-              For custom design runs exceeding $300, team uniforms, corporate gifts, or wholesale orders, we generate an official commercial invoice with a secure Stripe or PayPal payment link upon design approval.
+              For large orders exceeding $300, team uniforms, or wholesale purchases, we generate an official commercial invoice with a secure Stripe payment link.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
@@ -165,7 +154,7 @@ export default function PaymentMethods() {
                 <FiGlobe className="text-red-600" /> Can I pay in foreign currencies?
               </h4>
               <p className="text-sm text-gray-600 leading-relaxed">
-                All prices on the storefront are shown in US Dollars ($ USD). However, Stripe and PayPal will automatically convert your local currency at real-time bank exchange rates.
+                All prices on the storefront are shown in US Dollars ($ USD). However, Stripe will automatically convert your local currency at real-time bank exchange rates.
               </p>
             </div>
             <div>
@@ -173,7 +162,7 @@ export default function PaymentMethods() {
                 <FiHelpCircle className="text-red-600" /> What if I need a refund?
               </h4>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Approved refunds are processed back to your original payment method (Stripe or PayPal) within 3 to 5 business days, in accordance with our 30-day satisfaction guarantee.
+                Approved refunds are processed back to your original payment method via Stripe within 3 to 5 business days, in accordance with our 30-day satisfaction guarantee.
               </p>
             </div>
           </div>

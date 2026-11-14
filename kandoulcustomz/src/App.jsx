@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import { TRACKED_IDS, unitsLeft, useAvailability, variantKey } from './data/availability'
 import Navbar from './components/Navbar'
@@ -12,7 +12,6 @@ import FAQ from './pages/FAQ'
 import Contact from './pages/Contact'
 import PaymentMethods from './pages/PaymentMethods'
 import ThankYou from './pages/ThankYou'
-import Checkout from './pages/Checkout'
 import ScrollToTop from './components/ScrollToTop'
 
 export default function App() {
@@ -87,6 +86,12 @@ export default function App() {
     setCart(cartRef.current)
   }
 
+  const clearCart = () => {
+    cartRef.current = []
+    setCart([])
+    localStorage.removeItem('kc_cart')
+  }
+
   const cartCount = cart.reduce((sum, i) => sum + i.qty, 0)
   const cartTotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0)
 
@@ -108,13 +113,11 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home addToCart={addToCart} />} />
           <Route path="/shop" element={<Shop addToCart={addToCart} />} />
-          <Route path="/custom-order" element={<Navigate to="/shop" replace />} />
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/payment-methods" element={<PaymentMethods />} />
-          <Route path="/thank-you" element={<ThankYou />} />
-          <Route path="/checkout" element={<Checkout cart={cart} total={cartTotal} />} />
+          <Route path="/thank-you" element={<ThankYou clearCart={clearCart} />} />
         </Routes>
       </main>
       <Footer />

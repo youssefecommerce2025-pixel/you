@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { FiCheckCircle, FiPackage, FiTruck, FiClock, FiMessageCircle, FiArrowRight, FiShield, FiShoppingBag } from 'react-icons/fi'
 
-export default function ThankYou() {
+export default function ThankYou({ clearCart }) {
   const [searchParams] = useSearchParams()
   const [orderNumber, setOrderNumber] = useState('')
   const [orderTotal, setOrderTotal] = useState('$55.00')
 
   useEffect(() => {
+    if (clearCart) clearCart()
     // Generate or grab dynamic order reference
     const ref = searchParams.get('ref') || `KC-${Math.floor(100000 + Math.random() * 900000)}`
     setOrderNumber(ref)

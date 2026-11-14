@@ -10,6 +10,7 @@
     <meta property="og:description" content="Wear your story. Shop premium custom apparel and personalized gifts. Made with love, delivered to your door." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://jesuisla.us" />
+    <meta property="og:image" content="https://jesuisla.us/products/jsl-hoodie-black-front-catalog.png" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <!-- GitHub Pages SPA routing decode (handles /you/ and /you) -->
@@ -74,6 +75,14 @@
     <title>JSL | Premium Hoodies & Custom Apparel</title>
   </head>
   <body>
+    <!-- Hidden form for Netlify -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="reason" />
+      <textarea name="message"></textarea>
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

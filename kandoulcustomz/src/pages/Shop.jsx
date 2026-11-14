@@ -69,7 +69,7 @@ function ProductDetail({ product, addToCart }) {
     if (!selectedInStock) { setError('This color and size is sold out.'); return }
     if (product.logos.length > 0 && !selectedLogo) { setError('Please select a logo placement'); return }
     setError('')
-    if (product.isCustom) { navigate('/custom-order'); return }
+
     const gallery = photosForColor(product, selectedColor)
     const result = addToCart({
       id: product.id,
@@ -210,26 +210,20 @@ function ProductDetail({ product, addToCart }) {
 
           {/* Add to cart */}
           <div className="flex gap-3 mt-2">
-            {product.isCustom ? (
-              <Link to="/custom-order" className="flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-bold tracking-widest uppercase text-sm btn-gold">
-                Start Designing <FiArrowRight size={14} />
-              </Link>
-            ) : (
-              <button
-                onClick={handleAdd}
-                disabled={!stock.ready || (stock.ready && (!colorHasStock || (selectedSize && !selectedInStock)))}
-                className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-bold tracking-widest uppercase text-sm transition-all disabled:opacity-50 ${
-                  added ? 'bg-green-500 text-white' : 'btn-gold'
-                }`}
-              >
-                {!stock.ready ? 'Checking availability...' : (!colorHasStock || (selectedSize && !selectedInStock)) ? 'Sold out' : added ? '✓ Added to Cart!' : <><FiShoppingBag size={16} />Add to Cart</>}
-              </button>
-            )}
+            <button
+              onClick={handleAdd}
+              disabled={!stock.ready || (stock.ready && (!colorHasStock || (selectedSize && !selectedInStock)))}
+              className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-bold tracking-widest uppercase text-sm transition-all disabled:opacity-50 ${
+                added ? 'bg-green-500 text-white' : 'btn-gold'
+              }`}
+            >
+              {!stock.ready ? 'Checking availability...' : (!colorHasStock || (selectedSize && !selectedInStock)) ? 'Sold out' : added ? '✓ Added to Cart!' : <><FiShoppingBag size={16} />Add to Cart</>}
+            </button>
           </div>
 
           {/* Trust micro badges */}
           <div className="grid grid-cols-3 gap-2 mt-6 pt-6 border-t border-gray-100 text-center">
-            {[['📦', 'Tracked Delivery', '3-7 business days'], ['↩️', 'Easy Return', '30-day guarantee'], ['🔒', 'Secure Checkout', 'Stripe & PayPal']].map(([icon, title, sub]) => (
+            {[['📦', 'Tracked Delivery', '3-7 business days'], ['↩️', 'Easy Return', '30-day guarantee'], ['🔒', 'Secure Checkout', 'Stripe']].map(([icon, title, sub]) => (
               <div key={title}>
                 <p className="text-lg">{icon}</p>
                 <p className="text-xs font-bold text-gray-700">{title}</p>
@@ -281,7 +275,7 @@ function ProductDetail({ product, addToCart }) {
             <div className="space-y-4">
               <div><p className="font-bold text-sm mb-1">Care Instructions</p><p className="text-gray-500 text-sm">{product.care}</p></div>
               <div><p className="font-bold text-sm mb-1">US Delivery Time</p><p className="text-gray-500 text-sm">Delivered to your door in 3 to 7 business days via USPS/FedEx tracked service. Free shipping applies on all US orders over $75.</p></div>
-              <div><p className="font-bold text-sm mb-1">Accepted Payment Methods</p><p className="text-gray-500 text-sm">Stripe (Visa, Mastercard, Amex, Discover), PayPal, Apple Pay, and Google Pay.</p></div>
+              <div><p className="font-bold text-sm mb-1">Accepted Payment Methods</p><p className="text-gray-500 text-sm">Stripe (Visa, Mastercard, Amex, Discover), Apple Pay, and Google Pay.</p></div>
               <div><p className="font-bold text-sm mb-1">Returns & Satisfaction</p><p className="text-gray-500 text-sm">Not completely thrilled? We accept returns within 30 days of delivery. Items must be unworn and unwashed. Contact us at contact@jesuisla.us.</p></div>
             </div>
           )}

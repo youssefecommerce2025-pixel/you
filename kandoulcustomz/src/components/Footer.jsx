@@ -98,9 +98,6 @@ export default function Footer() {
               💳 Visa / Mastercard / Amex
             </Link>
             <Link to="/payment-methods" className="text-white/40 hover:text-red-500 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
-              🅿️ PayPal Protected
-            </Link>
-            <Link to="/payment-methods" className="text-white/40 hover:text-red-500 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
               🍎 Apple Pay & Google Pay
             </Link>
           </div>
