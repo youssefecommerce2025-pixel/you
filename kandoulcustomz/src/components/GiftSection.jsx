@@ -47,7 +47,7 @@ export default function GiftSection() {
           <div className="grid grid-cols-2 gap-4">
             {[
               { emoji: '🧥', title: 'Boxy Fit', sub: 'Room in the chest', color: '#f8f8f8' },
-              { emoji: '🧵', title: '450 GSM', sub: 'Heavyweight organic', color: '#0A0A0A', dark: true },
+              { emoji: '🧵', title: 'Heavyweight', sub: 'Organic cotton', color: '#0A0A0A', dark: true },
               { emoji: '💪', title: 'Structured', sub: 'Holds its shape', color: '#f5f0e8' },
               { emoji: '🇺🇸', title: 'US Finished', sub: 'Hand-inspected', color: '#1a1a1a', dark: true },
             ].map((item, i) => (
