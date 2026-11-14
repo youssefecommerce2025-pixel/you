@@ -21,7 +21,7 @@ export default function BrandStory() {
                       className="w-full max-w-[280px] mx-auto object-contain"
                     />
                     <p className="text-red-500 text-sm mt-4 italic font-medium">
-                      "I Am Here."
+                      Family-made in the USA
                     </p>
                   </div>
                   <div className="text-center mt-4">
@@ -53,21 +53,15 @@ export default function BrandStory() {
             <h2 className="text-4xl sm:text-5xl font-black text-white mb-6 leading-tight"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              Je suis là means
-              <span className="block italic" style={{ color: '#CC3731' }}>"I am here."</span>
+              Made in the USA.
+              <span className="block italic" style={{ color: '#CC3731' }}>Built by a family.</span>
             </h2>
             <div className="space-y-4 text-white/60 leading-relaxed">
               <p>
-                In a world built to pull your attention everywhere else, those words bring you back to yourself. Be present. Move with intention. Choose quality over excess.
+                <strong className="text-white">Je suis là</strong> is an American family brand. Every hoodie and crewneck is made in the United States from 100% organic cotton, with care from fabric to final pack.
               </p>
               <p>
-                <strong className="text-white">Je suis là</strong> is more than a clothing label. It is a daily practice of presence, in timeless essentials made for comfort, longevity, and calm.
-              </p>
-              <p>
-                Every piece is 100% organic cotton, from Midweight French Terry to Heavyweight Brushed Fleece and Heavyweight French Terry. No synthetic blends. Just natural fabrics for your everyday ritual.
-              </p>
-              <p>
-                A reminder to slow down, reconnect, and take care of yourself. The most important place to be is right here.
+                We don’t aim to make more. We aim to make better: lasting fits, real comfort, and quality a family can put its name on.
               </p>
             </div>
 

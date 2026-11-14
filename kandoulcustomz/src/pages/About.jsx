@@ -58,20 +58,15 @@ export default function About() {
             <div>
               <span className="text-xs font-bold uppercase tracking-widest text-red-500 mb-4 block">Our Philosophy</span>
               <h2 className="text-3xl sm:text-4xl font-black text-white mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-                I am here.
+                Made in the USA.
+                <span className="block italic" style={{ color: '#CC3731' }}>Built by a family.</span>
               </h2>
               <div className="space-y-4 text-white/60 leading-relaxed">
                 <p>
-                  <strong className="text-white">Je suis là</strong> means "I am here." In a world designed to pull attention everywhere else, it is a reminder to return to yourself: present, intentional, and choosing quality over excess.
+                  <strong className="text-white">Je suis là</strong> is an American family brand. Every hoodie and crewneck is made in the United States from 100% organic cotton, with care from fabric to final pack.
                 </p>
                 <p>
-                  More than a clothing label, it is a daily practice of presence, expressed through timeless essentials crafted for comfort, longevity, and calm.
-                </p>
-                <p>
-                  Every piece is made exclusively from 100% organic cotton, from Midweight French Terry to Heavyweight Brushed Fleece and Heavyweight French Terry. No synthetic blends. No unnecessary distractions. Just premium natural fabrics for your everyday ritual.
-                </p>
-                <p>
-                  Slow down. Reconnect. Take care of yourself. <strong className="text-white">The most important place to be is right here.</strong>
+                  We don’t aim to make more. We aim to make better: lasting fits, real comfort, and quality a family can put its name on.
                 </p>
               </div>
             </div>
