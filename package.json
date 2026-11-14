@@ -8,7 +8,8 @@
     "start": "node server.cjs",
     "dev": "node --watch src/server.js",
     "test": "node --test",
-    "init-db": "node src/db.js --init"
+    "init-db": "node src/db.js --init",
+    "build": "npm ci --prefix kandoulcustomz && npm run build --prefix kandoulcustomz && rm -rf dist && cp -a kandoulcustomz/dist dist"
   },
   "keywords": [
     "leads",
@@ -22,7 +23,8 @@
   "dependencies": {
     "express": "^4.21.2",
     "nodemailer": "^9.0.3",
-    "sql.js": "^1.14.1"
+    "sql.js": "^1.14.1",
+    "stripe": "^22.6.2"
   },
   "optionalDependencies": {
     "better-sqlite3": "^11.8.1"

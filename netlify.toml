@@ -1,0 +1,9 @@
+# Netlify is configured in the UI to build the repo root and publish /dist.
+# The storefront and its build script live in kandoulcustomz/.
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "kandoulcustomz/netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
