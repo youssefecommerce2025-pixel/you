@@ -32,11 +32,6 @@ function ProductCard({ product, addToCart }) {
     if (product.logos.length > 0 && !selectedLogo) { setError('Please select a logo placement'); return }
     setError('')
 
-    if (product.isCustom) {
-      navigate('/custom-order')
-      return
-    }
-
     const result = addToCart({
       id: product.id,
       name: product.name,
@@ -186,28 +181,19 @@ function ProductCard({ product, addToCart }) {
 
         {/* Add to cart / Custom CTA */}
         <div className="mt-auto pt-2">
-          {product.isCustom ? (
-            <Link
-              to="/custom-order"
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-bold tracking-widest uppercase text-sm btn-gold"
-            >
-              Start Designing <FiArrowRight size={14} />
-            </Link>
-          ) : (
-            <button
-              onClick={handleAdd}
-              disabled={!stock.ready || (stock.ready && (!colorHasStock || (selectedSize && !selectedInStock)))}
-              className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-bold tracking-widest uppercase text-sm transition-all duration-300 disabled:opacity-50 ${
-                added
-                  ? 'bg-green-500 text-white'
-                  : 'btn-gold'
-              }`}
-            >
-              {!stock.ready ? 'Checking availability...' : (!colorHasStock || (selectedSize && !selectedInStock)) ? 'Sold out' : added ? '✓ Added to Cart!' : (
-                <><FiShoppingBag size={14} /> Add to Cart</>
-              )}
-            </button>
-          )}
+          <button
+            onClick={handleAdd}
+            disabled={!stock.ready || (stock.ready && (!colorHasStock || (selectedSize && !selectedInStock)))}
+            className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-bold tracking-widest uppercase text-sm transition-all duration-300 disabled:opacity-50 ${
+              added
+                ? 'bg-green-500 text-white'
+                : 'btn-gold'
+            }`}
+          >
+            {!stock.ready ? 'Checking availability...' : (!colorHasStock || (selectedSize && !selectedInStock)) ? 'Sold out' : added ? '✓ Added to Cart!' : (
+              <><FiShoppingBag size={14} /> Add to Cart</>
+            )}
+          </button>
         </div>
       </div>
     </div>
@@ -221,7 +207,6 @@ function colorToHex(color) {
     'Navy': '#1B2B5E',
     'Olive Green': '#6B7C4A',
     'Forest Green': '#2D5A27',
-    'Brown': '#8B5E3C',
     'Tan': '#D4A47C',
     'Mustard': '#C4A06A',
     'Camel': '#C4A06A',

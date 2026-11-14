@@ -8,10 +8,29 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
   const update = (f, v) => setForm(p => ({ ...p, [f]: v }))
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (window.fbq) fbq('track', 'Lead', { content_name: 'contact_form' })
     if (window.ttq) ttq.track('Contact')
+
+    const formData = new FormData()
+    formData.append('form-name', 'contact')
+    formData.append('name', form.name)
+    formData.append('email', form.email)
+    formData.append('phone', form.phone)
+    formData.append('reason', form.reason)
+    formData.append('message', form.message)
+
+    try {
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      })
+    } catch (err) {
+      console.error('Form submission error', err)
+    }
+
     setSubmitted(true)
   }
 

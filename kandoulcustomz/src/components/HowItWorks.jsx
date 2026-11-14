@@ -2,27 +2,27 @@ import { Link } from 'react-router-dom'
 const steps = [
   {
     num: '01',
-    icon: '💡',
-    title: 'Share Your Vision',
-    desc: 'Tell us your idea — a design, a quote, a logo, or a feeling. Use our custom order form or just send us a message.',
+    icon: '🧵',
+    title: 'Sustainably Sourced',
+    desc: 'We start with 100% organic cotton, selected for its heavyweight durability and ultra-soft feel. No synthetic shortcuts.',
   },
   {
     num: '02',
-    icon: '🎨',
-    title: 'We Design It',
-    desc: "Our team brings your vision to life. We'll send you a digital mockup for approval before we print a single thread.",
+    icon: '✂️',
+    title: 'Precision Cut',
+    desc: "Engineered for the perfect boxy, structured fit. Our hoodies are cut to sit perfectly on the shoulders without sagging.",
   },
   {
     num: '03',
-    icon: '✂️',
-    title: 'We Craft It',
-    desc: 'Using premium materials and precision printing or embroidery, we produce your piece with obsessive attention to quality.',
+    icon: '🪡',
+    title: 'Hand Finished',
+    desc: 'Every piece is embroidered, inspected, and finished by hand in the USA to ensure flawless quality.',
   },
   {
     num: '04',
     icon: '📦',
-    title: 'Delivered to Your Door',
-    desc: "Carefully packaged and shipped directly to you. Standard delivery in 2-3 days. Custom orders in 5-7 days.",
+    title: 'Delivered to You',
+    desc: "Carefully packaged and shipped directly to your door. Standard tracked US delivery in 3-7 business days.",
   },
 ]
 
@@ -33,10 +33,10 @@ export default function HowItWorks() {
         <div className="text-center mb-14">
           <span className="text-xs font-bold uppercase tracking-widest text-red-600 mb-3 block">The Process</span>
           <h2 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Simple. Personal. Perfect.
+            Uncompromising Quality.
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto">
-            Getting a custom piece from JSL is simple, fast, and stress-free. Here's how it works:
+            From raw organic cotton to the final stitch, we control every step of the process to deliver the perfect men's heavyweight hoodie.
           </p>
         </div>
 
@@ -70,10 +70,10 @@ export default function HowItWorks() {
         {/* CTA */}
         <div className="text-center mt-14">
           <Link
-            to="/custom-order"
+            to="/shop"
             className="inline-flex items-center gap-2 px-10 py-4 rounded-full font-bold tracking-widest uppercase text-sm btn-gold"
           >
-            Start Your Custom Order Today
+            Shop the Collection
           </Link>
         </div>
       </div>

@@ -113,7 +113,7 @@ export default function App() {
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/payment-methods" element={<PaymentMethods />} />
-          <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/thank-you" element={<ThankYou clearCart={clearCart} />} />
           <Route path="/checkout" element={<Checkout cart={cart} total={cartTotal} />} />
         </Routes>
       </main>

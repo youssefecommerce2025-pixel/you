@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/jesuisla-favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="JSL — Premium Je Suis Là hoodies and custom apparel. Unique designs made in the USA." />
-    <meta name="keywords" content="JSL, Je Suis Là, custom hoodies, personalized gifts, streetwear, USA" />
-    <meta property="og:title" content="JSL | Premium Hoodies & Custom Apparel" />
-    <meta property="og:description" content="Wear your story. Shop premium custom apparel and personalized gifts. Made with love, delivered to your door." />
+    <meta name="description" content="JSL — Premium Je suis là hoodies and crewnecks. Ready-to-wear pieces made in the USA." />
+    <meta name="keywords" content="JSL, Je Suis Là, hoodies, crewnecks, streetwear, USA" />
+    <meta property="og:title" content="JSL | Premium Hoodies" />
+    <meta property="og:description" content="Wear your story. Shop premium hoodies and crewnecks. Made in the USA, paid in US dollars through Stripe." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://jesuisla.us" />
+    <meta property="og:image" content="https://jesuisla.us/products/jsl-hoodie-black-front-catalog.png" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <!-- GitHub Pages SPA routing decode (handles /you/ and /you) -->
@@ -71,9 +72,17 @@
     </script>
     <!-- END TIKTOK PIXEL -->
 
-    <title>JSL | Premium Hoodies & Custom Apparel</title>
+    <title>JSL | Premium Hoodies</title>
   </head>
   <body>
+    <!-- Hidden form for Netlify -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="reason" />
+      <textarea name="message"></textarea>
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
