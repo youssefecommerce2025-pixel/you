@@ -10,7 +10,7 @@ function colorToHex(color) {
     'Black': '#0A0A0A', 'White': '#F5F5F0', 'Navy': '#1B2B5E',
     'Olive Green': '#6B7C4A', 'Forest Green': '#2D5A27', 'Brown': '#8B5E3C',
     'Tan': '#D4A47C', 'Mustard': '#C4A06A', 'Camel': '#C4A06A', 'Heather': '#D8D8D8', 'Ash Grey': '#D8D8D8', 'Grey': '#A3A3A3', 'Slate': '#6E6E6E',
-    'Olive Military': '#5F6840', 'Olive': '#6B7344', 'Espresso': '#6A5344', 'Cream': '#F5E6D0', 'Red': '#C0392B',
+    'Olive Military': '#5F6840', 'Olive': '#6B7344', 'Brown': '#6A5344', 'Cream': '#F5E6D0', 'Red': '#C0392B',
     'Royal Blue': '#2E4DB4', 'Maroon': '#6D1A36', 'Gray': '#9E9E9E',
     'Yellow': '#F5C842', 'Orange': '#E67E22',
   }
@@ -228,14 +228,10 @@ function ProductDetail({ product, addToCart }) {
           </div>
 
           {/* Trust micro badges */}
-          <div className="grid grid-cols-3 gap-2 mt-6 pt-6 border-t border-gray-100 text-center">
-            {[['📦', 'Tracked Delivery', '3-7 business days'], ['↩️', 'Easy Return', '30-day guarantee'], ['🔒', 'Secure Checkout', 'Stripe & PayPal']].map(([icon, title, sub]) => (
-              <div key={title}>
-                <p className="text-lg">{icon}</p>
-                <p className="text-xs font-bold text-gray-700">{title}</p>
-                <p className="text-xs text-gray-400">{sub}</p>
-              </div>
-            ))}
+          <div className="mt-6 pt-6 border-t border-gray-100 text-center">
+            <p className="text-lg">📦</p>
+            <p className="text-xs font-bold text-gray-700">Tracked Delivery</p>
+            <p className="text-xs text-gray-400">USA only, 3-7 business days</p>
           </div>
         </div>
       </div>
@@ -281,8 +277,8 @@ function ProductDetail({ product, addToCart }) {
             <div className="space-y-4">
               <div><p className="font-bold text-sm mb-1">Care Instructions</p><p className="text-gray-500 text-sm">{product.care}</p></div>
               <div><p className="font-bold text-sm mb-1">US Delivery Time</p><p className="text-gray-500 text-sm">Delivered to your door in 3 to 7 business days via USPS/FedEx tracked service. Free shipping applies on all US orders over $75.</p></div>
-              <div><p className="font-bold text-sm mb-1">Accepted Payment Methods</p><p className="text-gray-500 text-sm">Stripe (Visa, Mastercard, Amex, Discover), PayPal, Apple Pay, and Google Pay.</p></div>
-              <div><p className="font-bold text-sm mb-1">Returns & Satisfaction</p><p className="text-gray-500 text-sm">Not completely thrilled? We accept returns within 30 days of delivery. Items must be unworn and unwashed. Contact us at contact@jesuisla.us.</p></div>
+              <div><p className="font-bold text-sm mb-1">Accepted Payment</p><p className="text-gray-500 text-sm">Payment is accepted in US dollars only, within the United States, and only through Stripe.</p></div>
+              <div><p className="font-bold text-sm mb-1">Returns</p><p className="text-gray-500 text-sm">Returns are not possible. In a case of force majeure, email customer service at contact@jesuisla.us.</p></div>
             </div>
           )}
         </div>

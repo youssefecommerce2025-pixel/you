@@ -100,7 +100,7 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
               </div>
               <div>
                 <p className="text-gray-900 font-bold text-base mb-1">Your cart is currently empty</p>
-                <p className="text-gray-400 text-xs max-w-xs">Explore our signature Je Suis Là hoodies and custom drops.</p>
+                <p className="text-gray-400 text-xs max-w-xs">Explore our signature Je Suis Là hoodies and crewnecks.</p>
               </div>
               <Link
                 to="/shop"
@@ -191,7 +191,7 @@ export default function CartDrawer({ open, onClose, cart, onRemove, onUpdateQty,
             {/* Payment Trust Badges */}
             <div className="pt-2 text-center">
               <p className="text-[10px] text-gray-400 mb-1.5 flex items-center justify-center gap-1">
-                <FiShield className="text-emerald-500" /> Accepted: Stripe • PayPal • Apple Pay • Google Pay
+                <FiShield className="text-emerald-500" /> Accepted: Stripe only, in US dollars
               </p>
               <Link
                 to="/payment-methods"

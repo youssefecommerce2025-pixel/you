@@ -17,8 +17,8 @@ const faqGroups = [
         a: "Yes! All US orders of $75 or more automatically qualify for FREE tracked shipping."
       },
       {
-        q: 'Do you ship internationally?',
-        a: "Currently, our primary focus is fast, premium fulfillment across the United States. For special international requests, email contact@jesuisla.us."
+        q: 'Where do you sell and ship?',
+        a: "Sales are authorized in the United States only. We do not ship outside the USA. Payment is accepted in US dollars only."
       },
       {
         q: 'How do I track my order?',
@@ -33,15 +33,15 @@ const faqGroups = [
     faqs: [
       {
         q: 'What is your return policy?',
-        a: "We accept returns within 30 days if the item is unworn, unwashed, and in original condition. Size exchanges are not available — please check the size chart before you order. To start a return, email contact@jesuisla.us."
+        a: "Returns are not possible. Please check the size chart before you order. In a case of force majeure, email customer service at contact@jesuisla.us."
       },
       {
         q: 'Can I exchange for a different size?',
-        a: "No. Size exchanges are not possible. Please use the size chart on each product page before you buy. If you have a question about fit, email contact@jesuisla.us before placing your order."
+        a: "No. Size exchanges are not possible, and returns are not possible. Please use the size chart on each product page before you buy."
       },
       {
-        q: 'My order arrived damaged. What do I do?',
-        a: "We're so sorry! Take a photo and email it to contact@jesuisla.us within 48 hours of delivery. We'll send a replacement immediately at no cost to you."
+        q: 'What if something goes wrong with my order?',
+        a: "In a case of force majeure, contact customer service by email at contact@jesuisla.us."
       },
     ]
   },

@@ -62,9 +62,9 @@ function page({ title, body }) {
     p, label { font-family: system-ui, sans-serif; }
     h1 { font-size: 2rem; font-weight: 700; margin: 0 0 8px; }
     .muted { color: rgba(255,255,255,.62); line-height: 1.5; margin: 0 0 24px; }
-    label { display: block; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; color: #e8c97a; }
+    label { display: block; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; color: #fff; }
     input { width: 100%; box-sizing: border-box; border: 1px solid rgba(255,255,255,.16); background: #141414; color: #fff; border-radius: 999px; padding: 14px 18px; font-size: 1rem; }
-    button { margin-top: 16px; width: 100%; border: 0; border-radius: 999px; padding: 14px 18px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: linear-gradient(135deg, #c9a84c, #e8c97a); color: #111; cursor: pointer; }
+    button { margin-top: 16px; width: 100%; border: 0; border-radius: 999px; padding: 14px 18px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: #CC3731; color: #fff; cursor: pointer; }
     .error { color: #ffb4b4; font-family: system-ui, sans-serif; margin: 0 0 16px; }
   </style>
 </head>
@@ -141,7 +141,7 @@ export function previewGateMiddleware(req, res, next, { access, now = Date.now()
 
 function loginPage(gate, nextUrl, invalid) {
   const until = new Date(gate.expiresAt).toLocaleString('fr-FR', {
-    timeZone: 'Europe/Paris',
+    timeZone: 'Africa/Casablanca',
     hour: '2-digit',
     minute: '2-digit',
     day: '2-digit',
@@ -150,7 +150,7 @@ function loginPage(gate, nextUrl, invalid) {
   return page({
     title: 'Aperçu privé',
     body: `<h1>Aperçu privé</h1>
-      <p class="muted">Ce site est protégé par un mot de passe. Le lien reste ouvert jusqu’à ${until} (heure de Paris).</p>
+      <p class="muted">Ce site est protégé par un mot de passe. Le lien reste ouvert jusqu’à ${until} (heure de Casablanca).</p>
       ${invalid ? '<p class="error">Mot de passe incorrect.</p>' : ''}
       <form method="post" action="/__preview/login">
         <input type="hidden" name="next" value="${nextUrl.replace(/"/g, '&quot;')}" />

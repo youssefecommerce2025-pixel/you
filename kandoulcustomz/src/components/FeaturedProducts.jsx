@@ -231,7 +231,7 @@ function colorToHex(color) {
     'Slate': '#6E6E6E',
     'Olive Military': '#5F6840',
     'Olive': '#6B7344',
-    'Espresso': '#6A5344',
+    'Brown': '#6A5344',
     'Cream': '#F5E6D0',
     'Red': '#C0392B',
     'Royal Blue': '#2E4DB4',
@@ -254,7 +254,7 @@ export default function FeaturedProducts({ addToCart }) {
             Wear What You Mean
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto">
-            Each piece tells a story. Whether it's our signature Je Suis Là hoodie or a completely custom creation — quality and meaning are always stitched in.
+            Each piece tells a story. Quality and meaning are stitched into every ready-to-wear hoodie and crewneck.
           </p>
         </div>
 

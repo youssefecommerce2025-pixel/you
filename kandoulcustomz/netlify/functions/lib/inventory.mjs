@@ -1,7 +1,7 @@
 export const CATALOG = {
   'jsl-hoodie': { name: 'French terry midweight organic 100% by Je suis là', amount: 5500 },
   'jsl-heather-hoodie': { name: 'Heavyweight organic 100 % brushed hood by Je suis là', amount: 6500 },
-  'jsl-espresso-hoodie': { name: 'Heavyweight French terry espresso', amount: 6500 },
+  'jsl-espresso-hoodie': { name: 'Heavyweight French terry by Je suis là', amount: 6500 },
   'jsl-crewneck': { name: 'Heavyweight crewneck by Je suis là', amount: 6500 },
 }
 
@@ -13,9 +13,9 @@ const STOCK = [
   { id: 'jsl-hoodie', color: 'Black', size: 'L', qty: 5 },
   { id: 'jsl-hoodie', color: 'Black', size: 'M', qty: 4 },
   { id: 'jsl-hoodie', color: 'Camel', size: 'L', qty: 3 },
-  { id: 'jsl-espresso-hoodie', color: 'Espresso', size: 'XL', qty: 2 },
-  { id: 'jsl-espresso-hoodie', color: 'Espresso', size: 'L', qty: 2 },
-  { id: 'jsl-espresso-hoodie', color: 'Espresso', size: 'M', qty: 1 },
+  { id: 'jsl-espresso-hoodie', color: 'Brown', size: 'XL', qty: 2 },
+  { id: 'jsl-espresso-hoodie', color: 'Brown', size: 'L', qty: 2 },
+  { id: 'jsl-espresso-hoodie', color: 'Brown', size: 'M', qty: 1 },
   { id: 'jsl-crewneck', color: 'Grey', size: 'L', qty: 2 },
   { id: 'jsl-crewneck', color: 'Black', size: 'L', qty: 2 },
   { id: 'jsl-crewneck', color: 'Olive', size: 'L', qty: 2 },
@@ -26,6 +26,7 @@ export function canonicalColor(color) {
   if (value === 'Heather') return 'Ash Grey'
   if (value === 'Grey' || value === 'Gray') return 'Slate'
   if (value === 'Mustard') return 'Camel'
+  if (value === 'Espresso') return 'Brown'
   return value
 }
 

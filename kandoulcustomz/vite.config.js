@@ -21,5 +21,9 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     allowedHosts: true,
+    proxy: {
+      '/availability': 'http://127.0.0.1:8787',
+      '/create-checkout-session': 'http://127.0.0.1:8787',
+    },
   },
 })

@@ -41,7 +41,7 @@ export default function Footer() {
                 { to: '/shop', label: 'All Products' },
                 { to: '/shop#jsl-hoodie', label: 'French terry hoodie' },
                 { to: '/shop#jsl-heather-hoodie', label: 'Brushed heavyweight hood' },
-                { to: '/shop#jsl-espresso-hoodie', label: 'Heavyweight French terry espresso' },
+                { to: '/shop#jsl-espresso-hoodie', label: 'Heavyweight French terry' },
                 { to: '/shop#jsl-crewneck', label: 'Heavyweight crewneck' },
               ].map(link => (
                 <li key={link.to + link.label}>
@@ -63,7 +63,7 @@ export default function Footer() {
                 { to: '/faq', label: 'FAQ' },
                 { to: '/contact', label: 'Contact Us' },
                 { to: '/faq#shipping', label: 'Delivery & Shipping' },
-                { to: '/faq#returns', label: 'Returns & Guarantee' },
+                { to: '/faq#returns', label: 'Final Sale' },
                 { to: '/faq#sizing', label: 'Size Guide' },
               ].map(link => (
                 <li key={link.to + link.label}>
@@ -92,16 +92,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
             <Link to="/payment-methods" className="text-white/40 hover:text-red-500 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
-              🔒 Stripe Verified
-            </Link>
-            <Link to="/payment-methods" className="text-white/40 hover:text-red-500 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
-              💳 Visa / Mastercard / Amex
-            </Link>
-            <Link to="/payment-methods" className="text-white/40 hover:text-red-500 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
-              🅿️ PayPal Protected
-            </Link>
-            <Link to="/payment-methods" className="text-white/40 hover:text-red-500 text-xs font-medium px-3 py-1 border border-white/10 rounded-full transition-colors">
-              🍎 Apple Pay & Google Pay
+              🔒 Pay with Stripe
             </Link>
           </div>
           <p className="text-white/20 text-xs text-center">

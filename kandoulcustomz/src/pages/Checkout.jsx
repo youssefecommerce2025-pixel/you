@@ -122,7 +122,7 @@ export default function Checkout({ cart, total }) {
       <div className="pt-52 pb-20 bg-gray-50 min-h-screen">
         <div className="max-w-lg mx-auto px-4 text-center">
           <h1 className="text-3xl font-black mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>Your cart is empty</h1>
-          <p className="text-gray-500 mb-8">Choose a size, color, and logo, then come back here to enter your delivery details.</p>
+          <p className="text-gray-500 mb-8">Choose a size and color, then come back here to enter your delivery details.</p>
           <Link to="/shop" className="btn-gold inline-flex px-8 py-4 rounded-full text-xs font-bold tracking-widest uppercase">Shop Collection</Link>
         </div>
       </div>
@@ -138,7 +138,7 @@ export default function Checkout({ cart, total }) {
             Where should we send it?
           </h1>
           <p className="text-gray-500 max-w-xl">
-            Enter your name, address, ZIP code, phone, and email. Payment opens only after this step.
+            We ship within the United States only, and payment is in US dollars only. Enter your name, address, ZIP code, phone, and email. Payment opens only after this step.
           </p>
         </div>
 

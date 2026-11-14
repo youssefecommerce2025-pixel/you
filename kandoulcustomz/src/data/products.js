@@ -42,7 +42,7 @@ export const products = [
         'products/jsl-hoodie-black-front-catalog.png',
       ],
     },
-    logos: ['Large Logo (Chest)', 'Small Corner Logo'],
+    logos: [],
     sizeChart: {
       headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],
       rows: [
@@ -98,7 +98,7 @@ export const products = [
         'products/jsl-hoodie-black-front-catalog.png',
       ],
     },
-    logos: ['Large Logo (Chest)', 'Small Corner Logo'],
+    logos: [],
     sizeChart: {
       headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],
       rows: [
@@ -114,33 +114,33 @@ export const products = [
   },
   {
     id: 'jsl-espresso-hoodie',
-    name: 'Heavyweight French terry espresso',
-    tagline: 'Heavyweight French terry in espresso. Dense, calm, everyday.',
+    name: 'Heavyweight French terry by Je suis là',
+    tagline: 'Heavyweight French terry. Dense, calm, everyday.',
     price: 65,
     emoji: '🧥',
     badge: 'HEAVYWEIGHT',
-    description: `Heavyweight French terry espresso by Je suis là. A dense espresso-brown heavyweight French terry hoodie with the signature chest graphic, built for comfort and everyday wear.`,
+    description: `Heavyweight French terry by Je suis là. A dense brown heavyweight French terry hoodie with the signature chest graphic, built for comfort and everyday wear.`,
     features: [
       '100% organic heavyweight French terry',
-      'Espresso brown',
+      'Brown',
       'Signature "Je suis là" chest graphic',
       'Kangaroo front pocket with JSL woven label',
       'Ribbed cuffs and hem',
       'Ethically made',
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    colors: ['Espresso'],
+    colors: ['Brown'],
     photos: [
       'products/hoodie-espresso-wear.jpg',
       'products/jsl-hoodie-espresso-front-catalog.png',
     ],
     colorPhotos: {
-      Espresso: [
+      Brown: [
         'products/hoodie-espresso-wear.jpg',
         'products/jsl-hoodie-espresso-front-catalog.png',
       ],
     },
-    logos: ['Large Logo (Chest)', 'Small Corner Logo'],
+    logos: [],
     sizeChart: {
       headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],
       rows: [
@@ -179,7 +179,7 @@ export const products = [
       Black: ['products/crew-black-sit.jpg', 'products/jsl_black.jpg', 'products/jsl_studio_3.jpg'],
       Olive: ['products/crew-olive-stand.jpg', 'products/crew-olive-sit.jpg', 'products/jsl_olive.jpg'],
     },
-    logos: ['Large Logo (Chest)', 'Small Corner Logo'],
+    logos: [],
     sizeChart: {
       headers: ['Size', 'Chest (in)', 'Length (in)', 'Sleeve (in)'],
       rows: [

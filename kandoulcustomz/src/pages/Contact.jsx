@@ -25,7 +25,7 @@ export default function Contact() {
             We're Here For You
           </h1>
           <p className="text-gray-500 max-w-lg mx-auto">
-            Questions, custom ideas, or just want to say hi — we respond to every message within 24 hours.
+            Questions about an order, or just want to say hi — we respond to every message within 24 hours.
           </p>
         </div>
 

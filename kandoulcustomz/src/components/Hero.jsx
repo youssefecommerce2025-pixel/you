@@ -40,8 +40,8 @@ export default function Hero() {
 
         {/* Sub-headline */}
         <p className="text-white/60 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-          Premium hoodies & statement pieces, crafted with soul.
-          From one-of-a-kind Je Suis Là hoodies to fully custom drops — made for the bold.
+          Premium hoodies and crewnecks, crafted with soul.
+          Ready-to-wear pieces, made for the bold.
         </p>
 
         {/* CTAs */}
@@ -73,8 +73,8 @@ export default function Hero() {
           </div>
           <div className="hidden sm:block w-px h-10 bg-white/10" />
           <div className="text-center">
-            <p className="text-3xl font-black text-white">100%</p>
-            <p className="text-xs text-white/40 uppercase tracking-widest mt-1">Satisfaction Guaranteed</p>
+            <p className="text-3xl font-black text-white">USD</p>
+            <p className="text-xs text-white/40 uppercase tracking-widest mt-1">US Dollars Only</p>
           </div>
         </div>
       </div>

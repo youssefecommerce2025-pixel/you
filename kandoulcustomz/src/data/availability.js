@@ -7,6 +7,7 @@ export function canonicalColor(color) {
   if (value === 'Heather') return 'Ash Grey'
   if (value === 'Grey' || value === 'Gray') return 'Slate'
   if (value === 'Mustard') return 'Camel'
+  if (value === 'Espresso') return 'Brown'
   return value
 }
 

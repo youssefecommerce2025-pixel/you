@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { FiCheckCircle, FiPackage, FiTruck, FiClock, FiMessageCircle, FiArrowRight, FiShield, FiShoppingBag } from 'react-icons/fi'
+import { FiCheckCircle, FiPackage, FiTruck, FiClock, FiMessageCircle, FiShoppingBag } from 'react-icons/fi'
 
 export default function ThankYou() {
   const [searchParams] = useSearchParams()
@@ -53,7 +53,7 @@ export default function ThankYou() {
             Thank You for Your Order!
           </h1>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed mb-6">
-            Your payment has been successfully accepted and secured. We are now hand-preparing your custom pieces with the utmost care.
+            Your payment has been successfully accepted and secured. We are now preparing your order.
           </p>
 
           {/* Key Delivery Promise Box */}
@@ -84,8 +84,8 @@ export default function ThankYou() {
                 <p className="text-xs text-gray-600">Confirmation email sent to your inbox with your detailed item summary.</p>
               </div>
               <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                <div className="text-red-600 font-black text-sm mb-1">02. Custom Crafting</div>
-                <p className="text-xs text-gray-600">Our artisans print or embroider your pieces on 100% premium cotton.</p>
+                <div className="text-red-600 font-black text-sm mb-1">02. Order Preparation</div>
+                <p className="text-xs text-gray-600">We prepare your ready-to-wear pieces for shipment.</p>
               </div>
               <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
                 <div className="text-red-600 font-black text-sm mb-1">03. Fast US Dispatch</div>
@@ -115,13 +115,10 @@ export default function ThankYou() {
         {/* Security & Guarantee Note */}
         <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-gray-500 text-center">
           <span className="flex items-center gap-1.5">
-            <FiShield className="text-green-600" /> 100% Satisfaction Guarantee
-          </span>
-          <span className="flex items-center gap-1.5">
             <FiTruck className="text-red-600" /> Tracked US Shipping
           </span>
           <span className="flex items-center gap-1.5">
-            <FiClock className="text-blue-600" /> 30-Day Hassle-Free Returns
+            <FiClock className="text-blue-600" /> US Dollars Only
           </span>
         </div>
 
