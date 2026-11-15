@@ -21,7 +21,7 @@ export default function BrandStory() {
                       className="w-full max-w-[280px] mx-auto object-contain"
                     />
                     <p className="text-red-500 text-sm mt-4 italic font-medium">
-                      Family-made in the USA
+                      Made in the USA
                     </p>
                   </div>
                   <div className="text-center mt-4">
