@@ -9,7 +9,7 @@
     "dev": "node --watch src/server.js",
     "test": "node --test",
     "init-db": "node src/db.js --init",
-    "build": "npm ci --prefix kandoulcustomz && npm run build --prefix kandoulcustomz && rm -rf dist && cp -a kandoulcustomz/dist dist"
+    "build": "npm ci --prefix kandoulcustomz && npm run build:netlify --prefix kandoulcustomz && rm -rf dist && cp -a kandoulcustomz/dist dist"
   },
   "keywords": [
     "leads",

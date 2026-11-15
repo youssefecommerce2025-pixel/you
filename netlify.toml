@@ -7,5 +7,9 @@
   # Never skip builds — production was stuck with skipped:true.
   ignore = "exit 1"
 
+[build.environment]
+  # Force Vite base=/ for jesuisla.us (not GitHub Pages /you/).
+  NETLIFY = "true"
+
 [functions]
   node_bundler = "esbuild"

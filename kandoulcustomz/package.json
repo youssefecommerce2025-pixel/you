@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/copy-spa-routes.mjs",
+    "build:netlify": "NETLIFY=true vite build && node scripts/copy-spa-routes.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
     "deploy": "gh-pages -d dist --add"
