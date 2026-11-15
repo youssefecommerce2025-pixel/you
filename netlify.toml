@@ -1,0 +1,15 @@
+# Netlify is configured in the UI to build the repo root and publish /dist.
+# The storefront and its build script live in kandoulcustomz/.
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "kandoulcustomz/netlify/functions"
+  # Never skip builds — production was stuck with skipped:true.
+  ignore = "exit 1"
+
+[build.environment]
+  # Force Vite base=/ for jesuisla.us (not GitHub Pages /you/).
+  NETLIFY = "true"
+
+[functions]
+  node_bundler = "esbuild"

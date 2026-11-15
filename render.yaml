@@ -34,3 +34,18 @@ services:
       name: leads-data
       mountPath: /var/data     # doit correspondre a DATA_DIR
       sizeGB: 1
+
+  # ─── Kandoul Customz — Static Website (FREE) ─────────────────────────────
+  - type: web
+    name: kandoulcustomz
+    runtime: static
+    plan: free
+    region: oregon
+    branch: cursor/kandoulcustomz-fb0d
+    buildCommand: cd kandoulcustomz && npm install && npm run build
+    staticPublishPath: kandoulcustomz/dist
+    autoDeploy: true
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
