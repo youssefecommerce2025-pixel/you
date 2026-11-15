@@ -2,6 +2,8 @@
   command = "npm run build"
   publish = "dist"
   functions = "netlify/functions"
+  # Never skip production/preview builds (fixes skipped:true on Netlify).
+  ignore = "exit 1"
 
 [functions]
   node_bundler = "esbuild"
