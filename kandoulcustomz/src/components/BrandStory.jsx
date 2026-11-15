@@ -24,10 +24,6 @@ export default function BrandStory() {
                       Made in the USA
                     </p>
                   </div>
-                  <div className="text-center mt-4">
-                    <p className="text-red-500 font-black text-2xl">USA</p>
-                    <p className="text-white/40 text-xs uppercase tracking-wider">Made</p>
-                  </div>
                 </div>
               </div>
 
