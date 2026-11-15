@@ -62,8 +62,8 @@ export default function Hero() {
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 sm:gap-10 border-t border-white/10 pt-8">
               <div>
-                <p className="text-2xl sm:text-3xl font-black text-white">USA</p>
-                <p className="text-[10px] sm:text-xs text-white/40 uppercase tracking-widest mt-1">Hand-finished</p>
+                <p className="text-2xl sm:text-3xl font-black text-white">American</p>
+                <p className="text-[10px] sm:text-xs text-white/40 uppercase tracking-widest mt-1">Brand</p>
               </div>
               <div className="w-px h-8 bg-white/10" />
               <div>
