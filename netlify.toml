@@ -4,6 +4,8 @@
   command = "npm run build"
   publish = "dist"
   functions = "kandoulcustomz/netlify/functions"
+  # Never skip builds — production was stuck with skipped:true.
+  ignore = "exit 1"
 
 [functions]
   node_bundler = "esbuild"
