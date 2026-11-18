@@ -197,7 +197,9 @@ const KIND_BY_COLLECTION = {
   'body-spray-hair-mist': 'body',
   'spray-maison-voiture': 'home',
   'parfum-enfant-amerray-kids': 'kids',
+  bougies: 'candle',
 }
+const EXTRA_PRODUCTS = ['bougie-parfumee-amerray-candle']
 const PACK_COLLECTIONS = ['new-pack-2026', 'offres-de-packs', 'pack-homme', 'pack-femme', 'pack-4-parfums']
 
 function seasonList(s, family) {
@@ -258,7 +260,7 @@ function shortDescription(lines, inspired, brand) {
   for (let i = 0; i < lines.length; i++) {
     const l = lines[i]
     if (/^[-–]\s/.test(l) && l.length > 40) return trimSentences(clean(l.replace(/^[-–]\s*/, '')).replace(/ au Maroc ?!/i, ' !'))
-    if (l.length > 70 && /parfum|composition|essence|senteur|fragrance|musc|pack/i.test(l) && !/s'inspirent|livr|^nous /i.test(l)) {
+    if (l.length > 70 && /parfum|composition|essence|senteur|fragrance|musc|pack|bougie/i.test(l) && !/s'inspirent|livr|^nous /i.test(l)) {
       let text = clean(l)
       if (/^[a-zà-ÿ]/.test(text)) text = `${clean(lines[i - 1] ?? inspired ?? '')} ${text}`.replace(/ parfum maroc /i, ' ')
       return trimSentences(text)
@@ -285,6 +287,14 @@ async function main() {
       if (!membership.has(p.id)) membership.set(p.id, new Set())
       membership.get(p.id).add(handle)
     }
+  }
+
+  for (const handle of EXTRA_PRODUCTS) {
+    const { product } = await getJSON(`${STORE}/products/${handle}.json`)
+    console.log(`${handle}: 1`)
+    byId.set(product.id, product)
+    if (!membership.has(product.id)) membership.set(product.id, new Set())
+    membership.get(product.id).add(product.handle.includes('bougie') ? 'bougies' : handle)
   }
 
   const bestOrder = new Map()

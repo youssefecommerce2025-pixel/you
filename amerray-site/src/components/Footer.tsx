@@ -7,7 +7,7 @@ import { useI18n, type TKey } from '../lib/i18n'
 import { CITIES, estimateDelivery, formatDay } from '../lib/shipping'
 import { useStore } from '../lib/store'
 import { waLink } from '../lib/whatsapp'
-import { NAV } from './Header'
+import { NAV, UNIVERSE } from './Header'
 import { InstagramIcon, Logo, TikTokIcon, WhatsAppIcon, YoutubeIcon } from './ui'
 
 export function TrustRow({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
@@ -117,7 +117,7 @@ export function Footer() {
         <div>
           <p className="eyebrow mb-5 text-gold">{t('footer.shop')}</p>
           <ul className="space-y-3 text-sm text-white/70">
-            {NAV.map((n) => (
+            {[...NAV, ...UNIVERSE].map((n) => (
               <li key={n.to}>
                 <Link to={n.to} className="transition hover:text-white">
                   {t(n.key)}

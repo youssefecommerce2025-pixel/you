@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import { DeliveryEstimator } from '../components/Footer'
 import { ProductCard } from '../components/ProductCard'
 import { Img, Meter, Reveal, SectionHeading, Stars, WhatsAppIcon } from '../components/ui'
-import { SINGLE_PRICE, displayName, formatPrice, shopifyImage, similarProducts, useCatalog, type Product, type Season } from '../lib/catalog'
+import { SINGLE_PRICE, collectionHandle, displayName, formatPrice, shopifyImage, similarProducts, useCatalog, type Product, type Season } from '../lib/catalog'
 import { useI18n, type TKey } from '../lib/i18n'
 import { useStore } from '../lib/store'
 import { useDocumentTitle } from '../lib/useDocumentTitle'
@@ -248,8 +248,8 @@ export function ProductPage() {
             {t('nav.home')}
           </Link>{' '}
           /{' '}
-          <Link to={`/collection/${p.kind === 'pack' ? 'packs' : p.kind === 'perfume' ? p.gender : 'musc-bakhour'}`} className="hover:text-ink">
-            {p.kind === 'pack' ? t('nav.packs') : t(`gender.${p.gender}`)}
+          <Link to={`/collection/${collectionHandle(p)}`} className="hover:text-ink">
+            {p.kind === 'perfume' ? t(`gender.${p.gender}`) : t(`col.${collectionHandle(p)}.t` as TKey)}
           </Link>{' '}
           / <span className="text-ink/70">{name}</span>
         </nav>

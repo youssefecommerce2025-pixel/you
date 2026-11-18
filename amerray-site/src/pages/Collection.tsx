@@ -3,7 +3,7 @@ import { ArrowUpDown, Search, SlidersHorizontal, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { ProductCard, ProductCardSkeleton } from '../components/ProductCard'
-import { COLLECTIONS, normalize, searchProducts, useCatalog, type Product } from '../lib/catalog'
+import { COLLECTIONS, NON_PERFUME_COLLECTIONS, normalize, searchProducts, useCatalog, type Product } from '../lib/catalog'
 import { useI18n, type TKey } from '../lib/i18n'
 import { useDocumentTitle } from '../lib/useDocumentTitle'
 
@@ -140,7 +140,7 @@ export function Collection() {
 
   const q = params.get('q') ?? ''
   const sort = params.get('sort') ?? 'best'
-  const isPerfumeCollection = !['packs', 'musc-bakhour', 'maison-corps', 'kids'].includes(def.handle)
+  const isPerfumeCollection = !NON_PERFUME_COLLECTIONS.has(def.handle)
   const available: FilterKey[] = isPerfumeCollection
     ? ['homme', 'femme', 'unisexe'].includes(def.handle)
       ? ['family', 'season', 'moment', 'strength']
@@ -210,7 +210,7 @@ export function Collection() {
           </motion.h1>
           <p className="mt-4 max-w-2xl text-[16px] text-ink/60">{t(descKey)}</p>
           <div className="no-scrollbar mt-8 -mb-px flex gap-2 overflow-x-auto">
-            {COLLECTIONS.filter((c) => !['tous', 'maison-corps', 'kids'].includes(c.handle)).map((c) => (
+            {COLLECTIONS.filter((c) => !['tous', 'musc-bakhour', 'maison-corps'].includes(c.handle)).map((c) => (
               <Link
                 key={c.handle}
                 to={`/collection/${c.handle}`}

@@ -2,6 +2,7 @@ import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Candy, ChevronDown, Flame, Flower2, Gift, MapPin, Search, Sparkles, Trees, Waves } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { CAMPAIGNS, CampaignSlider } from '../components/CampaignSlider'
 import { POPULAR } from '../components/SearchOverlay'
 import { ProductCard, ProductCardSkeleton } from '../components/ProductCard'
 import { DeliveryEstimator, TrustRow } from '../components/Footer'
@@ -203,10 +204,45 @@ const CATEGORY_TILES: { handle: string; key: TKey; span: string }[] = [
   { handle: 'arabic', key: 'nav.arabic', span: 'lg:col-span-2' },
   { handle: 'niche', key: 'nav.niche', span: '' },
   { handle: 'unisexe', key: 'nav.unisex', span: '' },
-  { handle: 'packs', key: 'nav.packs', span: 'lg:col-span-2' },
-  { handle: 'musc-bakhour', key: 'nav.musc', span: 'lg:col-span-2' },
-  { handle: 'maison-corps', key: 'nav.more', span: 'lg:col-span-2' },
+  { handle: 'packs', key: 'nav.packs', span: 'col-span-2 lg:col-span-6' },
 ]
+
+function Univers({ products }: { products: Product[] }) {
+  const { t } = useI18n()
+  return (
+    <section id="univers" className="container-x py-16 lg:py-20">
+      <SectionHeading eyebrow={t('home.univers.eyebrow')} title={t('home.univers.title')} />
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:gap-4">
+        {CAMPAIGNS.map((c, i) => {
+          const def = COLLECTIONS.find((d) => d.handle === c.handle)!
+          const count = products.filter(def.match).length
+          return (
+            <Reveal key={c.handle} delay={i * 0.04}>
+              <Link to={`/collection/${c.handle}`} className="group block overflow-hidden rounded-[22px] bg-white">
+                <div className="relative aspect-[16/10] overflow-hidden bg-ink-2">
+                  <Img
+                    src={c.image}
+                    alt={t(`col.${c.handle}.t` as TKey)}
+                    width={720}
+                    sizes="(min-width:768px) 25vw, 50vw"
+                    className="absolute inset-0 h-full transition-transform duration-700 ease-[var(--ease-luxe)] group-hover:scale-[1.05]"
+                  />
+                </div>
+                <div className="flex items-center justify-between gap-3 px-4 py-3.5">
+                  <div className="min-w-0">
+                    <p className="truncate font-medium">{t(`col.${c.handle}.t` as TKey)}</p>
+                    <p className="text-[12px] text-ink/45">{t('collection.count', { n: count })}</p>
+                  </div>
+                  <ArrowRight size={16} className="shrink-0 text-ink/35 transition group-hover:text-gold-deep rtl:rotate-180" />
+                </div>
+              </Link>
+            </Reveal>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
 
 function Categories({ products }: { products: Product[] }) {
   const { t } = useI18n()
@@ -659,6 +695,8 @@ export function Home({ onSearch }: { onSearch: (q?: string) => void }) {
   return (
     <>
       <Hero onSearch={onSearch} products={products} />
+      <CampaignSlider />
+      <Univers products={products} />
       <div className="border-b border-ink/5 bg-white py-8">
         <div className="container-x">
           <TrustRow />

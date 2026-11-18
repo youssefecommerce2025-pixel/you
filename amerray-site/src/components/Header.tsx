@@ -18,11 +18,21 @@ export const NAV: { to: string; key: TKey }[] = [
   { to: '/collection/musc-bakhour', key: 'nav.musc' },
 ]
 
+export const UNIVERSE: { to: string; key: TKey }[] = [
+  { to: '/collection/pack-homme', key: 'nav.packHomme' },
+  { to: '/collection/pack-femme', key: 'nav.packFemme' },
+  { to: '/collection/bakhour-oud', key: 'nav.bakhour' },
+  { to: '/collection/musc', key: 'nav.muscTahara' },
+  { to: '/collection/kids', key: 'nav.kids' },
+  { to: '/collection/maison-voiture', key: 'nav.maison' },
+  { to: '/collection/body-hair', key: 'nav.body' },
+  { to: '/collection/bougies', key: 'nav.candle' },
+]
+
 const MORE_NAV: { to: string; key: TKey }[] = [
   { to: '/collection/best-sellers', key: 'nav.best' },
   { to: '/collection/tous', key: 'nav.all' },
-  { to: '/collection/maison-corps', key: 'nav.more' },
-  { to: '/collection/kids', key: 'nav.kids' },
+  ...UNIVERSE,
 ]
 
 function AnnouncementBar() {

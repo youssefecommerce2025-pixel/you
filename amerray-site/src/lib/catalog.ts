@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 export type Gender = 'homme' | 'femme' | 'unisexe'
-export type Kind = 'perfume' | 'pack' | 'musc' | 'bakhour' | 'body' | 'home' | 'kids'
+export type Kind = 'perfume' | 'pack' | 'musc' | 'bakhour' | 'body' | 'home' | 'kids' | 'candle'
 export type FamilyGroup = 'frais' | 'floral' | 'oriental' | 'boise' | 'gourmand' | 'fruite' | 'oud'
 export type Season = 'printemps' | 'ete' | 'automne' | 'hiver'
 export type Moment = 'jour' | 'soir' | 'occasion'
@@ -178,9 +178,47 @@ export const COLLECTIONS: CollectionDef[] = [
   { handle: 'arabic', match: (p) => isPerfume(p) && p.collections.includes('perfumes-arabic') },
   { handle: 'niche', match: (p) => isPerfume(p) && p.collections.includes('parfum-de-niche') },
   { handle: 'packs', match: (p) => p.kind === 'pack' },
+  { handle: 'pack-homme', match: (p) => p.kind === 'pack' && p.collections.includes('pack-homme') },
+  { handle: 'pack-femme', match: (p) => p.kind === 'pack' && p.collections.includes('pack-femme') },
   { handle: 'musc-bakhour', match: (p) => p.kind === 'musc' || p.kind === 'bakhour' },
+  { handle: 'musc', match: (p) => p.kind === 'musc' },
+  { handle: 'bakhour-oud', match: (p) => p.kind === 'bakhour' },
   { handle: 'maison-corps', match: (p) => p.kind === 'home' || p.kind === 'body' },
+  { handle: 'maison-voiture', match: (p) => p.kind === 'home' },
+  { handle: 'body-hair', match: (p) => p.kind === 'body' },
   { handle: 'kids', match: (p) => p.kind === 'kids' },
+  { handle: 'bougies', match: (p) => p.kind === 'candle' },
 ]
+
+/** Perfume collections keep scent filters. Everything else is its own rayon. */
+export const NON_PERFUME_COLLECTIONS = new Set([
+  'packs',
+  'pack-homme',
+  'pack-femme',
+  'musc-bakhour',
+  'musc',
+  'bakhour-oud',
+  'maison-corps',
+  'maison-voiture',
+  'body-hair',
+  'kids',
+  'bougies',
+])
+
+export function collectionHandle(p: Product) {
+  if (p.kind === 'perfume') return p.gender
+  if (p.kind === 'pack') {
+    if (p.collections.includes('pack-femme')) return 'pack-femme'
+    if (p.collections.includes('pack-homme')) return 'pack-homme'
+    return 'packs'
+  }
+  if (p.kind === 'musc') return 'musc'
+  if (p.kind === 'bakhour') return 'bakhour-oud'
+  if (p.kind === 'home') return 'maison-voiture'
+  if (p.kind === 'body') return 'body-hair'
+  if (p.kind === 'kids') return 'kids'
+  if (p.kind === 'candle') return 'bougies'
+  return 'tous'
+}
 
 export const isPackEligible = (p: Product) => p.kind === 'perfume'
