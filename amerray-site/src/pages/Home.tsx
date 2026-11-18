@@ -9,6 +9,7 @@ import { Img, Reveal, SectionHeading, Stars } from '../components/ui'
 import { COLLECTIONS, displayName, formatPrice, useCatalog, type FamilyGroup, type Gender, type Product } from '../lib/catalog'
 import { useI18n, type TKey } from '../lib/i18n'
 import { useDocumentTitle } from '../lib/useDocumentTitle'
+import { waLink } from '../lib/whatsapp'
 
 function useTypewriter(words: string[], speed = 80, pause = 1600) {
   const [text, setText] = useState('')
@@ -613,6 +614,31 @@ export function Faq() {
   )
 }
 
+function Disclaimer() {
+  const { t } = useI18n()
+  return (
+    <section id="disclaimer" className="scroll-mt-28 border-t border-ink/8 bg-white">
+      <div className="container-x py-14 lg:py-16">
+        <div className="max-w-3xl">
+          <p className="eyebrow mb-4 text-ink/45">{t('home.legal.title')}</p>
+          <p className="text-[14.5px] leading-relaxed text-ink/65">
+            {t('home.legal.body')}{' '}
+            <a
+              href={waLink('Bonjour Amerray, j’ai une question.')}
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-ink underline decoration-gold underline-offset-4 hover:text-gold-deep"
+            >
+              {t('home.legal.contact')}
+            </a>
+            .
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export function Home({ onSearch }: { onSearch: (q?: string) => void }) {
   const catalog = useCatalog()
   const { hash } = useLocation()
@@ -649,6 +675,7 @@ export function Home({ onSearch }: { onSearch: (q?: string) => void }) {
       <DeliverySection />
       <StoreSection />
       <Faq />
+      <Disclaimer />
     </>
   )
 }

@@ -99,6 +99,10 @@ const fr = {
   'home.store.cta': 'Itinéraire',
   'home.faq.eyebrow': 'Questions fréquentes',
   'home.faq.title': 'Tout ce que vous voulez savoir',
+  'home.legal.title': 'Clause de non-responsabilité',
+  'home.legal.body':
+    'Chez Amerray Parfum, nos produits sont inspirés par des parfums de marques de luxe, mais ne sont pas des créations originales. Nous n’avons aucune affiliation avec ces marques ou leurs fabricants. Nos parfums sont des formulations indépendantes qui évoquent des profils olfactifs similaires à ceux des grandes marques. Les noms de marques mentionnés servent uniquement à des fins descriptives. En achetant chez Amerray Parfum, vous reconnaissez acquérir un parfum inspiré, et non un produit de créateur original. Pour toute question, veuillez',
+  'home.legal.contact': 'nous contacter',
 
   'family.frais': 'Frais & Aromatique',
   'family.floral': 'Floral & Poudré',
@@ -456,6 +460,10 @@ const ar: Record<TKey, string> = {
   'home.store.cta': 'الاتجاهات',
   'home.faq.eyebrow': 'أسئلة شائعة',
   'home.faq.title': 'كل ما تريد معرفته',
+  'home.legal.title': 'إخلاء المسؤولية',
+  'home.legal.body':
+    'في أميراي بارفان، منتجاتنا مستوحاة من عطور الماركات الفاخرة، لكنها ليست ابتكارات أصلية. ليست لنا أي علاقة بهذه الماركات أو مصنّعيها. عطورنا تركيبات مستقلة تستحضر ملامح عطرية قريبة من عطور الماركات الكبرى. تُذكر أسماء الماركات لأغراض وصفية فقط. بشرائك من أميراي بارفان، تقرّ بأنك تقتني عطراً مستوحى وليس منتجاً أصلياً من دار التصميم. لأي استفسار، يُرجى',
+  'home.legal.contact': 'التواصل معنا',
 
   'family.frais': 'منعش وعطري',
   'family.floral': 'زهري وبودري',
