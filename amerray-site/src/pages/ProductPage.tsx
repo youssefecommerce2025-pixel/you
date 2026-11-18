@@ -234,7 +234,7 @@ export function ProductPage() {
     ...(p.reviews.length
       ? {
           aggregateRating: { '@type': 'AggregateRating', ratingValue: 5, reviewCount: p.reviews.length },
-          review: p.reviews.map((r) => ({ '@type': 'Review', author: { '@type': 'Person', name: r.author }, reviewBody: r.text, reviewRating: { '@type': 'Rating', ratingValue: 5 } })),
+          review: p.reviews.map((r) => ({ '@type': 'Review', author: { '@type': 'Person', name: r.author }, reviewBody: r.text, reviewRating: { '@type': 'Rating', ratingValue: r.stars ?? 5 } })),
         }
       : {}),
   }
@@ -306,6 +306,25 @@ export function ProductPage() {
               <p className="mt-5 text-[15.5px] leading-relaxed text-ink/70" dir="auto">
                 {p.description}
               </p>
+            )}
+
+            {p.reviews.length > 0 && (
+              <div id="avis" className="mt-6 scroll-mt-28">
+                <p className="text-[13px] font-semibold tracking-wide">{t('product.reviews')}</p>
+                <ul className="mt-3 space-y-2.5">
+                  {p.reviews.map((r, i) => (
+                    <li key={i} className="rounded-2xl border-s-4 border-gold bg-white px-4 py-3.5">
+                      <p className="text-[14.5px] leading-relaxed text-ink/80 italic" dir="auto">
+                        {r.text}
+                      </p>
+                      <div className="mt-2 flex items-center justify-between gap-3">
+                        <p className="text-sm font-semibold">- {r.author}</p>
+                        <Stars value={r.stars ?? 5} size={12} />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
 
             {isPerfume && (
@@ -420,21 +439,6 @@ export function ProductPage() {
       </div>
 
       <Pyramid p={p} />
-
-      {p.reviews.length > 0 && (
-        <section id="avis" className="container-x scroll-mt-28 py-20">
-          <SectionHeading eyebrow={t('product.reviews')} title={<span className="flex items-center gap-4">5,0 <Stars size={22} /></span>} />
-          <div className="grid gap-4 md:grid-cols-2">
-            {p.reviews.map((r, i) => (
-              <Reveal key={i} delay={i * 0.06} className="card-surface p-6">
-                <Stars size={13} />
-                <p className="mt-3 text-[15px] leading-relaxed text-ink/75">« {r.text} »</p>
-                <p className="mt-4 text-sm font-semibold">{r.author}</p>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-      )}
 
       {similar.length > 0 && (
         <section className="bg-white py-20">

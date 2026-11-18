@@ -474,57 +474,6 @@ function Families({ products }: { products: Product[] }) {
   )
 }
 
-function Reviews({ products }: { products: Product[] }) {
-  const { t } = useI18n()
-  const reviews = useMemo(() => {
-    const out: { text: string; author: string; product: Product }[] = []
-    for (const p of products) {
-      if (p.kind !== 'perfume' || p.bestRank === undefined) continue
-      const r = p.reviews.find((x) => x.text.length < 190)
-      if (r) out.push({ ...r, product: p })
-      if (out.length >= 9) break
-    }
-    return out
-  }, [products])
-  return (
-    <section className="overflow-hidden bg-ink py-20 text-white lg:py-28">
-      <div className="container-x">
-        <SectionHeading
-          tone="light"
-          eyebrow={t('home.reviews.eyebrow')}
-          title={t('home.reviews.title')}
-          action={
-            <div className="flex items-center gap-3">
-              <span className="font-display text-5xl text-gold-soft">4,9</span>
-              <div>
-                <Stars size={16} />
-                <p className="mt-1 text-[12px] text-white/50">10 000+ clients</p>
-              </div>
-            </div>
-          }
-        />
-        <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
-          {reviews.map((r, i) => (
-            <Reveal key={i} delay={(i % 3) * 0.08} className="mb-4 break-inside-avoid rounded-[24px] border border-white/10 bg-white/[0.03] p-6">
-              <Stars size={13} />
-              <p className="mt-4 text-[15px] leading-relaxed text-white/80">« {r.text} »</p>
-              <div className="mt-5 flex items-center gap-3 border-t border-white/10 pt-4">
-                <Img src={r.product.images[0]} alt="" width={120} sizes="44px" className="size-11 shrink-0 rounded-full bg-ink-3" />
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold">{r.author}</p>
-                  <Link to={`/produit/${r.product.handle}`} className="block truncate text-[12px] text-gold-soft/80 hover:text-gold-soft">
-                    {displayName(r.product)}
-                  </Link>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 function Tradition({ products }: { products: Product[] }) {
   const { t } = useI18n()
   const items = products.filter((p) => p.kind === 'musc' || p.kind === 'bakhour').slice(0, 4)
@@ -708,7 +657,6 @@ export function Home({ onSearch }: { onSearch: (q?: string) => void }) {
       <HowItWorks />
       <QuizTeaser />
       <Families products={products} />
-      <Reviews products={products} />
       <Tradition products={products} />
       <DeliverySection />
       <StoreSection />

@@ -38,7 +38,7 @@ export interface Product {
   moments: Moment[]
   year?: number
   description: string
-  reviews: { text: string; author: string }[]
+  reviews: { text: string; author: string; stars?: number }[]
   packContents?: string[]
   bestRank?: number
   createdAt: string

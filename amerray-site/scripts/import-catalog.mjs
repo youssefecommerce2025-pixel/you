@@ -2,7 +2,7 @@
 // catalogue to src/data/catalog.json. Re-run any time: `npm run import:catalog`.
 import { writeFile, mkdir } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const STORE = process.env.AMERRAY_STORE ?? 'https://amerray.com'
 const OUT = resolve(dirname(fileURLToPath(import.meta.url)), '../src/data/catalog.json')
@@ -159,18 +159,30 @@ function accords(lines) {
   return found.slice(0, 6)
 }
 
-function reviews(lines) {
+export function extractReviews(html = '') {
   const out = []
-  for (let i = 1; i < lines.length; i++) {
-    const author = lines[i].match(/^[-–]\s*([A-ZÀ-Ý][^⭐"]{1,40}?)\s*(⭐+)?$/u)
-    if (!author) continue
-    const stars = author[2] || lines[i + 1]?.startsWith('⭐')
-    if (!stars) continue
-    const text = clean(lines[i - 1]).replace(/^["“«]\s*|\s*["”»]$/g, '')
-    if (text.length < 25 || /^[,.;]/.test(text) || text.includes('⭐')) continue
-    out.push({ text: cap1(text), author: clean(author[1]) })
+  const re = /<div class="review-text">([\s\S]*?)<\/div>\s*<div class="review-author">([\s\S]*?)<\/div>/gi
+  let m
+  while ((m = re.exec(html))) {
+    const text = clean(decode(m[1].replace(/<span[^>]*class="visually-hidden"[^>]*>[\s\S]*?<\/span>/gi, '').replace(/<[^>]+>/g, ' '))).replace(/^(\s*["“«])\s+/, '$1')
+    const authorHtml = m[2]
+    const stars = (authorHtml.match(/⭐/g) || []).length || 5
+    const author = clean(decode(authorHtml.replace(/<[^>]+>/g, ' '))).replace(/^[-–]\s*/, '').replace(/⭐/g, '').trim()
+    if (text.length < 12 || !author) continue
+    out.push({ text, author, stars })
   }
-  return out.slice(0, 4)
+  if (out.length) return out
+  const lines = toText(html)
+  for (let i = 1; i < lines.length; i++) {
+    const author = lines[i].match(/^[-–]\s*(.+?)\s*(⭐+)?$/u)
+    if (!author) continue
+    const starLine = author[2] || (lines[i + 1]?.startsWith('⭐') ? lines[i + 1] : '')
+    if (!starLine) continue
+    const text = clean(lines[i - 1]).replace(/^["“«]\s*|\s*["”»]$/g, '')
+    if (text.length < 12 || /^[,.;]/.test(text) || text.includes('⭐')) continue
+    out.push({ text, author: clean(author[1]), stars: (String(starLine).match(/⭐/g) || []).length || 5 })
+  }
+  return out
 }
 
 function duration(lines, family) {
@@ -376,7 +388,7 @@ async function main() {
       moments: momentList(moment, family ?? acc.join(' ')),
       year: Number(field(lines, ['Année'])) || undefined,
       description: shortDescription(lines, inspired, brand),
-      reviews: reviews(lines),
+      reviews: extractReviews(p.body_html),
       packContents: kind === 'pack' ? packContents(lines) : undefined,
       bestRank: bestOrder.get(p.id),
       createdAt: p.created_at,
@@ -390,7 +402,9 @@ async function main() {
   console.log(`\n${products.length} produits →`, OUT, counts)
 }
 
-main().catch((err) => {
-  console.error(err)
-  process.exit(1)
-})
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((err) => {
+    console.error(err)
+    process.exit(1)
+  })
+}
