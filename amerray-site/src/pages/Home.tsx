@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowRight, Candy, ChevronDown, Flame, Flower2, Gift, MapPin, Search, Sparkles, Trees, Waves } from 'lucide-react'
+import { ArrowRight, Candy, Flame, Flower2, Gift, MapPin, Plus, Search, Sparkles, Trees, Waves } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { CAMPAIGNS, CampaignSlider } from '../components/CampaignSlider'
@@ -562,36 +562,76 @@ function StoreSection() {
   )
 }
 
+const FAQ_GROUPS: { cat: TKey; items: { n: number; note?: TKey }[] }[] = [
+  { cat: 'faq.cat.quality', items: [{ n: 1 }, { n: 2 }, { n: 3 }] },
+  { cat: 'faq.cat.price', items: [{ n: 4, note: 'faq.4.note' }, { n: 5 }, { n: 6 }] },
+  { cat: 'faq.cat.delivery', items: [{ n: 7 }, { n: 8 }, { n: 9 }] },
+  { cat: 'faq.cat.service', items: [{ n: 10 }, { n: 11 }, { n: 12 }] },
+]
+
 export function Faq() {
   const { t } = useI18n()
-  const [open, setOpen] = useState<number | null>(0)
-  const items = [1, 2, 3, 4, 5, 6] as const
+  const [open, setOpen] = useState<number | null>(null)
+  const toggle = (n: number) => setOpen((cur) => (cur === n ? null : n))
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQ_GROUPS.flatMap((g) => g.items).map(({ n }) => ({
+      '@type': 'Question',
+      name: t(`faq.${n}.q` as TKey),
+      acceptedAnswer: { '@type': 'Answer', text: t(`faq.${n}.a` as TKey).replaceAll('\n', ' ') },
+    })),
+  }
   return (
-    <section id="faq" className="container-x scroll-mt-28 pb-20 lg:pb-28">
-      <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
-        <div className="lg:sticky lg:top-28">
-          <SectionHeading eyebrow={t('home.faq.eyebrow')} title={t('home.faq.title')} />
+    <section id="faq" className="scroll-mt-28 bg-[#f4f6f8] py-16 lg:py-24">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <div className="container-x">
+        <div className="mx-auto mb-10 max-w-3xl text-center">
+          <h2 className="font-display text-4xl leading-tight text-ink sm:text-5xl">{t('home.faq.title')}</h2>
+          <p className="mt-4 text-[15px] text-ink/55">{t('home.faq.subtitle')}</p>
         </div>
-        <div className="divide-y divide-ink/10 border-y border-ink/10">
-          {items.map((n, i) => (
-            <div key={n}>
-              <button type="button" onClick={() => setOpen(open === i ? null : i)} className="flex w-full items-center justify-between gap-6 py-6 text-start" aria-expanded={open === i}>
-                <span className="font-display text-2xl">{t(`faq.${n}.q`)}</span>
-                <ChevronDown size={20} className={`shrink-0 transition-transform duration-300 ${open === i ? 'rotate-180' : ''}`} />
-              </button>
-              <AnimatePresence initial={false}>
-                {open === i && (
-                  <motion.p
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden pe-10 text-[15.5px] leading-relaxed text-ink/65"
-                  >
-                    <span className="block pb-6">{t(`faq.${n}.a`)}</span>
-                  </motion.p>
-                )}
-              </AnimatePresence>
-            </div>
+        <div className="grid items-start gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {FAQ_GROUPS.map((group) => (
+            <article key={group.cat} className="rounded-[22px] border border-ink/8 bg-white p-5 shadow-[0_10px_30px_-24px_rgba(0,0,0,0.45)]">
+              <p className="mb-3 inline-block rounded-md bg-mist px-2.5 py-1 text-[13px] font-semibold text-ink/70">{t(group.cat)}</p>
+              <div className="divide-y divide-ink/8">
+                {group.items.map(({ n, note }) => {
+                  const isOpen = open === n
+                  return (
+                    <div key={n}>
+                      <button
+                        type="button"
+                        onClick={() => toggle(n)}
+                        className="flex w-full items-center justify-between gap-4 py-3.5 text-start text-[15px] font-medium"
+                        aria-expanded={isOpen}
+                      >
+                        <span>{t(`faq.${n}.q` as TKey)}</span>
+                        <Plus size={18} className={`shrink-0 text-ink/50 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`} />
+                      </button>
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="space-y-2 pb-4 text-[14.5px] leading-relaxed text-ink/70">
+                              {t(`faq.${n}.a` as TKey)
+                                .split('\n')
+                                .map((line) => (
+                                  <p key={line}>{line}</p>
+                                ))}
+                              {note && <p className="rounded-xl bg-gold/15 px-3 py-2 text-ink/80">{t(note)}</p>}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  )
+                })}
+              </div>
+            </article>
           ))}
         </div>
       </div>
