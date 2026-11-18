@@ -243,12 +243,28 @@ function familyGroup(family = '', acc = []) {
   return 'oriental'
 }
 
+function trimSentences(text, max = 260) {
+  const sentences = text.match(/[^.!?]+[.!?]+/g) ?? [text]
+  let out = ''
+  for (const s of sentences) {
+    if (out && (out + s).length > max) break
+    out += s
+  }
+  return clean(out.length > max + 40 ? `${out.slice(0, max).replace(/\s+\S*$/, '')}…` : out)
+}
+
 function shortDescription(lines, inspired, brand) {
-  const intro = lines.find((l) => /^[-–]\s/.test(l) && l.length > 40)
-  if (intro) return clean(intro.replace(/^[-–]\s*/, '')).replace(/ au Maroc ?!?/i, '.').slice(0, 220)
-  const sentence = lines.find((l) => l.length > 70 && /parfum|composition|essence|senteur|musc|pack/i.test(l) && !/s'inspirent|livr/i.test(l))
-  if (sentence) return clean(sentence).slice(0, 220)
-  return inspired ? `Notre interprétation de ${inspired}${brand ? ` de ${brand}` : ''}, en Eau de Parfum concentrée à 25-30 %.` : ''
+  const fallback = inspired ? `Notre interprétation de ${inspired}${brand ? ` de ${brand}` : ''}, en Eau de Parfum concentrée à 25-30 %.` : ''
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i]
+    if (/^[-–]\s/.test(l) && l.length > 40) return trimSentences(clean(l.replace(/^[-–]\s*/, '')).replace(/ au Maroc ?!/i, ' !'))
+    if (l.length > 70 && /parfum|composition|essence|senteur|fragrance|musc|pack/i.test(l) && !/s'inspirent|livr|^nous /i.test(l)) {
+      let text = clean(l)
+      if (/^[a-zà-ÿ]/.test(text)) text = `${clean(lines[i - 1] ?? inspired ?? '')} ${text}`.replace(/ parfum maroc /i, ' ')
+      return trimSentences(text)
+    }
+  }
+  return fallback
 }
 
 function packContents(lines) {

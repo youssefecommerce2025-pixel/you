@@ -1,32 +1,60 @@
-# React + TypeScript + Vite
+# Amerray & Co. — nouveau site
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Boutique moderne pour [amerray.com](https://amerray.com) (React + Vite + Tailwind), bilingue français / arabe, pensée mobile d'abord pour le marché marocain.
 
-Currently, two official plugins are available:
+Le catalogue (934 produits : parfums, packs, musc, bakhour, kids, maison) est importé directement depuis la boutique Shopify actuelle, avec les mêmes noms, prix, photos, handles et identifiants de variantes. Aucune donnée n'est perdue.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Lancer le site en local
 
-## React Compiler
+Prérequis : Node.js 20 ou plus récent.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+cd amerray-site
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Puis ouvrir http://localhost:5173.
+
+Version optimisée (production) :
+
+```bash
+npm run build
+npm run preview   # http://localhost:4173
+```
+
+## Mettre à jour le catalogue
+
+```bash
+npm run import:catalog
+```
+
+Le script `scripts/import-catalog.mjs` relit `amerray.com/collections/*/products.json` et régénère `src/data/catalog.json` (notes olfactives, famille, saison, tenue, sillage, avis clients extraits des fiches produits).
+
+## Recevoir les commandes
+
+Le formulaire « Paiement à la livraison » (nom, téléphone, ville, adresse) :
+
+1. ouvre WhatsApp vers le +212 665-440983 avec le récapitulatif complet de la commande ;
+2. si la variable `VITE_ORDER_WEBHOOK` est définie (Google Sheets Apps Script, Make, Zapier, n8n…), envoie aussi la commande en JSON à cette URL.
+
+```bash
+VITE_ORDER_WEBHOOK="https://script.google.com/macros/s/XXXX/exec" npm run build
+```
+
+## Ce qui a été ajouté par rapport au site actuel
+
+- Recherche instantanée par parfum original, marque ou note (« Sauvage », « Baccarat », « vanille »…).
+- Offre 3 + 1 calculée automatiquement dans le panier, avec barre de progression et suggestions pour compléter le pack.
+- Page « Composer mon pack » interactive (4 emplacements, le 4e offert).
+- Quiz olfactif en 5 questions avec recommandations notées.
+- Fiches produit : pyramide olfactive, tenue, sillage, saisons, moments, avis, estimation de livraison par ville, commande WhatsApp, barre d'achat collante sur mobile.
+- Filtres par genre, famille, saison, moment et intensité.
+- Version arabe complète (droite à gauche).
+- Checkout en une étape sans compte, validation des numéros marocains, estimation de la date de livraison.
+- Favoris, produits vus récemment, barre d'onglets mobile, bouton WhatsApp flottant.
+- SEO : balises meta, données structurées Product / Store (JSON-LD).
+
+## Déploiement
+
+Le dossier `dist/` est un site statique : Netlify, Vercel, Cloudflare Pages ou n'importe quel hébergeur. Le fichier `public/_redirects` gère les URL de l'application sur Netlify / Cloudflare Pages.

@@ -50,7 +50,7 @@ function Hero({ onSearch, products }: { onSearch: (q?: string) => void; products
       <div className="pointer-events-none absolute end-[-10%] bottom-[-30%] size-[600px] rounded-full bg-royal/25 blur-[140px]" />
 
       <div className="container-x relative grid items-center gap-12 pt-10 pb-16 lg:min-h-[calc(100vh-110px)] lg:grid-cols-[1.1fr_1fr] lg:gap-8 lg:py-16">
-        <div>
+        <div className="min-w-0">
           <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="eyebrow flex items-center gap-3 text-gold">
             <span className="h-px w-8 bg-gold" /> {t('hero.eyebrow')}
           </motion.p>

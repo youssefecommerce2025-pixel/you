@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { Search, SlidersHorizontal, X } from 'lucide-react'
+import { ArrowUpDown, Search, SlidersHorizontal, X } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { ProductCard, ProductCardSkeleton } from '../components/ProductCard'
@@ -245,18 +245,21 @@ export function Collection() {
               {activeCount > 0 && <span className="grid size-5 place-items-center rounded-full bg-gold text-[11px] font-bold">{activeCount}</span>}
             </button>
           )}
-          <select
-            value={sort}
-            onChange={(e) => setParam('sort', e.target.value === 'best' ? '' : e.target.value)}
-            className="ms-auto cursor-pointer rounded-full border border-ink/10 bg-white px-4 py-2.5 text-sm outline-none max-sm:w-[44px] max-sm:appearance-none max-sm:px-0 max-sm:text-transparent"
-            aria-label={t('collection.sort')}
-          >
-            {SORTS.map((s) => (
-              <option key={s.value} value={s.value} className="text-ink">
-                {t(s.label)}
-              </option>
-            ))}
-          </select>
+          <label className="relative ms-auto shrink-0">
+            <ArrowUpDown size={16} className="pointer-events-none absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 sm:hidden rtl:translate-x-1/2" />
+            <select
+              value={sort}
+              onChange={(e) => setParam('sort', e.target.value === 'best' ? '' : e.target.value)}
+              className="cursor-pointer rounded-full border border-ink/10 bg-white px-4 py-2.5 text-sm outline-none max-sm:h-[42px] max-sm:w-[42px] max-sm:appearance-none max-sm:px-0 max-sm:text-transparent"
+              aria-label={t('collection.sort')}
+            >
+              {SORTS.map((s) => (
+                <option key={s.value} value={s.value} className="text-ink">
+                  {t(s.label)}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
 
         <div className={`grid gap-10 ${available.length ? 'lg:grid-cols-[250px_1fr]' : ''}`}>

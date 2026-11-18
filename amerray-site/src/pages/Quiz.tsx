@@ -186,7 +186,7 @@ export function Quiz() {
                   <div key={p.id} className="relative">
                     <ProductCard p={p} index={i} />
                     <span className="absolute start-3 top-12 z-10 rounded-full bg-gold px-2.5 py-1 text-[11px] font-bold text-ink shadow">
-                      {t('quiz.match', { n: Math.min(99, Math.round((s / (MAX + 10)) * 100) + 8) })}
+                      {t('quiz.match', { n: Math.min(98, Math.round((s / (MAX + 10)) * 96 - i * 1.5 + 2)) })}
                     </span>
                   </div>
                 ))}

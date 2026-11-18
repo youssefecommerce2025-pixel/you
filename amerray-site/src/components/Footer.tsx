@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Banknote, Check, MapPin, Phone, ShieldCheck, Sparkles, Truck } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { WHATSAPP_DISPLAY } from '../lib/catalog'
 import { useI18n, type TKey } from '../lib/i18n'
@@ -245,8 +245,11 @@ export function AddedToast() {
   const { t } = useI18n()
   const { lastAdded, cartOpen, setCartOpen, totals } = useStore()
   const [visible, setVisible] = useState(false)
+  const shownAt = useRef(0)
   useEffect(() => {
-    if (!lastAdded || cartOpen) return
+    if (!lastAdded || lastAdded.at <= shownAt.current) return
+    shownAt.current = lastAdded.at
+    if (cartOpen) return
     setVisible(true)
     const id = setTimeout(() => setVisible(false), 2600)
     return () => clearTimeout(id)
