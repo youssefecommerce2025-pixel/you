@@ -125,7 +125,7 @@ const fr = {
       cod: 'Commande 1 clic + paiement à la livraison',
       story: 'Fiche produit experte',
       pack: 'Pack « 3 achetés = 1 offert »',
-      avis: 'Avis de clients et de clientes du Maroc',
+      avis: 'Avis des clients et des clientes du Maroc',
       quiz: 'Quiz « trouvez votre produit »',
       bilingue: 'Version français / arabe',
     } as Record<FeatureId, string>,
@@ -294,7 +294,7 @@ const fr = {
           'Tout l’Essentiel Express',
           'Fiches produits expertes : pyramide olfactive (tête, cœur, fond), intensité, saison — ou ingrédients et rituel pour les soins',
           'Upsell automatique : « 3 achetés = 1 offert », packs découverte, coffrets',
-          'Avis réels de clients et de clientes du Maroc pour la preuve sociale',
+          'Avis réels des clients et des clientes du Maroc pour la preuve sociale',
           'Catalogue élargi et reprise de vos produits existants',
         ],
         delay: 'En ligne en 10 jours',
@@ -389,7 +389,7 @@ const fr = {
           cod: 'Commande en 1 clic + paiement à la livraison',
           story: 'Fiches produits expertes (notes, ingrédients…)',
           pack: 'Packs et offres « 3 + 1 »',
-          avis: 'Avis de clients et de clientes visibles',
+          avis: 'Avis des clients et des clientes visibles',
           quiz: 'Un quiz pour guider un client ou une cliente',
           bilingue: 'Une version en arabe',
           wow: 'Des animations « waouh »',
@@ -436,7 +436,6 @@ const fr = {
       whatsappCta: 'Recevoir mon offre sur WhatsApp',
       seeOffer: 'Voir le détail de l’offre',
       again: 'Refaire le diagnostic',
-      siteInMessage: 'Ce lien du site part dans le message. Envoyez-le : la réponse se fait sur WhatsApp.',
       next: 'Notre équipe vous recontacte sous 24 h avec une première maquette à vos couleurs.',
     },
     reasons: {
@@ -457,7 +456,7 @@ const fr = {
       'fonctions.cod': 'Le paiement à la livraison en 1 clic est au cœur de l’offre.',
       'fonctions.story': 'Les fiches produits expertes sont incluses.',
       'fonctions.pack': 'Les packs et offres automatiques sont inclus.',
-      'fonctions.avis': 'Les avis de clients et de clientes du Maroc sont inclus.',
+      'fonctions.avis': 'Les avis des clients et des clientes du Maroc sont inclus.',
       'fonctions.quiz': 'Le quiz interactif est la signature de cette offre.',
       'fonctions.bilingue': 'La version français / arabe est incluse.',
       'fonctions.wow': 'Les animations sur mesure sont incluses.',
@@ -467,8 +466,8 @@ const fr = {
       'budget.l': 'Votre budget permet une expérience sur mesure complète.',
       'delai.urgent': 'C’est la mise en ligne la plus rapide.',
     } as Record<string, string>,
-    whatsapp: (name: string, brand: string, offer: string, site: string) =>
-      `Bonjour.\nJe suis ${isolate(name)}.\nMarque : ${isolate(brand)}.\nOffre : ${isolate(offer)}.\nLien du site :\n${site}`,
+    whatsapp: (name: string, brand: string, offer: string) =>
+      `Bonjour.\nJe suis ${isolate(name)}.\nMarque : ${isolate(brand)}.\nOffre : ${isolate(offer)}.`,
   },
   faq: {
     eyebrow: 'Questions fréquentes',
@@ -918,7 +917,6 @@ const ar: Content = {
       whatsappCta: 'أريد عرضي على واتساب',
       seeOffer: 'تفاصيل العرض',
       again: 'إعادة التشخيص',
-      siteInMessage: 'رابط الموقع داخل الرسالة. أرسلوها، والرد يكون على واتساب.',
       next: 'يتواصل معكم فريقنا خلال 24 ساعة بنموذج أول بألوانكم.',
     },
     reasons: {
@@ -949,8 +947,8 @@ const ar: Content = {
       'budget.l': 'ميزانيتكم تسمح بتجربة كاملة حسب الطلب.',
       'delai.urgent': 'إنه أسرع إطلاق ممكن.',
     },
-    whatsapp: (name: string, brand: string, offer: string, site: string) =>
-      `السلام عليكم.\nأنا ${isolate(name)}.\nالعلامة: ${isolate(brand)}.\nالعرض: ${isolate(offer)}.\nرابط الموقع:\n${site}`,
+    whatsapp: (name: string, brand: string, offer: string) =>
+      `السلام عليكم.\nأنا ${isolate(name)}.\nالعلامة: ${isolate(brand)}.\nالعرض: ${isolate(offer)}.\nأودّ معرفة المزيد.`,
   },
   faq: {
     eyebrow: 'أسئلة شائعة',

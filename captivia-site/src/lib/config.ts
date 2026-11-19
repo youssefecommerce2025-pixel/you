@@ -16,10 +16,3 @@ export function whatsappLink(text: string) {
 export function isolate(value: string) {
   return `\u2068${value.trim()}\u2069`
 }
-
-export function siteUrl() {
-  const configured = (import.meta.env.VITE_SITE_URL as string | undefined)?.trim()
-  if (configured) return configured.replace(/\/$/, '')
-  if (typeof window === 'undefined') return ''
-  return window.location.origin
-}
