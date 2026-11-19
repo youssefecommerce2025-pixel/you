@@ -69,7 +69,7 @@ const fr = {
         kicker: 'Chapitre 2 · Le paradoxe',
         title: '23 h 47. 38 messages non lus.',
         body:
-          "Pendant que vous répondez à une cliente, trois autres sont déjà parties chez le concurrent. Alors vous ouvrez un site : un thème générique, le même que la boutique de gadgets d’à côté, un abonnement en dollars, une application COD payante en plus… Et votre parfum de luxe ressemble soudain à un produit de dropshipping.",
+          "Pendant que vous répondez à un client ou une cliente, d’autres sont déjà partis chez le concurrent. Alors vous ouvrez un site : un thème générique, le même que la boutique de gadgets d’à côté, un abonnement en dollars, une application COD payante en plus… Et votre parfum de luxe ressemble soudain à un produit de dropshipping.",
       },
       {
         kicker: 'Chapitre 3 · Le déclic',
@@ -79,9 +79,9 @@ const fr = {
       },
       {
         kicker: 'Chapitre 4 · La métamorphose',
-        title: 'Votre cliente commande. Vous, vous dormez.',
+        title: 'Un client ou une cliente commande. Vous, vous dormez.',
         body:
-          "Elle arrive depuis une story. Elle découvre la pyramide olfactive, lit les avis de Casablanca à Oujda, compose son pack 3 + 1, commande en 30 secondes et paie à la livraison. Le lendemain matin, la commande vous attend sur WhatsApp, prête à expédier.",
+          "Un client ou une cliente arrive depuis une story, découvre la pyramide olfactive, lit les avis de Casablanca à Oujda, compose un pack 3 + 1, commande en 30 secondes et paie à la livraison. Le lendemain matin, la commande vous attend sur WhatsApp, prête à expédier.",
       },
     ],
     chat: {
@@ -93,7 +93,7 @@ const fr = {
         'Ça tient combien de temps sur la peau ?',
         'Allo ?? 😕',
       ],
-      seen: 'Vu · la cliente est partie',
+      seen: 'Vu · un client ou une cliente est parti',
     },
     outroTitle: 'Chapitre 5 · Le vôtre',
     outro: 'La suite de votre histoire ne s’écrit pas avec un template. Elle s’écrit avec vous.',
@@ -124,7 +124,7 @@ const fr = {
       cod: 'Commande 1 clic + paiement à la livraison',
       story: 'Fiche produit experte',
       pack: 'Pack « 3 achetés = 1 offert »',
-      avis: 'Avis clientes du Maroc',
+      avis: 'Avis de clients et de clientes du Maroc',
       quiz: 'Quiz « trouvez votre produit »',
       bilingue: 'Version français / arabe',
     } as Record<FeatureId, string>,
@@ -272,7 +272,7 @@ const fr = {
         price: '1 499',
         market: '2 500 DH et plus',
         idealFor: 'Les marques qui vendent par Instagram, TikTok ou WhatsApp et perdent des ventes à cause du temps de réponse.',
-        need: 'Arrêter de répondre à « bch7al ? » toute la journée et automatiser la prise de commande, sans effrayer la cliente marocaine.',
+        need: 'Arrêter de répondre à « bch7al ? » toute la journée et automatiser la prise de commande, sans effrayer un client ou une cliente.',
         features: [
           'Landing page ultra-rapide, pensée d’abord pour le mobile',
           'Catalogue jusqu’à 20 produits',
@@ -288,12 +288,12 @@ const fr = {
         price: '2 899',
         market: '4 000 à 6 000 DH',
         idealFor: 'Les marques déjà sur YouCan ou Shopify qui veulent sortir du générique et augmenter leur panier moyen.',
-        need: 'Avoir un site qui fait « vraie maison de luxe » et vendre plus de produits à chaque cliente.',
+        need: 'Avoir un site qui fait « vraie maison de luxe » et vendre plus de produits à chaque client ou cliente.',
         features: [
           'Tout l’Essentiel Express',
           'Fiches produits expertes : pyramide olfactive (tête, cœur, fond), intensité, saison — ou ingrédients et rituel pour les soins',
           'Upsell automatique : « 3 achetés = 1 offert », packs découverte, coffrets',
-          'Avis clientes réels du Maroc pour la preuve sociale',
+          'Avis réels de clients et de clientes du Maroc pour la preuve sociale',
           'Catalogue élargi et reprise de vos produits existants',
         ],
         delay: 'En ligne en 10 jours',
@@ -350,6 +350,7 @@ const fr = {
     multiHint: 'Plusieurs choix possibles',
     keyHint: 'Astuce : appuyez sur A, B, C… pour répondre',
     interested: (offer: string) => `Vous regardez « ${offer} » : le diagnostic va vérifier que c’est la bonne offre pour vous.`,
+    kept: (universe: string) => `Votre univers « ${universe} » est déjà pris en compte depuis l’atelier. On ne vous le redemande pas.`,
     questions: {
       univers: {
         title: 'Quel est l’univers de votre marque ?',
@@ -377,7 +378,7 @@ const fr = {
         options: {
           dm: 'Je perds des ventes dans les messages',
           image: 'Mon site ne reflète pas le luxe de ma marque',
-          panier: 'Mes clientes n’achètent qu’un seul produit',
+          panier: 'Un client ou une cliente n’achète qu’un seul produit',
           unique: 'Je veux écraser la concurrence',
         },
       },
@@ -387,8 +388,8 @@ const fr = {
           cod: 'Commande en 1 clic + paiement à la livraison',
           story: 'Fiches produits expertes (notes, ingrédients…)',
           pack: 'Packs et offres « 3 + 1 »',
-          avis: 'Avis clientes visibles',
-          quiz: 'Un quiz pour guider la cliente',
+          avis: 'Avis de clients et de clientes visibles',
+          quiz: 'Un quiz pour guider un client ou une cliente',
           bilingue: 'Une version en arabe',
           wow: 'Des animations « waouh »',
           dashboard: 'Un tableau de bord de mes ventes',
@@ -454,7 +455,7 @@ const fr = {
       'fonctions.cod': 'Le paiement à la livraison en 1 clic est au cœur de l’offre.',
       'fonctions.story': 'Les fiches produits expertes sont incluses.',
       'fonctions.pack': 'Les packs et offres automatiques sont inclus.',
-      'fonctions.avis': 'Les avis clientes du Maroc sont inclus.',
+      'fonctions.avis': 'Les avis de clients et de clientes du Maroc sont inclus.',
       'fonctions.quiz': 'Le quiz interactif est la signature de cette offre.',
       'fonctions.bilingue': 'La version français / arabe est incluse.',
       'fonctions.wow': 'Les animations sur mesure sont incluses.',
@@ -485,7 +486,7 @@ const fr = {
       },
       {
         q: 'Comment fonctionne le paiement à la livraison ?',
-        a: 'Votre cliente laisse son nom, son téléphone et sa ville : c’est tout. La commande vous arrive aussitôt sur WhatsApp (ou dans Google Sheets) avec le détail des produits.',
+        a: 'Votre client ou votre cliente laisse son nom, son téléphone et sa ville : c’est tout. La commande vous arrive aussitôt sur WhatsApp (ou dans Google Sheets) avec le détail des produits.',
       },
       {
         q: 'Combien de temps faut-il pour être en ligne ?',
@@ -565,7 +566,7 @@ const ar: Content = {
         kicker: 'الفصل الثاني · المفارقة',
         title: 'الساعة 23:47. ثمانٍ وثلاثون رسالة غير مقروءة.',
         body:
-          'بينما تردّون على زبونة، تكون ثلاث أخريات قد ذهبن إلى المنافس. فتفتحون موقعاً: قالب جاهز يشبه متجر الأدوات المجاور، واشتراك بالدولار، وتطبيق مدفوع للدفع عند الاستلام… وفجأة يبدو عطركم الفاخر كمنتج دروبشيبينغ عادي.',
+          'بينما تردّون على زبون أو زبونة، يكون آخرون قد ذهبوا إلى المنافس. فتفتحون موقعاً: قالب جاهز يشبه متجر الأدوات المجاور، واشتراك بالدولار، وتطبيق مدفوع للدفع عند الاستلام… وفجأة يبدو عطركم الفاخر كمنتج دروبشيبينغ عادي.',
       },
       {
         kicker: 'الفصل الثالث · لحظة التحوّل',
@@ -575,15 +576,15 @@ const ar: Content = {
       },
       {
         kicker: 'الفصل الرابع · التحوّل',
-        title: 'زبونتكم تطلب… وأنتم نائمون.',
+        title: 'زبون أو زبونة يطلب… وأنتم نائمون.',
         body:
-          'تصل من قصة على إنستغرام، تكتشف الهرم العطري، تقرأ آراء زبونات من الدار البيضاء إلى وجدة، تختار باقة 3 + 1، وتطلب في 30 ثانية وتدفع عند الاستلام. وفي الصباح، تنتظركم الطلبية على واتساب جاهزة للشحن.',
+          'يصل زبون أو زبونة من قصة على إنستغرام، يكتشف الهرم العطري، يقرأ آراء الزبائن من الدار البيضاء إلى وجدة، يختار باقة 3 + 1، ويطلب في 30 ثانية ويدفع عند الاستلام. وفي الصباح، تنتظركم الطلبية على واتساب جاهزة للشحن.',
       },
     ],
     chat: {
       header: 'الرسائل · صفحتكم',
       messages: ['السلام، بشحال هاد العطر؟ 🙏', 'كاين التوصيل لأكادير؟', 'واش كاين 50ml؟', 'شحال كيبقى فالجلد؟', 'ألو؟؟ 😕'],
-      seen: 'شوهدت · الزبونة غادرت',
+      seen: 'شوهد · زبون أو زبونة غادر',
     },
     outroTitle: 'الفصل الخامس · فصلكم أنتم',
     outro: 'بقية قصتكم لا تُكتب بقالب جاهز. بل تُكتب معكم.',
@@ -614,7 +615,7 @@ const ar: Content = {
       cod: 'طلب بنقرة + الدفع عند الاستلام',
       story: 'صفحة منتج احترافية',
       pack: 'باقة «اشترِ 3 واحصل على 1 مجاناً»',
-      avis: 'آراء زبونات من المغرب',
+      avis: 'آراء الزبائن من المغرب',
       quiz: 'اختبار «اكتشفي منتجكم»',
       bilingue: 'نسخة بالفرنسية والعربية',
     },
@@ -752,7 +753,7 @@ const ar: Content = {
         price: '1499',
         market: '2500 درهم فأكثر',
         idealFor: 'العلامات التي تبيع عبر إنستغرام أو تيك توك أو واتساب وتخسر مبيعات بسبب تأخر الرد.',
-        need: 'التوقف عن الرد على «بشحال؟» طوال اليوم، وأتمتة استقبال الطلبات دون تنفير الزبونة المغربية.',
+        need: 'التوقف عن الرد على «بشحال؟» طوال اليوم، وأتمتة استقبال الطلبات دون تنفير الزبون أو الزبونة.',
         features: [
           'صفحة هبوط فائقة السرعة، مصمّمة للهاتف أولاً',
           'كتالوج حتى 20 منتجاً',
@@ -768,12 +769,12 @@ const ar: Content = {
         price: '2899',
         market: 'من 4000 إلى 6000 درهم',
         idealFor: 'العلامات الموجودة على YouCan أو Shopify التي تريد الخروج من القوالب العادية ورفع قيمة السلة.',
-        need: 'موقع يبدو «دار فخامة حقيقية» وبيع منتجات أكثر لكل زبونة.',
+        need: 'موقع يبدو «دار فخامة حقيقية» وبيع منتجات أكثر لكل زبون أو زبونة.',
         features: [
           'كل ما في الأساسي السريع',
           'صفحات منتجات احترافية: الهرم العطري (المقدمة، القلب، القاعدة)، الشدّة، الموسم — أو المكوّنات والطقوس لمنتجات العناية',
           'بيع إضافي تلقائي: «اشترِ 3 واحصل على 1 مجاناً»، باقات اكتشاف، علب هدايا',
-          'آراء حقيقية لزبونات من المغرب كدليل اجتماعي',
+          'آراء حقيقية للزبائن من المغرب كدليل اجتماعي',
           'كتالوج موسّع ونقل منتجاتكم الحالية',
         ],
         delay: 'إطلاق خلال 10 أيام',
@@ -784,7 +785,7 @@ const ar: Content = {
         price: '4999',
         market: '10000 درهم فأكثر',
         idealFor: 'العلامات الطموحة التي تريد تجربة تليق بكبرى دور العطور.',
-        need: 'التفوّق في سوقكم بتقنية متقدّمة وتجربة لا تُنسى للزبونة.',
+        need: 'التفوّق في سوقكم بتقنية متقدّمة وتجربة لا تُنسى للزبون أو الزبونة.',
         features: [
           'كل ما في التجربة العطرية',
           'موقع حسب الطلب فائق السرعة (React / Vite)',
@@ -800,7 +801,7 @@ const ar: Content = {
     guarantees: [
       'نموذج نعتمده معكم قبل البرمجة',
       'الموقع واسم النطاق باسمكم',
-      'نقل منتجاتكم وصوركم وآراء زبوناتكم',
+      'نقل منتجاتكم وصوركم وآراء زبائنكم',
       'تدريب لتسيير طلباتكم باستقلالية',
       'الدفع على مرحلتين: 50% عند الانطلاق و50% عند الإطلاق',
     ],
@@ -830,6 +831,7 @@ const ar: Content = {
     multiHint: 'يمكن اختيار أكثر من إجابة',
     keyHint: 'نصيحة: اضغطوا A أو B أو C… للإجابة',
     interested: (offer: string) => `تهتمون بعرض «${offer}»: سيتحقّق التشخيص من أنه العرض المناسب لكم.`,
+    kept: (universe: string) => `عالمكم «${universe}» محفوظ من الورشة. لن نطلبه منكم مرة أخرى.`,
     questions: {
       univers: {
         title: 'ما هو عالم علامتكم؟',
@@ -857,7 +859,7 @@ const ar: Content = {
         options: {
           dm: 'أخسر مبيعات في الرسائل',
           image: 'موقعي لا يعكس فخامة علامتي',
-          panier: 'زبوناتي يشترين منتجاً واحداً فقط',
+          panier: 'زبون أو زبونة يشتري منتجاً واحداً فقط',
           unique: 'أريد التفوّق على المنافسين',
         },
       },
@@ -867,8 +869,8 @@ const ar: Content = {
           cod: 'طلب بنقرة + الدفع عند الاستلام',
           story: 'صفحات منتجات احترافية (النوتات، المكوّنات…)',
           pack: 'باقات وعروض «3 + 1»',
-          avis: 'آراء الزبونات ظاهرة',
-          quiz: 'اختبار يرشد الزبونة',
+          avis: 'آراء الزبائن ظاهرة',
+          quiz: 'اختبار يرشد الزبون أو الزبونة',
           bilingue: 'نسخة بالعربية',
           wow: 'حركات مُبهرة',
           dashboard: 'لوحة تحكم لمبيعاتي',
@@ -934,7 +936,7 @@ const ar: Content = {
       'fonctions.cod': 'الدفع عند الاستلام بنقرة واحدة في قلب هذا العرض.',
       'fonctions.story': 'صفحات المنتجات الاحترافية مشمولة.',
       'fonctions.pack': 'الباقات والعروض التلقائية مشمولة.',
-      'fonctions.avis': 'آراء زبونات المغرب مشمولة.',
+      'fonctions.avis': 'آراء الزبائن من المغرب مشمولة.',
       'fonctions.quiz': 'الاختبار التفاعلي هو بصمة هذا العرض.',
       'fonctions.bilingue': 'النسخة الفرنسية والعربية مشمولة.',
       'fonctions.wow': 'الحركات المصمّمة حسب الطلب مشمولة.',
@@ -961,11 +963,11 @@ const ar: Content = {
       },
       {
         q: 'لديّ موقع على YouCan أو Shopify. هل سأفقد منتجاتي؟',
-        a: 'لا. ننقل منتجاتكم وصوركم وأوصافكم وآراء زبوناتكم إلى موقعكم الجديد.',
+        a: 'لا. ننقل منتجاتكم وصوركم وأوصافكم وآراء زبائنكم إلى موقعكم الجديد.',
       },
       {
         q: 'كيف يعمل الدفع عند الاستلام؟',
-        a: 'تترك زبونتكم اسمها وهاتفها ومدينتها فقط. وتصلكم الطلبية فوراً على واتساب (أو في Google Sheets) مع تفاصيل المنتجات.',
+        a: 'يترك زبونكم أو زبونتكم الاسم والهاتف والمدينة فقط. وتصلكم الطلبية فوراً على واتساب (أو في Google Sheets) مع تفاصيل المنتجات.',
       },
       {
         q: 'كم من الوقت يلزم للإطلاق؟',

@@ -49,6 +49,9 @@
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
   }
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
   body {
     @apply bg-pearl font-sans text-ink antialiased;
   }

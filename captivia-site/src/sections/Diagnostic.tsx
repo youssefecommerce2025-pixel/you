@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Check, CornerDownLeft, Lock, MessageCircle, RotateCcw, Sparkles } from 'lucide-react'
-import { useEffect, useRef, useState, type FormEvent, type ReactElement } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type ReactElement } from 'react'
 import { whatsappLink } from '../lib/config'
 import type { Universe } from '../lib/design'
 import {
@@ -19,7 +19,6 @@ import { useStudio } from '../lib/studio'
 const COMMENT_STEP = QUESTIONS.length
 const CONTACT_STEP = QUESTIONS.length + 1
 const RESULT_STEP = QUESTIONS.length + 2
-const TOTAL = QUESTIONS.length + 2
 const LETTERS = 'ABCDEFGH'
 
 const slide = {
@@ -33,7 +32,10 @@ type ContactErrors = Partial<Record<keyof Contact, string>>
 export function Diagnostic() {
   const { t, lang } = useLang()
   const d = t.diagnostic
-  const { design, setDesign, interestedOffer, setInterestedOffer } = useStudio()
+  const { design, setDesign, interestedOffer, setInterestedOffer, atelierUniverse } = useStudio()
+  const skipUnivers = atelierUniverse
+  const isHidden = (index: number) => skipUnivers && QUESTIONS[index]?.id === 'univers'
+  const visibleQuestions = QUESTIONS.map((_, index) => index).filter((index) => !isHidden(index))
 
   const [step, setStep] = useState(0)
   const [dir, setDir] = useState(1)
@@ -52,19 +54,41 @@ export function Diagnostic() {
     if (!brandTouched) setContact((c) => ({ ...c, brand: design.brand }))
   }, [design.brand, brandTouched])
 
+  const fonctionsTouched = useRef(false)
+  useEffect(() => {
+    if (!skipUnivers) return
+    const allowed = QUESTIONS.find((q) => q.id === 'fonctions')?.options ?? []
+    setAnswers((current) => ({
+      ...current,
+      univers: [design.universe],
+      fonctions: fonctionsTouched.current
+        ? current.fonctions
+        : design.features.filter((feature) => allowed.includes(feature)),
+    }))
+  }, [skipUnivers, design.universe, design.features])
+
+  useLayoutEffect(() => {
+    if (step < QUESTIONS.length && isHidden(step)) setStep((current) => current + 1)
+  }, [step, skipUnivers])
+
   const update = (key: keyof Contact, value: string) => {
     setContact((c) => ({ ...c, [key]: value }))
     setErrors((e) => ({ ...e, [key]: undefined }))
   }
 
   const go = (to: number) => {
-    setDir(to > step ? 1 : -1)
-    setStep(to)
+    const direction = to > step ? 1 : -1
+    let dest = to
+    while (dest >= 0 && dest < QUESTIONS.length && isHidden(dest)) dest += direction
+    if (dest < 0) return
+    setDir(direction)
+    setStep(dest)
   }
 
   const choose = (qIndex: number, value: string) => {
     const q = QUESTIONS[qIndex]
     if (q.multi) {
+      if (q.id === 'fonctions') fonctionsTouched.current = true
       setAnswers((a) => {
         const cur = a[q.id] ?? []
         return { ...a, [q.id]: cur.includes(value) ? cur.filter((v) => v !== value) : [...cur, value] }
@@ -130,16 +154,21 @@ export function Diagnostic() {
   }
 
   const restart = () => {
-    setAnswers({})
+    fonctionsTouched.current = false
+    setAnswers(skipUnivers ? { univers: [design.universe] } : {})
     setComment('')
     setResult(null)
     setErrors({})
     go(0)
   }
 
-  const progress = Math.min(step, TOTAL) / TOTAL
-  const prevQ = step > 0 && step <= QUESTIONS.length ? QUESTIONS[step - 1] : null
+  const askedCount = visibleQuestions.length + 2
+  const askedIndex = step < QUESTIONS.length ? visibleQuestions.indexOf(step) : visibleQuestions.length + (step - QUESTIONS.length)
+  const progress = Math.max(0, askedIndex) / askedCount
+  const previousIndex = visibleQuestions.filter((index) => index < step).at(-1)
+  const prevQ = previousIndex === undefined ? null : QUESTIONS[previousIndex]
   const prevAnswer = prevQ ? (answers[prevQ.id] ?? []).map((v) => d.questions[prevQ.id].options[v]).join(' · ') : ''
+  const canGoBack = previousIndex !== undefined && step < RESULT_STEP
 
   return (
     <section id="diagnostic" className="relative overflow-hidden bg-gradient-to-b from-pearl to-mist py-24 sm:py-32">
@@ -167,17 +196,22 @@ export function Diagnostic() {
           <div className="flex items-center justify-between gap-4 text-xs font-semibold text-ink-soft">
             <span>
               {step < QUESTIONS.length
-                ? `${d.question} ${step + 1} ${d.of} ${QUESTIONS.length}`
+                ? `${d.question} ${visibleQuestions.indexOf(step) + 1} ${d.of} ${visibleQuestions.length}`
                 : step === RESULT_STEP
                   ? d.result.eyebrow
                   : d.duration}
             </span>
-            {step > 0 && step < RESULT_STEP && (
+            {canGoBack && (
               <button onClick={() => go(step - 1)} className="inline-flex items-center gap-1 text-violet hover:text-violet-deep">
                 <ArrowLeft size={14} className="rtl:rotate-180" /> {d.back}
               </button>
             )}
           </div>
+          {skipUnivers && step < RESULT_STEP && (
+            <p className="mt-4 rounded-2xl bg-lilac px-4 py-3 text-sm font-medium text-violet-deep">
+              {d.kept(t.atelier.universes[design.universe])}
+            </p>
+          )}
           <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-lilac">
             <motion.div
               className="h-full rounded-full bg-gradient-to-r from-violet-deep to-violet-bright"

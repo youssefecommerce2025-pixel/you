@@ -35,7 +35,7 @@ function Step({ n, label, children }: { n: number; label: string; children: Reac
 
 export function Atelier() {
   const { t } = useLang()
-  const { design, setDesign } = useStudio()
+  const { design, setDesign, confirmAtelier } = useStudio()
   const a = t.atelier
 
   const toggleFeature = (f: FeatureId) =>
@@ -72,9 +72,12 @@ export function Atelier() {
                 {UNIVERSES.map((u) => {
                   const active = design.universe === u
                   return (
-                    <button
+                      <button
                       key={u}
-                      onClick={() => setDesign((d) => ({ ...d, universe: u }))}
+                      onClick={() => {
+                        confirmAtelier()
+                        setDesign((d) => ({ ...d, universe: u }))
+                      }}
                       className={`group relative overflow-hidden rounded-2xl border-2 text-start transition ${
                         active ? 'border-violet shadow-lg' : 'border-transparent hover:border-violet/30'
                       }`}
@@ -168,7 +171,7 @@ export function Atelier() {
               <span className="h-2 w-2 animate-pulse rounded-full bg-violet" /> {a.live}
             </p>
             <BrandPreview design={design} scrollable />
-            <a href="#diagnostic" className="btn-primary mt-8 w-full">
+            <a href="#diagnostic" onClick={confirmAtelier} className="btn-primary mt-8 w-full">
               {a.cta} <ArrowRight size={17} className="rtl:rotate-180" />
             </a>
             <p className="mt-3 text-center text-xs text-ink-soft">{a.note}</p>
