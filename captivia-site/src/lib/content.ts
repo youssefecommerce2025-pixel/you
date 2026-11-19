@@ -4,6 +4,25 @@ import type { OfferId, QuestionId } from './diagnostic'
 
 export type Lang = 'fr' | 'ar'
 
+const whatsappHello = `Bonjour Captivia,
+Je souhaite un site pour ma marque. Ma demande :
+
+السلام عليكم كابتيفيا،
+أريد موقعاً لعلامتي. طلبي :`
+
+function diagnosticWhatsapp(name: string, brand: string, offer: string) {
+  return `Bonjour.
+Je suis ${isolate(name)}.
+Marque : ${isolate(brand)}.
+Offre : ${isolate(offer)}.
+
+السلام عليكم.
+أنا ${isolate(name)}.
+العلامة: ${isolate(brand)}.
+العرض: ${isolate(offer)}.
+أودّ معرفة المزيد.`
+}
+
 interface OfferContent {
   name: string
   tag: string
@@ -466,8 +485,7 @@ const fr = {
       'budget.l': 'Votre budget permet une expérience sur mesure complète.',
       'delai.urgent': 'C’est la mise en ligne la plus rapide.',
     } as Record<string, string>,
-    whatsapp: (name: string, brand: string, offer: string) =>
-      `Bonjour.\nJe suis ${isolate(name)}.\nMarque : ${isolate(brand)}.\nOffre : ${isolate(offer)}.`,
+    whatsapp: diagnosticWhatsapp,
   },
   faq: {
     eyebrow: 'Questions fréquentes',
@@ -513,7 +531,7 @@ const fr = {
     madeIn: 'Conçu au Maroc, avec passion.',
   },
   fab: 'Une question ? Écrivez-nous',
-  whatsappHello: 'Bonjour Captivia, j’aimerais un site pour ma marque.',
+  whatsappHello,
 }
 
 export type Content = typeof fr
@@ -947,8 +965,7 @@ const ar: Content = {
       'budget.l': 'ميزانيتكم تسمح بتجربة كاملة حسب الطلب.',
       'delai.urgent': 'إنه أسرع إطلاق ممكن.',
     },
-    whatsapp: (name: string, brand: string, offer: string) =>
-      `السلام عليكم.\nأنا ${isolate(name)}.\nالعلامة: ${isolate(brand)}.\nالعرض: ${isolate(offer)}.\nأودّ معرفة المزيد.`,
+    whatsapp: diagnosticWhatsapp,
   },
   faq: {
     eyebrow: 'أسئلة شائعة',
@@ -994,7 +1011,7 @@ const ar: Content = {
     madeIn: 'صُمّم في المغرب، بشغف.',
   },
   fab: 'سؤال؟ راسلونا',
-  whatsappHello: 'السلام عليكم كابتيفيا، أريد موقعاً لعلامتي.',
+  whatsappHello,
 }
 
 export const content: Record<Lang, Content> = { fr, ar }
