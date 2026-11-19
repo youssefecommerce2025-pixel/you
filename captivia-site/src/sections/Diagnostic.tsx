@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Check, CornerDownLeft, Lock, MessageCircle, RotateCcw, Sparkles } from 'lucide-react'
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type ReactElement } from 'react'
-import { whatsappLink } from '../lib/config'
+import { siteUrl, whatsappLink } from '../lib/config'
 import type { Universe } from '../lib/design'
 import {
   QUESTIONS,
@@ -473,6 +473,8 @@ function ResultStep({
 
   const offer = t.offers.items[result.offer]
   const alt = t.offers.items[result.alternative]
+  const link = siteUrl()
+  const message = d.whatsapp(firstName, brand, offer.name, link)
   const reasons = [...new Set(result.reasons.map((k) => d.reasons[k]).filter(Boolean))].slice(0, 4)
   const circumference = 2 * Math.PI * 34
 
@@ -542,7 +544,7 @@ function ResultStep({
 
       <div className="mt-auto flex flex-wrap gap-3 pt-7">
         <a
-          href={whatsappLink(d.whatsapp(firstName, brand, offer.name))}
+          href={whatsappLink(message)}
           target="_blank"
           rel="noreferrer"
           className="btn-primary"
@@ -556,7 +558,13 @@ function ResultStep({
           <RotateCcw size={14} /> {d.result.again}
         </button>
       </div>
-      <p className="mt-4 text-xs text-ink-soft">{d.result.next}</p>
+      <p className="mt-4 text-xs text-ink-soft">
+        {d.result.siteInMessage}
+        <a href={link} dir="ltr" className="mt-1 block font-semibold break-all text-violet">
+          {link}
+        </a>
+      </p>
+      <p className="mt-2 text-xs text-ink-soft">{d.result.next}</p>
     </div>
   )
 }

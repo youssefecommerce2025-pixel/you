@@ -1,3 +1,4 @@
+import { isolate } from './config'
 import type { FeatureId, FontId, PaletteId, Universe } from './design'
 import type { OfferId, QuestionId } from './diagnostic'
 
@@ -435,6 +436,7 @@ const fr = {
       whatsappCta: 'Recevoir mon offre sur WhatsApp',
       seeOffer: 'Voir le détail de l’offre',
       again: 'Refaire le diagnostic',
+      siteInMessage: 'Ce lien du site part dans le message. Envoyez-le : la réponse se fait sur WhatsApp.',
       next: 'Notre équipe vous recontacte sous 24 h avec une première maquette à vos couleurs.',
     },
     reasons: {
@@ -465,8 +467,8 @@ const fr = {
       'budget.l': 'Votre budget permet une expérience sur mesure complète.',
       'delai.urgent': 'C’est la mise en ligne la plus rapide.',
     } as Record<string, string>,
-    whatsapp: (name: string, brand: string, offer: string) =>
-      `Bonjour Captivia, je suis ${name} de la marque ${brand}. Mon diagnostic me recommande l’offre « ${offer} ». J’aimerais en savoir plus.`,
+    whatsapp: (name: string, brand: string, offer: string, site: string) =>
+      `Bonjour.\nJe suis ${isolate(name)}.\nMarque : ${isolate(brand)}.\nOffre : ${isolate(offer)}.\nLien du site :\n${site}`,
   },
   faq: {
     eyebrow: 'Questions fréquentes',
@@ -916,6 +918,7 @@ const ar: Content = {
       whatsappCta: 'أريد عرضي على واتساب',
       seeOffer: 'تفاصيل العرض',
       again: 'إعادة التشخيص',
+      siteInMessage: 'رابط الموقع داخل الرسالة. أرسلوها، والرد يكون على واتساب.',
       next: 'يتواصل معكم فريقنا خلال 24 ساعة بنموذج أول بألوانكم.',
     },
     reasons: {
@@ -946,8 +949,8 @@ const ar: Content = {
       'budget.l': 'ميزانيتكم تسمح بتجربة كاملة حسب الطلب.',
       'delai.urgent': 'إنه أسرع إطلاق ممكن.',
     },
-    whatsapp: (name: string, brand: string, offer: string) =>
-      `السلام عليكم كابتيفيا، أنا ${name} من علامة ${brand}. أوصاني التشخيص بعرض «${offer}». أودّ معرفة المزيد.`,
+    whatsapp: (name: string, brand: string, offer: string, site: string) =>
+      `السلام عليكم.\nأنا ${isolate(name)}.\nالعلامة: ${isolate(brand)}.\nالعرض: ${isolate(offer)}.\nرابط الموقع:\n${site}`,
   },
   faq: {
     eyebrow: 'أسئلة شائعة',

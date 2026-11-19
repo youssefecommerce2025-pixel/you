@@ -11,3 +11,15 @@ export const LEAD_WEBHOOK = env.VITE_LEAD_WEBHOOK as string | undefined
 export function whatsappLink(text: string) {
   return `https://wa.me/${CONTACT.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(text)}`
 }
+
+/** Keeps a name in its own direction so Arabic and Latin stay in the written order on WhatsApp. */
+export function isolate(value: string) {
+  return `\u2068${value.trim()}\u2069`
+}
+
+export function siteUrl() {
+  const configured = (import.meta.env.VITE_SITE_URL as string | undefined)?.trim()
+  if (configured) return configured.replace(/\/$/, '')
+  if (typeof window === 'undefined') return ''
+  return window.location.origin
+}
