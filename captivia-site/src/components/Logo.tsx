@@ -42,8 +42,10 @@ export function Logo({ light = false, compact = false }: { light?: boolean; comp
           CAPTIVIA
         </span>
         {!compact && (
-          <span className={`mt-1 hidden text-[0.56rem] font-semibold tracking-[0.22em] sm:block ${light ? 'text-lavender' : 'text-violet/70'}`}>
-            PARFUMERIE · BEAUTÉ
+          <span className={`mt-1 hidden flex-col items-center sm:flex ${light ? 'text-lavender' : 'text-violet/70'}`}>
+            <span className="text-[0.45rem] font-semibold tracking-[0.2em] uppercase">Conception de Site Web</span>
+            <span className="text-[0.4rem] font-medium tracking-[0.1em] lowercase opacity-80 my-[1px]">pour</span>
+            <span className="text-[0.55rem] font-semibold tracking-[0.2em] uppercase">Parfumerie · Beauté</span>
           </span>
         )}
       </span>
