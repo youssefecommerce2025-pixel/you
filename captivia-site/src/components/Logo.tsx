@@ -42,7 +42,7 @@ export function Logo({ light = false, compact = false }: { light?: boolean; comp
           CAPTIVIA
         </span>
         {!compact && (
-          <span className={`mt-1 flex flex-col items-start ${light ? 'text-lavender' : 'text-violet/70'}`}>
+          <span className={`mt-1 flex flex-col items-center text-center ${light ? 'text-lavender' : 'text-violet/70'}`}>
             <span className="text-[0.42rem] font-semibold tracking-[0.12em] uppercase sm:text-[0.48rem] sm:tracking-[0.16em]">
               Conception de Site Web
             </span>
