@@ -31,7 +31,7 @@ export function Header() {
         scrolled ? 'bg-white/85 shadow-[0_8px_30px_-18px_rgba(46,16,101,0.35)] backdrop-blur-xl' : 'bg-transparent'
       }`}
     >
-      <div className="container-luxe flex h-18 items-center justify-between gap-4 py-3">
+      <div className="container-luxe flex min-h-18 items-center justify-between gap-3 py-2.5">
         <a href="#top" aria-label="Captivia">
           <Logo />
         </a>

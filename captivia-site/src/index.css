@@ -50,7 +50,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   section[id] {
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: 7.5rem;
   }
   body {
     @apply bg-pearl font-sans text-ink antialiased;

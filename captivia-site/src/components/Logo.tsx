@@ -36,16 +36,22 @@ export function Logo({ light = false, compact = false }: { light?: boolean; comp
       <LogoMark light={light} className={compact ? 'h-8 w-8' : 'h-10 w-10'} />
       <span className="flex flex-col leading-none">
         <span
-          className={`text-[1.55rem] font-semibold tracking-[0.18em] ${light ? 'text-white' : 'text-violet-deep'}`}
+          className={`text-[1.15rem] font-semibold tracking-[0.14em] sm:text-[1.55rem] sm:tracking-[0.18em] ${light ? 'text-white' : 'text-violet-deep'}`}
           style={{ fontFamily: "'Cormorant Garamond', serif" }}
         >
           CAPTIVIA
         </span>
         {!compact && (
-          <span className={`mt-1 hidden flex-col items-center sm:flex ${light ? 'text-lavender' : 'text-violet/70'}`}>
-            <span className="text-[0.45rem] font-semibold tracking-[0.2em] uppercase">Conception de Site Web</span>
-            <span className="text-[0.4rem] font-medium tracking-[0.1em] lowercase opacity-80 my-[1px]">pour</span>
-            <span className="text-[0.55rem] font-semibold tracking-[0.2em] uppercase">Parfumerie · Beauté</span>
+          <span className={`mt-1 flex flex-col items-start ${light ? 'text-lavender' : 'text-violet/70'}`}>
+            <span className="text-[0.42rem] font-semibold tracking-[0.12em] uppercase sm:text-[0.48rem] sm:tracking-[0.16em]">
+              Conception de Site Web
+            </span>
+            <span className="my-px text-[0.38rem] font-medium lowercase tracking-[0.12em] opacity-80 sm:text-[0.42rem]">
+              pour
+            </span>
+            <span className="text-[0.48rem] font-semibold tracking-[0.14em] uppercase sm:text-[0.55rem] sm:tracking-[0.18em]">
+              Parfumerie · Beauté
+            </span>
           </span>
         )}
       </span>
