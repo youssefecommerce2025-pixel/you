@@ -14,6 +14,14 @@ function InstagramIcon() {
   )
 }
 
+function FacebookIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
+      <path d="M14.5 8.5V6.8c0-.7.5-1 1.2-1h1.3V3h-2.2C11.9 3 11 4.4 11 6.5v2H9v2.8h2V21h3.5v-9.7h2.3l.4-2.8h-2.7Z" />
+    </svg>
+  )
+}
+
 export function FinalCta() {
   const { t } = useLang()
   return (
@@ -81,9 +89,14 @@ export function Footer() {
         </div>
         <div>
           <p className="text-sm font-semibold text-white">{t.footer.follow}</p>
-          <a href={CONTACT.instagram} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-2 text-sm hover:text-white">
-            <InstagramIcon /> Instagram
-          </a>
+          <div className="mt-4 flex flex-col gap-3 text-sm">
+            <a href={CONTACT.instagram} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white">
+              <InstagramIcon /> Instagram
+            </a>
+            <a href={CONTACT.facebook} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white">
+              <FacebookIcon /> Facebook
+            </a>
+          </div>
         </div>
       </div>
       <div className="container-luxe mt-12 flex flex-wrap justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/45">

@@ -3,7 +3,8 @@ const env = import.meta.env
 export const CONTACT = {
   whatsapp: (env.VITE_WHATSAPP_NUMBER as string | undefined) ?? '212772234117',
   email: (env.VITE_CONTACT_EMAIL as string | undefined) ?? 'contact@captivia.ma',
-  instagram: (env.VITE_INSTAGRAM_URL as string | undefined) ?? 'https://instagram.com/captivia.ma',
+  instagram: (env.VITE_INSTAGRAM_URL as string | undefined) ?? 'https://www.instagram.com/captivia.online/',
+  facebook: (env.VITE_FACEBOOK_URL as string | undefined) ?? 'https://www.facebook.com/profile.php?id=61596761401635',
 }
 
 export const LEAD_WEBHOOK = env.VITE_LEAD_WEBHOOK as string | undefined
