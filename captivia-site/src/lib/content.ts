@@ -53,6 +53,7 @@ const fr = {
     offers: 'Offres',
     compare: 'Comparatif',
     faq: 'FAQ',
+    cgv: 'CGV',
     cta: 'Diagnostic gratuit',
     switchTo: 'العربية',
     menu: 'Menu',
@@ -497,7 +498,7 @@ const fr = {
       },
       {
         q: 'Dois-je payer un abonnement chaque mois ?',
-        a: 'Non. Pas d’abonnement de plateforme en dollars, pas d’application COD payante. Seul le nom de domaine reste à renouveler chaque année (quelques centaines de dirhams).',
+        a: 'Non. Pas d’abonnement de plateforme en dollars, pas d’application COD payante. L’hébergement est inclus les 12 premiers mois. Le nom de domaine est inclus jusqu’à 50 DH ; au-delà, son achat est à votre charge, ainsi que son renouvellement annuel.',
       },
       {
         q: 'J’ai déjà un site YouCan ou Shopify. Je vais perdre mes produits ?',
@@ -522,6 +523,35 @@ const fr = {
     subtitle: 'Faites le diagnostic gratuit et recevez une première maquette à vos couleurs.',
     cta: 'Commencer mon diagnostic',
     whatsapp: 'Discuter sur WhatsApp',
+  },
+  cgv: {
+    eyebrow: 'Conditions',
+    title: 'Conditions générales de vente',
+    updated: 'Applicables aux devis signés à compter du 22 novembre 2026.',
+    intro:
+      'Les présentes conditions régissent les prestations de conception de site web vendues par Captivia aux marques de parfumerie, de soins et de cosmétiques. La signature du devis vaut acceptation de ces conditions.',
+    articles: [
+      {
+        title: 'Prix et modalités de paiement',
+        body: 'Les prix des offres sont affichés en dirhams, paiement unique : 1 499 DH, 2 899 DH ou 4 999 DH. Le règlement se fait en deux fois : 50 % au lancement, à la signature du devis, et 50 % à la mise en ligne, avant la remise des accès.',
+      },
+      {
+        title: 'Paiement non remboursable',
+        body: 'Les sommes versées ne sont pas remboursables. Cela concerne l’acompte de 50 % comme le solde de 50 %. Une demande d’arrêt du projet, un changement d’avis ou un retard dans l’envoi des contenus ne donne pas droit au remboursement des montants déjà payés.',
+      },
+      {
+        title: 'Nom de domaine',
+        body: 'Le site et le nom de domaine sont enregistrés au nom du client. L’acquisition du nom de domaine est incluse lorsque son prix est de 50 DH ou moins. Si le montant de l’acquisition dépasse 50 DH, elle est entièrement à la charge du client. Le renouvellement annuel du nom de domaine reste à la charge du client.',
+      },
+      {
+        title: 'Hébergement',
+        body: 'L’hébergement du site est inclus pendant les 12 premiers mois à compter de la mise en ligne. Passé ce délai, la poursuite de l’hébergement fait l’objet d’un accord séparé.',
+      },
+      {
+        title: 'Délais',
+        body: 'Le délai indiqué sur le devis court à compter de la réception de l’acompte et des photos, textes et informations de la marque. La maquette est présentée pour validation avant le développement.',
+      },
+    ],
   },
   footer: {
     tagline: 'Atelier e-commerce pour les marques marocaines de parfum et de beauté.',
@@ -549,6 +579,7 @@ const ar: Content = {
     offers: 'العروض',
     compare: 'المقارنة',
     faq: 'الأسئلة',
+    cgv: 'الشروط',
     cta: 'تشخيص مجاني',
     switchTo: 'Français',
     menu: 'القائمة',
@@ -977,7 +1008,7 @@ const ar: Content = {
       },
       {
         q: 'هل عليّ دفع اشتراك كل شهر؟',
-        a: 'لا. لا اشتراك في منصّات بالدولار، ولا تطبيق مدفوع للدفع عند الاستلام. يبقى فقط تجديد اسم النطاق كل سنة (بضع مئات من الدراهم).',
+        a: 'لا. لا اشتراك في منصّات بالدولار، ولا تطبيق مدفوع للدفع عند الاستلام. الاستضافة مشمولة خلال الأشهر الـ12 الأولى. اسم النطاق مشمول إذا كان ثمنه 50 درهماً أو أقل؛ وإذا تجاوز هذا المبلغ، يتحمّل العميل شراءه، وكذلك تجديده السنوي.',
       },
       {
         q: 'لديّ موقع على YouCan أو Shopify. هل سأفقد منتجاتي؟',
@@ -1002,6 +1033,35 @@ const ar: Content = {
     subtitle: 'قوموا بالتشخيص المجاني واستلموا نموذجاً أول بألوانكم.',
     cta: 'ابدؤوا التشخيص',
     whatsapp: 'تحدّثوا معنا على واتساب',
+  },
+  cgv: {
+    eyebrow: 'الشروط',
+    title: 'الشروط العامة للبيع',
+    updated: 'تُطبَّق على عروض الأسعار الموقَّعة ابتداءً من 22 نوفمبر 2026.',
+    intro:
+      'تنظّم هذه الشروط خدمات تصميم المواقع التي تبيعها كابتيفيا لعلامات العطور والعناية والتجميل. توقيع عرض السعر يعني قبول هذه الشروط.',
+    articles: [
+      {
+        title: 'الأسعار وطريقة الدفع',
+        body: 'أسعار العروض معروضة بالدرهم، ودفعة واحدة: 1499 أو 2899 أو 4999 درهماً. يتم الأداء على مرحلتين: 50٪ عند الانطلاق مع توقيع عرض السعر، و50٪ عند إطلاق الموقع وقبل تسليم بيانات الدخول.',
+      },
+      {
+        title: 'الدفع غير قابل للاسترداد',
+        body: 'المبالغ المدفوعة غير قابلة للاسترداد. يشمل ذلك العربون بنسبة 50٪ كما يشمل الباقي بنسبة 50٪. إيقاف المشروع، أو التراجع عن الطلب، أو التأخر في إرسال المحتوى، لا يمنح الحق في استرجاع ما تم دفعه.',
+      },
+      {
+        title: 'اسم النطاق',
+        body: 'يُسجَّل الموقع واسم النطاق باسم العميل. اقتناء اسم النطاق مشمول إذا كان ثمنه 50 درهماً أو أقل. إذا تجاوز مبلغ الاقتناء 50 درهماً، فإنه يكون بالكامل على حساب العميل. ويبقى التجديد السنوي لاسم النطاق على حساب العميل.',
+      },
+      {
+        title: 'الاستضافة',
+        body: 'استضافة الموقع مشمولة خلال الأشهر الـ12 الأولى ابتداءً من تاريخ الإطلاق. بعد هذه المدة، تخضع مواصلة الاستضافة لاتفاق منفصل.',
+      },
+      {
+        title: 'الآجال',
+        body: 'يسري الأجل المذكور في عرض السعر ابتداءً من استلام العربون والصور والنصوص ومعلومات العلامة. يُعرض النموذج للمصادقة قبل التطوير.',
+      },
+    ],
   },
   footer: {
     tagline: 'ورشة متاجر إلكترونية لعلامات العطور والتجميل المغربية.',

@@ -103,6 +103,9 @@ export function Footer() {
         <span>
           © {new Date().getFullYear()} Captivia. {t.footer.rights}
         </span>
+        <a href="#cgv" className="hover:text-white">
+          {t.cgv.title}
+        </a>
         <span>{t.footer.madeIn}</span>
       </div>
     </footer>

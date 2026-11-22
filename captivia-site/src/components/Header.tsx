@@ -22,6 +22,7 @@ export function Header() {
     { href: '#comparatif', label: t.nav.compare },
     { href: '#offres', label: t.nav.offers },
     { href: '#faq', label: t.nav.faq },
+    { href: '#cgv', label: t.nav.cgv },
   ]
   const toggleLang = () => setLang(lang === 'fr' ? 'ar' : 'fr')
 
@@ -36,7 +37,7 @@ export function Header() {
           <Logo />
         </a>
 
-        <nav className="hidden items-center gap-7 lg:flex">
+        <nav className="hidden items-center gap-5 lg:flex">
           {links.map((l) => (
             <a key={l.href} href={l.href} className="text-sm font-medium text-ink-soft transition hover:text-violet">
               {l.label}
