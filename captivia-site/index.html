@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Captivia — Sites e-commerce sur mesure pour marques marocaines de parfum &amp; beauté</title>
+    <meta
+      name="description"
+      content="Captivia façonne des boutiques en ligne sur mesure pour les marques marocaines de parfumerie, soins et cosmétiques : commande en 1 clic avec paiement à la livraison, fiches produits expertes, packs. Dès 1 499 DH."
+    />
+    <meta name="theme-color" content="#4c1d95" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Captivia" />
+    <meta property="og:title" content="Captivia — Votre marque mérite d’être captivante" />
+    <meta
+      property="og:description"
+      content="Sites e-commerce sur mesure pour marques marocaines de parfum et de beauté. Dès 1 499 DH, sans abonnement."
+    />
+    <meta property="og:image" content="/og.jpg" />
+    <meta property="og:locale" content="fr_MA" />
+    <meta property="og:locale:alternate" content="ar_MA" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Captivia",
+        "description": "Conception de sites e-commerce sur mesure pour marques marocaines de parfumerie, soins et cosmétiques.",
+        "areaServed": "MA",
+        "availableLanguage": ["fr", "ar"],
+        "priceRange": "1499 - 4999 MAD",
+        "makesOffer": [
+          { "@type": "Offer", "name": "L’Essentiel Express", "price": "1499", "priceCurrency": "MAD" },
+          { "@type": "Offer", "name": "L’Expérience Olfactive", "price": "2899", "priceCurrency": "MAD" },
+          { "@type": "Offer", "name": "Prestige & Sur-Mesure", "price": "4999", "priceCurrency": "MAD" }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Static copy of the diagnostic form so Netlify Forms registers its fields at build time. -->
+    <form name="diagnostic" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input name="bot-field" />
+      <input name="prenom" /><input name="nom" /><input name="brand" /><input name="telephone" /><input name="email" />
+      <input name="offre" /><input name="compatibilite" /><textarea name="reponses"></textarea>
+      <textarea name="commentaire"></textarea><textarea name="maquette"></textarea><input name="langue" />
+    </form>
+    <div id="root"></div>
+    <script src="/leads-config.js"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
