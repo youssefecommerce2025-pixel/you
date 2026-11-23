@@ -146,7 +146,16 @@ export function Diagnostic() {
     setSending(true)
     go(RESULT_STEP)
     await Promise.all([
-      submitLead({ answers, comment, contact, recommendation: rec, design, lang, createdAt: new Date().toISOString() }),
+      submitLead({
+        answers,
+        comment,
+        contact,
+        recommendation: rec,
+        design,
+        lang,
+        createdAt: new Date().toISOString(),
+        interestedOffer,
+      }),
       new Promise((r) => setTimeout(r, 1700)),
     ])
     setResult(rec)

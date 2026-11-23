@@ -1,4 +1,5 @@
-import { LEAD_WEBHOOK } from './config'
+import { leadWebhook } from './config'
+import { leadReport } from './leadReport'
 import type { Design } from './design'
 
 export type OfferId = 'essentiel' | 'experience' | 'prestige'
@@ -104,6 +105,7 @@ export interface Lead {
   design: Design
   lang: string
   createdAt: string
+  interestedOffer?: OfferId | null
 }
 
 export function isValidPhone(raw: string) {
@@ -123,19 +125,20 @@ export async function submitLead(lead: Lead) {
     /* storage may be unavailable in private mode */
   }
 
+  const report = leadReport(lead)
   const flat: Record<string, string> = {
     'form-name': 'diagnostic',
-    prenom: lead.contact.firstName,
-    nom: lead.contact.lastName,
-    brand: lead.contact.brand,
-    telephone: lead.contact.phone,
-    email: lead.contact.email,
-    offre: lead.recommendation.offer,
-    compatibilite: `${lead.recommendation.match}%`,
-    reponses: JSON.stringify(lead.answers),
-    commentaire: lead.comment,
-    maquette: JSON.stringify(lead.design),
-    langue: lead.lang,
+    prenom: report.prenom,
+    nom: report.nom,
+    brand: report.marque,
+    telephone: report.telephone,
+    email: report.email,
+    offre: report.offre,
+    compatibilite: report.compatibilite,
+    reponses: JSON.stringify(report),
+    commentaire: report.commentaire,
+    maquette: report.maquette,
+    langue: report.langue,
   }
 
   const requests: Promise<unknown>[] = [
@@ -145,12 +148,15 @@ export async function submitLead(lead: Lead) {
       body: new URLSearchParams(flat).toString(),
     }),
   ]
-  if (LEAD_WEBHOOK) {
+  const webhook = leadWebhook()
+  if (webhook) {
+    const googleScript = /script\.google\.com/.test(webhook)
     requests.push(
-      fetch(LEAD_WEBHOOK, {
+      fetch(webhook, {
         method: 'POST',
+        mode: googleScript ? 'no-cors' : 'cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ ...flat, lead }),
+        body: JSON.stringify(report),
       }),
     )
   }

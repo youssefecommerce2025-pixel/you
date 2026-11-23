@@ -9,6 +9,21 @@ export const CONTACT = {
 
 export const LEAD_WEBHOOK = env.VITE_LEAD_WEBHOOK as string | undefined
 
+declare global {
+  interface Window {
+    CAPTIVIA_LEADS?: { webhook?: string }
+  }
+}
+
+/** Webhook pasted in public/leads-config.js, otherwise the build-time env value. */
+export function leadWebhook() {
+  if (typeof window !== 'undefined') {
+    const fromFile = window.CAPTIVIA_LEADS?.webhook?.trim()
+    if (fromFile) return fromFile
+  }
+  return (LEAD_WEBHOOK ?? '').trim()
+}
+
 export function whatsappLink(text: string) {
   return `https://wa.me/${CONTACT.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(text)}`
 }

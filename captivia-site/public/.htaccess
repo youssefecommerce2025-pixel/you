@@ -9,4 +9,7 @@ DirectoryIndex index.html
 
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
+  <Files "leads-config.js">
+    Header set Cache-Control "no-cache"
+  </Files>
 </IfModule>
